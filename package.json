@@ -1,8 +1,8 @@
 {
-  "name": "",
+  "name": "a2-harbar20",
   "version": "",
   "description": "",
-  "author": "",
+  "author": "harbar20",
   "scripts": {
     "start": "node server.js"
   },
