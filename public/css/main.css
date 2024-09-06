@@ -2,3 +2,11 @@ body {
     background: black;
     color: white;
 }
+
+.itemQuantity {
+    width: 1rem;
+}
+
+.itemPrice {
+    width: 3rem;
+}

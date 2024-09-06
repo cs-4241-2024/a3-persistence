@@ -10,8 +10,19 @@
         <link rel="icon" href="data:;base64,iVBORw0KGgo=" />
     </head>
     <body>
+        <h1>Your Grocery List</h1>
+        <table id="list">
+            <tr>
+                <th>Item</th>
+                <th>Price</th>
+                <th>Quantity</th>
+                <th>Total</th>
+            </tr>
+        </table>
         <form>
-            <input type="text" id="yourname" value="your name here" />
+            <input type="text" id="itemName" placeholder="item" required />
+            <input type="text" id="itemPrice" class="itemPrice" placeholder="price" required />
+            <input type="text" id="itemQuantity" class="itemQuantity" placeholder="#" required />
             <button>submit</button>
         </form>
     </body>
