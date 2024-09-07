@@ -13,8 +13,12 @@ const appdata = [];
 const server = http.createServer(function (request, response) {
     if (request.method === "GET") {
         handleGet(request, response);
+    } else if (request.method === "PUT") {
+        handlePut(request, response);
     } else if (request.method === "POST") {
         handlePost(request, response);
+    } else if (request.method === "DELETE") {
+        handleDelete(request, response);
     }
 });
 
@@ -31,6 +35,25 @@ const handleGet = function (request, response) {
     }
 };
 
+const handlePut = function (request, response) {
+    let dataString = "";
+
+    request.on("data", function (data) {
+        dataString += data;
+    });
+
+    request.on("end", function () {
+        const parsed = JSON.parse(dataString);
+        const { index, ...rest } = parsed;
+        appdata[index] = rest;
+
+        console.log(appdata);
+
+        response.writeHead(200, "OK", { "Content-Type": "text/plain" });
+        response.end("Data updated successfully");
+    });
+};
+
 const handlePost = function (request, response) {
     let dataString = "";
 
@@ -40,11 +63,30 @@ const handlePost = function (request, response) {
 
     request.on("end", function () {
         const parsed = JSON.parse(dataString);
+        // Derived value
+        parsed.total = parsed.price * parsed.quantity;
 
         appdata.push(parsed);
 
         response.writeHead(200, "OK", { "Content-Type": "text/plain" });
         response.end("Data updated successfully");
+    });
+};
+
+const handleDelete = function (request, response) {
+    let dataString = "";
+
+    request.on("data", function (data) {
+        dataString += data;
+    });
+
+    request.on("end", function () {
+        const parsed = JSON.parse(dataString);
+        const { index } = parsed;
+        appdata.splice(index, 1);
+
+        response.writeHead(200, "OK", { "Content-Type": "text/plain" });
+        response.end("Data deleted successfully");
     });
 };
 

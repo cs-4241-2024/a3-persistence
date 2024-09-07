@@ -3,10 +3,10 @@ body {
     color: white;
 }
 
-.itemQuantity {
-    width: 1rem;
+#itemQuantity {
+    width: 2rem;
 }
 
-.itemPrice {
+#itemPrice {
     width: 3rem;
 }
