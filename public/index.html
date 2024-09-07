@@ -11,19 +11,23 @@
     </head>
     <body>
         <h1>Your Grocery List</h1>
-        <table id="list"></table>
-        <p>Grand Total: $<span id="total"></span></p>
-        <form>
-            <input type="text" id="itemName" placeholder="item" required />
-            <input
-                type="number"
-                id="itemPrice"
-                step="0.25"
-                placeholder="price"
-                required
-            />
-            <input type="number" id="itemQuantity" placeholder="#" required />
-            <button>submit</button>
-        </form>
+        <div class="mainDiv">
+            <div class="listDiv">
+                <table id="list"></table>
+                <h2 class="grandTotal">Grand Total: $<span id="total"></span></h2>
+            </div>
+            <form class="formDiv">
+                <input type="text" id="itemName" placeholder="item" required />
+                <input
+                    type="number"
+                    id="itemPrice"
+                    step="0.25"
+                    placeholder="price"
+                    required
+                />
+                <input type="number" id="itemQuantity" placeholder="#" required />
+                <button>submit</button>
+            </form>
+        </div>
     </body>
 </html>

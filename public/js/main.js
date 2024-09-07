@@ -118,7 +118,7 @@ const revalidate = async () => {
         td = document.createElement("td");
         const editButton = document.createElement("button");
         editButton.textContent = "Edit";
-        editButton.classList.add("editButton");
+        editButton.classList.add("recordButton");
         editButton.onclick = () => onEdit(i, item);
         td.appendChild(editButton);
         tr.appendChild(td);
@@ -126,7 +126,7 @@ const revalidate = async () => {
         td = document.createElement("td");
         const deleteButton = document.createElement("button");
         deleteButton.textContent = "Delete";
-        deleteButton.classList.add("deleteButton");
+        deleteButton.classList.add("recordButton");
         deleteButton.onclick = () => onDelete(i);
         td.appendChild(deleteButton);
 

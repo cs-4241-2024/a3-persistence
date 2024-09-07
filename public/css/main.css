@@ -1,6 +1,91 @@
 body {
     background: black;
     color: white;
+    font-family: "Segoe UI", sans-serif;
+    text-align: center;
+}
+
+h1 {
+    text-align: center;
+}
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+th,
+td {
+    border: 1px solid white;
+    padding: 0.5rem;
+}
+
+button {
+    background: white;
+    border: 1px solid black;
+    color: black;
+    padding: 0.5rem;
+}
+
+button:hover {
+    background: darkgrey;
+    color: white;
+    cursor: pointer;
+}
+
+input {
+    border: 1px solid white;
+    padding: 0.5rem;
+}
+
+.mainDiv {
+    display: flex;
+    flex-direction: row;
+}
+
+.listDiv {
+    width: 50%;
+}
+
+.formDiv {
+    width: 50%;
+}
+
+#list {
+    margin: auto;
+    width: 50%;
+}
+
+.record {
+    margin: 0.5rem;
+    padding: 0.5rem;
+}
+
+.recordName {
+    width: 20rem;
+}
+
+.recordPrice {
+    width: 3rem;
+}
+
+.recordQuantity {
+    width: 2rem;
+}
+
+.recordTotal {
+    width: 3rem;
+}
+
+.recordButton {
+    background: lightgrey;
+    border: 1px solid black;
+    color: black;
+    padding: 0.5rem;
+}
+
+#itemName {
+    width: 20rem;
 }
 
 #itemQuantity {
