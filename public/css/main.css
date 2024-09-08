@@ -61,19 +61,19 @@ input {
     padding: 0.5rem;
 }
 
-.recordName {
+.name {
     width: 20rem;
 }
 
-.recordPrice {
+.price {
     width: 3rem;
 }
 
-.recordQuantity {
+.quantity {
     width: 2rem;
 }
 
-.recordTotal {
+.total {
     width: 3rem;
 }
 

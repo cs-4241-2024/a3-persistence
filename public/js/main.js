@@ -96,32 +96,32 @@ const revalidate = async () => {
         let td = document.createElement("td");
         // Item Name
         td.innerHTML = item.name;
-        td.classList.add("recordName");
+        td.contentEditable = true;
+        td.onblur = editableListener;
+        td.classList.add("name");
         tr.appendChild(td);
         // Item Price
         td = document.createElement("td");
         td.innerHTML = item.price;
-        td.classList.add("recordPrice");
+        td.contentEditable = true;
+        td.onblur = editableListener;
+        td.classList.add("price");
         tr.appendChild(td);
         // Item Quantity
         td = document.createElement("td");
         td.innerHTML = item.quantity;
-        td.classList.add("recordQuantity");
+        td.contentEditable = true;
+        td.onblur = editableListener;
+        td.classList.add("quantity");
         tr.appendChild(td);
         // Item Total, derived value
         td = document.createElement("td");
         td.innerHTML = item.total;
-        td.classList.add("recordTotal");
+        td.contentEditable = true;
+        td.onblur = editableListener;
+        td.classList.add("total");
         tr.appendChild(td);
 
-        // Edit button
-        td = document.createElement("td");
-        const editButton = document.createElement("button");
-        editButton.textContent = "Edit";
-        editButton.classList.add("recordButton");
-        editButton.onclick = () => onEdit(i, item);
-        td.appendChild(editButton);
-        tr.appendChild(td);
         // Delete button
         td = document.createElement("td");
         const deleteButton = document.createElement("button");
@@ -160,61 +160,31 @@ const onDelete = async function (i) {
     revalidate();
 };
 
-const onEdit = async function (i, item) {
-    console.log(JSON.stringify(item));
-    const record = document.querySelector(`#record-${i}`);
+const editableListener = function (event) {
+    const row = this.parentNode;
 
-    // Turning all the cells into inputs individually
-    let form = document.createElement("form");
-    form.id = "editForm";
+    let body = {
+        index: Number(row.id.split("-")[1]),
+    };
+    for (const child of row.children) {
+        const content = child.innerText;
 
-    // Item Name
-    let td = document.createElement("td");
-    const itemNameInput = document.createElement("input");
-    itemNameInput.setAttribute("form", "editForm");
-    itemNameInput.type = "text";
-    itemNameInput.id = "editItemName";
-    itemNameInput.placeholder = "item";
-    itemNameInput.setAttribute("value", item.name);
-    itemNameInput.required = true;
-    td.appendChild(itemNameInput);
-    form.appendChild(td);
-    // Item Price
-    td = document.createElement("td");
-    const itemPriceInput = document.createElement("input");
-    itemPriceInput.setAttribute("form", "editForm");
-    itemPriceInput.type = "number";
-    itemPriceInput.id = "editItemPrice";
-    itemPriceInput.step = "0.25";
-    itemPriceInput.placeholder = "price";
-    itemPriceInput.setAttribute("value", item.price);
-    itemPriceInput.required = true;
-    td.appendChild(itemPriceInput);
-    form.appendChild(td);
-    // Item Quantity
-    td = document.createElement("td");
-    const itemQuantityInput = document.createElement("input");
-    itemQuantityInput.setAttribute("form", "editForm");
-    itemQuantityInput.type = "number";
-    itemQuantityInput.id = "editItemQuantity";
-    itemQuantityInput.placeholder = "#";
-    itemQuantityInput.setAttribute("value", item.quantity);
-    itemQuantityInput.required = true;
-    td.appendChild(itemQuantityInput);
-    form.appendChild(td);
-    // Submit
-    td = document.createElement("td");
-    const submitButton = document.createElement("button");
-    submitButton.setAttribute("form", "editForm");
-    submitButton.textContent = "Update";
-    submitButton.setAttribute("type", "submit");
-    submitButton.onclick = (e) => onEditSubmit(e, i);
-    td.appendChild(submitButton);
-    form.appendChild(td);
+        if (Number(content)) {
+            body[child.classList[0]] = Number(content);
+        } else if (content !== "Delete") {
+            body[child.classList[0]] = content;
+        }
+    }
 
-    form.appendChild(td);
+    // Validating input
+    if (!validateInput(body)) {
+        return;
+    }
 
-    record.innerHTML = form.outerHTML;
+    fetch("/data", {
+        method: "PUT",
+        body: JSON.stringify(body),
+    });
 };
 
 const onEditSubmit = async function (e, i) {
