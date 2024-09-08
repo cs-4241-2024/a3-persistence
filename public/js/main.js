@@ -56,7 +56,7 @@ const submit = async function (event) {
 };
 
 window.onload = async function () {
-    const button = document.querySelector("button");
+    const button = document.querySelector("#newItemSubmit");
     button.onclick = submit;
 
     await revalidate();
@@ -175,7 +175,7 @@ const onEdit = async function (i, item) {
     itemNameInput.type = "text";
     itemNameInput.id = "editItemName";
     itemNameInput.placeholder = "item";
-    itemNameInput.value = item.name;
+    itemNameInput.setAttribute("value", item.name);
     itemNameInput.required = true;
     td.appendChild(itemNameInput);
     form.appendChild(td);
@@ -187,7 +187,7 @@ const onEdit = async function (i, item) {
     itemPriceInput.id = "editItemPrice";
     itemPriceInput.step = "0.25";
     itemPriceInput.placeholder = "price";
-    itemPriceInput.value = item.price;
+    itemPriceInput.setAttribute("value", item.price);
     itemPriceInput.required = true;
     td.appendChild(itemPriceInput);
     form.appendChild(td);
@@ -198,7 +198,7 @@ const onEdit = async function (i, item) {
     itemQuantityInput.type = "number";
     itemQuantityInput.id = "editItemQuantity";
     itemQuantityInput.placeholder = "#";
-    itemQuantityInput.value = item.quantity;
+    itemQuantityInput.setAttribute("value", item.quantity);
     itemQuantityInput.required = true;
     td.appendChild(itemQuantityInput);
     form.appendChild(td);
@@ -213,7 +213,6 @@ const onEdit = async function (i, item) {
     form.appendChild(td);
 
     form.appendChild(td);
-    form.onsubmit = (e) => onEditSubmit(e, i);
 
     record.innerHTML = form.outerHTML;
 };
