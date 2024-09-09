@@ -157,10 +157,10 @@ const onDelete = async function (i) {
         body,
     });
 
-    revalidate();
+    await revalidate();
 };
 
-const editableListener = function (event) {
+const editableListener = async function (event) {
     const row = this.parentNode;
 
     let body = {
@@ -185,32 +185,6 @@ const editableListener = function (event) {
         method: "PUT",
         body: JSON.stringify(body),
     });
-};
 
-const onEditSubmit = async function (e, i) {
-    e.preventDefault();
-
-    const form = e.target;
-    const itemNameInput = form.querySelector("#itemName");
-    const itemPriceInput = form.querySelector("#itemPrice");
-    const itemQuantityInput = form.querySelector("#itemQuantity");
-    const json = {
-        index: i,
-        name: itemNameInput.value,
-        quantity: Number(itemQuantityInput.value),
-        price: Number(itemPriceInput.value),
-    };
-    const body = JSON.stringify(json);
-
-    console.log("UPDATING UPDATING UPDATING");
-    console.log(json);
-
-    validateInput(json);
-
-    const response = await fetch("/data", {
-        method: "PUT",
-        body,
-    });
-
-    revalidate();
+    await revalidate();
 };
