@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Click Speed Game</title>
+    <meta charset="utf-8" />
+    <script src="js/main.js"></script>
+    <link rel="stylesheet" href="css/main.css" />
+    <link rel="icon" href="data:;base64,iVBORw0KGgo=" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <h1>Click Speed Game</h1>
+    <p>Click anywhere on the page as many times as you can in 5 seconds!</p>
+    <div class="game-container">
+      <p id="timer">Click "Start Game" to begin</p>
+      <p id="counter">Clicks: 0</p>
+      <p id="message"></p>
+      <button id="startGameButton">Start Game</button>
+      <button id="playAgain" style="display: none">Play Again</button>
+    </div>
+    <h2>Leaderboard</h2>
+    <form id="addEntryForm">
+      <label for="name">Name:</label>
+      <input type="text" id="name" name="name" required />
+      <label for="score">Score:</label>
+      <input type="number" id="score" name="score" required />
+      <button type="submit">Add to Leaderboard</button>
+    </form>
+    <table id="leaderboard-table">
+      <thead>
+        <tr>
+          <th>Rank</th>
+          <th>Name</th>
+          <th>Score</th>
+          <th>Date</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody id="leaderboard"></tbody>
+    </table>
+  </body>
+</html>

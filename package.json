@@ -1,0 +1,13 @@
+{
+    "name": "clicker-game",
+    "version": "1.0.0",
+    "description": "A simple spacebar game for CS4241 Assignment 2",
+    "author": "Ben Tyler",
+    "scripts": {
+      "start": "node server.js"
+    },
+    "dependencies": {
+      "express": "^4.19.2",
+      "mime": "^4.0.4"
+    }
+  }
