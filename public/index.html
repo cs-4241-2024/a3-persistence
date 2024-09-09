@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>CS4241 Assignment 2</title>
+    <meta charset="utf-8">
+    <script src="js/main.js"></script>
+    <link rel="stylesheet" href="css/main.css">
+    
+    <!-- get rid of favicon error -->
+    <link rel="icon" href="data:;base64,iVBORw0KGgo=">
+  </head>
+  <body>
+    <h1>
+      Arcade Scoreboard
+    </h1>
+    <h3>
+      This is an arcade game scoreboard. Submit your Name, Game and Score in the fields below.
+      You will receive a letter rank based on your score.
+      <br> Click the Submit button to submit your scores.
+      <br> Click the Delete button to delete a score from the database that EXACTLY matches the fields
+      you entered (you do not need to input rank).
+    </h3>
+    <form>
+      Name: <input type="text" id="yourname" value="Name"> <br><br>
+      Game: <input type="text" id="game" value="Game"> <br><br>
+      Score: <input type="text" id="score" value="Score"> <br><br>
+      <button id="submit">Submit</button>
+      <button id="delete">Delete</button>
+      <ul>
+      </ul>
+    </form>
+  </body>
+</html>
