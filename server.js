@@ -83,7 +83,7 @@ app.post('/register', checkNotAuthenticated, async (req, res) => {
 
             data.password = hashedPassword;
 
-            await user.create(data);
+            await User.create(data);
         }
         res.redirect('/login');
     } catch {

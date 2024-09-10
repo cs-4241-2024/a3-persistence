@@ -2,13 +2,13 @@
 const LocalStrategy = require('passport-local').Strategy;
 const GitHubStrategy = require('passport-github2').Strategy;
 const bcrypt = require('bcrypt');
-const collection = require('./config'); // Import your User model
+const User = require('./config'); // Import your User model
 
 function initialize(passport) {
     const authenticateUser = async (email, password, done) => {
         try {
             // Find user by email using Mongoose
-            const user = await collection.findOne({ email: email });
+            const user = await User.findOne({ email: email });
             if (!user) {
                 return done(null, false, { message: 'No user with that email' });
             }
@@ -35,11 +35,11 @@ function initialize(passport) {
     },
         async (accessToken, refreshToken, profile, done) => {
             try {
-                const user = await collection.findOne({ githubId: profile.id });
+                const user = await User.findOne({ githubId: profile.id });
                 if (user) {
                     return done(null, user);
                 } else {
-                    const newUser = await collection.create({ githubId: profile.id, name: profile.displayName || 'GitHub User' });
+                    const newUser = await User.create({ githubId: profile.id, name: profile.displayName || 'GitHub User' });
                     return done(null, newUser);
                 }
             } catch (error) {
@@ -55,7 +55,7 @@ function initialize(passport) {
     // Deserialize user from session using user ID
     passport.deserializeUser(async (id, done) => {
         try {
-            const user = await collection.findById(id);
+            const user = await User.findById(id);
             done(null, user);
         } catch (error) {
             done(error);
