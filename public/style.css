@@ -71,7 +71,6 @@ h2 {
 
   .form-group-main{
     display: flex; 
-    flex-direction: row;
     align-items: center; 
   }
 
@@ -79,7 +78,6 @@ h2 {
     width: 150px;
     font-weight: bold;
     margin-right: 10px;
-    margin-bottom: 5px;
   }
 
   .form-group-main input {
