@@ -1,0 +1,13 @@
+{
+  "name": "a3-persistence",
+  "version": "0.0.1",
+  "description": "student management system made for CS 4241 - Webware course at WPI",
+  "author": "Alden Cutler",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "mime": "^2.4.4",
+    "express": "^4.17.1"
+  }
+}
