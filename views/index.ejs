@@ -9,7 +9,7 @@
     <title>Tasks</title>
 
     <link rel="stylesheet" href="/style.css" type="text/css">
-    
+
 </head>
 
 <body class="mainbody">
@@ -22,19 +22,21 @@
     <div class="form-container-main">
         <h2>Create your tasks:</h2>
 
-        <form action="/tasks" method="POST">
-            <div class="form-group-main">
-                <label for="task">Task Name:</label>
-                <input type="text" id="task" name="task" placeholder="Please enter your task" required
-                    autocomplete="off">
-            </div>
-            <div class="form-group-main">
-                <label for="startdate">Start Date:</label>
-                <input type="date" id="startdate" name="startdate" required>
-            </div>
-            <div class="form-group-main">
-                <label for="duedate">Due Date:</label>
-                <input type="date" id="duedate" name="duedate" required>
+        <form action="/tasks" method="POST" class="form=container-main">
+            <div class="form-groups-container">
+                <div class="form-group-main">
+                    <label for="task">Task Name:</label>
+                    <input type="text" id="task" name="task" placeholder="Please enter your task" required
+                        autocomplete="off">
+                </div>
+                <div class="form-group-main">
+                    <label for="startdate">Start Date:</label>
+                    <input type="date" id="startdate" name="startdate" required>
+                </div>
+                <div class="form-group-main">
+                    <label for="duedate">Due Date:</label>
+                    <input type="date" id="duedate" name="duedate" required>
+                </div>
             </div>
             <button type="submit" class="submit-btn">Add task:</button>
         </form>

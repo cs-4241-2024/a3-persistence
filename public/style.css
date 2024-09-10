@@ -63,11 +63,15 @@ h2 {
     border-radius: 5px;
   }
 
+  .form-group-container{
+    display: flex;
+    gap: 15px;
+    margin-bottom: 15px;
+  }
+
   .form-group-main{
     display: flex; 
-    flex-direction: row;
     align-items: center; 
-    margin-bottom: 15px;
   }
 
   .form-group-main label {
