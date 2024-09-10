@@ -1,3 +1,4 @@
+//This file contains the configuration for user, which allows users to be created.
 const mongoose = require('mongoose')
 mongoose.connect(process.env.DATABASE_URL, {
   useNewUrlParser: true,            // Use the new MongoDB driver's connection string parser
@@ -29,6 +30,10 @@ const userSchema = new mongoose.Schema({
     password: {
         type: String,
         required: true
+    },
+    githubId: {
+        type: String,
+        required: false
     }
     })
 

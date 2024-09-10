@@ -1,6 +1,7 @@
 if(process.env.NODE_ENV !== 'production') {
     require('dotenv').config()
 }
+
 const express = require('express')
 const app = express()
 const bcrypt = require('bcrypt')
@@ -69,6 +70,15 @@ app.post('/register', checkNotAuthenticated, async (req, res) => {
         res.redirect('/register');
     }
 });
+
+app.get('/auth/github', passport.authenticate('github', { scope: [ 'user:email' ] }));
+
+app.get('/auth/github/callback', 
+    passport.authenticate('github', { failureRedirect: '/login' }),
+    (req, res) => {
+        
+        res.redirect('/');
+    });
 
 app.delete('/logout', (req, res, next) => {
     req.logOut((err) => {
