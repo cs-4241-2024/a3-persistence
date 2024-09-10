@@ -9,15 +9,16 @@
     <title>Tasks</title>
 
     <link rel="stylesheet" href="/style.css" type="text/css">
+    
+</head>
+
+<body>
     <div class="header">
         <h1>Hi <%= name %> here are your tasks:</h1>
         <form action="/logout?_method=DELETE" method="POST">
             <button type="submit">Logout</button>
         </form>
     </div>
-</head>
-
-<body>
     <div class="form-container">
         <h2>Create your tasks:</h2>
 
