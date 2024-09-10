@@ -40,7 +40,7 @@ const userSchema = new mongoose.Schema({
     githubId: {
         type: String,
         required: false,
-        spare: true,
+        sparse: true,
         unique: true
     }
     })
