@@ -66,7 +66,7 @@ function initialize(passport) {
     // Deserialize user from session using user ID
     passport.deserializeUser(async (id, done) => {
         try {
-            const user = await User.findById(id);
+            const user = await collection.findById(id);
             done(null, user);
         } catch (error) {
             done(error);
