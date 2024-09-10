@@ -38,8 +38,8 @@ app.get("/", checkAuthenticated, async (req, res) => {
 })
 
 app.get('/login', checkNotAuthenticated, (req, res) => {
-    res.render('login.ejs')
-})
+    res.render('login.ejs', { message: req.flash('error') });
+});
 
 app.get('/register', checkNotAuthenticated, (req, res) => {
     res.render('register.ejs')
