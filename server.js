@@ -29,8 +29,10 @@ app.use(passport.session())
 app.use(methodOveride('_method'))
 app.use(express.static(path.join(__dirname, 'public')))
 
-app.get('/', checkAuthenticated, (req, res) => {
-    res.render('index.ejs', { name: req.user.name, email: req.user.email, githubId: req.user.githubId })
+
+app.get("/", checkAuthenticated, async (req, res) => {
+    const tasks = await Task.find({ userId: req.user._id });
+    res.render('index.ejs', { name: req.user.name, email: req.user.email, githubId: req.user.githubId, details: tasks })
 })
 
 app.get('/login', checkNotAuthenticated, (req, res) => {

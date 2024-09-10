@@ -40,29 +40,35 @@
             <button type="submit" class="submit-btn">Add Task</button>
         </form>
     </div>
+
+    <table>
+        <tr>
+            <th>Task</th>
+            <th>Start Date</th>
+            <th>Due Date</th>
+            <th>Available Days</th>
+            <th>Days Left</th>
+            <!-- <th>Delete</th> -->
+        </tr>
+
+    <% if(details!=null) { %>
+        
+        <% details.forEach(function(item){ %>
+        <tr>
+            <td><%= item.task%></td>
+            <td><%= item.startdate%></td>
+            <td><%= item.duedate%></td>
+            <td><%= item.daysAvailable%></td>
+            <td><%= item.daysLeft%></td>
+            <!-- <td><%= item.time%></td> -->
+        
+        </tr>
+        <% }) %>
+        
+        <% } %>
+    </table>
     
 
 </body>
 
 </html>
-
-<!-- <h1>Hi <%= name %> here are your tasks: </h1>
-<form action="/logout?_method=DELETE" method="POST">
-    <button type="submit">Logout</button>
-</form>
-
-<form action="/tasks" method="POST">
-    <div>
-        <label for="task">Task</label>
-        <input type="text" id="task" name="task" required>
-    </div>
-    <div>
-        <label for="date">Start Date</label>
-        <input type="date" id="date" name="date" required>
-    </div>
-    <div>
-        <label for="time">Due Date</label>
-        <input type="time" id="time" name="time" required>
-    </div>
-    <button type="submit">Add Task</button>
-</form> -->
