@@ -1,0 +1,161 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap');
+
+/* Used color palette from https://coolors.co/palette/dad7cd-a3b18a-588157-3a5a40-344e41 */
+:root {
+  --first-alt:
+  #143109;
+  --second-alt:
+  #AAAE7F;
+  --third-alt:
+  #D0D6B3;
+  --fourth-alt:
+  #EFEFEF;
+  --fifth-alt:
+  #F7F7F7;
+
+  --first: #344e41;
+  --second: #3a5a40;
+  --third: #588157;
+  --fourth: #a3b18a;
+  --fifth: #dad7cd;
+}
+
+html {
+  font-size: 1.2rem;
+  font-family: "Open Sans", system-ui;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
+  font-variation-settings: "wdth" 100;
+  color: var(--first);
+  background-color: var(--fifth);
+}
+
+body {
+  margin: 0;
+  padding: 0;
+}
+
+
+table {
+  border-collapse: collapse;
+  border: 2px solid var(--first);
+  font-size: 0.8rem;
+  letter-spacing: 1px;
+  margin: 3rem auto;
+  /* color: var(--fifth); */
+}
+
+caption {
+  caption-side: top;
+  padding: 10px;
+  font-weight: bold;
+  font-size: 1.5rem;
+}
+
+thead,
+tfoot {
+  background-color: var(--first);
+  color: var(--fifth);
+}
+
+th,
+td {
+  /* border: 2px solid var(--first); */
+  padding: 8px 10px;
+}
+
+td:last-of-type {
+  text-align: center;
+}
+
+tbody > tr:nth-of-type(even) {
+  background-color: var(--fourth);
+}
+
+tbody > tr:nth-of-type(odd) {
+  background-color: var(--third-alt);
+}
+
+tbody > tr:hover {
+  background-color: var(--second);
+  color: var(--fifth);
+
+  .delete-button {
+    background-color: var(--fifth);
+    color: var(--first);
+  }
+}
+
+tbody {
+  color: var(--first);
+}
+
+tfoot th {
+  text-align: right;
+}
+
+tfoot td {
+  font-weight: bold;
+}
+
+form {
+  margin-top: 2rem;
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+}
+
+input[type="text"],
+input[type="number"] {
+  padding: 0.5rem;
+  font-size: 1rem;
+  border: 1px solid var(--first);
+}
+
+#submit {
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+  background-color: var(--first);
+  color: var(--fifth);
+  border: none;
+  cursor: pointer;
+}
+
+#submit:hover {
+  background-color: var(--third);
+  color: var(--first);
+  border: 1px solid var(--first);
+
+}
+
+button:hover {
+  border: 1px solid var(--first);
+}
+
+#class {
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+  border: 1px solid var(--first);
+}
+
+h1 {
+  text-align: center;
+  margin-top: 3rem;
+}
+
+.delete-button {
+  /* background-color: rgba(0, 0, 0, 0); */
+  background-color: var(--second);
+  color: var(--fifth);
+  border: 1px solid var(--second);
+  font-family: "Open Sans", system-ui;
+  cursor: pointer;
+  margin: auto;
+  display: block;
+}
+
+.delete-button:hover {
+  background-color: var(--fifth);
+  color: var(--first);
+}
