@@ -31,8 +31,6 @@ const initializePassport = require('./passport-config')
 initializePassport(passport, email => users.find(user => user.email === email), 
 id => users.find(user => user.id === id))
 
-const users = []
-
 app.set('view-engine', 'ejs')
 app.use(express.urlencoded({ extended: false }))
 app.use(flash())
@@ -103,4 +101,9 @@ function checkNotAuthenticated(req, res, next) {
     next()
 }
 
-app.listen(3000)
+//fix this please
+const PORT = process.env.PORT || 3000;
+
+app.listen(PORT, () => {
+    console.log(`Server is running on port ${PORT}`);
+  });
