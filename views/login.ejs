@@ -27,6 +27,12 @@
         <p>Or Login with <a class="link" href="/auth/github">GitHub</a></p>
         <p>Don't have an account? <a class="link" href="/register">Register</a></p>
       </div>
+
+      <% if (message) { %>
+        <script>
+            alert("<%= message %>");
+        </script>
+    <% } %>
     
 </body>
 </html>
