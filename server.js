@@ -4,70 +4,55 @@ if(process.env.NODE_ENV !== 'production') {
 const express = require('express')
 const app = express()
 const bcrypt = require('bcrypt')
-// const passport = require('passport')
-// const flash = require('express-flash')
-// const session = require('express-session')
+const passport = require('passport')
+const flash = require('express-flash')
+const session = require('express-session')
 const methodOveride = require('method-override')
 const collection = require('./config')
 
 
-// const initializePassport = require('./passport-config')
-// initializePassport(passport, email => users.find(user => user.email === email), 
-// id => users.find(user => user.id === id))
+const initializePassport = require('./passport-config')
+initializePassport(passport)
 
 app.set('view-engine', 'ejs')
 app.use(express.urlencoded({ extended: false }))
-// app.use(flash())
-// app.use(session({
-//     secret: process.env.SESSION_SECRET,
-//     resave: false,
-//     saveUninitialized: false
-// }))
-// app.use(passport.initialize())
-// app.use(passport.session())
+app.use(flash())
+app.use(session({
+    secret: process.env.SESSION_SECRET,
+    resave: false,
+    saveUninitialized: false
+}))
+app.use(passport.initialize())
+app.use(passport.session())
 app.use(methodOveride('_method'))
 
-app.get('/', (req, res) => {
+app.get('/', checkAuthenticated, (req, res) => {
     res.render('index.ejs', { name: req.user.name })
 })
 
-app.get('/login', (req, res) => {
+app.get('/login', checkNotAuthenticated, (req, res) => {
     res.render('login.ejs')
 })
 
-app.get('/register', (req, res) => {
+app.get('/register', checkNotAuthenticated, (req, res) => {
     res.render('register.ejs')
 })
 
-app.post('/login',  async (req, res) => {
+app.post('/login',  checkNotAuthenticated, passport.authenticate('local', {
+    successRedirect: '/',
+    failureRedirect: '/login',
+    failureFlash: true
+}))
+
+app.post('/register', checkNotAuthenticated, async (req, res) => {
     try {
-        const user = await collection.findOne({email: req.body.email});
-        if (user == null) {
-            return res.render('login.ejs', {message: 'No user with that email'})
-        }
-        const isPasswordMatch = await bcrypt.compare(req.body.password, user.password);
-        if (isPasswordMatch) {
-            return res.redirect('/')
-        } else {
-            return res.render('login.ejs', {message: 'Password incorrect'})
-        }
-
-    }catch {
-        res.redirect('/login')
-    }
-})
-
-
-app.post('/register', async (req, res) => {
-    try {
-
         const data = {
             name: req.body.name,
             email: req.body.email,
             password: req.body.password
-        }
+        };
 
-        const existingUser = await collection.findOne({email: data.email});
+        const existingUser = await collection.findOne({ email: data.email });
 
         if (existingUser) {
             res.send('User already exists. Please choose a different email.');
@@ -77,14 +62,13 @@ app.post('/register', async (req, res) => {
 
             data.password = hashedPassword;
 
-            const userdata = await collection.insertOne(data);
-            console.log(userdata);
+            await collection.create(data);
         }
         res.redirect('/login');
-    } catch{
+    } catch {
         res.redirect('/register');
     }
-})
+});
 
 app.delete('/logout', (req, res, next) => {
     req.logOut((err) => {
