@@ -39,7 +39,7 @@ function initialize(passport) {
                 if (user) {
                     return done(null, user);
                 } else {
-                    const newUser = await collection.create({ githubId: profile.id, name: profile.displayName });
+                    const newUser = await collection.create({ githubId: profile.id, name: profile.displayName || 'GitHub User' });
                     return done(null, newUser);
                 }
             } catch (error) {

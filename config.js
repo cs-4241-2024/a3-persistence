@@ -25,15 +25,22 @@ const userSchema = new mongoose.Schema({
     },
     email: {
         type: String,
-        required: true
+        required: function() {
+            return !this.githubId
+        },
+        unique: true,
+        sparse: true
     },
     password: {
         type: String,
-        required: true
+        required: function(){
+            return !this.githubId
+        }
     },
     githubId: {
         type: String,
-        required: false
+        required: false,
+        unique: true
     }
     })
 
