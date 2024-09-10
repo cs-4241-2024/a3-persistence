@@ -43,11 +43,14 @@ app.get('/register', checkNotAuthenticated, (req, res) => {
 
 app.post('/tasks', checkAuthenticated, async (req, res) => {
     try {
+        const { daysAvailable, daysLeft } = calculateDays(req.body.startdate, req.body.duedate);
+
         const newTask = {
             task: req.body.task,
             startdate: req.body.startdate,
             duedate: req.body.duedate,
-            daysAvailable, daysLeft: calculateDays(req.body.startdate, req.body.duedate),
+            daysAvailable,
+            daysLeft,
             userId: req.user._id 
         };
 
