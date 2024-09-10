@@ -58,7 +58,7 @@ h2 {
   .form-container-main {
     width: 60vw; 
     margin: 0 auto;
-    padding: 20px;
+    /* padding: 20px; */
     border: 1px solid #ccc;
     border-radius: 5px;
   }
@@ -67,7 +67,6 @@ h2 {
     display: flex;
     /* gap: 15px; */
     margin-bottom: 15px;
-    margin-right: 10px;
   }
 
   .form-group-main{
