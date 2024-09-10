@@ -2,7 +2,7 @@
 const LocalStrategy = require('passport-local').Strategy;
 const GitHubStrategy = require('passport-github2').Strategy;
 const bcrypt = require('bcrypt');
-const User = require('./config'); // Import your User model
+const { User, Task } = require('./config');
 
 function initialize(passport) {
     const authenticateUser = async (email, password, done) => {
