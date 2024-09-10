@@ -39,10 +39,15 @@ const submit = async function (event) {
         return;
     }
 
+    console.log(body);
+
     // Adding the item to the list
-    const response = await fetch("/submit", {
+    const response = await fetch("/data", {
         method: "POST",
-        body,
+        body: body,
+        headers: {
+            "Content-Type": "application/json",
+        },
     });
     const text = await response.text();
 
@@ -79,9 +84,7 @@ const revalidate = async () => {
 
     // Displaying loading icon while revalidating
     document.querySelector("#list").appendChild(loading);
-    const response = await fetch("/data", {
-        method: "GET",
-    });
+    const response = await fetch("/data");
     const data = await response.json();
     document.querySelector("#list").removeChild(loading);
 
@@ -155,6 +158,9 @@ const onDelete = async function (i) {
     const response = await fetch("/data", {
         method: "DELETE",
         body,
+        headers: {
+            "Content-Type": "application/json",
+        },
     });
 
     await revalidate();
@@ -184,6 +190,9 @@ const editableListener = async function (event) {
     fetch("/data", {
         method: "PUT",
         body: JSON.stringify(body),
+        headers: {
+            "Content-Type": "application/json",
+        },
     });
 
     await revalidate();

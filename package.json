@@ -1,12 +1,14 @@
 {
-  "name": "a2-harbar20",
-  "version": "",
-  "description": "",
-  "author": "harbar20",
-  "scripts": {
-    "start": "node server.js"
-  },
-  "dependencies": {
-    "mime": "^2.4.4"
-  }
+    "name": "a2-harbar20",
+    "version": "",
+    "description": "",
+    "author": "harbar20",
+    "scripts": {
+        "start": "node server.js"
+    },
+    "dependencies": {
+        "express": "^4.20.0",
+        "mime": "^2.4.4"
+    },
+    "type": "module"
 }
