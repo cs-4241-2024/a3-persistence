@@ -10,7 +10,7 @@ const passport = require('passport')
 const flash = require('express-flash')
 const session = require('express-session')
 const methodOveride = require('method-override')
-const collection = require('./config')
+const { User, Task } = require('./config');
 
 
 const initializePassport = require('./passport-config')
@@ -30,7 +30,7 @@ app.use(methodOveride('_method'))
 app.use(express.static(path.join(__dirname, 'public')))
 
 app.get('/', checkAuthenticated, (req, res) => {
-    res.render('index.ejs', { name: req.user.name })
+    res.render('index.ejs', { name: req.user.name, email: req.user.email, githubId: req.user.githubId })
 })
 
 app.get('/login', checkNotAuthenticated, (req, res) => {
@@ -39,6 +39,24 @@ app.get('/login', checkNotAuthenticated, (req, res) => {
 
 app.get('/register', checkNotAuthenticated, (req, res) => {
     res.render('register.ejs')
+})
+
+app.post('/tasks', checkAuthenticated, async (req, res) => {
+    try {
+        const newTask = {
+            task: req.body.task,
+            startdate: req.body.startdate,
+            duedate: req.body.duedate,
+            daysAvailable, daysLeft: calculateDays(req.body.startdate, req.body.duedate),
+            userId: req.user._id 
+        };
+
+        await Task.create(newTask);
+        res.redirect('/');
+    } catch (err) {
+        console.error(err);
+        res.status(500).send('Error creating task');
+    }
 })
 
 app.post('/login',  checkNotAuthenticated, passport.authenticate('local', {
@@ -55,7 +73,7 @@ app.post('/register', checkNotAuthenticated, async (req, res) => {
             password: req.body.password
         };
 
-        const existingUser = await collection.findOne({ email: data.email });
+        const existingUser = await User.findOne({ email: data.email });
 
         if (existingUser) {
             res.send('User already exists. Please choose a different email.');
@@ -65,7 +83,7 @@ app.post('/register', checkNotAuthenticated, async (req, res) => {
 
             data.password = hashedPassword;
 
-            await collection.create(data);
+            await user.create(data);
         }
         res.redirect('/login');
     } catch {
@@ -104,6 +122,21 @@ function checkNotAuthenticated(req, res, next) {
         return res.redirect('/')
     }
     next()
+}
+
+function calculateDays(start, end) {
+    const startDate = new Date(start);
+    const endDate = new Date(end);
+    const today = new Date();
+    startDate.setHours(0, 0, 0, 0);
+    endDate.setHours(0, 0, 0, 0);
+    today.setHours(0, 0, 0, 0);
+    const daysAvailable = Math.round((end - start) / (1000 * 60 * 60 * 24));
+    let daysLeft = Math.ceil((end - today) / (1000 * 60 * 60 * 24));
+    if (daysLeft < 0) {
+        daysLeft = 0;
+    }
+    return daysAvailable, daysLeft;
 }
 
 const PORT = process.env.PORT || 3000;

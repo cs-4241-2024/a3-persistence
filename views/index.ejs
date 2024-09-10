@@ -1,4 +1,58 @@
-<h1>Hi <%= name %></h1>
+<!DOCTYPE html>
+<!-- This code is for the login page -->
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Login page">
+    <title>Login</title>
+
+    <link rel="stylesheet" href="/style.css" type="text/css">
+</head>
+<body>
+
+    <div class="form-container">
+        <h2>Hi <%= name %> here are your tasks:</h2>
+        <form action="/logout?_method=DELETE" method="POST">
+            <button type="submit">Logout</button>
+        </form>
+        <form action="/tasks" method="POST">
+          <div class="form-group">
+            <label for="task">Task Name:</label>
+            <input type="text" id="task" name="task" placeholder="Please enter your task" required autocomplete="off">
+          </div>
+          <div class="form-group">
+            <label for="startdate">Start Date:</label>
+            <input type="date" id="startdate" name="startdate" required>
+          </div>
+          <div class="form-group"></div>
+            <label for="duedate">Due Date:</label>
+            <input type="date" id="duedate" name="duedate" required>
+          </div>
+          <button type="submit" class="submit-btn">Add task:</button>
+        </form>
+      </div>
+    
+</body>
+</html>
+
+<!-- <h1>Hi <%= name %> here are your tasks: </h1>
 <form action="/logout?_method=DELETE" method="POST">
     <button type="submit">Logout</button>
 </form>
+
+<form action="/tasks" method="POST">
+    <div>
+        <label for="task">Task</label>
+        <input type="text" id="task" name="task" required>
+    </div>
+    <div>
+        <label for="date">Start Date</label>
+        <input type="date" id="date" name="date" required>
+    </div>
+    <div>
+        <label for="time">Due Date</label>
+        <input type="time" id="time" name="time" required>
+    </div>
+    <button type="submit">Add Task</button>
+</form> -->
