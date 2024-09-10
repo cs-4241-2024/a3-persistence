@@ -56,7 +56,7 @@ h2 {
   }
 
   .form-container-main {
-    width: 60vw; 
+    width: flex; 
     margin: 0 2px;
     padding: 20px;
     border: 1px solid #ccc;
