@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>CS4241 Assignment 2</title>
+    <meta charset="utf-8">
+    <script src="js/main.js"></script>
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="icon" href="data:;base64,iVBORw0KGgo=">
+  </head>
+  <body>
+    <header>
+      Employee Form
+    </header>
+    <p>
+      Fill out ALL of the form before submitting data.
+    </p>
+    <form id="employeeForm">
+      <input type="text" id="employeeid" placeholder="your employee ID">
+      <input type="text" id="yourname" placeholder="your name here">
+      <input type="text" id="salary" placeholder="your yearly salary">
+      <input type="text" id="regdate" placeholder="ID registration year">
+      <button type="submit">Submit</button>
+    </form>
+
+    <table id="employeeTable">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Name</th>
+          <th>Salary</th>
+          <th>Registration Year</th>
+          <th>Expiration Year</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- Rows added from server -->
+      </tbody>
+    </table>
+  </body>
+</html>

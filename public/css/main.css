@@ -1,0 +1,61 @@
+.ubuntu-regular {
+  font-family: "Ubuntu", sans-serif;
+  font-weight: 700;
+  font-style: normal;
+}
+
+body {
+  font-family: "Ubuntu";
+  background: rgb(124, 178, 133);
+  color:white;
+}
+
+header {
+  background: linear-gradient(to bottom, rgb(13, 90, 26), rgb(18, 138, 38));
+  padding: 20px;
+  text-align: center;
+  color: black;
+  font-size: 30px;
+  font-weight: 1000;
+}
+
+p {
+  text-align: center;
+  font-size: 25px;
+  color: black;
+  font-style: bold;
+}
+
+form {
+  margin-top: 20px;
+  display: flex;
+  justify-content: flex-start;
+  flex-direction: column;
+  justify-content: space-evenly;
+  border: 5px solid rgb(159, 23, 23);
+}
+
+table, th, td {
+  border: 5px solid rgb(159, 23, 23);
+  border-collapse: collapse;
+}
+
+button {
+  margin-top: 10px;
+  margin-bottom: 10px;
+  padding: 3px;
+}
+
+table {
+  margin-top: 50px;
+}
+
+th {
+  font-family: "Ubuntu";
+  text-align: center;
+  padding-right: 50px;
+}
+
+td {
+  margin-right: 5px;
+}
