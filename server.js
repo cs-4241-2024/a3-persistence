@@ -1,4 +1,4 @@
-if(process.env.NODE_ENV !== 'production') {
+if (process.env.NODE_ENV !== 'production') {
     require('dotenv').config()
 }
 
@@ -28,6 +28,8 @@ app.use(passport.initialize())
 app.use(passport.session())
 app.use(methodOveride('_method'))
 app.use(express.static(path.join(__dirname, 'public')))
+app.use(express.json())
+app.use(express.urlencoded({ extended: true }))
 
 
 app.get("/", checkAuthenticated, async (req, res) => {
@@ -53,7 +55,7 @@ app.post('/tasks', checkAuthenticated, async (req, res) => {
             duedate: req.body.duedate,
             daysAvailable,
             daysLeft,
-            userId: req.user._id 
+            userId: req.user._id
         };
 
         await Task.create(newTask);
@@ -64,7 +66,7 @@ app.post('/tasks', checkAuthenticated, async (req, res) => {
     }
 })
 
-app.post('/login',  checkNotAuthenticated, passport.authenticate('local', {
+app.post('/login', checkNotAuthenticated, passport.authenticate('local', {
     successRedirect: '/',
     failureRedirect: '/login',
     failureFlash: true
@@ -87,22 +89,24 @@ app.post('/register', checkNotAuthenticated, async (req, res) => {
             const hashedPassword = await bcrypt.hash(data.password, saltRounds);
 
             data.password = hashedPassword;
-            // console.log("got here 3");
-            await User.create(data);
+            console.log("Creating new user:", data);
+            const newUser = await User.create(data);
+            console.log("User created:", newUser);
         }
-        console.log("redirecting to login");
-        res.redirect('/login');
-    } catch {
+
+        await res.redirect('/login');
+    } catch (error) {
+        console.error("Error during user registration:", error);
         res.redirect('/register');
     }
 });
 
-app.get('/auth/github', passport.authenticate('github', { scope: [ 'user:email' ] }));
+app.get('/auth/github', passport.authenticate('github', { scope: ['user:email'] }));
 
-app.get('/auth/github/callback', 
+app.get('/auth/github/callback',
     passport.authenticate('github', { failureRedirect: '/login' }),
     (req, res) => {
-        
+
         res.redirect('/');
     });
 
@@ -149,4 +153,4 @@ const PORT = process.env.PORT || 3000;
 
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
-  });
+});
