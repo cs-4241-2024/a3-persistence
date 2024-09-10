@@ -151,11 +151,12 @@ h2 {
     padding: 12px; 
     text-align: center; 
     border-bottom: 1px solid #444; 
+    color: black;
   }
   
   th {
-    background-color: #555;
-    color: white; 
+    background-color: #fff;
+    color: black; 
     font-weight: bold; 
   }
   
@@ -164,10 +165,10 @@ h2 {
   }
   
   tbody tr:nth-child(even) {
-    background-color: #444; 
+    background-color: #8a8585; 
   }
   
   tbody tr:nth-child(odd) {
-    background-color: #333; 
+    background-color: #fff; 
   }
   
