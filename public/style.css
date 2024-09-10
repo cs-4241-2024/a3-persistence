@@ -73,10 +73,11 @@ h2 {
     display: flex; 
     align-items: center; 
     margin: 0;
+
   }
 
   .form-group-main label {
-    width: 150px;
+    width: atuo;
     font-weight: bold;
     margin: 0;
   }
