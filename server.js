@@ -131,12 +131,12 @@ function calculateDays(start, end) {
     startDate.setHours(0, 0, 0, 0);
     endDate.setHours(0, 0, 0, 0);
     today.setHours(0, 0, 0, 0);
-    const daysAvailable = Math.round((end - start) / (1000 * 60 * 60 * 24));
-    let daysLeft = Math.ceil((end - today) / (1000 * 60 * 60 * 24));
+    const daysAvailable = Math.round((endDate - startDate) / (1000 * 60 * 60 * 24));
+    let daysLeft = Math.ceil((endDate - today) / (1000 * 60 * 60 * 24));
     if (daysLeft < 0) {
         daysLeft = 0;
     }
-    return daysAvailable, daysLeft;
+    return { daysAvailable, daysLeft };
 }
 
 const PORT = process.env.PORT || 3000;
