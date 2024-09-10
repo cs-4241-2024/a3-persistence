@@ -121,6 +121,7 @@ h2 {
   .submit-btn {
     display: block;
     width: 100%;
+    max-width: 200px;
     padding: 10px;
     background-color: #472dbb;
     color: #fff;

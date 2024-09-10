@@ -66,6 +66,16 @@ app.post('/tasks', checkAuthenticated, async (req, res) => {
     }
 })
 
+app.delete('/tasks/:id', checkAuthenticated, async (req, res) => {
+    try {
+        await Task.findByIdAndDelete(req.params.id);
+        res.redirect('/');
+    } catch (err) {
+        console.error(err);
+        res.status(500).send('Error deleting task');
+    }
+})
+
 app.post('/login', checkNotAuthenticated, passport.authenticate('local', {
     successRedirect: '/',
     failureRedirect: '/login',
