@@ -1,0 +1,12 @@
+{
+  "name": "Button Game",
+  "version": "1.0",
+  "description": "CS 4241 Assignment 2",
+  "author": "Jeremy Kurtz",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "mime": "^2.4.4"
+  }
+}
