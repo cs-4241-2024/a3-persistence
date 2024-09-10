@@ -71,6 +71,7 @@ h2 {
 
   .form-group-main{
     display: flex; 
+    flex-direction: row;
     align-items: center; 
   }
 
