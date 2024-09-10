@@ -77,9 +77,9 @@ app.post('/register', checkNotAuthenticated, async (req, res) => {
             email: req.body.email,
             password: req.body.password
         };
-        console.log("got here 1");
+        // console.log("got here 1");
         const existingUser = await User.findOne({ email: data.email });
-        console.log("got here 2");
+        // console.log("got here 2");
         if (existingUser) {
             res.send('User already exists. Please choose a different email.');
         } else {
@@ -87,9 +87,10 @@ app.post('/register', checkNotAuthenticated, async (req, res) => {
             const hashedPassword = await bcrypt.hash(data.password, saltRounds);
 
             data.password = hashedPassword;
-            console.log("got here 3");
+            // console.log("got here 3");
             await User.create(data);
         }
+        console.log("redirecting to login");
         res.redirect('/login');
     } catch {
         res.redirect('/register');
