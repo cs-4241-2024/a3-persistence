@@ -1,110 +1,71 @@
-const http = require("http"),
-    fs = require("fs"),
-    // IMPORTANT: you must run `npm install` in the directory for this assignment
-    // to install the mime library if you're testing this on your local machine.
-    // However, Glitch will install it automatically by looking in your package.json
-    // file.
-    mime = require("mime"),
-    dir = "public/",
-    port = 3000;
+import express from "express";
+import { client } from "./db.js";
 
+// App configuration
+const app = express();
+app.use(express.json());
+app.use(express.static("public"));
+const dir = "public/";
+const port = 3000;
+
+// App data
 const appdata = [];
 
-const server = http.createServer(function (request, response) {
-    if (request.method === "GET") {
-        handleGet(request, response);
-    } else if (request.method === "PUT") {
-        handlePut(request, response);
-    } else if (request.method === "POST") {
-        handlePost(request, response);
-    } else if (request.method === "DELETE") {
-        handleDelete(request, response);
-    }
+app.get("/data", (req, res) => {
+    console.log(appdata);
+
+    res.json(appdata);
 });
 
-const handleGet = function (request, response) {
-    const filename = dir + request.url.slice(1);
+app.put("/data", (req, res) => {
+    const data = req.body;
+    const { index, ...rest } = data;
+    // Derived value
+    rest.total = data.price * data.quantity;
+    aappdata[index] = rest;
+    res.send("Data updated successfully");
+});
 
-    if (request.url === "/") {
-        sendFile(response, "public/index.html");
-    } else if (request.url === "/data") {
-        response.writeHeader(200, { "Content-Type": "application/json" });
-        response.end(JSON.stringify(appdata));
-    } else {
-        sendFile(response, filename);
-    }
-};
+app.post("/data", (req, res) => {
+    const data = req.body;
 
-const handlePut = function (request, response) {
-    let dataString = "";
+    console.log(data);
 
-    request.on("data", function (data) {
-        dataString += data;
-    });
+    // Derived value
+    data.total = data.price * data.quantity;
+    appdata.push(data);
 
-    request.on("end", function () {
-        const parsed = JSON.parse(dataString);
-        const { index, ...rest } = parsed;
-        appdata[index] = rest;
+    console.log(appdata);
 
-        console.log(appdata);
+    res.send("Data updated successfully");
+});
 
-        response.writeHead(200, "OK", { "Content-Type": "text/plain" });
-        response.end("Data updated successfully");
-    });
-};
+app.delete("/data", (req, res) => {
+    const data = req.body;
+    const { index } = data;
+    appdata.splice(index, 1);
+    res.send("Data deleted successfully");
+});
 
-const handlePost = function (request, response) {
-    let dataString = "";
+const startServer = async () => {
+    // Connect the client to the server	(optional starting in v4.7)
+    await client.connect();
+    // Send a ping to confirm a successful connection
+    await client.db("admin").command({ ping: 1 });
+    console.log(
+        "Pinged your deployment. You successfully connected to MongoDB!"
+    );
 
-    request.on("data", function (data) {
-        dataString += data;
-    });
-
-    request.on("end", function () {
-        const parsed = JSON.parse(dataString);
-        // Derived value
-        parsed.total = parsed.price * parsed.quantity;
-
-        appdata.push(parsed);
-
-        response.writeHead(200, "OK", { "Content-Type": "text/plain" });
-        response.end("Data updated successfully");
+    app.listen(port, async () => {
+        console.log(`Listening on http://localhost:${port}`);
+        console.log(client.db("sample_mflix").collection("movies").find());
     });
 };
 
-const handleDelete = function (request, response) {
-    let dataString = "";
+startServer();
 
-    request.on("data", function (data) {
-        dataString += data;
-    });
-
-    request.on("end", function () {
-        const parsed = JSON.parse(dataString);
-        const { index } = parsed;
-        appdata.splice(index, 1);
-
-        response.writeHead(200, "OK", { "Content-Type": "text/plain" });
-        response.end("Data deleted successfully");
-    });
-};
-
-const sendFile = function (response, filename) {
-    const type = mime.getType(filename);
-
-    fs.readFile(filename, function (err, content) {
-        // if the error = null, then we've loaded the file successfully
-        if (err === null) {
-            // status code: https://httpstatuses.com
-            response.writeHeader(200, { "Content-Type": type });
-            response.end(content);
-        } else {
-            // file not found, error code 404
-            response.writeHeader(404);
-            response.end("404 Error: File Not Found");
-        }
-    });
-};
-
-server.listen(process.env.PORT || port);
+process.on("exit", async () => {
+    setTimeout(async () => {
+        await client.close();
+    }, 1000);
+});

@@ -4,11 +4,12 @@
     "description": "",
     "author": "harbar20",
     "scripts": {
-        "start": "node server.js"
+        "start": "node --env-file=.env server.js"
     },
     "dependencies": {
         "express": "^4.20.0",
-        "mime": "^2.4.4"
+        "mime": "^2.4.4",
+        "mongodb": "^6.8.1"
     },
     "type": "module"
 }
