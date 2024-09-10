@@ -74,7 +74,8 @@ const alterRow = async function(event) {
       body = JSON.stringify( json )
 
   const response = await fetch( '/alterRow', {
-    method:'PATCH',
+    method:'PUT',
+    headers: { 'Content-Type': 'application/json' },
     body
   })
   const jsonData = await response.json()
@@ -126,8 +127,7 @@ window.onload = async function() {
       json = { name: input.value, clickCount: clicks },
       body = JSON.stringify( json )
   const response = await fetch( '/getData', {
-    method:'POST',
-    body
+    method:'GET'
   })
 
   const jsonData = await response.json()
