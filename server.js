@@ -26,12 +26,13 @@ const db = mongoose.connection
 db.on('error', (error) => console.error(error))
 db.once('open', () => console.log('Connected to Database'))
 
+const users = []
 
 const initializePassport = require('./passport-config')
 initializePassport(passport, email => users.find(user => user.email === email), 
 id => users.find(user => user.id === id))
 
-const users = []
+
 
 app.set('view-engine', 'ejs')
 app.use(express.urlencoded({ extended: false }))
