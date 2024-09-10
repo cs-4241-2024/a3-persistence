@@ -4,41 +4,42 @@ if(process.env.NODE_ENV !== 'production') {
 const express = require('express')
 const app = express()
 const bcrypt = require('bcrypt')
-const passport = require('passport')
+// const passport = require('passport')
 const flash = require('express-flash')
-const session = require('express-session')
+// const session = require('express-session')
 const methodOveride = require('method-override')
+const collection = require('./config')
 
 
-const initializePassport = require('./passport-config')
-initializePassport(passport, email => users.find(user => user.email === email), 
-id => users.find(user => user.id === id))
+// const initializePassport = require('./passport-config')
+// initializePassport(passport, email => users.find(user => user.email === email), 
+// id => users.find(user => user.id === id))
 
 app.set('view-engine', 'ejs')
 app.use(express.urlencoded({ extended: false }))
 app.use(flash())
-app.use(session({
-    secret: process.env.SESSION_SECRET,
-    resave: false,
-    saveUninitialized: false
-}))
-app.use(passport.initialize())
-app.use(passport.session())
+// app.use(session({
+//     secret: process.env.SESSION_SECRET,
+//     resave: false,
+//     saveUninitialized: false
+// }))
+// app.use(passport.initialize())
+// app.use(passport.session())
 app.use(methodOveride('_method'))
 
-app.get('/', checkAuthenticated, (req, res) => {
+app.get('/', (req, res) => {
     res.render('index.ejs', { name: req.user.name })
 })
 
-app.get('/login', checkNotAuthenticated, (req, res) => {
+app.get('/login', (req, res) => {
     res.render('login.ejs')
 })
 
-app.get('/register', checkNotAuthenticated, (req, res) => {
+app.get('/register', (req, res) => {
     res.render('register.ejs')
 })
 
-app.post('/login', checkNotAuthenticated, async (req, rest) => {
+app.post('/login',  async (req, rest) => {
     try {
         const user = await collection.findOne({email: req.body.email});
         if (user == null) {
@@ -57,7 +58,7 @@ app.post('/login', checkNotAuthenticated, async (req, rest) => {
 })
 
 
-app.post('/register', checkNotAuthenticated, async (req, res) => {
+app.post('/register', async (req, res) => {
     try {
 
         const data = {
