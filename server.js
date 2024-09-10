@@ -9,23 +9,6 @@ const flash = require('express-flash')
 const session = require('express-session')
 const methodOveride = require('method-override')
 
-const mongoose = require('mongoose')
-mongoose.connect(process.env.DATABASE_URL, {
-  useNewUrlParser: true,            // Use the new MongoDB driver's connection string parser
-  useUnifiedTopology: true,         // Opt-in to the new connection management engine
-  tls: true,                        // Enable TLS (important for MongoDB Atlas)
-  tlsAllowInvalidCertificates: false, // Ensures the certificate is valid (could be true for self-signed certs)
-  autoIndex: true,                  // Automatically build indexes
-  connectTimeoutMS: 10000,          // Timeout after 10 seconds if unable to connect
-  serverSelectionTimeoutMS: 5000,   // Timeout for MongoDB server selection process
-  socketTimeoutMS: 45000,           // Closes sockets after 45 seconds of inactivity
-  family: 4                         // Use IPv4, skip trying IPv6
-
-})
-const db = mongoose.connection
-db.on('error', (error) => console.error(error))
-db.once('open', () => console.log('Connected to Database'))
-
 
 const initializePassport = require('./passport-config')
 initializePassport(passport, email => users.find(user => user.email === email), 
@@ -55,22 +38,47 @@ app.get('/register', checkNotAuthenticated, (req, res) => {
     res.render('register.ejs')
 })
 
-app.post('/login', checkNotAuthenticated, passport.authenticate('local', {
-    successRedirect: '/',
-    failureRedirect: '/login',
-    failureFlash: true
-}))
+app.post('/login', checkNotAuthenticated, async (req, rest) => {
+    try {
+        const user = await collection.findOne({email: req.body.email});
+        if (user == null) {
+            return res.render('login.ejs', {message: 'No user with that email'})
+        }
+        const isPasswordMatch = await bcrypt.compare(req.body.password, user.password);
+        if (isPasswordMatch) {
+            return res.redirect('/')
+        } else {
+            return res.render('login.ejs', {message: 'Password incorrect'})
+        }
+
+    }catch {
+        res.redirect('/login')
+    }
+})
 
 
 app.post('/register', checkNotAuthenticated, async (req, res) => {
     try {
-        const hashedPassword = await bcrypt.hash(req.body.password, 10);
-        users.push({
-            id: Date.now().toString(),
+
+        const data = {
             name: req.body.name,
             email: req.body.email,
-            password: hashedPassword
-        });
+            password: req.body.password
+        }
+
+        const existingUser = await collection.findOne({email: data.email});
+
+        if (existingUser) {
+            res.send('User already exists. Please choose a different email.');
+        } else {
+            const saltRounds = 10;
+            const hashedPassword = await bcrypt.hash(data.password, saltRounds);
+
+            data.password = hashedPassword;
+
+            const userdata = await collection.insertMany(data);
+            console.log(userdata);
+        }
         res.redirect('/login');
     } catch{
         res.redirect('/register');
@@ -101,7 +109,6 @@ function checkNotAuthenticated(req, res, next) {
     next()
 }
 
-//fix this please
 const PORT = process.env.PORT || 3000;
 
 app.listen(PORT, () => {
