@@ -3,6 +3,7 @@ if(process.env.NODE_ENV !== 'production') {
 }
 
 const express = require('express')
+const path = require('path');
 const app = express()
 const bcrypt = require('bcrypt')
 const passport = require('passport')
@@ -26,7 +27,7 @@ app.use(session({
 app.use(passport.initialize())
 app.use(passport.session())
 app.use(methodOveride('_method'))
-app.use(express.static('public'))
+app.use(express.static(path.join(__dirname, 'public')))
 
 app.get('/', checkAuthenticated, (req, res) => {
     res.render('index.ejs', { name: req.user.name })
