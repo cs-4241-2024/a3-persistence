@@ -4,6 +4,30 @@
     box-sizing: border-box;
 }
 
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px; /* Optional padding for spacing */
+}
+
+.header h1 {
+  margin: 0; /* Remove margin from h1 to align properly */
+}
+
+.header form button {
+  background-color: #472dbb; /* Styling for the button */
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.header form button:hover {
+  background-color: #4565a0; /* Hover effect */
+}
+
 body {
     height: 100vh;
     display: flex;
