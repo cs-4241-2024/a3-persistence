@@ -5,7 +5,7 @@ const express = require('express')
 const app = express()
 const bcrypt = require('bcrypt')
 // const passport = require('passport')
-const flash = require('express-flash')
+// const flash = require('express-flash')
 // const session = require('express-session')
 const methodOveride = require('method-override')
 const collection = require('./config')
@@ -17,7 +17,7 @@ const collection = require('./config')
 
 app.set('view-engine', 'ejs')
 app.use(express.urlencoded({ extended: false }))
-app.use(flash())
+// app.use(flash())
 // app.use(session({
 //     secret: process.env.SESSION_SECRET,
 //     resave: false,
@@ -39,7 +39,7 @@ app.get('/register', (req, res) => {
     res.render('register.ejs')
 })
 
-app.post('/login',  async (req, rest) => {
+app.post('/login',  async (req, res) => {
     try {
         const user = await collection.findOne({email: req.body.email});
         if (user == null) {
@@ -77,7 +77,7 @@ app.post('/register', async (req, res) => {
 
             data.password = hashedPassword;
 
-            const userdata = await collection.insertMany(data);
+            const userdata = await collection.insertOne(data);
             console.log(userdata);
         }
         res.redirect('/login');
