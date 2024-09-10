@@ -136,3 +136,38 @@ h2 {
   p {
     margin-top: 15px;
   }
+
+  #data-table {
+    border-collapse: collapse;
+    width: 80%; 
+    max-width: 800px; 
+    margin: 20px auto; 
+    background-color: #333; 
+    border-radius: 8px;
+    overflow: hidden;
+  }
+  
+  th, td {
+    padding: 12px; 
+    text-align: center; 
+    border-bottom: 1px solid #444; 
+  }
+  
+  th {
+    background-color: #555;
+    color: white; 
+    font-weight: bold; 
+  }
+  
+  tbody tr:hover {
+    background-color: #444; 
+  }
+  
+  tbody tr:nth-child(even) {
+    background-color: #444; 
+  }
+  
+  tbody tr:nth-child(odd) {
+    background-color: #333; 
+  }
+  
