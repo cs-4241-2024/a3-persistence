@@ -11,90 +11,101 @@
     <link rel="icon" href="data:;base64,iVBORw0KGgo=" />
   </head>
   <body>
+    <div id="login">
+      <h1>Login</h1>
 
-    <h1>Student Gradebook</h1>
+      <form>
+        <input type="text" id="username" placeholder="Username" />
+        <input type="password" id="password" placeholder="Password" />
+        <button id="login-button">Login</button>
+        <button id="create-account">Create Account</button>
+      </form>
+    </div>
 
-    <form>
-      <input type="text" id="name" placeholder="Student Name" />
-      <select id="class">
-        <option value="">Select Student Year/Type</option>
-        <option value="freshman">Freshman</option>
-        <option value="sophomore">Sophomore</option>
-        <option value="junior">Junior</option>
-        <option value="senior">Senior</option>
-        <option value="grad">Grad</option>
-        <option value="part-time">Part-Time</option>
-      </select>
-      <input type="number" id="grade" placeholder="Final Grade (Number)" />
-      <button id="submit">Add/Update Student</button>
-    </form>
+    <div id="gradebook">
+      <h1>Student Gradebook</h1>
+      <form>
+        <input type="text" id="name" placeholder="Student Name" />
+        <select id="class">
+          <option value="">Select Student Year/Type</option>
+          <option value="freshman">Freshman</option>
+          <option value="sophomore">Sophomore</option>
+          <option value="junior">Junior</option>
+          <option value="senior">Senior</option>
+          <option value="grad">Grad</option>
+          <option value="part-time">Part-Time</option>
+        </select>
+        <input type="number" id="grade" placeholder="Final Grade (Number)" />
+        <button id="submit">Add/Update Student</button>
+      </form>
 
-    <table>
-      <caption>
-        Student Grades
-      </caption>
-      <thead>
-        <tr>
-          <th scope="col">Student Name</th>
-          <th scope="col">Student Year/Type</th>
-          <th scope="col">Grade (Number)</th>
-          <th scope="col">Final Grade (Char)</th>
-          <th scope="col">Actions</th>
-        </tr>
-      </thead>
-      <tbody id="table-body"></tbody>
-    </table>
-
-    <div id="stats">
       <table>
         <caption>
-          Class Statistics
+          Student Grades
         </caption>
         <thead>
           <tr>
+            <th scope="col">Student Name</th>
             <th scope="col">Student Year/Type</th>
-            <th scope="col">Average Grade</th>
-            <th scope="col">Number of Students</th>
+            <th scope="col">Grade (Number)</th>
+            <th scope="col">Final Grade (Char)</th>
+            <th scope="col">Actions</th>
           </tr>
         </thead>
-        <tbody id="stats-body">
-          <tr>
-            <td>Whole Class</td>
-            <td id="all-avg">0</td>
-            <td id="all-count">0</td>
-          </tr>
-          <tr>
-            <td>Freshman</td>
-            <td id="freshman-avg">0</td>
-            <td id="freshman-count">0</td>
-          </tr>
-          <tr>
-            <td>Sophomore</td>
-            <td id="sophomore-avg">0</td>
-            <td id="sophomore-count">0</td>
-          </tr>
-          <tr>
-            <td>Junior</td>
-            <td id="junior-avg">0</td>
-            <td id="junior-count">0</td>
-          </tr>
-          <tr>
-            <td>Senior</td>
-            <td id="senior-avg">0</td>
-            <td id="senior-count">0</td>
-          </tr>
-          <tr>
-            <td>Grad</td>
-            <td id="grad-avg">0</td>
-            <td id="grad-count">0</td>
-          </tr>
-          <tr>
-            <td>Part-Time</td>
-            <td id="part-time-avg">0</td>
-            <td id="part-time-count">0</td>
-          </tr>
-        </tbody>
+        <tbody id="table-body"></tbody>
       </table>
+
+      <div id="stats">
+        <table>
+          <caption>
+            Class Statistics
+          </caption>
+          <thead>
+            <tr>
+              <th scope="col">Student Year/Type</th>
+              <th scope="col">Average Grade</th>
+              <th scope="col">Number of Students</th>
+            </tr>
+          </thead>
+          <tbody id="stats-body">
+            <tr>
+              <td>Whole Class</td>
+              <td id="all-avg">0</td>
+              <td id="all-count">0</td>
+            </tr>
+            <tr>
+              <td>Freshman</td>
+              <td id="freshman-avg">0</td>
+              <td id="freshman-count">0</td>
+            </tr>
+            <tr>
+              <td>Sophomore</td>
+              <td id="sophomore-avg">0</td>
+              <td id="sophomore-count">0</td>
+            </tr>
+            <tr>
+              <td>Junior</td>
+              <td id="junior-avg">0</td>
+              <td id="junior-count">0</td>
+            </tr>
+            <tr>
+              <td>Senior</td>
+              <td id="senior-avg">0</td>
+              <td id="senior-count">0</td>
+            </tr>
+            <tr>
+              <td>Grad</td>
+              <td id="grad-avg">0</td>
+              <td id="grad-count">0</td>
+            </tr>
+            <tr>
+              <td>Part-Time</td>
+              <td id="part-time-avg">0</td>
+              <td id="part-time-count">0</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
   </body>
 </html>

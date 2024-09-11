@@ -107,22 +107,24 @@ form {
 }
 
 input[type="text"],
-input[type="number"] {
+input[type="number"],
+input[type="password"] {
   padding: 0.5rem;
   font-size: 1rem;
   border: 1px solid var(--first);
 }
 
-#submit {
+#submit, #login-button, #create-account {
   padding: 0.5rem 1rem;
   font-size: 1rem;
   background-color: var(--first);
   color: var(--fifth);
   border: none;
   cursor: pointer;
+  border: 1px solid var(--first);
 }
 
-#submit:hover {
+#submit:hover, #login-button:hover, #create-account:hover {
   background-color: var(--third);
   color: var(--first);
   border: 1px solid var(--first);
