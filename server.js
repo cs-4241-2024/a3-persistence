@@ -76,6 +76,23 @@ app.delete('/tasks/:id', checkAuthenticated, async (req, res) => {
     }
 })
 
+app.post('/tasks/:id/edit', checkAuthenticated, async (req, res) => {
+    const taskId = req.params.id;
+    const { task, startdate, duedate } = req.body;
+    try {
+        await Task.findByIdAndUpdate(taskId, {
+            task,
+            startdate: new Date(startdate),
+            duedate: new Date(duedate)
+        });
+
+        res.redirect('/');
+    } catch (error) {
+        console.error("Error updating task:", error);
+        res.status(500).send("An error occurred while updating the task.");
+    }
+});
+
 app.post('/login', checkNotAuthenticated, passport.authenticate('local', {
     successRedirect: '/',
     failureRedirect: '/login',

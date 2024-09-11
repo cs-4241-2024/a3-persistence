@@ -53,6 +53,53 @@
             <th>Due Date</th>
             <th>Available Days</th>
             <th>Days Left</th>
+            <th>Edit</th>
+            <th>Delete</th>
+        </tr>
+    
+        <% if(details!=null) { %>
+    
+            <% details.forEach(function(item){ %>
+            <tr>
+                <form action="/tasks/<%= item._id %>/edit" method="POST">
+                    <td>
+                        <input type="text" name="task" value="<%= item.task %>">
+                    </td>
+                    <td>
+                        <input type="date" name="startdate" value="<%= item.startdate.toISOString().split('T')[0] %>">
+                    </td>
+                    <td>
+                        <input type="date" name="duedate" value="<%= item.duedate.toISOString().split('T')[0] %>">
+                    </td>
+                    <td>
+                        <%= item.daysAvailable %>
+                    </td>
+                    <td>
+                        <%= item.daysLeft %>
+                    </td>
+                    <td>
+                        <button type="submit" class="edit">Save</button>
+                    </td>
+                </form>
+                <td>
+                    <form action="/tasks/<%= item._id %>?_method=DELETE" method="POST">
+                        <button type="submit" class="delete">Delete</button>
+                    </form>
+                </td>
+            </tr>
+            <% }) %>
+    
+        <% } %>
+    </table>    
+
+    <!-- <table id="data-table">
+        <tr>
+            <th>Task</th>
+            <th>Start Date</th>
+            <th>Due Date</th>
+            <th>Available Days</th>
+            <th>Days Left</th>
+            <th>Edit</th>
             <th>Delete</th>
         </tr>
 
@@ -61,19 +108,24 @@
             <% details.forEach(function(item){ %>
                 <tr>
                     <td>
-                        <%= item.task %>
+                        <input type="text" name="task" value="<%= item.task %>">
                     </td>
                     <td>
-                        <%= new Date(item.startdate).toLocaleDateString() %>
+                        <input type="date" name="startdate" value="<%= item.startdate.toISOString().split('T')[0] %>">
                     </td>
                     <td>
-                        <%= new Date(item.duedate).toLocaleDateString() %>
+                        <input type="date" name="duedate" value="<%= item.duedate.toISOString().split('T')[0] %>">
                     </td>
                     <td>
                         <%= item.daysAvailable %>
                     </td>
                     <td>
                         <%= item.daysLeft %>
+                    </td>
+                    <td>
+                        <form action="/tasks/<%= item._id %>/edit" method="GET">
+                            <button type="submit" class="edit">Save</button>
+                        </form>
                     </td>
                     <td>
                         <form action="/tasks/<%= item._id %>?_method=DELETE" method="POST">
@@ -85,7 +137,7 @@
                 <% }) %>
 
                     <% } %>
-    </table>
+    </table> -->
 
 
 </body>
