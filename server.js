@@ -30,6 +30,13 @@ app.use(methodOveride('_method'))
 app.use(express.static(path.join(__dirname, 'public')))
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
+app.use((req, res, next) => {
+    res.locals.message = {
+        success: req.flash('success'),
+        error: req.flash('error')
+    };
+    next();
+});
 
 
 app.get("/", checkAuthenticated, async (req, res) => {
@@ -110,7 +117,8 @@ app.post('/register', checkNotAuthenticated, async (req, res) => {
         const existingUser = await User.findOne({ email: data.email });
         // console.log("got here 2");
         if (existingUser) {
-            res.send('User already exists. Please choose a different email.');
+            req.flash('error', 'User already exists. Please choose a different email.');
+            return res.redirect('/register');
         } else {
             const saltRounds = 10;
             const hashedPassword = await bcrypt.hash(data.password, saltRounds);
@@ -124,6 +132,7 @@ app.post('/register', checkNotAuthenticated, async (req, res) => {
         await res.redirect('/login');
     } catch (error) {
         console.error("Error during user registration:", error);
+        req.flash('error', 'Error during user registration. Please try again.');
         res.redirect('/register');
     }
 });
