@@ -65,13 +65,16 @@
             <tr>
                 <form action="/tasks/<%= item._id %>/edit" method="POST">
                     <td>
-                        <input type="text" name="task" value="<%= item.task %>">
+                        <label for="task">Task:</label>
+                        <input type="text" id="task" name="task" value="<%= item.task %>">
                     </td>
                     <td>
-                        <input type="date" name="startdate" value="<%= item.startdate.toISOString().split('T')[0] %>">
+                        <label for="startdate">Start Date:</label>
+                        <input type="date" id="startdate" name="startdate" value="<%= item.startdate.toISOString().split('T')[0] %>">
                     </td>
                     <td>
-                        <input type="date" name="duedate" value="<%= item.duedate.toISOString().split('T')[0] %>">
+                        <label for="duedate">Due Date:</label>
+                        <input type="date" id="duedate" name="duedate" value="<%= item.duedate.toISOString().split('T')[0] %>">
                     </td>
                     <td>
                         <%= item.daysAvailable %>
