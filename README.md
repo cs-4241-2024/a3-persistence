@@ -1,4 +1,7 @@
 Title: Clicking Game
+
+https://a2-ron1tk.glitch.me
+
 I have created a game that allows users to click the button as many times as they can in 5 seconds and keeps track of their high score based off of therir name. 
 To play the game, enter your name. Then click the start button, this will start the 5 second timer. then click the button as many times as you can. 
 For css, I used a protest guerilla font on google fonts, i made the background black and the color white. Then I used a flex display on column to position the different parts of the game correctly. After, I set the font size of the title "Clicking Game" to 5em. I used flex for the portion that dipslays the data about thte users and their new high scores.  

@@ -53,7 +53,7 @@ window.onload =function () {
     document.querySelector('#click-button').disabled =false;
     setTimeout(function () {
       gameStarted=false;
-      document.querySelector('#click-button').disabled = rue;
+      document.querySelector('#click-button').disabled = true;
       alert('Game is Over!');
       submit(new Event('submit'));  
     }, 5000); 
