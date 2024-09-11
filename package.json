@@ -1,8 +1,8 @@
 {
-  "name": "",
+  "name": "a2-ron1tk",
   "version": "",
-  "description": "",
-  "author": "",
+  "description": "clicking game",
+  "author": "Ronit Kapoor",
   "scripts": {
     "start": "node server.js"
   },

@@ -5,14 +5,21 @@
     <meta charset="utf-8">
     <script src="js/main.js"></script>
     <link rel="stylesheet" href="css/main.css">
+
     
     <!-- get rid of favicon error -->
     <link rel="icon" href="data:;base64,iVBORw0KGgo=">
   </head>
   <body>
-    <form>
+    <h1>Clicking Game</h1>
+    <form id="name-form">
       <input type="text" id="yourname" value="your name here">
-      <button>submit</button>
     </form>
+    <button id="start-game">Start Game</button>
+    <button id="click-button" disabled>Click Me!</button>
+    <p>Clicks: <span id="click-count">0</span></p>
+    <h2>High Scores</h2>
+    <ul id="high-scores-list"></ul>
+    <script src="js/main.js"></script>
   </body>
 </html>

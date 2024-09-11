@@ -1,4 +1,24 @@
+@import url('https://fonts.googleapis.com/css2?family=Protest+Guerrilla&display=swap');
 body {
-  background:black;
-  color:white;
+  font-family: 'Protest Guerilla';
+  background: black;
+  color: white;
+  display: flex;
+  flex-direction: column;
 }
+h1 {
+  font-size: 5em;
+}
+#name-form, .clicks-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 10px;
+}
+button {
+  padding: 20px;
+}
+ul {
+  list-style: none;
+}
+
