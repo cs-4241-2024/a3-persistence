@@ -109,7 +109,7 @@ app.post('/login', checkNotAuthenticated, (req, res, next) => {
         if (!user) {
             console.log("Login error message 1: ", info.message); 
             req.flash('error', info.message);
-            console.log("Flash message set: ", req.flash('error')); 
+            // console.log("Flash message set: ", req.flash('error')); 
             return res.redirect('/login');
         }
         req.logIn(user, (err) => {
