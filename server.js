@@ -43,8 +43,9 @@ app.get("/", checkAuthenticated, async (req, res) => {
 })
 
 app.get('/login', checkNotAuthenticated, (req, res) => {
-    console.log("Flash error message: ", req.flash('error'));
-    res.render('login.ejs', { message: req.flash('error') });
+    const errorMessage = req.flash('error');
+    console.log("Flash error message: ", errorMessage); 
+    res.render('login.ejs', { message: { error: errorMessage } });
 });
 
 app.get('/register', checkNotAuthenticated, (req, res) => {
@@ -99,20 +100,13 @@ app.post('/tasks/:id/edit', checkAuthenticated, async (req, res) => {
     }
 });
 
-// app.post('/login', checkNotAuthenticated, passport.authenticate('local', {
-//     successRedirect: '/',
-//     failureRedirect: '/login',
-//     failureFlash: true
-// }))
-
 app.post('/login', checkNotAuthenticated, (req, res, next) => {
     passport.authenticate('local', (err, user, info) => {
         if (err) {
             return next(err);
         }
         if (!user) {
-            console.log(info);
-            req.flash('error', info.message); 
+            req.flash('error', info.message);
             return res.redirect('/login');
         }
         req.logIn(user, (err) => {
