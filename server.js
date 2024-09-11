@@ -43,12 +43,6 @@ app.get("/", checkAuthenticated, async (req, res) => {
     res.render('index.ejs', { name: req.user.name, email: req.user.email, githubId: req.user.githubId, details: tasks })
 })
 
-app.get('/login', checkNotAuthenticated, (req, res) => {
-    const errorMessage = req.flash('error');
-    console.log("Flash error message 2: ", errorMessage);
-    res.render('login.ejs', { message: { error: errorMessage } });
-});
-
 app.get('/register', checkNotAuthenticated, (req, res) => {
     res.render('register.ejs')
 })
@@ -119,6 +113,12 @@ app.post('/login', checkNotAuthenticated, (req, res, next) => {
             return res.redirect('/');
         });
     })(req, res, next);
+});
+
+app.get('/login', checkNotAuthenticated, (req, res) => {
+    const errorMessage = req.flash('error');
+    console.log("Flash error message 2: ", errorMessage);
+    res.render('login.ejs', { message: { error: errorMessage } });
 });
 
 app.post('/register', checkNotAuthenticated, async (req, res) => {
