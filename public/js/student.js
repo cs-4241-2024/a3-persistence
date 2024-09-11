@@ -46,7 +46,7 @@ function removeFromTable(studentName) {
  * @param {Object} student - The student object to be added.
  * @returns {void}
  */
-export function addStudentToTable(student) {
+export function addStudentToTable(student, userId) {
   let tbody = document.getElementById("table-body");
   let row = document.createElement("tr");
   let nameEl = document.createElement("td");
@@ -71,7 +71,10 @@ export function addStudentToTable(student) {
     const response = await fetch("/delete", {
       method: "POST",
       body,
-      headers: { "Content-Type": "application/json" },  // this is important to send JSON data to the server, I spent an hour debugging this before remembering this was mentioned in class.
+      headers: { 
+        "Content-Type": "application/json",
+        "userId": userId,
+       },  // this is important to send JSON data to the server, I spent an hour debugging this before remembering this was mentioned in class.
     });
     const res = await response.json();
 
@@ -140,14 +143,14 @@ export function updateClassStats(stats) {
  * @param {Event} e - The form submission event.
  * @returns {void}
  */
-export async function handleAdd(e) {
+export async function handleAdd(e, userId) {
   e.preventDefault();
 
   // get all the input fields
   const name = document.querySelector("#name"),
     classYear = document.querySelector("#class"),
     grade = document.querySelector("#grade"),
-    json = { name: name.value, classYear: classYear.value, grade: grade.value },
+    json = { student: {name: name.value, classYear: classYear.value, grade: grade.value}, id: userId },
     body = JSON.stringify(json);
 
   // form validation
@@ -183,7 +186,7 @@ export async function handleAdd(e) {
     gradeLetter: res.value,
   };
   if (response.status === 201) {
-    addStudentToTable(student);
+    addStudentToTable(student, userId);
   } else if (response.status === 200) {
     updateStudentEntry(student);
   }

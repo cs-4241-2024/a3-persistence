@@ -1,16 +1,17 @@
 const express = require("express");
-const mongoose = require('mongoose')
+const mongoose = require("mongoose");
 const path = require("path");
 const app = express();
 const dir = "public/";
 const port = 3000;
-require('dotenv').config();
+require("dotenv").config();
 
 const URI = process.env.MONGODB_URI;
 
-mongoose.connect(URI, {  })
-  .then(() => console.log(Date().valueOf(), ': Connected to MongoDB'))
-  .catch(err => console.error("Could not connect to MongoDB", err));
+mongoose
+  .connect(URI, {})
+  .then(() => console.log(Date().valueOf(), ": Connected to MongoDB"))
+  .catch((err) => console.error("Could not connect to MongoDB", err));
 
 const studentSchema = new mongoose.Schema({
   name: String,
@@ -20,8 +21,16 @@ const studentSchema = new mongoose.Schema({
 });
 const Student = mongoose.model("Student", studentSchema);
 
+const userSchema = new mongoose.Schema({
+  username: String,
+  password: String, // yes, I know it's not good to store passwords in plaintext but I don't want to deal with hashing right now
+  students: [{ type: mongoose.Schema.Types.ObjectId, ref: "Student" }],
+});
+const User = mongoose.model("User", userSchema);
+
 app.use(express.json());
 app.use(express.static(dir));
+
 
 
 // GET request handlers
@@ -34,26 +43,94 @@ app.get("/students", async (req, res) => {
   console.log(Date().valueOf(), ": GET: /students");
   const students = await Student.find();
   console.log(students);
-  res.status(200).json({ students: students, stats: await calculateClassGradeStatsDB() });
+  res
+    .status(200)
+    .json({ students: students, stats: await calculateClassGradeStatsDB() });
 });
 
+app.get("/students/:id", async (req, res) => {
+  console.log(Date().valueOf(), ": GET: /students/:id");
+  const userId = req.params.id;
+
+  try {
+    const user = await User.findById(userId).populate("students");
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    res.status(200).json({
+      students: user.students,
+      stats: await calculateClassGradeStatsDB(),
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Internal Server Error" });
+  }
+});
 
 // POST request handlers
+app.post("/login", async (req, res) => {
+  const { username, password } = req.body;
+
+  try {
+    const user = await User.findOne({ username: username, password: password });
+    if (user) {
+      res
+        .status(200)
+        .json({ success: true, message: "Login successful.", userId: user.id });
+    } else {
+      res
+        .status(401)
+        .json({ success: false, message: "Login failed. Please try again." });
+    }
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ success: false, message: "Internal Server Error" });
+  }
+});
+
+app.post("/create-account", async (req, res) => {
+  console.log(Date().valueOf(), ": POST: /create-account");
+
+  // handle the request
+  try {
+    const { username, password } = req.body;
+
+    const existing = await User.findOne({ username: username });
+    if (existing) {
+      res.status(400).json({ message: "Username already exists" });
+    } else {
+      const newUser = new User({ username: username, password: password });
+      await newUser.save();
+      res.status(201).json({ message: "Account created. Please login." });
+    }
+  } catch (error) {
+    res.status(500).json({ message: "Internal Server Error" });
+  }
+});
+
 app.post("/add", async (req, res) => {
   console.log(Date().valueOf(), ": POST: /add");
 
   // handle the request
-  let student = req.body;
-  let code = await addStudentDB(student);
+  let student = req.body.student;
+  let code = await addStudentDB(student, req.body.id);
 
-  if (code == 0) {        // Student already exists
-    res.status(204).json({  });
-  } 
-  else if (code == 1) {   // Student successfully added
-    res.status(201).json({ value: student.gradeLetter, stats: await calculateClassGradeStatsDB() });
-  } 
-  else if (code == 2) {   // Student updated with different grade or class
-    res.status(200).json({ value: student.gradeLetter, stats: await calculateClassGradeStatsDB() });
+  if (code == 0) {
+    // Student already exists
+    res.status(204).json({});
+  } else if (code == 1) {
+    // Student successfully added
+    res.status(201).json({
+      value: student.gradeLetter,
+      stats: await calculateClassGradeStatsDB(),
+    });
+  } else if (code == 2) {
+    // Student updated with different grade or class
+    res.status(200).json({
+      value: student.gradeLetter,
+      stats: await calculateClassGradeStatsDB(),
+    });
   }
 });
 
@@ -66,12 +143,14 @@ app.post("/delete", async (req, res) => {
 
   // deleteStudentDB returns 0 on failure, 1 on success
   if (success) {
-    res.status(200).json({ message: "Student deleted", stats: await calculateClassGradeStatsDB() });
+    res.status(200).json({
+      message: "Student deleted",
+      stats: await calculateClassGradeStatsDB(),
+    });
   } else {
     res.status(400).send("400: Bad Request - Student not found");
   }
 });
-
 
 /**
  * Adds a student to the database or updates their existing record if the student already exists.
@@ -81,7 +160,7 @@ app.post("/delete", async (req, res) => {
  * - 1: Student successfully added.
  * - 2: Student updated with different grade or class.
  */
-async function addStudentDB(student) {
+async function addStudentDB(student, userId) {
   let gradeLetter = student.grade;
   switch (true) {
     case gradeLetter >= 90:
@@ -96,41 +175,75 @@ async function addStudentDB(student) {
     default:
       gradeLetter = "NR";
   }
-
   student.gradeLetter = gradeLetter;
 
-  const existingStudent = await Student.findOne({ name: student.name });
+  const user = await User.findById(userId);
+  let existingStudent; 
+  if (user) {
+    existingStudent = await Student.findOne({
+      name: student.name,
+      _id: { $in: user.students },
+    });
+  }
+
+  if (!user) {
+    console.log(Date().valueOf(), ": ERR POST: User not found.");
+    return 4; // User not found
+  }
+
   if (existingStudent) {
-    if (existingStudent.grade === student.grade && existingStudent.classYear === student.classYear) {
+    if (
+      existingStudent.grade === student.grade &&
+      existingStudent.classYear === student.classYear
+    ) {
       console.log(Date().valueOf(), ": ERR POST: Student already exists");
       return 0; // Identical student already exists
     } else {
       existingStudent.grade = student.grade;
       existingStudent.classYear = student.classYear;
       existingStudent.gradeLetter = gradeLetter;
-      console.log(Date().valueOf(), ": ADD: Student", existingStudent.id, "updated.")
+      console.log(
+        Date().valueOf(),
+        ": ADD: Student",
+        existingStudent.id,
+        "updated."
+      );
       await existingStudent.save();
       return 2; // Student updated with different grade or class
     }
   } else {
     const newStudent = new Student(student);
     await newStudent.save();
-    console.log(Date().valueOf(), ": ADD: Student", newStudent.id, "created.")
+    user.students.push(newStudent._id);
+    await user.save();
+    console.log(Date().valueOf(), ": ADD: Student", newStudent.id, "created.");
     return 1;
   }
 }
 
-
 /**
  * Deletes a student from the database.
- * @param {json} student 
- * @returns 
+ * @param {json} student
+ * @returns
  */
-async function deleteStudentDB(student) {
-  const result = await Student.deleteOne({ name: student.name });
-  
-  if (result === 0) console.log(Date().valueOf(), ": ERR DELETE: Student not found.")
-  else console.log(Date().valueOf(), ": DELETE: Student", student.name, "deleted.")
+async function deleteStudentDB(student, userId) {
+  const user = await User.findOne({ _id: userId });
+  if (!user) {
+    console.log(Date().valueOf(), ": ERR DELETE: User not found.");
+    return 0;
+  }
+
+  const result = await Student.deleteOne({ name: student.name, _id: { $in: user.students } });
+
+  if (result === 0)
+    console.log(Date().valueOf(), ": ERR DELETE: Student not found.");
+  else
+    console.log(
+      Date().valueOf(),
+      ": DELETE: Student",
+      student.name,
+      "deleted."
+    );
 
   return result.deletedCount ? 1 : 0;
 }
@@ -139,7 +252,7 @@ async function deleteStudentDB(student) {
  * Calculates the class grade statistics from the database.
  * @returns classStats object containing the number of students in each class, the average grade for each class, and the average grade for the entire class.
  */
-async function calculateClassGradeStatsDB() {
+async function calculateClassGradeStatsDB(user) {
   const students = await Student.find();
   let counts = {
     senior: 0,
@@ -160,7 +273,7 @@ async function calculateClassGradeStatsDB() {
   };
 
   let classAvg = 0;
-  students.forEach(student => {
+  students.forEach((student) => {
     classAvg += student.grade;
     switch (student.classYear) {
       case "senior":
@@ -190,13 +303,32 @@ async function calculateClassGradeStatsDB() {
     }
   });
 
-  classAvg = students.length == 0 ? 0 : parseFloat((classAvg / students.length).toFixed(2));
-  avgs.senior = counts.senior == 0 ? 0 : parseFloat((avgs.senior / counts.senior).toFixed(2));
-  avgs.junior = counts.junior == 0 ? 0 : parseFloat((avgs.junior / counts.junior).toFixed(2));
-  avgs.sophomore = counts.sophomore == 0 ? 0 : parseFloat((avgs.sophomore / counts.sophomore).toFixed(2));
-  avgs.freshman = counts.freshman == 0 ? 0 : parseFloat((avgs.freshman / counts.freshman).toFixed(2));
-  avgs.grad = counts.grad == 0 ? 0 : parseFloat((avgs.grad / counts.grad).toFixed(2));
-  avgs.parttime = counts.parttime == 0 ? 0 : parseFloat((avgs.parttime / counts.parttime).toFixed(2));
+  classAvg =
+    students.length == 0
+      ? 0
+      : parseFloat((classAvg / students.length).toFixed(2));
+  avgs.senior =
+    counts.senior == 0
+      ? 0
+      : parseFloat((avgs.senior / counts.senior).toFixed(2));
+  avgs.junior =
+    counts.junior == 0
+      ? 0
+      : parseFloat((avgs.junior / counts.junior).toFixed(2));
+  avgs.sophomore =
+    counts.sophomore == 0
+      ? 0
+      : parseFloat((avgs.sophomore / counts.sophomore).toFixed(2));
+  avgs.freshman =
+    counts.freshman == 0
+      ? 0
+      : parseFloat((avgs.freshman / counts.freshman).toFixed(2));
+  avgs.grad =
+    counts.grad == 0 ? 0 : parseFloat((avgs.grad / counts.grad).toFixed(2));
+  avgs.parttime =
+    counts.parttime == 0
+      ? 0
+      : parseFloat((avgs.parttime / counts.parttime).toFixed(2));
 
   let classStats = {
     counts: counts,
