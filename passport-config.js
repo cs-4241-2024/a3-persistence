@@ -7,13 +7,11 @@ const { User } = require('./config');
 function initialize(passport) {
     const authenticateUser = async (email, password, done) => {
         try {
-            
             const user = await User.findOne({ email: email });
             if (!user) {
                 return done(null, false, { message: 'No user with that email' });
             }
 
-    
             const isMatch = await bcrypt.compare(password, user.password);
             if (isMatch) {
                 return done(null, user);
@@ -45,7 +43,8 @@ function initialize(passport) {
             } catch (error) {
                 return done(error);
             }
-    }))
+        }
+    ));
 
     passport.serializeUser((user, done) => {
         done(null, user.id);

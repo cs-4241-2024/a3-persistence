@@ -1,35 +1,52 @@
 if (process.env.NODE_ENV !== 'production') {
-    require('dotenv').config()
+    require('dotenv').config(); 
 }
 
-const express = require('express')
+const express = require('express');
 const path = require('path');
-const app = express()
-const bcrypt = require('bcrypt')
-const passport = require('passport')
-const flash = require('express-flash')
-const session = require('express-session')
-const methodOveride = require('method-override')
+const bcrypt = require('bcrypt');
+const passport = require('passport');
+const flash = require('express-flash');
+const session = require('express-session');
+const methodOverride = require('method-override');
 const { User, Task } = require('./config');
 
+const app = express(); // Create Express application
 
+// Middleware for parsing URL-encoded data (from forms)
+app.use(express.urlencoded({ extended: true })); 
+
+// Session configuration
 app.use(session({
     secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: false,
 }));
-app.use(flash())
-const initializePassport = require('./passport-config')
-initializePassport(passport)
 
-app.set('view-engine', 'ejs')
-app.use(express.urlencoded({ extended: false }))
-app.use(passport.initialize())
-app.use(passport.session())
-app.use(methodOveride('_method'))
-app.use(express.static(path.join(__dirname, 'public')))
-app.use(express.json())
-app.use(express.urlencoded({ extended: true }))
+// Flash messages middleware
+app.use(flash());
+
+// Passport configuration
+const initializePassport = require('./passport-config');
+initializePassport(passport);
+
+// Passport middleware
+app.use(passport.initialize());
+app.use(passport.session());
+
+// Method override middleware
+app.use(methodOverride('_method'));
+
+// Static files middleware
+app.use(express.static(path.join(__dirname, 'public')));
+
+// JSON parsing middleware
+app.use(express.json()); 
+
+// View engine setup
+app.set('view-engine', 'ejs');
+
+// Middleware for setting local flash messages
 app.use((req, res, next) => {
     res.locals.message = {
         success: req.flash('success'),
@@ -40,12 +57,12 @@ app.use((req, res, next) => {
 
 app.get("/", checkAuthenticated, async (req, res) => {
     const tasks = await Task.find({ userId: req.user._id });
-    res.render('index.ejs', { name: req.user.name, email: req.user.email, githubId: req.user.githubId, details: tasks })
-})
+    res.render('index.ejs', { name: req.user.name, email: req.user.email, githubId: req.user.githubId, details: tasks });
+});
 
 app.get('/register', checkNotAuthenticated, (req, res) => {
-    res.render('register.ejs')
-})
+    res.render('register.ejs');
+});
 
 app.post('/tasks', checkAuthenticated, async (req, res) => {
     try {
@@ -66,7 +83,7 @@ app.post('/tasks', checkAuthenticated, async (req, res) => {
         console.error(err);
         res.status(500).send('Error creating task');
     }
-})
+});
 
 app.delete('/tasks/:id', checkAuthenticated, async (req, res) => {
     try {
@@ -76,7 +93,7 @@ app.delete('/tasks/:id', checkAuthenticated, async (req, res) => {
         console.error(err);
         res.status(500).send('Error deleting task');
     }
-})
+});
 
 app.post('/tasks/:id/edit', checkAuthenticated, async (req, res) => {
     const taskId = req.params.id;
@@ -101,7 +118,7 @@ app.post('/login', checkNotAuthenticated, (req, res, next) => {
             return next(err);
         }
         if (!user) {
-            console.log("Login error message 1: ", info.message); 
+            //console.log("Login error message 1: ", info.message); 
             req.flash('error', info.message);
             // console.log("Flash message set: ", req.flash('error')); 
             return res.redirect('/login');
@@ -116,9 +133,9 @@ app.post('/login', checkNotAuthenticated, (req, res, next) => {
 });
 
 app.get('/login', checkNotAuthenticated, (req, res) => {
-    console.log("Flash object: ", req.flash()); 
+    //console.log("Flash object: ", req.flash()); 
     const errorMessage = req.flash('error'); 
-    console.log("Flash error message 2: ", errorMessage);
+    //console.log("Flash error message 2: ", errorMessage);
     res.render('login.ejs', { message: { error: errorMessage } });
 });
 
@@ -140,9 +157,9 @@ app.post('/register', checkNotAuthenticated, async (req, res) => {
             const hashedPassword = await bcrypt.hash(data.password, saltRounds);
 
             data.password = hashedPassword;
-            console.log("Creating new user:", data);
+            //console.log("Creating new user:", data);
             const newUser = await User.create(data);
-            console.log("User created:", newUser);
+            //console.log("User created:", newUser);
         }
 
         await res.redirect('/login');
@@ -158,32 +175,32 @@ app.get('/auth/github', passport.authenticate('github', { scope: ['user:email'] 
 app.get('/auth/github/callback',
     passport.authenticate('github', { failureRedirect: '/login' }),
     (req, res) => {
-
         res.redirect('/');
-    });
+    }
+);
 
 app.delete('/logout', (req, res, next) => {
     req.logOut((err) => {
         if (err) {
-            return next(err)
+            return next(err);
         }
-        res.redirect('/login')
-    })
-})
+        res.redirect('/login');
+    });
+});
 
 function checkAuthenticated(req, res, next) {
     if (req.isAuthenticated()) {
-        return next()
+        return next();
     }
 
-    res.redirect('/login')
+    res.redirect('/login');
 }
 
 function checkNotAuthenticated(req, res, next) {
     if (req.isAuthenticated()) {
-        return res.redirect('/')
+        return res.redirect('/');
     }
-    next()
+    next();
 }
 
 function calculateDays(start, end) {
