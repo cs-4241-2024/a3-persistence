@@ -5,13 +5,14 @@ const app = express();
 const dir = "public/";
 const port = 3000;
 require("dotenv").config();
-
 const URI = process.env.MONGODB_URI;
 
 mongoose
-  .connect(URI, {})
+  .connect(URI)
   .then(() => console.log(Date().valueOf(), ": Connected to MongoDB"))
   .catch((err) => console.error("Could not connect to MongoDB", err));
+
+
 
 const studentSchema = new mongoose.Schema({
   name: String,
@@ -254,7 +255,7 @@ async function deleteStudentDB(student, userId) {
  */
 async function calculateClassGradeStatsDB() {
   const students = await Student.find();
-  
+
   let counts = {
     senior: 0,
     junior: 0,
