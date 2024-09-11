@@ -45,7 +45,7 @@ app.get("/", checkAuthenticated, async (req, res) => {
 
 app.get('/login', checkNotAuthenticated, (req, res) => {
     const errorMessage = req.flash('error');
-    console.log("Flash error message 2: ", errorMessage); 
+    console.log("Flash error message 2: ", errorMessage);
     res.render('login.ejs', { message: { error: errorMessage } });
 });
 
@@ -109,6 +109,7 @@ app.post('/login', checkNotAuthenticated, (req, res, next) => {
         if (!user) {
             console.log("Login error message 1: ", info.message); // Log the error message
             req.flash('error', info.message);
+            console.log("Flash message set: ", req.flash('error')); // Log the flash message immediately after setting it
             return res.redirect('/login');
         }
         req.logIn(user, (err) => {
