@@ -64,7 +64,7 @@ window.onload = async function () {
       // populate the table with the existing students (if any)
       const res2 = await response.json();
       if (res2.students) {
-        res2.students.forEach((student) => addStudentToTable(student));
+        res2.students.forEach((student) => addStudentToTable(student, userId));
       }
       updateClassStats(res2.stats);
     }

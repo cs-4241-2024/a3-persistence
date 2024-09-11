@@ -65,15 +65,13 @@ export function addStudentToTable(student, userId) {
   deleteButton.className = "delete-button";
   deleteButton.onclick = async function () {
     const name = student.name,
-      json = { name: name },
+      json = { name: name, id: userId },
       body = JSON.stringify(json);
-
     const response = await fetch("/delete", {
       method: "POST",
       body,
       headers: { 
         "Content-Type": "application/json",
-        "userId": userId,
        },  // this is important to send JSON data to the server, I spent an hour debugging this before remembering this was mentioned in class.
     });
     const res = await response.json();

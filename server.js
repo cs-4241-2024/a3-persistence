@@ -8,7 +8,7 @@ require("dotenv").config();
 const URI = process.env.MONGODB_URI;
 
 mongoose
-  .connect(URI)
+  .connect(`mongodb+srv://aldencutler:${URI}@a3-persistence.km9oy.mongodb.net/?retryWrites=true&w=majority&appName=a3-persistence`)
   .then(() => console.log(Date().valueOf(), ": Connected to MongoDB"))
   .catch((err) => console.error("Could not connect to MongoDB", err));
 
@@ -139,8 +139,9 @@ app.post("/delete", async (req, res) => {
   console.log(Date().valueOf(), ": POST: /delete");
 
   // handle the request
-  let student = req.body;
-  let success = await deleteStudentDB(student);
+  let student = req.body.name;
+  let success = await deleteStudentDB(student, req.body.id);
+  console.log(req.body)
 
   // deleteStudentDB returns 0 on failure, 1 on success
   if (success) {
@@ -227,14 +228,15 @@ async function addStudentDB(student, userId) {
  * @param {json} student
  * @returns
  */
-async function deleteStudentDB(student, userId) {
+async function deleteStudentDB(studentName, userId) {
   const user = await User.findOne({ _id: userId });
+  console.log(user, userId);
   if (!user) {
     console.log(Date().valueOf(), ": ERR DELETE: User not found.");
     return 0;
   }
 
-  const result = await Student.deleteOne({ name: student.name, _id: { $in: user.students } });
+  const result = await Student.deleteOne({ name: studentName, _id: { $in: user.students } });
 
   if (result === 0)
     console.log(Date().valueOf(), ": ERR DELETE: Student not found.");
@@ -242,7 +244,7 @@ async function deleteStudentDB(student, userId) {
     console.log(
       Date().valueOf(),
       ": DELETE: Student",
-      student.name,
+      studentName,
       "deleted."
     );
 
