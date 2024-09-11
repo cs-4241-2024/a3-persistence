@@ -12,12 +12,13 @@ const session = require('express-session')
 const methodOveride = require('method-override')
 const { User, Task } = require('./config');
 
-app.use(flash())
+
 app.use(session({
     secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: false,
 }))
+app.use(flash())
 const initializePassport = require('./passport-config')
 initializePassport(passport)
 
