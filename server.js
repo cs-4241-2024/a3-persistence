@@ -6,6 +6,7 @@ const dir = "public/";
 const port = 3000;
 require("dotenv").config();
 const URI = process.env.MONGODB_URI;
+console.log(URI);
 
 mongoose
   .connect(`mongodb+srv://aldencutler:${URI}@a3-persistence.km9oy.mongodb.net/?retryWrites=true&w=majority&appName=a3-persistence`)
