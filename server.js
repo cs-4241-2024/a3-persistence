@@ -1,136 +1,146 @@
 const express = require("express");
+const mongoose = require('mongoose')
 const path = require("path");
-
 const app = express();
 const dir = "public/";
 const port = 3000;
-let students = [];
+require('dotenv').config();
 
-// Middleware to parse JSON bodies
+const URI = process.env.MONGODB_URI;
+
+mongoose.connect(URI, {  })
+  .then(() => console.log(Date().valueOf(), ': Connected to MongoDB'))
+  .catch(err => console.error("Could not connect to MongoDB", err));
+
+const studentSchema = new mongoose.Schema({
+  name: String,
+  classYear: String,
+  grade: Number,
+  gradeLetter: String,
+});
+const Student = mongoose.model("Student", studentSchema);
+
 app.use(express.json());
-
-// Middleware to serve static files
 app.use(express.static(dir));
+
 
 // GET request handlers
 app.get("/", (req, res) => {
+  console.log(Date().valueOf(), ": GET: /");
   res.sendFile(path.join(__dirname, dir, "index.html"));
 });
 
-app.get("/students", (req, res) => {
-  res.status(200).json({ students: students, stats: calculateClassGradeStats() });
+app.get("/students", async (req, res) => {
+  console.log(Date().valueOf(), ": GET: /students");
+  const students = await Student.find();
+  console.log(students);
+  res.status(200).json({ students: students, stats: await calculateClassGradeStatsDB() });
 });
+
 
 // POST request handlers
-app.post("/add", (req, res) => {
+app.post("/add", async (req, res) => {
+  console.log(Date().valueOf(), ": POST: /add");
+
+  // handle the request
   let student = req.body;
-  let code = addStudent(student);
-  if (code == 0) {
-    console.log("Student already exists");
+  let code = await addStudentDB(student);
+
+  if (code == 0) {        // Student already exists
     res.status(204).json({  });
-  } else if (code == 1) {
-    console.log("Student added");
-    res.status(201).json({ value: student.gradeLetter, stats: calculateClassGradeStats() });
-  } else if (code == 2) {
-    console.log("Student updated");
-    res.status(200).json({ value: student.gradeLetter, stats: calculateClassGradeStats() });
+  } 
+  else if (code == 1) {   // Student successfully added
+    res.status(201).json({ value: student.gradeLetter, stats: await calculateClassGradeStatsDB() });
+  } 
+  else if (code == 2) {   // Student updated with different grade or class
+    res.status(200).json({ value: student.gradeLetter, stats: await calculateClassGradeStatsDB() });
   }
-  console.log(students);
 });
 
-app.post("/delete", (req, res) => {
+app.post("/delete", async (req, res) => {
+  console.log(Date().valueOf(), ": POST: /delete");
+
+  // handle the request
   let student = req.body;
-  let success = deleteStudent(student);
+  let success = await deleteStudentDB(student);
+
+  // deleteStudentDB returns 0 on failure, 1 on success
   if (success) {
-    res.status(200).json({ message: "Student deleted", stats: calculateClassGradeStats() });
+    res.status(200).json({ message: "Student deleted", stats: await calculateClassGradeStatsDB() });
   } else {
     res.status(400).send("400: Bad Request - Student not found");
   }
 });
 
+
 /**
- * Adds a student to the list.
- *
- * @param {Object} student - The student object to be added.
- * @returns {number} - The result code indicating the outcome of the operation:
- *   - 0: Bad Request - Student already exists.
- *   - 1: Student successfully added.
- *   - 2: Student updated with different grade or class.
+ * Adds a student to the database or updates their existing record if the student already exists.
+ * @param {json} student the student to be added or updated
+ * @returns A success code indicating the outcome of the operation:
+ * - 0: Bad Request - Student already exists.
+ * - 1: Student successfully added.
+ * - 2: Student updated with different grade or class.
  */
-function addStudent(student) {
-  // calculate the grade letter
-  let grade = student.grade;
+async function addStudentDB(student) {
+  let gradeLetter = student.grade;
   switch (true) {
-    case grade >= 90:
-      grade = "A";
+    case gradeLetter >= 90:
+      gradeLetter = "A";
       break;
-    case grade >= 80:
-      grade = "B";
+    case gradeLetter >= 80:
+      gradeLetter = "B";
       break;
-    case grade >= 70:
-      grade = "C";
+    case gradeLetter >= 70:
+      gradeLetter = "C";
       break;
     default:
-      grade = "NR";
+      gradeLetter = "NR";
   }
 
-  // check if the student is already in the list
-  for (let i = 0; i < students.length; i++) {
-    if (
-      students[i].name === student.name &&
-      students[i].classYear === student.classYear &&
-      students[i].grade === student.grade
-    ) {
-      return 0;
-    }
-    // if the student exists but has a different grade or class, update the other fields
-    else if (students[i].name === student.name) {
-      students[i].grade = student.grade;
-      students[i].classYear = student.classYear;
-      students[i].gradeLetter = grade;
-      student.gradeLetter = grade;
-      return 2;
-    }
-  }
+  student.gradeLetter = gradeLetter;
 
-  // otherwise, if the student doesn't exist yet, add the student to the list
-  student.gradeLetter = grade;
-  students.push(student);
-  return 1;
+  const existingStudent = await Student.findOne({ name: student.name });
+  if (existingStudent) {
+    if (existingStudent.grade === student.grade && existingStudent.classYear === student.classYear) {
+      console.log(Date().valueOf(), ": ERR POST: Student already exists");
+      return 0; // Identical student already exists
+    } else {
+      existingStudent.grade = student.grade;
+      existingStudent.classYear = student.classYear;
+      existingStudent.gradeLetter = gradeLetter;
+      console.log(Date().valueOf(), ": ADD: Student", existingStudent.id, "updated.")
+      await existingStudent.save();
+      return 2; // Student updated with different grade or class
+    }
+  } else {
+    const newStudent = new Student(student);
+    await newStudent.save();
+    console.log(Date().valueOf(), ": ADD: Student", newStudent.id, "created.")
+    return 1;
+  }
 }
 
+
 /**
- * Deletes a student from the list.
- *
- * @param {Object} student - The student object to be deleted.
- * @returns {number} - The result code indicating the outcome of the operation:
- *  - 0: Bad Request - Student not found.
- *  - 1: Student successfully deleted.
+ * Deletes a student from the database.
+ * @param {json} student 
+ * @returns 
  */
-function deleteStudent(student) {
-  // check if the student is in the list
-  for (let i = 0; i < students.length; i++) {
-    if (students[i].name === student.name) {
-      students.splice(i, 1);
-      return 1;
-    }
-  }
+async function deleteStudentDB(student) {
+  const result = await Student.deleteOne({ name: student.name });
+  
+  if (result === 0) console.log(Date().valueOf(), ": ERR DELETE: Student not found.")
+  else console.log(Date().valueOf(), ": DELETE: Student", student.name, "deleted.")
 
-  // if the student is not in the list, return 0 to indicate that the student was not found
-  return 0;
+  return result.deletedCount ? 1 : 0;
 }
 
 /**
- * Calculates the class grade statistics.
- * 
- * @returns {Object} - The class grade statistics object.
- * - counts: The number of students in each class.
- * - avgs: The average grade for each class.
- * - classAvg: The average grade for the entire class.
- * 
- * Note: The classAvg is the average of all the students' grades.
- * */
-function calculateClassGradeStats() {
+ * Calculates the class grade statistics from the database.
+ * @returns classStats object containing the number of students in each class, the average grade for each class, and the average grade for the entire class.
+ */
+async function calculateClassGradeStatsDB() {
+  const students = await Student.find();
   let counts = {
     senior: 0,
     junior: 0,
@@ -139,6 +149,7 @@ function calculateClassGradeStats() {
     grad: 0,
     parttime: 0,
   };
+
   let avgs = {
     senior: 0,
     junior: 0,
@@ -147,36 +158,37 @@ function calculateClassGradeStats() {
     grad: 0,
     parttime: 0,
   };
+
   let classAvg = 0;
-  for (let i = 0; i < students.length; i++) {
-    classAvg += parseInt(students[i].grade);
-    switch (students[i].classYear) {
+  students.forEach(student => {
+    classAvg += student.grade;
+    switch (student.classYear) {
       case "senior":
         counts.senior++;
-        avgs.senior += parseInt(students[i].grade);
+        avgs.senior += student.grade;
         break;
       case "junior":
         counts.junior++;
-        avgs.junior += parseInt(students[i].grade);
+        avgs.junior += student.grade;
         break;
       case "sophomore":
         counts.sophomore++;
-        avgs.sophomore += parseInt(students[i].grade);
+        avgs.sophomore += student.grade;
         break;
       case "freshman":
         counts.freshman++;
-        avgs.freshman += parseInt(students[i].grade);
+        avgs.freshman += student.grade;
         break;
       case "grad":
         counts.grad++;
-        avgs.grad += parseInt(students[i].grade)
+        avgs.grad += student.grade;
         break;
       case "part-time":
         counts.parttime++;
-        avgs.parttime += parseInt(students[i].grade);
+        avgs.parttime += student.grade;
         break;
     }
-  }
+  });
 
   classAvg = students.length == 0 ? 0 : parseFloat((classAvg / students.length).toFixed(2));
   avgs.senior = counts.senior == 0 ? 0 : parseFloat((avgs.senior / counts.senior).toFixed(2));
