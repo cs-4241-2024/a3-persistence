@@ -116,7 +116,8 @@ app.post('/login', checkNotAuthenticated, (req, res, next) => {
 });
 
 app.get('/login', checkNotAuthenticated, (req, res) => {
-    const errorMessage = req.flash('error');
+    console.log("Flash object: ", req.flash()); 
+    const errorMessage = req.flash('error'); 
     console.log("Flash error message 2: ", errorMessage);
     res.render('login.ejs', { message: { error: errorMessage } });
 });
