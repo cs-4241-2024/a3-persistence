@@ -12,18 +12,17 @@ const session = require('express-session')
 const methodOveride = require('method-override')
 const { User, Task } = require('./config');
 
-
-const initializePassport = require('./passport-config')
-initializePassport(passport)
-
-app.set('view-engine', 'ejs')
-app.use(express.urlencoded({ extended: false }))
 app.use(flash())
 app.use(session({
     secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: false,
 }))
+const initializePassport = require('./passport-config')
+initializePassport(passport)
+
+app.set('view-engine', 'ejs')
+app.use(express.urlencoded({ extended: false }))
 app.use(passport.initialize())
 app.use(passport.session())
 app.use(methodOveride('_method'))
@@ -44,6 +43,7 @@ app.get("/", checkAuthenticated, async (req, res) => {
 })
 
 app.get('/login', checkNotAuthenticated, (req, res) => {
+    console.log("Flash error message: ", req.flash('error'));
     res.render('login.ejs', { message: req.flash('error') });
 });
 

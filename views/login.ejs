@@ -39,6 +39,11 @@
             alert("<%= message.success[0] %>");
         </script>
     <% } %>
+    <% if (message && message.length > 0) { %>
+      <script>
+          alert("<%= message[0] %>");
+      </script>
+  <% } %>
     
 </body>
 </html>
