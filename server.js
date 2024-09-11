@@ -17,7 +17,7 @@ app.use(session({
     secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: false,
-}))
+}));
 app.use(flash())
 const initializePassport = require('./passport-config')
 initializePassport(passport)
@@ -107,9 +107,9 @@ app.post('/login', checkNotAuthenticated, (req, res, next) => {
             return next(err);
         }
         if (!user) {
-            console.log("Login error message 1: ", info.message); // Log the error message
+            console.log("Login error message 1: ", info.message); 
             req.flash('error', info.message);
-            console.log("Flash message set: ", req.flash('error')); // Log the flash message immediately after setting it
+            console.log("Flash message set: ", req.flash('error')); 
             return res.redirect('/login');
         }
         req.logIn(user, (err) => {
