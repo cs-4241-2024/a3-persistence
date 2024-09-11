@@ -30,6 +30,12 @@
         <p>Already have an account? <a class="link" href="/login">Login</a></p>
         <p>Or Login with <a class="link" href="/auth/github">GitHub</a></p>
       </div>
+
+      <% if (message && message.trim() !== "") { %>
+        <script>
+            alert("<%= message %>");
+        </script>
+    <% } %>
     
 </body>
 </html>
