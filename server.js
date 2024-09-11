@@ -5,7 +5,7 @@ const app = express();
 const dir = "public/";
 const port = 3000;
 require("dotenv").config();
-const URI = process.env.MONGODB_URI;
+const URI = encodeURIComponent( process.env.MONGODB_URI );
 console.log(URI);
 
 mongoose
