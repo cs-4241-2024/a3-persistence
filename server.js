@@ -38,7 +38,6 @@ app.use((req, res, next) => {
     next();
 });
 
-
 app.get("/", checkAuthenticated, async (req, res) => {
     const tasks = await Task.find({ userId: req.user._id });
     res.render('index.ejs', { name: req.user.name, email: req.user.email, githubId: req.user.githubId, details: tasks })

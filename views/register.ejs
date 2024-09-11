@@ -31,9 +31,15 @@
         <p>Or Login with <a class="link" href="/auth/github">GitHub</a></p>
       </div>
 
-      <% if (typeof message === 'string' && message.trim() !== "") { %>
+      <% if (message.error && message.error.length > 0) { %>
         <script>
-            alert("<%= message %>");
+            alert("<%= message.error[0] %>");
+        </script>
+    <% } %>
+    
+    <% if (message.success && message.success.length > 0) { %>
+        <script>
+            alert("<%= message.success[0] %>");
         </script>
     <% } %>
     
