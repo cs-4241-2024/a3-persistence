@@ -99,11 +99,30 @@ app.post('/tasks/:id/edit', checkAuthenticated, async (req, res) => {
     }
 });
 
-app.post('/login', checkNotAuthenticated, passport.authenticate('local', {
-    successRedirect: '/',
-    failureRedirect: '/login',
-    failureFlash: true
-}))
+// app.post('/login', checkNotAuthenticated, passport.authenticate('local', {
+//     successRedirect: '/',
+//     failureRedirect: '/login',
+//     failureFlash: true
+// }))
+
+app.post('/login', checkNotAuthenticated, (req, res, next) => {
+    passport.authenticate('local', (err, user, info) => {
+        if (err) {
+            return next(err);
+        }
+        if (!user) {
+            console.log(info);
+            req.flash('error', info.message); 
+            return res.redirect('/login');
+        }
+        req.logIn(user, (err) => {
+            if (err) {
+                return next(err);
+            }
+            return res.redirect('/');
+        });
+    })(req, res, next);
+});
 
 app.post('/register', checkNotAuthenticated, async (req, res) => {
     try {
