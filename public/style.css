@@ -178,14 +178,14 @@ h2 {
   }
   
   tbody tr:hover {
-    background-color: #252525; 
+    background-color: #444; 
   }
   
   tbody tr:nth-child(even) {
-    background-color: #b9b7b7; 
+    background-color: #3f3e3e; 
   }
   
   tbody tr:nth-child(odd) {
-    background-color: #fff; 
+    background-color: #1f1d1d; 
   }
   
