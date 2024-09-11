@@ -28,7 +28,7 @@
         <p>Don't have an account? <a class="link" href="/register">Register</a></p>
       </div>
 
-      <% if (message && message.trim() !== "") { %>
+      <% if (typeof message === 'string' && message.trim() !== "") { %>
         <script>
             alert("<%= message %>");
         </script>
