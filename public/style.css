@@ -51,10 +51,10 @@
   justify-content: center;
 }
 
-h2 {
+/* h2 {
   text-align: center;
   margin-bottom: 30px;
-}
+} */
 
 .form-container-main {
   width: flex;
@@ -151,9 +151,9 @@ h2 {
   background-color: #ff4d4d;
 }
 
-p {
+/* p {
   margin-top: 15px;
-}
+} */
 
 #data-table {
   border-collapse: collapse;
@@ -166,7 +166,7 @@ p {
   border: 1px solid #444;
 }
 
-th,
+/* th,
 td {
   padding: 12px;
   text-align: center;
@@ -190,4 +190,4 @@ tbody tr:nth-child(even) {
 
 tbody tr:nth-child(odd) {
   background-color: #fff;
-}
+} */
