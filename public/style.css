@@ -173,13 +173,12 @@ h2 {
   }
   
   th {
-    background-color: #fff;
     color: white; 
     font-weight: bold; 
   }
   
   tbody tr:hover {
-    background-color: #444; 
+    background-color: #252525; 
   }
   
   tbody tr:nth-child(even) {
