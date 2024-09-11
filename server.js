@@ -252,8 +252,9 @@ async function deleteStudentDB(student, userId) {
  * Calculates the class grade statistics from the database.
  * @returns classStats object containing the number of students in each class, the average grade for each class, and the average grade for the entire class.
  */
-async function calculateClassGradeStatsDB(user) {
+async function calculateClassGradeStatsDB() {
   const students = await Student.find();
+  
   let counts = {
     senior: 0,
     junior: 0,

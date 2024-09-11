@@ -2,9 +2,11 @@ window.onload = async function () {
   const usernameInput = document.getElementById("username");
   const passwordInput = document.getElementById("password");
   const loginButton = document.getElementById("login-button");
+  const logoutButton = document.getElementById("logout");
   const createAccountButton = document.getElementById("create-account");
   const submitButton = document.getElementById("submit");
   const loginForm = document.getElementById("login");
+  const gradebook = document.getElementById("gradebook");
 
   // handle login event
   loginButton.onclick = async function (e) {
@@ -31,10 +33,11 @@ window.onload = async function () {
     // if the login was successful, fetch the students and stats
     let res = await response.json();
     const userId = res.userId;
+    alert(res.message);
     if (res.success) {
-      
       // hide the login form
       loginForm.style.display = "none";
+      gradebook.style.display = "block";
 
       // dynamically import the functions from student.js
       const handleAdd = await import("./student.js").then(
@@ -65,7 +68,12 @@ window.onload = async function () {
       }
       updateClassStats(res2.stats);
     }
-    alert(res.message);
+  };
+
+  // handle logout event
+  logoutButton.onclick = function (e) {
+    // just reload the page since I haven't implemented sessions yet
+    location.reload();
   };
 
   // handle create account event

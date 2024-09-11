@@ -36,6 +36,18 @@ body {
   padding: 0;
 }
 
+#gradebook {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+#logout {
+  margin: 1rem auto;
+  display: flex;
+  justify-content: center;
+}
 
 table {
   border-collapse: collapse;
@@ -114,7 +126,7 @@ input[type="password"] {
   border: 1px solid var(--first);
 }
 
-#submit, #login-button, #create-account {
+#submit, #login-button, #create-account, #logout-button {
   padding: 0.5rem 1rem;
   font-size: 1rem;
   background-color: var(--first);
@@ -124,7 +136,7 @@ input[type="password"] {
   border: 1px solid var(--first);
 }
 
-#submit:hover, #login-button:hover, #create-account:hover {
+#submit:hover, #login-button:hover, #create-account:hover, #logout-button:hover {
   background-color: var(--third);
   color: var(--first);
   border: 1px solid var(--first);
