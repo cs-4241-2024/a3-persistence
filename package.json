@@ -1,0 +1,12 @@
+{
+  "name": "cs-4241-a2-shortstack",
+  "version": "1.0",
+  "description": "Assignment 2: Shortstack Development",
+  "author": "Ian Poulsen",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "mime": "^2.4.4"
+  }
+}
