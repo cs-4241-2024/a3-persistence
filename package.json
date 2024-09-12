@@ -1,7 +1,7 @@
 {
-  "name": "cs-4241-a2-shortstack",
+  "name": "cs-4241-a3-pesistance",
   "version": "1.0",
-  "description": "Assignment 2: Shortstack Development",
+  "description": "Assignment 3: Persistance",
   "author": "Ian Poulsen",
   "scripts": {
     "start": "node server.js"
