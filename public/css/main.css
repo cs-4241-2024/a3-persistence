@@ -1,0 +1,78 @@
+@font-face {
+  font-family: Nerko;
+  src: url(NerkoOne-Regular.ttf);
+}
+
+body {
+  display:flex;
+  align-items: center;
+  flex-direction: column;
+  background-color: rgb(12, 235, 216);
+  color: white;
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+h1 {
+  text-align: center;
+  margin: 50px 0;
+  color: #7541D9;
+  font-family: Nerko;
+  font-size: 300%;
+  border: 2px solid #7541D9;
+  padding: 20px;
+  border-radius: 10px;
+  background-color: rgba(117, 65, 217, 0.1);
+}
+
+
+h2 {
+  color: #7541D9;
+  font-family: Nerko, sans-serif;
+  font-size: 200%;
+}
+
+label {
+  color: #7541D9;
+  font-size: 120%;
+}
+
+form.vertical-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+  margin: 0 auto;
+}
+
+input[type="text"] {
+  padding: 12px;
+  width: 220px;
+  border: 2px solid #7541D9;
+  border-radius: 5px;
+}
+
+table, th, td {
+  border: 1px solid #7541D9;
+  color: #7541D9;
+  border-collapse: collapse;
+  padding: 10px;
+}
+
+button {
+  width: 120px;
+  padding: 12px 0;
+  cursor: pointer;
+  color: white;
+  background-color: #7541D9;
+  border: none;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: #5a33b5;
+}
+

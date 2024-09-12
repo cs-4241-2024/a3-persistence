@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>CS4241 Assignment 2</title>
+    <meta charset="utf-8">
+    <script src="js/main.js"></script>
+    <link rel="stylesheet" href="css/main.css">
+    
+    <!-- get rid of favicon error -->
+    <link rel="icon" href="data:;base64,iVBORw0KGgo=">
+  </head>
+  <body>
+    <div class="formSection">
+    <h1>To Do List</h1>
+    <form class="vertical-form">
+      <label for="ToDo">Item To Do::</label>
+      <input type="text" id="ToDo" value="to do item">
+      <label for="type">Type of Work:</label>
+      <select name="type" id="type">
+        <option value="school">School</option>
+        <option value="work">Work</option>
+        <option value="personal">Personal</option>
+      </select>
+      <label for="date">Due Date:</label>
+      <input type="date" id="date" value="due date">
+      <!-- <input type="text" id="priority" value="priority number 1-10"> -->
+      <button id="submitButton" type="submit">Submit</button>
+    </form>
+  </div>
+  <div class="tableSection">
+    <h2>Your List:</h2>
+    <table id="myList">
+      <tr>
+        <th>Item</th>
+        <th>Type of Work</th>
+        <th>Date</th>
+        <th>Priority</th>
+        <th>Delete</th>
+      </tr>
+
+    </table>
+  </div>
+  </body>
+</html>
