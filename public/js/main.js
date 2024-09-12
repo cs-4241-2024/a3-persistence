@@ -208,13 +208,15 @@ const get_data = async function () {
         method: "GET",
     });
 
+
     const newData = await response.json();
+
+    console.log("get: ", newData);
 
     data = newData;
 
     renderData();
 
-    console.log(data);
 };
 
 window.onload = function () {
