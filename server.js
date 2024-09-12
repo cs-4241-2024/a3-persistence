@@ -1,12 +1,11 @@
-const http = require("http"),
-  fs = require("fs"),
-  // IMPORTANT: you must run `npm install` in the directory for this assignment
-  // to install the mime library if you're testing this on your local machine.
-  // However, Glitch will install it automatically by looking in your package.json
-  // file.
-  mime = require("mime"),
-  dir = "public/",
-  port = 3000;
+const express = require("express"),
+  app = express()
+
+  app.use( (req, res, next) => {
+    //dp someting
+    console.log('url:', req.url)
+    next()
+  })
 
 let tab = [];
 let nextId = 1;
@@ -118,4 +117,4 @@ const sendFile = function (response, filename) {
   });
 };
 
-server.listen(process.env.PORT || port);
+server.listen( process.env.PORT || 3000);
