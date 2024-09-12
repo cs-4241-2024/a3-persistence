@@ -22,6 +22,7 @@ const submitPlayer = async function( ev ) {
 
   const response = await fetch( '/submit', {
     method:'POST',
+    headers:{'Content-Type': 'application/json'},
     body: message
   })
 
@@ -42,6 +43,7 @@ async function deletePlayer(ev) {
 
   const response = await fetch('/delete', {
     method: 'POST',
+    headers:{'Content-Type': 'application/json'},
     body: message
   })
 
@@ -123,6 +125,7 @@ async function handleSave(event) {
 
   const response = await fetch('/record', {
     method: 'POST',
+    headers:{'Content-Type': 'application/json'},
     body:message
   })
 
@@ -152,9 +155,10 @@ async function handleSave(event) {
   }
 
 
-  let editMessage = {index: index.toString(), editedRecord: JSON.stringify(editedRecord)}
+  let editMessage = {index: index.toString(), editedRecord: editedRecord}
   const responseEdit = await fetch('/edit', {
     method: 'POST',
+    headers:{'Content-Type': 'application/json'},
     body: JSON.stringify(editMessage)
   })
 
