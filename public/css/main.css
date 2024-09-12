@@ -1,0 +1,152 @@
+body {
+  background:#fffffa;
+  margin: 0;
+}
+/*googleFont*/
+*{
+  font-family: "Open Sans", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 100;
+  font-style: normal;
+  font-variation-settings:
+          "wdth" 100;
+}
+
+/*Page lay out css*/
+
+main{
+  width: 100vw;
+  height: 100vh;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction:row;
+  justify-content: center;
+}
+
+.tableWrapper{
+  overflow: auto;
+  width: 80%;
+  background-color: #44A1A0;
+}
+
+.formWrapper{
+  display: flex;
+  flex-direction:column;
+  background-color: #247B7B;
+  width: 20%;
+}
+
+.title{
+  background-color: #0D5C63;
+  font-size: 2.5vh;
+  color:white;
+  height: 8vh;
+  overflow: hidden;
+  padding: 10px;
+  text-align: center;
+}
+
+.forms{
+  padding: 0 10px;
+}
+
+/*Form Css*/
+
+form{
+  display: flex;
+  flex-direction:column;
+  margin-top: 20px;
+  border-radius: 10px;
+  background-color: #0D5C63;
+  padding: 10px;
+}
+
+.formTitleText{
+  color:white;
+  font-size: max(2vh,18px);
+  justify-content: center;
+  display: flex;
+  margin-bottom: 10px;
+}
+
+select,input{
+  border: 0;
+  background-color: #247B7B;
+  color:white;
+}
+
+label{
+  color:white;
+  font-size: max(1.5vh,14px);
+  margin-top: 5px;
+}
+
+::placeholder {
+  color: white;
+  opacity: 1;
+}
+
+::-ms-input-placeholder {
+  color: white;
+}
+
+button{
+  margin-top: 20px;
+  color:white;
+  border: 0;
+}
+
+#deleteSubmit{
+  background-color: #922E2E;
+}
+#deleteSubmit:hover{
+  background-color: #742525;
+}
+
+#EntrySubmit{
+  background-color: #247B7B;
+}
+#EntrySubmit:hover{
+  background-color: #174F4F;
+}
+
+/*Table css*/
+
+table{
+  padding: 10px;
+  width: 100%;
+}
+
+th{
+  border: 1px solid #44A1A0;
+  border-collapse: collapse;
+  background-color: #8ED0CF;
+  font-weight: 700;
+  width: 10%;
+  padding: 5px;
+}
+td{
+  border: 1px solid #44A1A0;
+  border-collapse: collapse;
+  padding: 5px;
+  text-align: center;
+}
+
+tr{
+  background-color: #A0DCE3;
+}
+tr:nth-child(even) {
+  background-color: #78CDD7;
+}
+
+.editInput{
+  background-color: #C2E9ED;
+  width: 100%;
+  color:black;
+  padding: 0;
+  margin: 0;
+  border:0;
+}
+
+
