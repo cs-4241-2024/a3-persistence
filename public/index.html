@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>CS4241 Assignment 2</title>
+    <meta charset="utf-8">
+    <script src="js/main.js"></script>
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="https://fonts.google.com/specimen/Kanit">
+    
+    <!-- get rid of favicon error -->
+    <link rel="icon" href="data:;base64,iVBORw0KGgo=">
+  </head>
+  <body>
+    <h1>
+      Shopping List
+    </h1>
+    <form>
+      <input type="text" id="name" placeholder="Item name:" required />
+      <input type="number" id="price" placeholder="Price:" min="0" required />
+      <input type="number" id="quantity" placeholder="Quantity:" min="1" required />
+      <p></p>
+      <button onclick="document.getElementById('name').value = ''" id="submit">add</button>
+    </form>
+
+    <table class="tab">
+      <h2>Things to buy:</h2>
+      <tr>
+        <th>Item</th>
+        <th>Price</th>
+        <th>Quantity</th>
+        <th>Total Cost</th>
+        <th>Settings</th>
+      </tr>
+      <tbody id="body"></tbody>
+    </table>
+
+    <ul> 
+    
+    </ul>
+    
+    <div id="editor" style="display: none">
+      <h2>Edit Entry</h2>
+      <form id="editForm">
+        <label for="editItem">Item:</label>
+        <input type="text" id="editItem" name="name" required /><br />
+        <label for="editPrice">Price:</label>
+        <input type="number" id="editPrice" name="price" min="0" required /><br />
+        <label for="editQuantity">Quantity:</label>
+        <input type="number" id="editQuantity" name="quantity" min="1" required /><br />
+        <input type="hidden" id="editId" />
+        <button type="submit">save</button>
+        <button type="button" onclick="stopEdit()">cancel</button>
+      </form>
+    </div>
+    
+  </body>
+</html>

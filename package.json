@@ -1,0 +1,12 @@
+{
+  "name": "cs-4241-a3-persistence",
+  "version": "0.1.0",
+  "description": "WPI CS 4241 third assignment",
+  "author": "Kruti Shah",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "mime": "^2.6.0"
+  }
+}

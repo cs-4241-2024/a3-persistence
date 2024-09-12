@@ -1,0 +1,70 @@
+body {
+  background:rgb(255, 170, 190);
+  color:rgb(65, 31, 31);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-family: "Kanit", sans-serif;
+}
+
+h1 {
+  text-align: center;
+  color: rgb(200, 72, 120);
+
+}
+
+h2 {
+  color: brown;
+  text-align: center;
+}
+
+table {
+  text-align: center;
+  align-content: center;
+  border: solid 2px rgb(193, 52, 20);
+  margin-top: 10px;
+  margin-left: auto;
+  margin-right: auto;
+} 
+
+th, td {
+  text-align: center;
+  align-content: center;
+  border: solid 1px rgb(193, 52, 20);
+  color: rgb(193, 72, 80);
+  margin-top: 10px;
+  margin-left: auto;
+  margin-right: auto;
+  background: pink;
+}
+
+form {
+  text-align: center;
+}
+
+input {
+  background: pink;
+  border: solid 1.5px brown;
+  color: brown;
+}
+
+::placeholder {
+  color: rgb(193, 72, 80);
+}
+
+button {
+  background: pink;
+  border: solid 1.5px brown;
+  color: rgb(193, 72, 80);
+}
+
+#editor {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background:rgb(240, 149, 170);
+  border: solid 1.5px brown;
+  padding: 20px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+}
