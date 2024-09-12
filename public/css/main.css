@@ -1,0 +1,111 @@
+html {
+    height: 100%;
+}
+
+body {
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+/* Common */
+
+.header {
+    background-color: aqua;
+    margin-bottom: 3px;
+    height: 100%;
+}
+
+label {
+    cursor: auto;
+    width: 100%;
+    padding-left: 5px;
+    padding-right: 5px;
+    margin: auto;
+}
+
+div[class*="container"] {
+    display: grid;
+    height: fit-content;
+    width: 85%;
+    grid-template-columns: 3fr 2fr 1fr 1fr minmax(auto, 0.5fr) minmax(auto, 0.5fr);
+}
+
+button {
+    margin: 0 0;
+    width: 100%;
+}
+
+input,
+span {
+    margin-left: -5px;
+}
+
+input {
+    padding: 5px;
+}
+
+/* Input */
+
+p {
+    grid-column: 1/4;
+    background: aqua;
+    padding: 1px;
+    margin-bottom: 3px;
+    padding-left: 5px;
+}
+
+.input-container {
+    margin-bottom: 10%;
+}
+
+.filler {
+    grid-column-end: end;
+}
+
+/* Data */
+
+div.data {
+    display: grid;
+    grid-template-columns: subgrid;
+    grid-column: 1/end;
+}
+
+.data-row {
+    display: grid;
+    grid-template-columns: subgrid;
+    grid-column: 1/end;
+}
+
+div.data input {
+    margin-left: 0px;
+}
+
+.checkable {
+    margin-left: 5px;
+}
+
+.input-name {
+    grid-column: 1;
+}
+
+.task {
+    grid-column: 1;
+}
+
+.due-date {
+    grid-column: 2;
+}
+
+.done-box {
+    grid-column: 3;
+}
+
+.days-left {
+    grid-column: 4;
+}
