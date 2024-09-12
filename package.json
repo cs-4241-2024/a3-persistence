@@ -1,7 +1,7 @@
 {
   "name": "a3-smoliner1",
   "version": "1.0",
-  "description": "Assignment 2",
+  "description": "Assignment 3",
   "author": "Steven Oliner",
   "scripts": {
     "start": "node server.js"
