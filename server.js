@@ -1,10 +1,61 @@
+require('dotenv').config()
+
+// Mongo DB
+const { MongoClient, ObjectId } = require('mongodb');
 //Expres Server
 const express = require( 'express' ),
-      app = express()
+    app = express()
 
 app.use(express.static('views'))
 app.use(express.static('public'))
 app.use(express.json())
+
+const uri = `mongodb+srv://${process.env.USER}:${process.env.PASS}@${process.env.HOST}`
+const client = new MongoClient( uri )
+
+let collection = null
+
+async function run() {
+  await client.connect()
+  collection = await client.db("datatest").collection("test")
+
+
+}
+
+run()
+// route to get all docs
+app.get("/docs", async (req, res) => {
+  if (collection !== null) {
+    const docs = await collection.find({}).toArray()
+    res.json( docs )
+  }
+})
+
+app.post( '/add', async (req,res) => {
+  const result = await collection.insertOne( req.body )
+  res.json( result )
+})
+
+// assumes req.body takes form { _id:5d91fb30f3f81b282d7be0dd } etc.
+app.post( '/remove', async (req,res) => {
+  const result = await collection.deleteOne({
+    _id:new ObjectId( req.body._id )
+  })
+
+  res.json( result )
+})
+
+app.post( '/update', async (req,res) => {
+  const result = await collection.updateOne(
+      { _id: new ObjectId( req.body._id ) },
+      { $set:{ name:req.body.name } }
+  )
+
+  res.json( result )
+})
+
+
+
 
 
 const appdata = [
