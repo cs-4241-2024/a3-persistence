@@ -71,6 +71,7 @@ async function loadTable() {
   // create new rows in table based on data
   for (let i =0; i<FFdata.length;i++) {
     let newTableRow = document.createElement("tr")
+    newTableRow.className = "even:bg-emerald-200 odd:bg-emerald-100"
     createCell(newTableRow,FFdata[i]["rDyn"])
     createCell(newTableRow,FFdata[i]["rPPR"])
     createCell(newTableRow,FFdata[i]["rDelta"])
@@ -82,14 +83,14 @@ async function loadTable() {
     //create edit cell
     let editCell = document.createElement("td")
     editCell.textContent = "Edit"
-    editCell.className="editCell"
+    editCell.className="border-4 border-collapse border-emerald-400 p-1.5 text-center"
     editCell.addEventListener("click",handleEdit)
     editCell.dbId = FFdata[i]["_id"]
     newTableRow.append(editCell)
     //create delete cell
     let deleteCell = document.createElement("td")
     deleteCell.textContent = "Delete"
-    deleteCell.className="editCell"
+    deleteCell.className="border-4 border-collapse border-emerald-400 p-1.5 text-center"
     deleteCell.addEventListener("click",handleDelete)
     deleteCell.dbId = FFdata[i]["_id"]
     console.log("dd")
@@ -102,6 +103,7 @@ async function loadTable() {
 function createCell(row,content){
   let cell = document.createElement("td")
   cell.textContent = content
+  cell.className = "border-4 border-collapse border-emerald-400 p-1.5 text-center"
   row.append(cell)
 }
 
@@ -116,7 +118,7 @@ async function handleEdit(event){
     let input = document.createElement("input")
     input.setAttribute("value",cell.textContent)
     input.setAttribute("type","text")
-    input.className = "editInput"
+    input.className = "bg-emerald-50 w-full text-black p-0 m-0 border-0"
     cell.textContent = ""
     cell.appendChild(input)
   }

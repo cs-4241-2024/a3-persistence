@@ -4,33 +4,33 @@
     <title>CS4241 Assignment 2</title>
     <meta charset="utf-8">
     <script src="js/main.js"></script>
-    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/output.css">
     
     <!-- get rid of favicon error -->
     <link rel="icon" href="data:;base64,iVBORw0KGgo=">
   </head>
   <body>
-  <main>
-    <div class = "formWrapper">
-      <header class="title">
+  <main class = "w-screen h-screen m-0 p-0 flex justify-center">
+    <div class = "flex flex-col w-1/5 bg-emerald-500">
+      <header class="bg-emerald-800 text-white p-2.5 text-center text-2xl">
         Fantasy Football Database<br>Dynasty vs PPR
       </header>
-      <div class="forms">
-        <form id="playerEntry">
-          <header class="formTitleText" >
+      <div class="pr-2.5 pl-2.5">
+        <form id="playerEntry" class = "flex flex-col mt-5 rounded-xl bg-emerald-800 p-2.5">
+          <header class="text-white mb-2.5 flex justify-center text-xl" >
             Add Player
           </header>
-          <label for="rDyn">Rank Dynasty</label>
-          <input type="number" id="rDyn" placeholder="1-*">
+          <label class="mt-1 text-white" for="rDyn">Rank Dynasty</label>
+          <input class="border-0 bg-emerald-500 placeholder-gray-600" type="number" id="rDyn" placeholder="1-*">
 
-          <label for="rPPR">Rank PPR</label>
-          <input type="number" id="rPPR" placeholder="1-*">
+          <label class="mt-1 text-white" for="rPPR">Rank PPR</label>
+          <input class="border-0 bg-emerald-500 placeholder-gray-600" type="number" id="rPPR" placeholder="1-*">
 
-          <label for="name">Name</label>
-          <input type="text" id="name" placeholder="cool person">
+          <label class="mt-1 text-white" for="name">Name</label>
+          <input class="border-0 bg-emerald-500 placeholder-gray-600" type="text" id="name" placeholder="Cool Person">
 
-          <label for="team">Team</label>
-          <select id="team" >
+          <label class="mt-1 text-white" for="team">Team</label>
+          <select class="border-0 bg-emerald-500 placeholder-gray-600" id="team" >
             <option value="ARI">ARI</option>
             <option value="BAL">BAL</option>
             <option value="BUF">BUF</option>
@@ -65,8 +65,8 @@
             <option value="FA">FA</option>
           </select>
 
-          <label for="pos">Position</label>
-          <select id="pos" >
+          <label class="mt-1 text-white" for="pos">Position</label>
+          <select class="border-0 bg-emerald-500" id="pos" >
             <option value="WR">WR</option>
             <option value="RB">RB</option>
             <option value="QB">QB</option>
@@ -75,30 +75,30 @@
             <option value="DST">DST</option>
           </select>
 
-          <label for="byeWeek">Bye Week</label>
-          <input type="number" id="byeWeek" placeholder="1-18">
+          <label class="mt-1 text-white" for="byeWeek">Bye Week</label>
+          <input class="border-0 bg-emerald-500 placeholder-gray-600" type="number" id="byeWeek" placeholder="1-18">
 
-          <label for="age">Age</label>
-          <input type="number" id="age" placeholder="1-99">
+          <label class="mt-1 text-white" for="age">Age</label>
+          <input class="border-0 bg-emerald-500 placeholder-gray-600" type="number" id="age" placeholder="1-99">
 
-          <button id="EntrySubmit">Submit</button>
+          <button class="mt-5 border-0 bg-emerald-500 hover:bg-emerald-900 hover:text-white" id="EntrySubmit">Submit</button>
         </form>
-        <button id="logOut" onclick="logout()">logOut</button>
+        <button class="mt-5 text-white border-0" id="logOut" onclick="logout()">logOut</button>
       </div>
     </div>
-    <div class = "tableWrapper">
-      <table>
+    <div class = "w-4/5 overflow-auto bg-emerald-400 p-2">
+      <table class = "w-full" >
         <tr id="tableHeaders">
-          <th>Rank Dyn</th>
-          <th>Rank PPR</th>
-          <th>Rank Delta</th>
-          <th>Player Name</th>
-          <th>Team</th>
-          <th>Position</th>
-          <th>Bye Week</th>
-          <th>Age</th>
-          <th></th>
-          <th></th>
+          <th class="border-4 border-collapse border-emerald-400 bg-emerald-300 w-10Prec p-1.5">Rank Dyn</th>
+          <th class="border-4 border-collapse border-emerald-400 bg-emerald-300 w-10Prec p-1.5">Rank PPR</th>
+          <th class="border-4 border-collapse border-emerald-400 bg-emerald-300 w-10Prec p-1.5">Rank Delta</th>
+          <th class="border-4 border-collapse border-emerald-400 bg-emerald-300 w-10Prec p-1.5">Player Name</th>
+          <th class="border-4 border-collapse border-emerald-400 bg-emerald-300 w-10Prec p-1.5">Team</th>
+          <th class="border-4 border-collapse border-emerald-400 bg-emerald-300 w-10Prec p-1.5">Position</th>
+          <th class="border-4 border-collapse border-emerald-400 bg-emerald-300 w-10Prec p-1.5">Bye Week</th>
+          <th class="border-4 border-collapse border-emerald-400 bg-emerald-300 w-10Prec p-1.5">Age</th>
+          <th class="border-4 border-collapse border-emerald-400 bg-emerald-300 w-10Prec p-1.5">Edit</th>
+          <th class="border-4 border-collapse border-emerald-400 bg-emerald-300 w-10Prec p-1.5">Save</th>
         </tr>
         <tbody id="FFtable"></tbody>
       </table>
