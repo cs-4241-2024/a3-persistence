@@ -44,7 +44,7 @@ const toggleEdit = function (row, index) {
     };
 
     fetch(`/edit/${index}`, {
-      method: 'POST',
+      method: 'PUT',
       headers: {
         'Content-Type': 'application/json'
       },

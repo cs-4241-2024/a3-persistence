@@ -11,7 +11,7 @@ body {
 }
 
 header {
-  background: linear-gradient(to bottom, rgb(13, 90, 26), rgb(18, 138, 38));
+  background: linear-gradient(to bottom, rgb(142, 9, 9), rgb(255, 4, 4));
   padding: 20px;
   text-align: left;
   color: black;
@@ -35,19 +35,49 @@ form {
   justify-content: flex-start;
   flex-direction: column;
   justify-content: space-evenly;
-  border: 5px solid rgb(159, 23, 23);
+  border: 5px solid rgb(255, 4, 4);
 }
 
+#employeeid {
+  padding-bottom: 8px;
+  margin-bottom: 25px;
+}
+
+#yourname {
+  padding-bottom: 8px;
+  margin-bottom: 25px;
+}
+
+#salary {
+  padding-bottom: 8px;
+  margin-bottom: 25px;
+}
+
+#regdate {
+  padding-bottom: 8px;
+  margin-bottom: 50px;
+}
+
+#submit {
+  padding-bottom: 8px;
+  padding: 3px;
+}
+
+#editBtn {
+  padding-bottom: 8px;
+  padding: 3px;
+}
+
+footer {
+  margin-top: 150px;
+}
+
+
 table, th, td {
-  border: 5px solid rgb(159, 23, 23);
+  border: 5px solid rgb(255, 4, 4);
   border-collapse: collapse;
 }
 
-button {
-  margin-top: 10px;
-  margin-bottom: 10px;
-  padding: 3px;
-}
 
 table {
   margin-top: 50px;
