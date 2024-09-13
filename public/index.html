@@ -10,83 +10,85 @@
     <link rel="icon" href="data:;base64,iVBORw0KGgo=">
   </head>
   <body>
-  <main>
-    <div class = "formWrapper">
-      <header class="title">
-        Fantasy Football Database<br>Dynasty vs PPR
-      </header>
-      <div class="forms">
-        <form id="playerEntry">
-          <header class="formTitleText" >
-            Add Player
-          </header>
-          <label for="rDyn">Rank Dynasty</label>
-          <input type="number" id="rDyn" placeholder="1-*">
+  <main class="pure-g">
+    <div class = "formWrapper pure-u-1-5">
+      <div class="pure-g">
+        <header class="title pure-u-1">
+          Fantasy Football Database<br>Dynasty vs PPR
+        </header>
+        <div class="forms pure-u-1">
+          <form id="playerEntry">
+            <header class="formTitleText" >
+              Add Player
+            </header>
+            <label for="rDyn">Rank Dynasty</label>
+            <input type="number" id="rDyn" placeholder="1-*">
 
-          <label for="rPPR">Rank PPR</label>
-          <input type="number" id="rPPR" placeholder="1-*">
+            <label for="rPPR">Rank PPR</label>
+            <input type="number" id="rPPR" placeholder="1-*">
 
-          <label for="name">Name</label>
-          <input type="text" id="name" placeholder="cool person">
+            <label for="name">Name</label>
+            <input type="text" id="name" placeholder="cool person">
 
-          <label for="team">Team</label>
-          <select id="team" >
-            <option value="ARI">ARI</option>
-            <option value="BAL">BAL</option>
-            <option value="BUF">BUF</option>
-            <option value="CAR">CAR</option>
-            <option value="CHI">CHI</option>
-            <option value="CIN">CIN</option>
-            <option value="CLE">CLE</option>
-            <option value="DAL">DAL</option>
-            <option value="DEN">DEN</option>
-            <option value="DET">DET</option>
-            <option value="GB">GB</option>
-            <option value="HOU">HOU</option>
-            <option value="IND">IND</option>
-            <option value="JAC">JAC</option>
-            <option value="KC">KC</option>
-            <option value="LAC">LAC</option>
-            <option value="LAR">LAR</option>
-            <option value="LV">LV</option>
-            <option value="MIA">MIA</option>
-            <option value="MIN">MIN</option>
-            <option value="NE">NE</option>
-            <option value="NO">NO</option>
-            <option value="NYG">NYG</option>
-            <option value="NYJ">NYJ</option>
-            <option value="PHI">PHI</option>
-            <option value="PIT">PIT</option>
-            <option value="SEA">SEA</option>
-            <option value="SF">SF</option>
-            <option value="TB">TB</option>
-            <option value="TEN">TEN</option>
-            <option value="WAS">WAS</option>
-            <option value="FA">FA</option>
-          </select>
+            <label for="team">Team</label>
+            <select id="team" >
+              <option value="ARI">ARI</option>
+              <option value="BAL">BAL</option>
+              <option value="BUF">BUF</option>
+              <option value="CAR">CAR</option>
+              <option value="CHI">CHI</option>
+              <option value="CIN">CIN</option>
+              <option value="CLE">CLE</option>
+              <option value="DAL">DAL</option>
+              <option value="DEN">DEN</option>
+              <option value="DET">DET</option>
+              <option value="GB">GB</option>
+              <option value="HOU">HOU</option>
+              <option value="IND">IND</option>
+              <option value="JAC">JAC</option>
+              <option value="KC">KC</option>
+              <option value="LAC">LAC</option>
+              <option value="LAR">LAR</option>
+              <option value="LV">LV</option>
+              <option value="MIA">MIA</option>
+              <option value="MIN">MIN</option>
+              <option value="NE">NE</option>
+              <option value="NO">NO</option>
+              <option value="NYG">NYG</option>
+              <option value="NYJ">NYJ</option>
+              <option value="PHI">PHI</option>
+              <option value="PIT">PIT</option>
+              <option value="SEA">SEA</option>
+              <option value="SF">SF</option>
+              <option value="TB">TB</option>
+              <option value="TEN">TEN</option>
+              <option value="WAS">WAS</option>
+              <option value="FA">FA</option>
+            </select>
 
-          <label for="pos">Position</label>
-          <select id="pos" >
-            <option value="WR">WR</option>
-            <option value="RB">RB</option>
-            <option value="QB">QB</option>
-            <option value="TE">TE</option>
-            <option value="K">K</option>
-            <option value="DST">DST</option>
-          </select>
+            <label for="pos">Position</label>
+            <select id="pos" >
+              <option value="WR">WR</option>
+              <option value="RB">RB</option>
+              <option value="QB">QB</option>
+              <option value="TE">TE</option>
+              <option value="K">K</option>
+              <option value="DST">DST</option>
+            </select>
 
-          <label for="byeWeek">Bye Week</label>
-          <input type="number" id="byeWeek" placeholder="1-18">
+            <label for="byeWeek">Bye Week</label>
+            <input type="number" id="byeWeek" placeholder="1-18">
 
-          <label for="age">Age</label>
-          <input type="number" id="age" placeholder="1-99">
+            <label for="age">Age</label>
+            <input type="number" id="age" placeholder="1-99">
 
-          <button id="EntrySubmit">Submit</button>
-        </form>
-        <button id="logOut" onclick="logout()">logOut</button>
+            <button id="EntrySubmit">Submit</button>
+          </form>
+          <button id="logOut" onclick="logout()">logOut</button>
+        </div>
       </div>
     </div>
-    <div class = "tableWrapper">
+    <div class = "tableWrapper pure-u-4-5">
       <table>
         <tr id="tableHeaders">
           <th>Rank Dyn</th>

@@ -1,6 +1,7 @@
 const express = require('express')
 const app = express()
 const dotenv = require('dotenv').config()
+// const pureCss = require('purecss')
 
 const DbConnectionURL = `mongodb+srv://${process.env.DbUser}:${process.env.DbPass}@${process.env.DbURL}`
 const { MongoClient, ObjectId } = require("mongodb")
@@ -52,8 +53,8 @@ app.get('/auth/github', passport.authenticate('github'),function (req,res){
 })
 
 //call back url
-app.get('/auth/github/callback', passport.authenticate('github',{failureRedirect: '/login'}),function (req,res){
-    res.redirect("/");
+app.get('/auth/github/callback', passport.authenticate('github',{failureRedirect: '/'}),function (req,res){
+    res.redirect("/table");
 })
 
 app.post('/logout', function(req, res, next) {
@@ -67,28 +68,33 @@ app.post('/logout', function(req, res, next) {
 function isAuthenticated(req, res, next) {
     //console.log(req)
     if (req.isAuthenticated()) { return next(); }
-    res.redirect('/login')
+    res.redirect('/')
 }
 
 //send index html at root url
-app.get('/', isAuthenticated,(req, res) => {
+app.get('/table', isAuthenticated,(req, res) => {
     console.log("HIHIHI")
     console.log(req.user.id)
 
     res.sendFile('/public/index.html', {root: __dirname})
 })
-app.get('/login', (req, res) => {
+
+app.get('/', (req, res) => {
     res.sendFile('/public/login.html', {root: __dirname})
 })
+
+
 // allow all files in public to be served
 app.use(express.static('public'))
+// allow all files from root
+app.use('/purecss',express.static('node_modules/purecss/build'))
 
 //send back fantasy football data from database (will need to change this to be by user)
-app.get('/FFtable', async (req, res) => {
+app.get('/FFtable',isAuthenticated, async (req, res) => {
     try{
         await client.connect()
         let playersTable = await client.db(Dbname).collection("Players")
-        let players = await playersTable.find({}).toArray()
+        let players = await playersTable.find({ownerID:req.user.userName+req.user.id}).toArray()
         res.status(200)
         res.send(players)
     }catch (e){
@@ -99,12 +105,14 @@ app.get('/FFtable', async (req, res) => {
 })
 
 //get a record
-app.post('/record', async (req, res) => {
+app.post('/record',isAuthenticated, async (req, res) => {
     try {
         let dbId = req.body['dbId']
+        console.log("DBID")
+        console.log(dbId)
         await client.connect()
         let playersTable = await client.db(Dbname).collection("Players")
-        let foundPlayer = await playersTable.findOne({_id: new ObjectId(dbId) })
+        let foundPlayer = await playersTable.findOne({_id: new ObjectId(dbId),ownerID:req.user.userName+req.user.id })
         if(foundPlayer){
             res.status(200)
             res.send(foundPlayer)
@@ -121,12 +129,14 @@ app.post('/record', async (req, res) => {
 })
 
 //post new player
-app.post('/submit', async (req, res) => {
+app.post('/submit',isAuthenticated, async (req, res) => {
     let newRecord = req.body
     //check if record is valid if so add it
     if (recordIsVaild(newRecord)) {
         //calculate rDelta for newRecord
         newRecord["rDelta"] = newRecord["rPPR"]-newRecord["rDyn"]
+        //add who owns the player
+        newRecord["ownerID"] = req.user.userName+req.user.id
         //add to database
         await client.connect()
         let playersTable = await client.db(Dbname).collection("Players")
@@ -141,13 +151,13 @@ app.post('/submit', async (req, res) => {
 })
 
 //delete a player (add database connection)
-app.post('/delete', async (req, res) => {
+app.post('/delete',isAuthenticated, async (req, res) => {
     try {
         let dbId = req.body['dbId']
         await client.connect()
         let playersTable = await client.db(Dbname).collection("Players")
 
-        let deleteResult = await playersTable.deleteOne({_id: new ObjectId(dbId)})
+        let deleteResult = await playersTable.deleteOne({_id: new ObjectId(dbId),ownerID:req.user.userName+req.user.id})
         if (deleteResult) {
             res.status(200)
             res.send("delete done")
@@ -162,7 +172,7 @@ app.post('/delete', async (req, res) => {
 })
 
 //edit a player
-app.post('/edit', async (req, res) => {
+app.post('/edit',isAuthenticated, async (req, res) => {
     try {
         let dbId = req.body['dbId']
         let editedRecord = req.body['editedRecord']
@@ -170,17 +180,17 @@ app.post('/edit', async (req, res) => {
         let playersTable = await client.db(Dbname).collection("Players")
         let updateScheme = {
             $set: {
-                rDyn:editedRecord["rDyn"],
-                rPPR:editedRecord["rPPR"],
-                rDelta:editedRecord["rDelta"],
+                rDyn:parseInt(editedRecord["rDyn"]),
+                rPPR:parseInt(editedRecord["rPPR"]),
+                rDelta:parseInt(editedRecord["rDelta"]),
                 name:editedRecord["name"],
                 team:editedRecord["team"],
                 pos:editedRecord["pos"],
-                byeWeek:editedRecord["byeWeek"],
-                age:editedRecord["age"]
+                byeWeek:parseInt(editedRecord["byeWeek"]),
+                age:parseInt(editedRecord["age"])
             },
         }
-        let updateResult = await playersTable.updateOne({_id: new ObjectId(dbId)},updateScheme)
+        let updateResult = await playersTable.updateOne({_id: new ObjectId(dbId),ownerID:req.user.userName+req.user.id},updateScheme)
         if (updateResult) {
             res.status(200)
             res.send("Update done")
@@ -193,7 +203,6 @@ app.post('/edit', async (req, res) => {
         res.send('error connecting to db')
     }
 })
-
 
 function recordIsVaild(newRecord){
     if(newRecord['rDyn']==null ){
@@ -221,6 +230,9 @@ function recordIsVaild(newRecord){
 
 }
 
+// app.get('/pureCss/*',async (req, res) => {
+//     res.sendFile(pureCss.getFilePath(req.path.split('/')[2]))
+// })
 
 //start server on port
 app.listen(port, () => {

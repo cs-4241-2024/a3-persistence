@@ -92,6 +92,8 @@ async function loadTable() {
     deleteCell.className="editCell"
     deleteCell.addEventListener("click",handleDelete)
     deleteCell.dbId = FFdata[i]["_id"]
+    console.log("dd")
+    console.log(FFdata[i]["_id"])
     newTableRow.append(deleteCell)
     FFtableBody.append(newTableRow)
   }
@@ -108,8 +110,8 @@ async function handleEdit(event){
   editButton.textContent="Save"
   editButton.removeEventListener("click",handleEdit)
   let currentRow = editButton.parentElement
-  //skip last element as thats the save button
-  for(let i =1; i<currentRow.children.length-1;i++){
+  //skip last two element as thats the save and delte button
+  for(let i =0; i<currentRow.children.length-2;i++){
     let cell = currentRow.children[i]
     let input = document.createElement("input")
     input.setAttribute("value",cell.textContent)
@@ -124,6 +126,7 @@ async function handleEdit(event){
 async function handleSave(event) {
   let editButton = event.target
   let dbId = editButton.dbId
+  console.log(dbId)
 
   let dbIdToGet = {dbId: dbId}
   let message = JSON.stringify(dbIdToGet)
@@ -150,12 +153,12 @@ async function handleSave(event) {
   let valueTest = inputTest.value
 
   //skip last two element as thats the edit and delete button
-  for(let i =1; i<currentRow.children.length-1;i++){
+  for(let i =0; i<currentRow.children.length-2;i++){
     let cell = currentRow.children[i]
     let input = cell.firstElementChild
     let value = input.value
 
-    editedRecord[recordFields[i-1]]=value
+    editedRecord[recordFields[i]]=value
     cell.removeChild(input)
     cell.textContent=value
   }
@@ -182,7 +185,7 @@ async function logout(){
   const response = await fetch('/logout', {
     method: 'POST'
   })
-  window.location.href="/login"
+  window.location.href="/"
 }
 
 window.onload = function() {
