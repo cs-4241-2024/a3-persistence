@@ -11,18 +11,77 @@ app.use(express.json()) // parse data as json
 const port = 3000
 const Dbname="FantasyFootballPublic"
 
-//DELETE once data base is up
-const appdata = [
-    { 'id':1,'rPPR': 2, 'rDyn': 2, 'rDelta': 0, "name": "CeeDee Lamb","team": "DAL", "pos" : "WR", "byeWeek" : 7, "age": 25 },
-    { 'id':2,'rPPR': 3, 'rDyn': 15, 'rDelta': -12, "name": "Tyreek Hill","team": "MIA", "pos" : "WR", "byeWeek" : 6, "age": 30 },
-    { 'id':3,'rPPR': 1, 'rDyn': 13, 'rDelta': -12, "name": "Christian McCaffrey","team": "SF", "pos" : "RB", "byeWeek" : 9, "age": 28 }
-]
-let nextIdNumber = 4
+const passport = require('passport');
+const session = require('express-session');
+const GitHubStrategy = require('passport-github2').Strategy;
+passport.use(new GitHubStrategy({
+        clientID: process.env.gitHubClient,
+        clientSecret: process.env.gitHubSecret,
+        callbackURL: "http://localhost:3000/auth/github/callback"
+    },
+    async function (accessToken, refreshToken, profile, done) {
+        await client.connect()
+        let usersTable = await client.db(Dbname).collection("Users")
+
+        //attempt to find the user, if no user is present create one
+        let findResult = await usersTable.findOneAndUpdate({id:profile.id},
+            { $setOnInsert:{id:profile.id,userName:profile.username}}, {upsert:true})
+
+        return done(null, findResult)
+    }
+));
+
+passport.serializeUser(function(user, done) {
+    done(null, user.id);
+});
+
+passport.deserializeUser(async function (userId, done) {
+    await client.connect()
+    let usersTable = await client.db(Dbname).collection("Users")
+    let findUser = await usersTable.findOne({id:userId})
+    done(null, findUser);
+});
+
+app.use(session({ secret:process.env.sessionSecret, resave: false, saveUninitialized: false }))
+app.use(passport.initialize())
+app.use(passport.session({}));
+
+//send user for auth by github
+app.get('/auth/github', passport.authenticate('github'),function (req,res){
+    console.log("should not run")
+})
+
+//call back url
+app.get('/auth/github/callback', passport.authenticate('github',{failureRedirect: '/login'}),function (req,res){
+    res.redirect("/");
+})
+
+app.post('/logout', function(req, res, next) {
+    req.logout(function(err) {
+        console.log(err)
+        res.redirect('/');
+    });
+
+});
+
+function isAuthenticated(req, res, next) {
+    //console.log(req)
+    if (req.isAuthenticated()) { return next(); }
+    res.redirect('/login')
+}
 
 //send index html at root url
-app.get('/', (req, res) => {
+app.get('/', isAuthenticated,(req, res) => {
+    console.log("HIHIHI")
+    console.log(req.user.id)
+
     res.sendFile('/public/index.html', {root: __dirname})
 })
+app.get('/login', (req, res) => {
+    res.sendFile('/public/login.html', {root: __dirname})
+})
+// allow all files in public to be served
+app.use(express.static('public'))
 
 //send back fantasy football data from database (will need to change this to be by user)
 app.get('/FFtable', async (req, res) => {
@@ -135,7 +194,7 @@ app.post('/edit', async (req, res) => {
     }
 })
 
-//wont need once data base is set up correctly
+
 function recordIsVaild(newRecord){
     if(newRecord['rDyn']==null ){
         return false
@@ -162,8 +221,6 @@ function recordIsVaild(newRecord){
 
 }
 
-// allow all files in public to be served
-app.use(express.static('public'))
 
 //start server on port
 app.listen(port, () => {

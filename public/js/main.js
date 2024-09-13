@@ -178,6 +178,13 @@ async function handleSave(event) {
 
 }
 
+async function logout(){
+  const response = await fetch('/logout', {
+    method: 'POST'
+  })
+  window.location.href="/login"
+}
+
 window.onload = function() {
   const button = document.getElementById("EntrySubmit");
   button.onclick = submitPlayer;
