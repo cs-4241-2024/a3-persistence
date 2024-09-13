@@ -83,14 +83,14 @@ async function loadTable() {
     //create edit cell
     let editCell = document.createElement("td")
     editCell.textContent = "Edit"
-    editCell.className="border-4 border-collapse border-emerald-400 p-1.5 text-center"
+    editCell.className="border-4 border-collapse border-emerald-400 bg-green-600 hover:bg-green-800 text-white font-bold p-1.5 text-center"
     editCell.addEventListener("click",handleEdit)
     editCell.dbId = FFdata[i]["_id"]
     newTableRow.append(editCell)
     //create delete cell
     let deleteCell = document.createElement("td")
     deleteCell.textContent = "Delete"
-    deleteCell.className="border-4 border-collapse border-emerald-400 p-1.5 text-center"
+    deleteCell.className="border-4 border-collapse border-emerald-400 bg-red-700 hover:bg-red-900 text-white font-bold p-1.5 text-center"
     deleteCell.addEventListener("click",handleDelete)
     deleteCell.dbId = FFdata[i]["_id"]
     console.log("dd")
