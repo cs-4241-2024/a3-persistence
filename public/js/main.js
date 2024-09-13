@@ -102,8 +102,14 @@ const submit = async function (event) {
   }
 };
 
+const getData = async () => {
+  await fetch('/docs', {
+  method: 'GET',
+})}
+
 window.onload = function () {
   const form = document.querySelector('#employeeForm');
   form.onsubmit = submit;
-  loadData();
+  getData();
+  //loadData();
 };

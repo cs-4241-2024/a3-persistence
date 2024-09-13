@@ -4,6 +4,32 @@ const mime = require('mime');
 const path = require('path');
 const app = express();
 const port = 3000;
+const { MongoClient, ServerApiVersion } = require("mongodb");
+const uri = "mongodb+srv://jmsmith2:testingwizard456@assignment3-database.oiv2l.mongodb.net/?retryWrites=true&w=majority&appName=Assignment3-Database"
+
+const client = new MongoClient(uri, {
+  serverApi: {
+    version: ServerApiVersion.v1,
+    strict: true,
+    deprecationErrors: true,
+  }
+});
+let collection = null;
+async function run() {
+  try {
+    // Connect the client to the server	(optional starting in v4.7)
+    await client.connect();
+    // Send a ping to confirm a successful connection
+    await client.db("admin").command({ ping: 1 });
+    collection = await client.db('EmployeeDB').collection('Users');
+    console.log("Pinged your deployment. You successfully connected to MongoDB!");
+  } finally {
+    // Ensures that the client will close when you finish/error
+    //await client.close();
+  }
+}
+run().catch(console.dir);
+
 
 let appdata = [
   { 'employeeid': '123456789', 'name': 'John Doe', 'salary': 57000, 'regdate': 2021, 'expdate': 2026 },
@@ -23,6 +49,14 @@ app.get('/', (req, res) => {
 app.get('/data', (req, res) => {
   res.status(200).json(appdata);
 });
+
+app.get("/docs", async (req, res) => {
+  if (collection !== null) {
+    const docs = await collection.find({}).toArray()
+    console.log(docs)
+    res.json( docs )
+  }
+})
 
 app.post('/submit', (req, res) => {
   const newData = req.body;
