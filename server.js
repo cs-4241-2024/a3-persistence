@@ -67,7 +67,7 @@ app.get('/getData', (req, res) => {
   res.end(JSON.stringify(appdata))
 })
 
-app.post('/submit', (req, res) => {
+app.post('/submit', async (req, res) => {
   const json = req.body
   console.log(json)
   let score = json.clickCount*100
@@ -79,18 +79,28 @@ app.post('/submit', (req, res) => {
   // routes or middleware.
   appdata.push( {name: json.name, clickCount: json.clickCount, points: score }  )
 
-  res.writeHead( 200, "OK", {'Content-Type': 'text/plain' })
-  res.end(JSON.stringify(appdata))
+  const result = await collection.insertOne( {name: json.name, clickCount: json.clickCount, points: score } )
+  res.json( result )
+
+  // res.writeHead( 200, "OK", {'Content-Type': 'text/plain' })
+  // res.end(JSON.stringify(appdata))
 })
 
 
 
 
-app.delete('/deleteRow', (req, res) => {
+app.delete('/deleteRow', async (req, res) => {
   const json = req.body
+  console.log(json)
   let index = Number(json.index)
 
   appdata.splice(index, 1)
+
+  const result = await collection.deleteOne({
+    _id:new ObjectId( req.body._id )
+  })
+
+  res.json( result )
 
   // add a 'json' field to our request object
   // this field will be available in any additional
@@ -100,9 +110,10 @@ app.delete('/deleteRow', (req, res) => {
   res.end(JSON.stringify(appdata))
 })
 
-app.put('/alterRow', (req, res) => {
+app.put('/alterRow', async (req, res) => {
 
   const json = req.body
+  console.log(json)
   let index = Number(json.index)
 
   const targetObject = appdata.find( (row, i) => i === index )
@@ -110,6 +121,13 @@ app.put('/alterRow', (req, res) => {
   targetObject.name = json.name
   targetObject.clickCount = json.clickCount
   targetObject.points = json.clickCount*100
+
+  const result = await collection.updateOne(
+      { _id: new ObjectId( req.body._id ) },
+      { $set:{ name:req.body.name } }
+  )
+
+  res.json( result )
 
   // add a 'json' field to our request object
   // this field will be available in any additional
