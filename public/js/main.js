@@ -44,7 +44,7 @@ const deleteRow = async function (key) {
     console.log("Requesting delete of row ", getRowByKey(key));
 
     // Check if this row was being edited
-    if (editingRow != null && editingRow.children[2].firstChild.id == key) {
+    if (editingRow != null && editingRow.children[3].firstChild.id == key) {
         console.log("Updating editingrow");
         editingRow = null;
     }
@@ -66,8 +66,8 @@ const deleteRow = async function (key) {
 const swapToLabel = function (row) {
     const taskInput = row.children[0];
     const dueInput = row.children[1];
-    const checkbox = row.children[2].firstChild;
-    const button = row.children[4];
+    const checkbox = row.children[3].firstChild;
+    const button = row.children[5];
     const rowData = getRowByKey(checkbox.id);
     const taskLabel = document.createElement("label");
     taskLabel.type = "text";
@@ -96,8 +96,8 @@ const swapToEdit = function (row) {
     editingRow = row;
     const taskLabel = row.children[0];
     const dueLabel = row.children[1];
-    const checkbox = row.children[2].firstChild;
-    const editButton = row.children[4];
+    const checkbox = row.children[3].firstChild;
+    const editButton = row.children[5];
 
     console.log("checkbox", checkbox);
 
@@ -144,16 +144,23 @@ const renderData = function () {
     const dataContainer = document.getElementById("data");
     dataContainer.innerHTML = "";
     for (let row of data.rows) {
+        const accessLabel = document.createElement("label");
+        accessLabel.for = row.key;
+        accessLabel.innerText = "Task Complete";
+        const body = document.querySelector("body");
+        accessLabel.className = "access-label";
+
         const rowElement = document.createElement("div");
         rowElement.className = "data-row";
-        rowElement.innerHTML = `<label class="task">${row.task}</label>
+        rowElement.innerHTML = `
+            <label class="task">${row.task}</label>
             <label class="due-date">${row.due}</label>
+            <label class="access-label" for="${row.key}">Task Complete</label>
             <label class="done-box"><input class="done-box" type="checkbox" id="${row.key}" checked=${row.done}><span class="checkable"></span></label>
             <label class="days-left">${row.daysLeft}</label>`
         dataContainer.appendChild(rowElement);
 
-        const checkbox = rowElement.children[2].firstChild;
-        const span = rowElement.children[2].lastChild;
+        const checkbox = rowElement.children[3].firstChild;
         checkbox.checked = row.done;
         checkbox.addEventListener("change", () => { tickBox(row.key, checkbox.checked) });
 

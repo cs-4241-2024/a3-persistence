@@ -13,6 +13,11 @@ body {
     width: 100%;
 }
 
+.access-label {
+    position: fixed;
+    left: 100%;
+}
+
 /* Common */
 
 .header {
@@ -39,6 +44,10 @@ div[class*="container"] {
 button {
     margin: 0 0;
     width: 100%;
+}
+
+button.error {
+    color: black;
 }
 
 input,
