@@ -97,12 +97,12 @@ button{
   border: 0;
 }
 
-#deleteSubmit{
-  background-color: #922E2E;
-}
-#deleteSubmit:hover{
-  background-color: #742525;
-}
+/*#deleteSubmit{*/
+/*  background-color: #922E2E;*/
+/*}*/
+/*#deleteSubmit:hover{*/
+/*  background-color: #742525;*/
+/*}*/
 
 #EntrySubmit{
   background-color: #247B7B;

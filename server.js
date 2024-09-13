@@ -1,10 +1,15 @@
 const express = require('express')
-const mime = require("mime");
 const app = express()
+const dotenv = require('dotenv').config()
+
+const DbConnectionURL = `mongodb+srv://${process.env.DbUser}:${process.env.DbPass}@${process.env.DbURL}`
+const { MongoClient, ObjectId } = require("mongodb")
+const client = new MongoClient( DbConnectionURL )
 
 app.use(express.urlencoded({ extended: false })); //url parser
 app.use(express.json()) // parse data as json
 const port = 3000
+const Dbname="FantasyFootballPublic"
 
 //DELETE once data base is up
 const appdata = [
@@ -20,36 +25,53 @@ app.get('/', (req, res) => {
 })
 
 //send back fantasy football data from database (will need to change this to be by user)
-app.get('/FFtable', (req, res) => {
-    res.status(200)
-    res.send(appdata)
+app.get('/FFtable', async (req, res) => {
+    try{
+        await client.connect()
+        let playersTable = await client.db(Dbname).collection("Players")
+        let players = await playersTable.find({}).toArray()
+        res.status(200)
+        res.send(players)
+    }catch (e){
+        console.log(e)
+    }
+    // res.status(200)
+    // res.send(appdata)
 })
 
 //get a record
-app.post('/record', (req, res) => {
-    let index = parseInt(req.body['index'])
-    if(!isNaN(index)){
-        let record = appdata[index]
-        res.status(200)
-        res.send(record)
-    }
-    else{
+app.post('/record', async (req, res) => {
+    try {
+        let dbId = req.body['dbId']
+        await client.connect()
+        let playersTable = await client.db(Dbname).collection("Players")
+        let foundPlayer = await playersTable.findOne({_id: new ObjectId(dbId) })
+        if(foundPlayer){
+            res.status(200)
+            res.send(foundPlayer)
+        }
+        else{
+            res.status(400)
+            res.send('not found in db')
+        }
+    } catch (e) {
         res.status(404)
-        res.send( 'Index not found in dataset' )
+        res.send('error connecting to db')
     }
-    console.log(req.params)
+
 })
 
-//post new player (add database connection)
-app.post('/submit', (req, res) => {
+//post new player
+app.post('/submit', async (req, res) => {
     let newRecord = req.body
     //check if record is valid if so add it
     if (recordIsVaild(newRecord)) {
         //calculate rDelta for newRecord
         newRecord["rDelta"] = newRecord["rPPR"]-newRecord["rDyn"]
-        newRecord["id"] = nextIdNumber
-        nextIdNumber++
-        appdata.push(newRecord)
+        //add to database
+        await client.connect()
+        let playersTable = await client.db(Dbname).collection("Players")
+        await playersTable.insertOne(newRecord)
         res.status(200)
         res.send("Post ok")
     }
@@ -60,52 +82,56 @@ app.post('/submit', (req, res) => {
 })
 
 //delete a player (add database connection)
-app.post('/delete', (req, res) => {
-    let idToDelete = parseInt(req.body['id'])
-    console.log(idToDelete)
-    console.log(req.body)
+app.post('/delete', async (req, res) => {
+    try {
+        let dbId = req.body['dbId']
+        await client.connect()
+        let playersTable = await client.db(Dbname).collection("Players")
 
-    // find player with sent id and delete
-    let found = false
-    for (let i =0; i<appdata.length;i++){
-        if(appdata[i]['id']===idToDelete){
-            appdata.splice(i,1)
-            found = true
-            break
+        let deleteResult = await playersTable.deleteOne({_id: new ObjectId(dbId)})
+        if (deleteResult) {
+            res.status(200)
+            res.send("delete done")
+        } else {
+            res.status(400)
+            res.send('delete faild: not found in db')
         }
-    }
-    //send back successes if player was deleted
-    if (found){
-        res.status(200)
-        res.send("good")
-    }
-    else{
-        res.status(400)
-        res.send("not found")
+    } catch (e) {
+        res.status(404)
+        res.send('error connecting to db')
     }
 })
 
 //edit a player
-app.post('/edit', (req, res) => {
-    let index = parseInt(req.body['index'])
-    let editedRecord = req.body['editedRecord']
-    if(!isNaN(index)){
-        let record = appdata[index]
-        record["rDyn"] = editedRecord["rDyn"]
-        record["rPPR"] = editedRecord["rPPR"]
-        record["rDelta"] = editedRecord["rDelta"]
-        record["name"] = editedRecord["name"]
-        record["team"] = editedRecord["team"]
-        record["pos"] = editedRecord["pos"]
-        record["byeWeek"] = editedRecord["byeWeek"]
-        record["age"] = editedRecord["age"]
-
-        res.status(200)
-        res.send('good')
-    }
-    else{
+app.post('/edit', async (req, res) => {
+    try {
+        let dbId = req.body['dbId']
+        let editedRecord = req.body['editedRecord']
+        await client.connect()
+        let playersTable = await client.db(Dbname).collection("Players")
+        let updateScheme = {
+            $set: {
+                rDyn:editedRecord["rDyn"],
+                rPPR:editedRecord["rPPR"],
+                rDelta:editedRecord["rDelta"],
+                name:editedRecord["name"],
+                team:editedRecord["team"],
+                pos:editedRecord["pos"],
+                byeWeek:editedRecord["byeWeek"],
+                age:editedRecord["age"]
+            },
+        }
+        let updateResult = await playersTable.updateOne({_id: new ObjectId(dbId)},updateScheme)
+        if (updateResult) {
+            res.status(200)
+            res.send("Update done")
+        } else {
+            res.status(400)
+            res.send('not found in db')
+        }
+    } catch (e) {
         res.status(404)
-        res.send('edit index bad')
+        res.send('error connecting to db')
     }
 })
 

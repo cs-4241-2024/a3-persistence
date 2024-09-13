@@ -35,11 +35,11 @@ const submitPlayer = async function( ev ) {
   console.log( 'text:', text )
 }
 
-async function deletePlayer(ev) {
-  ev.preventDefault()
+async function handleDelete(event) {
+  let deleteButton = event.target
   //send id to delete
-  let idToDelete = {id: document.getElementById("id").value}
-  let message = JSON.stringify(idToDelete)
+  let dbIdToDelte = deleteButton.dbId
+  let message = JSON.stringify({dbId: dbIdToDelte})
 
   const response = await fetch('/delete', {
     method: 'POST',
@@ -71,7 +71,6 @@ async function loadTable() {
   // create new rows in table based on data
   for (let i =0; i<FFdata.length;i++) {
     let newTableRow = document.createElement("tr")
-    createCell(newTableRow,FFdata[i]["id"])
     createCell(newTableRow,FFdata[i]["rDyn"])
     createCell(newTableRow,FFdata[i]["rPPR"])
     createCell(newTableRow,FFdata[i]["rDelta"])
@@ -85,8 +84,15 @@ async function loadTable() {
     editCell.textContent = "Edit"
     editCell.className="editCell"
     editCell.addEventListener("click",handleEdit)
-    editCell.indexID = i
+    editCell.dbId = FFdata[i]["_id"]
     newTableRow.append(editCell)
+    //create delete cell
+    let deleteCell = document.createElement("td")
+    deleteCell.textContent = "Delete"
+    deleteCell.className="editCell"
+    deleteCell.addEventListener("click",handleDelete)
+    deleteCell.dbId = FFdata[i]["_id"]
+    newTableRow.append(deleteCell)
     FFtableBody.append(newTableRow)
   }
 }
@@ -99,7 +105,6 @@ function createCell(row,content){
 
 async function handleEdit(event){
   let editButton = event.target
-  let index = event.indexID
   editButton.textContent="Save"
   editButton.removeEventListener("click",handleEdit)
   let currentRow = editButton.parentElement
@@ -118,10 +123,10 @@ async function handleEdit(event){
 
 async function handleSave(event) {
   let editButton = event.target
-  let index = editButton.indexID
+  let dbId = editButton.dbId
 
-  let indexToGet = {index: index.toString()}
-  let message = JSON.stringify(indexToGet)
+  let dbIdToGet = {dbId: dbId}
+  let message = JSON.stringify(dbIdToGet)
 
   const response = await fetch('/record', {
     method: 'POST',
@@ -135,6 +140,7 @@ async function handleSave(event) {
   }
 
   let editedRecord = JSON.parse(await response.text())
+  console.log(editedRecord)
 
   let currentRow = editButton.parentElement
   let recordFields = ["rDyn","rPPR","rDelta","name","team","pos","byeWeek","age"]
@@ -143,7 +149,7 @@ async function handleSave(event) {
   let inputTest = test.firstElementChild
   let valueTest = inputTest.value
 
-  //skip last element as thats the save button
+  //skip last two element as thats the edit and delete button
   for(let i =1; i<currentRow.children.length-1;i++){
     let cell = currentRow.children[i]
     let input = cell.firstElementChild
@@ -155,7 +161,7 @@ async function handleSave(event) {
   }
 
 
-  let editMessage = {index: index.toString(), editedRecord: editedRecord}
+  let editMessage = {dbId: dbId, editedRecord: editedRecord}
   const responseEdit = await fetch('/edit', {
     method: 'POST',
     headers:{'Content-Type': 'application/json'},
@@ -175,7 +181,5 @@ async function handleSave(event) {
 window.onload = function() {
   const button = document.getElementById("EntrySubmit");
   button.onclick = submitPlayer;
-  const buttonDelete = document.getElementById("deleteSubmit");
-  buttonDelete.onclick = deletePlayer;
   loadTable().then(r => {})
 }
