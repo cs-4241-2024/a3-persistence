@@ -1,21 +1,20 @@
+// Initialize global variables
+let orderedItemsArray = [];
 let cumulativeTotalPrice = 0;
-let orderedItemsArray = []; // To store all the orders
 
+// Function to fetch initial orders from the server (MongoDB)
 const fetchInitialOrders = async function () {
   try {
     const response = await fetch("/orders");
-
-    console.log(response);
     if (!response.ok) {
       throw new Error(`Error fetching data: ${response.statusText}`);
     }
-
     const data = await response.json();
 
-    console.log("Fetched orders data from backend:", data.appdata);  // Log the fetched data to verify
+    // Update orderedItemsArray with the fetched orders from MongoDB
+    orderedItemsArray = data.orders;
 
-    // Update orderedItemsArray with the fetched orders
-    orderedItemsArray = data.appdata;
+    console.log("Fetched orders:", data.orders);
 
     // Recalculate the cumulative total price
     cumulativeTotalPrice = orderedItemsArray.reduce(
@@ -33,128 +32,119 @@ const fetchInitialOrders = async function () {
   } catch (error) {
     console.error("Error fetching initial orders:", error);
   }
+
+
 };
 
-window.onload = function () {
-  // Fetch initial orders when the page loads
-  fetchInitialOrders();
-
-  console.log("Hello")
-
-  const button = document.querySelector("button");
-  button.onclick = submit;
-};
-
-const submit = async function (event) {
-  // Prevent the default form submission behavior
-  event.preventDefault();
-
-  const nameInput = document.querySelector("#name"),
-      foodInput = document.querySelector("#food"),
-      quantityInput = document.querySelector("#quantity");
-
-  if (!nameInput.value || !foodInput.value || !quantityInput.value) {
-    alert("Please fill out all fields before submitting the form.");
-    return; // Stop form submission if validation fails
-  }
-
-  const json = {
-    name: nameInput.value,
-    food: foodInput.value,
-    quantity: quantityInput.value,
-    cumulativeTotalPrice: cumulativeTotalPrice
-  };
-
-
-  const body = JSON.stringify(json);
-
-  const response = await fetch("/submit", {
-    method: "POST",
-    body: JSON.stringify(json),
-    headers: { "Content-Type": "application/json" },
-  });
-
-
-  const text = await response.text();
-  console.log("text:", text);
-
-  const foodOptions = {
-    10: "Burger",
-    5: "Fries",
-    3: "Milkshake"
-  };
-
-  // Get the selected food price and food name
-  const selectedFoodPrice = parseInt(foodInput.value);
-  const selectedFoodName = foodOptions[selectedFoodPrice];
-
-  // Get the quantity of the order
-  const quantity = parseInt(quantityInput.value);
-
-  // Calculate the total price for this submission
-  const totalPrice = selectedFoodPrice * quantity;
-
-  // Add the current total to the cumulative total
-  cumulativeTotalPrice += totalPrice;
-
-  // Add the current order to the array
-  orderedItemsArray.push({
-    name: nameInput.value,
-    foodName: selectedFoodName,
-    foodPrice: selectedFoodPrice,
-    quantity: quantity
-  });
-
-  // Update the total price field with the cumulative total
-  const totalPriceField = document.querySelector("#totalPriceField");
-  totalPriceField.innerHTML = `<h3>Cumulative Total Price: $${cumulativeTotalPrice}</h3>`;
-
-  // Render the ordered items in the list
-  renderOrderedItems();
-};
-
-// Function to render ordered items and create edit buttons
+// Function to render ordered items on the frontend
 function renderOrderedItems() {
   const orderedItemsList = document.querySelector("#orderedItemsList");
   orderedItemsList.innerHTML = ''; // Clear the list before re-rendering
 
-  orderedItemsArray.forEach((item, index) => {
+  orderedItemsArray.forEach((item) => {
     const listItem = document.createElement("li");
-    listItem.id = `item-${index}`;
+    listItem.id = `item-${item._id}`; // Use _id as the identifier for the element
     listItem.innerHTML = `
       <span>${item.name} ordered ${item.quantity} x ${item.foodName} ($${item.foodPrice} each)</span>
-      <button onclick="editItem(${index})">Edit</button>
-      <button onclick="deleteItem(${index})">Delete</button>
+      <button onclick="editItem('${item._id}')">Edit</button>
+      <button onclick="deleteItem('${item._id}')">Delete</button>
     `;
     orderedItemsList.appendChild(listItem);
   });
 }
 
-// Function to edit an existing order directly from the list
-function editItem(index) {
-  const item = orderedItemsArray[index];
+// Function to add a new item to the list
+async function addItem(event) {
+  event.preventDefault(); // Prevent the form from reloading the page
+
+  const nameInput = document.querySelector("#nameInput").value;
+  const foodPrice = parseInt(document.querySelector("#foodSelect").value);
+  const quantity = parseInt(document.querySelector("#quantityInput").value);
+
+  const foodOptions = {
+    10: "Burger",
+    5: "Fries",
+    3: "Milkshake",
+  };
+
+  const foodName = foodOptions[foodPrice];
+
+  // Send a POST request to the server to add the new order
+  const response = await fetch("/submit", {
+    method: "POST",
+    body: JSON.stringify({
+      name: nameInput,
+      foodName: foodName,
+      foodPrice: foodPrice,
+      quantity: quantity,
+    }),
+    headers: { "Content-Type": "application/json" },
+  });
+
+  const result = await response.json();
+  console.log(result.message);
+
+  if (response.ok) {
+    // Add the newly created item (including its MongoDB _id) to the local array
+    orderedItemsArray.push(result.order);
+
+    // Recalculate cumulative total price
+    cumulativeTotalPrice += foodPrice * quantity;
+
+    // Update the total price field
+    const totalPriceField = document.querySelector("#totalPriceField");
+    totalPriceField.innerHTML = `<h3>Cumulative Total Price: $${cumulativeTotalPrice}</h3>`;
+
+    // Re-render the list
+    renderOrderedItems();
+  }
+
+  // Clear the form after submission
+  document.querySelector("#orderForm").reset();
+
+  console.log("Submitting order:", {
+    name: nameInput,
+    foodName: foodName,
+    foodPrice: foodPrice,
+    quantity: quantity
+  });
+  console.log("Server response:", result);
+}
+
+// Attach event listener to the form
+window.onload = function() {
+  fetchInitialOrders();
+
+  // Add event listener to handle form submission
+  const orderForm = document.querySelector("#orderForm");
+  orderForm.addEventListener("submit", addItem);
+};
+
+// Function to edit an item in the list
+function editItem(id) {
+  const item = orderedItemsArray.find(order => order._id === id); // Find order by _id
 
   // Replace the list item with editable fields
-  const listItem = document.querySelector(`#item-${index}`);
+  const listItem = document.querySelector(`#item-${id}`);
 
   listItem.innerHTML = `
-    <input type="text" id="editName-${index}" value="${item.name}" />
-    <select id="editFood-${index}">
+    <input type="text" id="editName-${id}" value="${item.name}" />
+    <select id="editFood-${id}">
       <option value="10" ${item.foodPrice === 10 ? 'selected' : ''}>Burger ($10)</option>
       <option value="5" ${item.foodPrice === 5 ? 'selected' : ''}>Fries ($5)</option>
       <option value="3" ${item.foodPrice === 3 ? 'selected' : ''}>Milkshake ($3)</option>
     </select>
-    <input type="number" id="editQuantity-${index}" value="${item.quantity}" min="1" max="5" />
-    <button onclick="saveItem(${index})">Save</button>
-    <button onclick="cancelEdit(${index})">Cancel</button>
+    <input type="number" id="editQuantity-${id}" value="${item.quantity}" min="1" max="5" />
+    <button onclick="saveItem('${id}')">Save</button>
+    <button onclick="cancelEdit('${id}')">Cancel</button>
   `;
 }
 
 // Function to save the edited item
-async function saveItem(index) {
-  const nameInput = document.querySelector(`#editName-${index}`).value;
-  const foodPrice = parseInt(document.querySelector(`#editFood-${index}`).value);
-  const quantity = parseInt(document.querySelector(`#editQuantity-${index}`).value);
+async function saveItem(id) {
+  const nameInput = document.querySelector(`#editName-${id}`).value;
+  const foodPrice = parseInt(document.querySelector(`#editFood-${id}`).value);
+  const quantity = parseInt(document.querySelector(`#editQuantity-${id}`).value);
 
   const foodOptions = {
     10: "Burger",
@@ -168,7 +158,7 @@ async function saveItem(index) {
   const response = await fetch(`/edit`, {
     method: "PUT",
     body: JSON.stringify({
-      index: index,
+      id: id,
       name: nameInput,
       foodName: foodName,
       foodPrice: foodPrice,
@@ -181,45 +171,40 @@ async function saveItem(index) {
   console.log(result.message);
 
   if (response.ok) {
-    // Update the order locally only if the update was successful on the server
-    cumulativeTotalPrice -= orderedItemsArray[index].foodPrice * orderedItemsArray[index].quantity;
-    cumulativeTotalPrice += foodPrice * quantity;
-
-    orderedItemsArray[index] = {
-      name: nameInput,
-      foodName: foodName,
-      foodPrice: foodPrice,
-      quantity: quantity,
-    };
-
-    // Update the total price field in the UI
-    const totalPriceField = document.querySelector("#totalPriceField");
-    totalPriceField.innerHTML = `<h3>Cumulative Total Price: $${cumulativeTotalPrice}</h3>`;
+    // Update the order locally if the update was successful
+    const updatedOrder = orderedItemsArray.find(order => order._id === id);
+    updatedOrder.name = nameInput;
+    updatedOrder.foodName = foodName;
+    updatedOrder.foodPrice = foodPrice;
+    updatedOrder.quantity = quantity;
 
     renderOrderedItems();
   }
 }
 
+// Function to cancel editing an item
+function cancelEdit(id) {
+  renderOrderedItems(); // Re-render the list to cancel the edit
+}
+
 // Function to delete an item from the list
-async function deleteItem(index) {
+async function deleteItem(id) {
   // Send a DELETE request to the server
   const response = await fetch(`/delete`, {
     method: "DELETE",
-    body: JSON.stringify({ index: index }),
+    body: JSON.stringify({ id }),
     headers: { "Content-Type": "application/json" },
   });
 
   const result = await response.json();
   console.log(result.message);
 
-  // Remove the item locally only if the deletion was successful on the server
   if (response.ok) {
-    // Adjust the cumulative total price by subtracting the price of the deleted item
-    const deletedItem = orderedItemsArray[index];
-    cumulativeTotalPrice -= deletedItem.foodPrice * deletedItem.quantity;
+    // Remove the item locally only if the deletion was successful on the server
+    orderedItemsArray = orderedItemsArray.filter(order => order._id !== id);
 
-    // Remove the item locally from orderedItemsArray
-    orderedItemsArray.splice(index, 1);
+    // Recalculate cumulative total price
+    cumulativeTotalPrice = orderedItemsArray.reduce((total, item) => total + item.foodPrice * item.quantity, 0);
 
     // Update the total price field on the frontend
     const totalPriceField = document.querySelector("#totalPriceField");
