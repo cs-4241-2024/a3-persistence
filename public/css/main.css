@@ -2,10 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-body {
-  background:#fffffa;
-  margin: 0;
-}
 /*googleFont*/
 *{
   font-family: "Open Sans", sans-serif;
