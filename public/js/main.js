@@ -7,6 +7,7 @@ window.onload = async function () {
   const submitButton = document.getElementById("submit");
   const loginForm = document.getElementById("login");
   const gradebook = document.getElementById("gradebook");
+  const currentUser = document.getElementById("current-user");
 
   // handle login event
   loginButton.onclick = async function (e) {
@@ -34,7 +35,7 @@ window.onload = async function () {
     let res = await response.json();
     const userId = res.userId;
     alert(res.message);
-    if (res.success) {
+    if (res.success && (res.userId != null)) {
       // hide the login form
       loginForm.style.display = "none";
       gradebook.style.display = "block";
@@ -67,6 +68,9 @@ window.onload = async function () {
         res2.students.forEach((student) => addStudentToTable(student, userId));
       }
       updateClassStats(res2.stats);
+
+      // display the current user
+      currentUser.innerText = usernameInput.value;
     }
   };
 

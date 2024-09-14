@@ -1,0 +1,14 @@
+#logout {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+
+    p {
+        padding-right: 1rem;
+    }
+
+    button {
+        height: 50%;
+        margin: auto;
+    }
+}

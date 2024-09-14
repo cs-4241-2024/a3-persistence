@@ -1,47 +1,51 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const path = require("path");
+const morgan = require("morgan");
+const serveStatic = require("serve-static");
+require("dotenv").config();
+
 const app = express();
 const dir = "public/";
 const port = 3000;
-require("dotenv").config();
 const PASSWORD = process.env.MONGODB_PASSWORD;
 const USERNAME = process.env.MONGODB_USERNAME;
 const URI = process.env.MONGODB_URI;
 
-mongoose
-  .connect(`mongodb+srv://${USERNAME}:${PASSWORD}@${URI}`)
+mongoose.connect(`mongodb+srv://${USERNAME}:${PASSWORD}@${URI}`)
   .then(() => console.log(Date().valueOf(), ": Connected to MongoDB"))
   .catch((err) => console.error("Could not connect to MongoDB", err));
 
+// Define the schema for the database
 const studentSchema = new mongoose.Schema({
   name: String,
   classYear: String,
   grade: Number,
   gradeLetter: String,
 });
-const Student = mongoose.model("Student", studentSchema);
-
 const userSchema = new mongoose.Schema({
   username: String,
   password: String, // yes, I know it's not good to store passwords in plaintext but I don't want to deal with hashing right now
   students: [{ type: mongoose.Schema.Types.ObjectId, ref: "Student" }],
 });
+
+// Create the models
 const User = mongoose.model("User", userSchema);
+const Student = mongoose.model("Student", studentSchema);
 
+// Middleware
 app.use(express.json());
-app.use(express.static(dir));
-
-
+app.use(serveStatic(path.join(__dirname, dir), { index: "index.html" }));
+app.use(morgan("dev"));
 
 // GET request handlers
 app.get("/", (req, res) => {
-  console.log(Date().valueOf(), ": GET: /");
+  // console.log(Date().valueOf(), ": GET: /");
   res.sendFile(path.join(__dirname, dir, "index.html"));
 });
 
 app.get("/students", async (req, res) => {
-  console.log(Date().valueOf(), ": GET: /students");
+  // console.log(Date().valueOf(), ": GET: /students");
   const students = await Student.find();
   console.log(students);
   res
@@ -50,7 +54,7 @@ app.get("/students", async (req, res) => {
 });
 
 app.get("/students/:id", async (req, res) => {
-  console.log(Date().valueOf(), ": GET: /students/:id");
+  // console.log(Date().valueOf(), ": GET: /students/:id");
   const userId = req.params.id;
 
   try {
@@ -91,7 +95,7 @@ app.post("/login", async (req, res) => {
 });
 
 app.post("/create-account", async (req, res) => {
-  console.log(Date().valueOf(), ": POST: /create-account");
+  // console.log(Date().valueOf(), ": POST: /create-account");
 
   // handle the request
   try {
@@ -111,7 +115,7 @@ app.post("/create-account", async (req, res) => {
 });
 
 app.post("/add", async (req, res) => {
-  console.log(Date().valueOf(), ": POST: /add");
+  // console.log(Date().valueOf(), ": POST: /add");
 
   // handle the request
   let student = req.body.student;
@@ -136,12 +140,11 @@ app.post("/add", async (req, res) => {
 });
 
 app.post("/delete", async (req, res) => {
-  console.log(Date().valueOf(), ": POST: /delete");
+  // console.log(Date().valueOf(), ": POST: /delete");
 
   // handle the request
   let student = req.body.name;
   let success = await deleteStudentDB(student, req.body.id);
-  console.log(req.body)
 
   // deleteStudentDB returns 0 on failure, 1 on success
   if (success) {
@@ -180,7 +183,7 @@ async function addStudentDB(student, userId) {
   student.gradeLetter = gradeLetter;
 
   const user = await User.findById(userId);
-  let existingStudent; 
+  let existingStudent;
   if (user) {
     existingStudent = await Student.findOne({
       name: student.name,
@@ -189,7 +192,7 @@ async function addStudentDB(student, userId) {
   }
 
   if (!user) {
-    console.log(Date().valueOf(), ": ERR POST: User not found.");
+    // console.log(Date().valueOf(), ": ERR POST: User not found.");
     return 4; // User not found
   }
 
@@ -198,7 +201,7 @@ async function addStudentDB(student, userId) {
       existingStudent.grade === student.grade &&
       existingStudent.classYear === student.classYear
     ) {
-      console.log(Date().valueOf(), ": ERR POST: Student already exists");
+      // console.log(Date().valueOf(), ": ERR POST: Student already exists");
       return 0; // Identical student already exists
     } else {
       existingStudent.grade = student.grade;
@@ -230,23 +233,21 @@ async function addStudentDB(student, userId) {
  */
 async function deleteStudentDB(studentName, userId) {
   const user = await User.findOne({ _id: userId });
-  console.log(user, userId);
+  // console.log(user, userId);
   if (!user) {
     console.log(Date().valueOf(), ": ERR DELETE: User not found.");
     return 0;
   }
 
-  const result = await Student.deleteOne({ name: studentName, _id: { $in: user.students } });
+  const result = await Student.deleteOne({
+    name: studentName,
+    _id: { $in: user.students },
+  });
 
   if (result === 0)
     console.log(Date().valueOf(), ": ERR DELETE: Student not found.");
   else
-    console.log(
-      Date().valueOf(),
-      ": DELETE: Student",
-      studentName,
-      "deleted."
-    );
+    console.log(Date().valueOf(), ": DELETE: Student", studentName, "deleted.");
 
   return result.deletedCount ? 1 : 0;
 }
