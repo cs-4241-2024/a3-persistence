@@ -240,7 +240,7 @@ function recordIsVaild(newRecord){
 // })
 
 //start server on port
-app.listen(port, () => {
+app.listen(process.env.PORT || port, () => {
     console.log(`Listening on port ${port}`)
 })
 
