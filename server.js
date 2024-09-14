@@ -84,7 +84,7 @@ const handleSubmit = async function (request, response) {
   const requestData = request.body;
   let dateObj = new Date(requestData.due);
   let today = new Date();
-  requestData.daysLeft = dateObj.getDate() - today.getDate() + 1;
+  requestData.daysLeft = dateObj.getDate() - today.getDate();
   requestData.userID = request.user;
   // console.log("handleSubmit: today.getDate() ", today.getDate(), " dateObj.getDate() ", dateObj.getDate());
 
