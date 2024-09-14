@@ -3,9 +3,17 @@ require('dotenv').config();
 const express = require("express"),
   app = express(),
   { MongoClient, ObjectId } = require("mongodb");
+var passport = require('passport');
+var util = require('util');
+var session = require('express-session');
+var bodyParser = require('body-parser');
+var methodOverride = require('method-override');
+var GitHubStrategy = require('passport-github2').Strategy;
+var partials = require('express-partials');
 
-app.use(express.static("public"));
-app.use(express.static("views"));
+
+var GITHUB_CLIENT_ID = process.env.GITHUB_CLIENT_ID;
+var GITHUB_CLIENT_SECRET = process.env.GITHUB_CLIENT_SECRET;
 
 const uri = `mongodb+srv://server:${process.env.PASS}@${process.env.HOST}`;
 const client = new MongoClient(uri);
@@ -17,10 +25,6 @@ let collection = null
 app.listen(process.env.PORT || 3000);
 
 let appdata = {
-  rows:
-    [
-
-    ]
 }
 
 // Get back a JSON object with the row's data
@@ -31,19 +35,22 @@ const getRowByKey = function (key) {
       return row;
     }
   }
-  console.log("data: ", appdata);
+  // console.log("data: ", appdata);
   console.log("Bad row request. Requested key: ", key);
   return null;
 }
 
 const handleGet = async function (request, response) {
+  // console.log(request.user);
   if (collection !== null) {
-    const docs = await collection.find({}).toArray()
-    appdata = { rows: docs };
-    for (let row of appdata.rows) {
+    const docs = await collection.find({ userID: request.user }).toArray()
+    let userData = appdata[request.user];
+    userData.rows = docs;
+    for (let row of userData.rows) {
       row.key = row._id;
     }
-    response.json(appdata);
+    // console.log("appdata ", appdata);
+    response.json(userData);
   } else {
     console.log("uh oh");
   }
@@ -51,7 +58,7 @@ const handleGet = async function (request, response) {
 
 // Sort and then send the current table
 const sortAndSend = function (request, response) {
-  appdata.rows.sort(function (a, b) {
+  appdata[request.user].rows.sort(function (a, b) {
     // Principally sort by done-ness
     let aint = a.done ? 1 : 0;
     let bint = b.done ? 1 : 0;
@@ -69,7 +76,7 @@ const sortAndSend = function (request, response) {
     return diff;
   });
   response.writeHead(200, "OK", { "Content-Type": "text/plain" });
-  response.end(JSON.stringify(appdata));
+  response.end(JSON.stringify(appdata[request.user]));
 };
 
 const handleSubmit = async function (request, response) {
@@ -78,12 +85,14 @@ const handleSubmit = async function (request, response) {
   let dateObj = new Date(requestData.due);
   let today = new Date();
   requestData.daysLeft = dateObj.getDate() - today.getDate() + 1;
-  console.log("handleSubmit: today.getDate() ", today.getDate(), " dateObj.getDate() ", dateObj.getDate());
+  requestData.userID = request.user;
+  // console.log("handleSubmit: today.getDate() ", today.getDate(), " dateObj.getDate() ", dateObj.getDate());
 
   const result = await collection.insertOne(requestData);
   requestData.key = result.insertedId.toString();
-  appdata.rows.push(requestData);
+  appdata[request.user].rows.push(requestData);
 
+  // console.log("appdata request user ", appdata[request.user]);
   sortAndSend(request, response);
 };
 
@@ -91,24 +100,24 @@ const handleDelete = async function (request, response) {
   const data = request.body;
   console.log("Received delete request for " + JSON.stringify(request.body));
   let idx = undefined;
-  for (let i = 0; i < appdata.rows.length; i++) {
-    if (appdata.rows[i].key == data.key) {
-      console.log("Found row");
+  for (let i = 0; i < appdata[request.user].rows.length; i++) {
+    if (appdata[request.user].rows[i].key == data.key) {
+      // console.log("Found row");
       idx = i;
       break;
     }
   }
   if (idx != undefined) {
     console.log("Deleting.");
-    appdata.rows.splice(idx, 1);
+    appdata[request.user].rows.splice(idx, 1);
   }
 
   try {
-    console.log("key ", data.key);
+    // console.log("key ", data.key);
     const result = await collection.deleteOne(
-      { _id: new ObjectId(data.key) }
+      { _id: new ObjectId(data.key), userID: request.user }
     )
-    console.log("deleted ", result.deletedCount);
+    // console.log("deleted ", result.deletedCount);
   } finally {
     sortAndSend(request, response);
   }
@@ -121,10 +130,10 @@ const tickBox = async function (request, response) {
     { _id: new ObjectId(data.key) },
     { $set: { done: data.value } }
   )
-  console.log("updated ", result.matchedCount);
+  // console.log("updated ", result.matchedCount);
   let row = getRowByKey(data.key);
   row.done = data.value;
-  console.log("Set done to ", row.done);
+  // console.log("Set done to ", row.done);
 
 
 
@@ -139,21 +148,91 @@ app.use((req, res, next) => {
   }
 })
 
+// For session setup
+passport.serializeUser(function (user, done) {
+  done(null, user);
+});
+
+passport.deserializeUser(function (obj, done) {
+  done(null, obj);
+});
+
+passport.use(new GitHubStrategy({
+  clientID: GITHUB_CLIENT_ID,
+  clientSecret: GITHUB_CLIENT_SECRET,
+  callbackURL: "http://127.0.0.1:3000/auth/github/callback"
+},
+  function (accessToken, refreshToken, profile, done) {
+
+    // To keep the example simple, the user's GitHub profile is returned to
+    // represent the logged-in user.  In a typical application, you would want
+    // to associate the GitHub account with a user record in your database,
+    // and return that user instead.
+    console.log("profile ", profile.id);
+    appdata[profile.id] = { rows: [] };
+    return done(null, profile.id);
+  }
+));
+
 async function run() {
   await client.connect()
   collection = await client.db("a3").collection("data")
+  app.set('views', __dirname + '/public');
+  app.set('view engine', 'ejs');
+  app.use(partials());
+  app.use(bodyParser.urlencoded({ extended: true }));
+  app.use(bodyParser.json());
+  app.use(methodOverride());
+  app.use(session({ secret: 'keyboard cat', resave: false, saveUninitialized: false }));
 
-  // route to get all docs
-  // app.get("/docs", async (req, res) => {
-  //   if (collection !== null) {
-  //     const docs = await collection.find({}).toArray()
-  //     res.json(docs)
-  //   }
-  // })
-  app.get("/data", handleGet);
-  app.post("/add-new-data", express.json(), handleSubmit);
-  app.post("/delete", express.json(), handleDelete);
-  app.post("/update-box", express.json(), tickBox);
+  // Initialize Passport!  Also use passport.session() middleware, to support
+  // persistent login sessions
+  app.use(passport.initialize());
+  app.use(passport.session());
+
+  app.use(express.static("public"));
+
+  app.get('/', function (req, res) {
+    res.render('login', { user: req.user });
+  });
+
+  app.get('/login', function (req, res) {
+    res.render('login', { user: req.user });
+  });
+
+  app.get('/todo', ensureAuthenticated, function (req, res) {
+    res.render('todo', { user: req.user });
+  });
+
+  app.get('/auth/github',
+    passport.authenticate('github', { scope: ['user:email'] }),
+    function (req, res) {
+      // The request will be redirected to GitHub for authentication, so this
+      // function will not be called.
+    });
+
+  app.get('/auth/github/callback',
+    passport.authenticate('github', { failureRedirect: '/login' }),
+    function (req, res) {
+      res.redirect('/todo');
+    });
+
+  app.get('/logout', function (req, res) {
+    req.logout(function (err) {
+      if (err) return next(err);
+      res.redirect('/');
+    });
+  });
+
+  app.get("/data", ensureAuthenticated, handleGet);
+  app.post("/add-new-data", ensureAuthenticated, express.json(), handleSubmit);
+  app.post("/delete", ensureAuthenticated, express.json(), handleDelete);
+  app.post("/update-box", ensureAuthenticated, express.json(), tickBox);
+}
+
+function ensureAuthenticated(req, res, next) {
+  if (req.isAuthenticated()) { return next(); }
+  res.redirect('/login')
 }
 
 run()

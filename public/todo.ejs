@@ -21,32 +21,38 @@
 
 <body>
     <!-- <h2>Add Task</h    2> -->
-    <div class="input-container">
-        <p>Add Task</p>
-        <div class="filler"></div>
-        <label id="name-label" for="input-name">Task Name</label>
-        <label id="date-label" for="input-date">Due Date</label>
-        <div class="filler"></div>
-        <label><input id="input-name" type="text" placeholder="Task"></label>
-        <label><input id="input-date" type="date" value="2024-09-12"></label>
-        <label><button id="add-new-task">Add</button></label>
-    </div>
-    <div class="table-container">
-        <label class="task header" for="task-input">Task</label>
-        <label class="due-date header" for="due-input">Due</label>
-        <label class="done-box header" for="done-box">Done</label>
-        <label class="days-left header">Days Left</label>
-        <div class="data" id="data">
-            <!-- <div class="data-row">
+    <% if (!user) { %>
+        <a href="/auth/github">Log in with GitHub</a>
+        <% } else { %>
+            <header>
+                <a href="/logout">Logout</a>
+            </header>
+            <div class="input-container">
+                <p>Add Task</p>
+                <div class="filler"></div>
+                <label id="name-label" for="input-name">Task Name</label>
+                <label id="date-label" for="input-date">Due Date</label>
+                <div class="filler"></div>
+                <label><input id="input-name" type="text" placeholder="Task"></label>
+                <label><input id="input-date" type="date" value="2024-09-12"></label>
+                <label><button id="add-new-task">Add</button></label>
+            </div>
+            <div class="table-container">
+                <label class="task header" for="task-input">Task</label>
+                <label class="due-date header" for="due-input">Due</label>
+                <label class="done-box header" for="done-box">Done</label>
+                <label class="days-left header">Days Left</label>
+                <div class="data" id="data">
+                    <!-- <div class="data-row">
                 <input class="task" value="Test Task 1" id="task-input"></input>
                 <label class="due-date">11/29/24</label>
                 <label class="done-box"><input class="done-box" type="checkbox"><span class="checkable"></span></label>
                 <label class="days-left">2</label>
             </div> -->
-        </div>
+                </div>
 
 
-        <!-- <h2>Add task</h2>
+                <!-- <h2>Add task</h2>
         <table id="entry-table" class="primary">
             <thead>
                 <th>Task</th>
@@ -78,5 +84,6 @@
                 </tr>
             </tbody>
         </table> -->
-    </div>
+            </div>
+            <% } %>
 </body>
