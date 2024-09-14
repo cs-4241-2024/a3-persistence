@@ -71,7 +71,7 @@ async function loadTable() {
   // create new rows in table based on data
   for (let i =0; i<FFdata.length;i++) {
     let newTableRow = document.createElement("tr")
-    newTableRow.className = "even:bg-emerald-200 odd:bg-emerald-100"
+    newTableRow.className = "even:bg-neutral-400 odd:bg-stone-300"
     createCell(newTableRow,FFdata[i]["rDyn"])
     createCell(newTableRow,FFdata[i]["rPPR"])
     createCell(newTableRow,FFdata[i]["rDelta"])
@@ -83,14 +83,14 @@ async function loadTable() {
     //create edit cell
     let editCell = document.createElement("td")
     editCell.textContent = "Edit"
-    editCell.className="border-4 border-collapse border-emerald-400 bg-green-600 hover:bg-green-800 text-white font-bold p-1.5 text-center"
+    editCell.className="border-4 border-collapse border-stone-100 bg-green-700 hover:bg-green-800 text-white font-bold p-1.5 text-center"
     editCell.addEventListener("click",handleEdit)
     editCell.dbId = FFdata[i]["_id"]
     newTableRow.append(editCell)
     //create delete cell
     let deleteCell = document.createElement("td")
     deleteCell.textContent = "Delete"
-    deleteCell.className="border-4 border-collapse border-emerald-400 bg-red-700 hover:bg-red-900 text-white font-bold p-1.5 text-center"
+    deleteCell.className="border-4 border-collapse border-stone-100 bg-red-800 hover:bg-red-900 text-white font-bold p-1.5 text-center"
     deleteCell.addEventListener("click",handleDelete)
     deleteCell.dbId = FFdata[i]["_id"]
     console.log("dd")
@@ -103,7 +103,7 @@ async function loadTable() {
 function createCell(row,content){
   let cell = document.createElement("td")
   cell.textContent = content
-  cell.className = "border-4 border-collapse border-emerald-400 p-1.5 text-center"
+  cell.className = "border-4 border-collapse border-stone-100 p-1.5 text-center"
   row.append(cell)
 }
 
@@ -190,8 +190,18 @@ async function logout(){
   window.location.href="/"
 }
 
+async function getLoggedInUser(){
+  const response = await fetch('/userName', {
+    method: 'get'
+
+  })
+  const loggedInUser = document.getElementById("loggedInUser");
+  loggedInUser.innerText = "User: " + JSON.parse(await response.text())["userName"]
+}
+
 window.onload = function() {
   const button = document.getElementById("EntrySubmit");
   button.onclick = submitPlayer;
+  getLoggedInUser().then(r=>{})
   loadTable().then(r => {})
 }

@@ -52,6 +52,11 @@ app.get('/auth/github', passport.authenticate('github'),function (req,res){
     console.log("should not run")
 })
 
+app.get('/userName',isAuthenticated,function (req,res){
+    res.status(200)
+    res.send({userName:req.user.userName})
+})
+
 //call back url
 app.get('/auth/github/callback', passport.authenticate('github',{failureRedirect: '/'}),function (req,res){
     res.redirect("/table");
