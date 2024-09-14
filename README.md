@@ -34,6 +34,6 @@ The goal of this application is to provide each user with a table they can updat
     - Whenever the sever crashes you can restart it, but the button to do so is named "Restart all Dinos" (unintuitive) and is hidden under a menu button called "more"
     - Logs to see how your sever crashed are also hidden under "more" and only provide a stack trace if you are looking at them as the sever crashes.
   - Overall I like Glitch more.
-- **Got 100% on LightHouse for both the login and table pages**: see `Light-House-Login-Page.png` and `Light-House-Table-page.png` for proof
+- **Got 100% on LightHouse for both the login and table pages**: See `Light-House-Login-Page.png` and `Light-House-Table-page.png` for proof
 - **Middleware packages**: 
   - Passport.js: for implements the Oauth GitHub login system
