@@ -16,13 +16,13 @@ The goal of this application is to provide each user with a table they can updat
 - I used the tailwind css framework to re-style my application as I was familiar with it from my software engineering course (CS3733)
 - Tailwind also allows for a lot of flexibility for designing elements.
 - Custom CSS changes include:
-  - a rule to change all text to the google font `Open Sans`
+  - a rule to change all text to the Google font `Open Sans`
 
 ## Technical Achievements
-- **OAuth authentication using Github**: I implemented OAuth authentication via passport.js GitHub strategy
+- **OAuth authentication using GitHub**: I implemented OAuth authentication via passport.js GitHub strategy
 - **Hosted on Heroku**: I hosted the website on Heroku instead of Glitch
-  - Postives:
-    - Uploading the project from Github was relatively painless
+  - Positives:
+    - Uploading the project from GitHub was relatively painless
     - Ui showing throughput, memory usage, and response time is a nice touch.
     - Looks like it could be more extendable than glitch but my simple app does not take advantage of this
   - Negatives:
