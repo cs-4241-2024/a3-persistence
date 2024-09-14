@@ -18,7 +18,7 @@ const GitHubStrategy = require('passport-github2').Strategy;
 passport.use(new GitHubStrategy({
         clientID: process.env.gitHubClient,
         clientSecret: process.env.gitHubSecret,
-        callbackURL: "http://localhost:3000/auth/github/callback"
+        callbackURL: "https://a3-stryder-crouse-af275422c96c.herokuapp.com/auth/github/callback"
     },
     async function (accessToken, refreshToken, profile, done) {
         await client.connect()
