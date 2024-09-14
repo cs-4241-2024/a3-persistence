@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>Mood Tracker</title> <!--CS4241 Assignment 3-->
+    <meta charset="utf-8">
+    <script src="js/main.js"></script>
+    <link rel="stylesheet" href="css/main.css">
+    
+    <!-- get rid of favicon error -->
+    <link rel="icon" href="data:;base64,iVBORw0KGgo=">
+  </head>
+  <body>
+    <h1>Track Your Daily Mood</h1>
+    <form class="mood-form">
+      <label for="name">Name</label>
+      <input type="text" id="name" name="name" class="form-input">
+      <label for="mood">Select Your Mood:</label>
+      <select name="mood" id="mood" class="form-select">
+        <option value="" disabled selected>Choose your mood</option>
+        <option value="happy">Happy</option>
+        <option value="sad">Sad</option>
+        <option value="stressed">Stressed</option>
+        <option value="excited">Excited</option>
+        <option value="neutral">Neutral</option>
+      </select>
+      <br>
+      <label for="comment">Comment (optional):</label>
+      <input type="text" id="comment" name="comment" class="form-input">
+      <br>
+      <button type="submit" class="form-button">Submit Mood</button>
+    </form>
+    <h2>Your Mood Log</h2>
+    <table id="moodTable">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Mood</th>
+          <th>Comment</th>
+          <th>Time</th>
+          <th>Mood Score</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!--Mood entries will be inserted automatically by JS-->
+      </tbody>
+    </table>
+  </body>
+</html>
