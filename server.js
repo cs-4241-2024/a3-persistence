@@ -5,15 +5,14 @@ const app = express();
 const dir = "public/";
 const port = 3000;
 require("dotenv").config();
-const URI = encodeURIComponent( process.env.MONGODB_URI );
-console.log(URI);
+const PASSWORD = process.env.MONGODB_PASSWORD;
+const USERNAME = process.env.MONGODB_USERNAME;
+const URI = process.env.MONGODB_URI;
 
 mongoose
-  .connect(`mongodb+srv://aldencutler:${URI}@a3-persistence.km9oy.mongodb.net/?retryWrites=true&w=majority&appName=a3-persistence`)
+  .connect(`mongodb+srv://${USERNAME}:${PASSWORD}@${URI}`)
   .then(() => console.log(Date().valueOf(), ": Connected to MongoDB"))
   .catch((err) => console.error("Could not connect to MongoDB", err));
-
-
 
 const studentSchema = new mongoose.Schema({
   name: String,
