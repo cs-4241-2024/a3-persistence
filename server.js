@@ -1,3 +1,6 @@
+const express = require ("express"),
+      app = express(); 
+
 const http = require( 'http' ),
       fs   = require( 'fs' ),
       // IMPORTANT: you must run `npm install` in the directory for this assignment
@@ -133,4 +136,4 @@ const sendFile = function(response, filename) {
    })
 }
 
-server.listen( process.env.PORT || port );
+app.listen( process.env.PORT || port );
