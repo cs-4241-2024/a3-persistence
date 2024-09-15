@@ -37,13 +37,18 @@ Picture of Task (should always be dark even in lightmode):
 - **Tech Achievement 2**: I used heroku to host my website. I liked it alot better then glitch because it gave me more information about my website and what was wrong then the simplicty of glitch which I really enjoyed. The only thing worse was there was no guide on the canvas page so I had to find my own :).
 - **Tech Achievement 3**: I have 100% on lighthouse on all pages:
   Login:
+  
   ![image](https://github.com/user-attachments/assets/cc13f260-e1aa-4c3b-a1dc-541c79403cf9)
+  
   Register:
+  
   ![image](https://github.com/user-attachments/assets/9e6dbb28-8c6a-4675-ba93-8cc80d4d41b4)
+  
   Main Page:
+  
   ![image](https://github.com/user-attachments/assets/064c51a9-6d27-4edb-b3f9-8d9b14abda93)
 
--  **Tech Achievement 3**:
+-  **Tech Achievement 4**:
     1.express.urlencoded({ extended: true }): Parses URL-encoded data from forms and makes it accessible via req.body.
     2.express-session: Manages user sessions with a server-side store and a unique session ID sent to the client, configured with a secret and options to control session behavior.
     3.express-flash: Enables flash messages, which are temporary messages (e.g., success or error) stored in the session and displayed to users on the next request.
