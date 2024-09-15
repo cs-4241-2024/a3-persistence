@@ -237,10 +237,16 @@ async function deleteStudentDB(studentName, userId) {
     return 0;
   }
 
-  const result = await Student.deleteOne({
-    name: studentName,
-    _id: { $in: user.students },
-  });
+  // find the student to delete
+  const student = await Student.findOne({ name: studentName, _id: { $in: user.students } });
+  const result = await Student.deleteOne({ name: studentName, _id: { $in: user.students } });
+
+  // delete from user's students array
+  user.students = user.students.filter((id) => id.toString() !== student.id);
+  console.log(user.students);
+  await user.save();
+
+  // delete the student
 
   if (result === 0)
     console.log(Date().valueOf(), ": ERR DELETE: Student not found.");
