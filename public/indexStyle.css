@@ -1,0 +1,99 @@
+/* styles */
+/* called by your view template */
+
+* {
+    box-sizing: border-box;
+  }
+  
+  body {
+    align-items: center;
+    text-align: center;
+    font-family: "Benton Sans", "Helvetica Neue", helvetica, arial, sans-serif;
+    margin: 2em;
+    background-color:#df91f7;
+    color:#999;
+  }
+  .field {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+header {
+    color:#000000;
+    font-family: "Shadows Into Light", cursive;
+    font-weight: 400;
+    font-style: normal;
+}
+  h2 {
+    color:#000000;
+    font-family: "Nerko One", cursive;
+    font-weight: 400;
+    font-style: normal;
+    font-size:xx-large;
+    padding:0cm;
+}
+  h5 {
+    color:#523BED;
+    text-align: right;
+    margin: auto;
+    padding-bottom:20px;
+    padding-right: 10px;
+  }
+  p {
+    font-family: "Merriweather", serif;
+    font-weight: 400;
+    font-style: normal;
+    color:black;
+  }
+
+  .result {
+    width: 100%;
+    max-width: 400px;
+    margin:auto;
+    padding: 15px;
+    border: 5px solid rgb(28, 177, 203);
+    background-color: #8ebbfaa1;
+  }
+  
+  form {
+    /*padding: 15px;
+    background-color: cyan;
+    display: inline-block;
+    width: 100%;
+    max-width: 400px;
+    border-radius: 3px;*/
+  }
+  
+  input {
+    
+    margin-bottom: 20px;
+    padding: 5px;
+    width: 100%;
+    border: 1px solid lightgrey;
+    border-radius: 3px;
+    font-size: 16px;
+  }
+  
+  button {
+    font-size: 16px;
+    border-radius: 3px;
+    background-color: lightgrey;
+    border: 1px solid grey;
+    box-shadow: 2px 2px teal;
+    cursor: pointer;
+  }
+
+  .msg {
+    margin: auto;
+    text-align: center;
+    width:500px;
+    height:auto;
+}
+
+  
+  footer {
+    margin-top: 50px;
+    padding-top: 25px;
+    border-top: 1px solid lightgrey;
+  }
+  

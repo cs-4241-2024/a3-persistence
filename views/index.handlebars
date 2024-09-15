@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <title>CS4241 Assignment 3</title>
+    <link rel="stylesheet" type="text/css" href="indexStyle.css">
+    <meta charset="utf-8">
+    <link rel="prefetch"  href="index.html"> <!--idk about this link-->
+
+    <!-- font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Karla:ital,wght@0,200..800;1,200..800&family=Macondo&family=Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,300;1,400;1,700;1,900&family=Nerko+One&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Shadows+Into+Light&display=swap" rel="stylesheet">
+    <!--font-->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Karla:ital,wght@0,200..800;1,200..800&family=Macondo&family=Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,300;1,400;1,700;1,900&family=Shadows+Into+Light&display=swap" rel="stylesheet">
+     <!--font-->
+     <link rel="preconnect" href="https://fonts.googleapis.com">
+     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+     <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Karla:ital,wght@0,200..800;1,200..800&family=Macondo&family=Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,300;1,400;1,700;1,900&display=swap" rel="stylesheet">
+    
+    <!-- get rid of favicon error -->
+    <link rel="icon" href="data:;base64,iVBORw0KGgo=">
+  </head>
+  <body>
+    <header>CS4241 Assignment 3</header>
+    <h2>Book Collection Manager</h2>
+    <form action='/login' method='POST'>
+      <p>Please login to our account</p>
+      <div class="field"><h5>Username:</h5>
+        <input type='text' name='username' required minlength="1" maxlength="40" size="30">
+    </div>
+      <div class="field"><h5>Password:</h5>
+        <input type='password' name='password' required minlength="1" maxlength="40" size="30">
+    </div>
+      <input type='submit'>
+    </form>
+    <p>
+    {{{msg}}}
+    </p>
+
+    
+  </body>
+</html>
