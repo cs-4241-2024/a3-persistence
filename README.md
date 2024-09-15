@@ -1,16 +1,18 @@
 # Assignment 3 - Persistence: Two-tier Web Application with Database, Express server, and CSS template
 
-## Student Management System
+## Student Gradebook System
 
-- Link to Project: <http://a3-alden-cutler.glitch.me>
+- Link to Project: <https://a3-alden-cutler.onrender.com>
 
 #### Description
 
 Include a very brief summary of your project here. Images are encouraged, along with concise, high-level text. Be sure to include:
 
-- **Goal of the Application**: The goal of this application is to provide a comprehensive student management system that allows users to add, update, and delete student records, as well as view real-time statistics about the students.
+- **Goal of the Application**: The goal of this application is to provide a comprehensive student gradebook system that allows users to add, update, and delete student records, as well as view real-time statistics about the students.
 - **Challenges Faced**: 
-- **Authentication Strategy**: I implemented my own very simple authentication system. The user inputs a username and password, then clicks the "Login" button to authenticate. The server then goes and fetches the `users` collection from the database and checks if the username and password match any of the documents in the collection. If a match is found, the user is authenticated and the main page is updated to show the student management system. If no match is found, the user is shown an error message and prompted to try again.
+  1. **Database Integration**: Integrating the MongoDB database with the Express server was challenging, especially ensuring that the database operations were performed asynchronously and handling potential errors gracefully.
+  2. **Deployment**: Deploying the application to Render and ensuring that it worked correctly in a production environment was challenging. For a while, I kept getting somewhat cryptic error messages, saying that the server could not connect to MongoDB. Multiple online resources mentioned URI-encoding each part of the connection string, but that didn't work. I'm not quite sure what the issue was, but I seemed to fix it by moving the last section of the connection string to the .env file, along with the username and password.
+- **Authentication Strategy**: I implemented my own very simple authentication system. The user inputs a username and password, then clicks the "Login" button to authenticate. The server then goes and fetches the `users` collection from the database and checks if the username and password match any of the documents in the collection. If a match is found, the user is authenticated and the main page is updated to show the student gradebook system. If no match is found, the user is shown an error message and prompted to try again.
   - If a user doesn't have an account, they can enter a username and password, then press the "Create Account" button. This creates a new document in the `users` collection with the username and password. The user is then prompted to login with their new username and password.
 - **CSS Framework**: I used `Simple.css` as the CSS framework for this project because it is lightweight and easy to use. I also added a couple of custom styles.
 
@@ -25,6 +27,10 @@ Include a very brief summary of your project here. Images are encouraged, along 
   2. **`serve-static`**: Used to serve static files such as HTML, CSS, and JavaScript from the `public` directory.
   3. **`dotenv`**: Used to load environment variables from a `.env` file into `process.env`.
   4. **`errorhandler`**: Used to handle errors in a development environment by displaying a stack trace and error message in the browser.
+
+- **Deployed to Render**: Render is a cloud platform, similar to Glitch, that allows you to deploy web applications. It differs from Glitch in a couple ways. First of all, instead of simply copying your repository, like Glitch does, it "attaches" itself to it, so whenever you push a new update to your Git repository, Render can automatically redeploy the changes. You also have the option of deploying from a Docker image or public Git repository. Render also lets you specify a build command, start command, and root directory in which to run commands. This is useful for projects that require a build step, like React projects. Render also provides a free SSL certificate for your domain, which is a nice touch. It supports rollbacks as well. On paid instances, it also supports SSH access and persistent disks.
+  - However, Render doesn't allow you to edit your code directly like Glitch does. If you notice an error in your code, you have to push a new commit to your Git repository and redeploy.
+  - Because of these features, I decided to deploy my project to Render. You can view the deployed project [here](https://a3-alden-cutler.onrender.com), or by clicking the link at the top of this README.
 
 ### Design/Evaluation Achievements
 
