@@ -5,7 +5,10 @@ let cumulativeTotalPrice = 0;
 // Function to fetch initial orders from the server (MongoDB)
 const fetchInitialOrders = async function () {
   try {
-    const response = await fetch("/orders");
+    const response = await fetch('/orders', {
+      method: 'GET'
+    })
+
     if (!response.ok) {
       throw new Error(`Error fetching data: ${response.statusText}`);
     }
@@ -32,8 +35,6 @@ const fetchInitialOrders = async function () {
   } catch (error) {
     console.error("Error fetching initial orders:", error);
   }
-
-
 };
 
 // Function to render ordered items on the frontend
@@ -178,6 +179,17 @@ async function saveItem(id) {
     updatedOrder.foodPrice = foodPrice;
     updatedOrder.quantity = quantity;
 
+    // Recalculate cumulative total price
+    cumulativeTotalPrice = orderedItemsArray.reduce(
+        (total, item) => total + item.foodPrice * item.quantity,
+        0
+    );
+
+    // Update the total price field
+    const totalPriceField = document.querySelector("#totalPriceField");
+    totalPriceField.innerHTML = `<h3>Cumulative Total Price: $${cumulativeTotalPrice}</h3>`;
+
+    // Re-render the list of orders
     renderOrderedItems();
   }
 }
