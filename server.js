@@ -8,13 +8,19 @@ app.use(express.static("public"));
 const dir = "public/";
 const port = 3000;
 
-// App data
-const appdata = [];
+app.get("/data", async (req, res) => {
+    // getting data from a3 database in grocery-lists collection
+    const groceryLists = client.db("a3").collection("grocery-lists");
+    const list = await groceryLists.findOne({ username: "harbar20" });
+    const groceries = list.groceries;
+    const result = groceries.map((grocery) => {
+        return {
+            ...grocery,
+            total: grocery.price * grocery.quantity,
+        };
+    });
 
-app.get("/data", (req, res) => {
-    console.log(appdata);
-
-    res.json(appdata);
+    res.json(result);
 });
 
 app.put("/data", (req, res) => {
@@ -58,7 +64,6 @@ const startServer = async () => {
 
     app.listen(port, async () => {
         console.log(`Listening on http://localhost:${port}`);
-        console.log(client.db("sample_mflix").collection("movies").find());
     });
 };
 
