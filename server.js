@@ -25,10 +25,20 @@ app.get("/data", async (req, res) => {
 
 app.put("/data", (req, res) => {
     const data = req.body;
-    const { index, ...rest } = data;
-    // Derived value
-    rest.total = data.price * data.quantity;
-    aappdata[index] = rest;
+    const { index } = data;
+
+    const groceryLists = client.db("a3").collection("grocery-lists");
+    const list = groceryLists.updateOne(
+        {
+            username: "harbar20",
+        },
+        {
+            $set: {
+                [`groceries.${index}`]: data,
+            },
+        }
+    );
+
     res.send("Data updated successfully");
 });
 

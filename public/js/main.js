@@ -187,7 +187,7 @@ const editableListener = async function (event) {
         return;
     }
 
-    fetch("/data", {
+    await fetch("/data", {
         method: "PUT",
         body: JSON.stringify(body),
         headers: {
