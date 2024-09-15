@@ -9,6 +9,10 @@ app.use(express.static("public") )//folder public
 app.use(express.json() )
 
 
+const cookie  = require( 'cookie-session' ),
+hbs     = require( 'express-handlebars' ).engine
+
+
 const uri = `mongodb+srv://${process.env.MYUSER}:${process.env.PASS}@${process.env.HOST}`
 const client = new MongoClient( uri )
 
@@ -35,18 +39,39 @@ app.use( (req,res,next) => {
     }
   })
 
+
+// use express.urlencoded to get data sent by defaut form actions
+// or GET requests
+app.use( express.urlencoded({ extended:true }) )
+
+
+//add function but not working the way I want currently
 app.post( '/add', async (req,res) => {
+    const result2 = await collection.findOne({ title: req.body.title });
+    if (!result2) {
     const result = await collection.insertOne( req.body )
+    console.log(req.body)
     res.json( result )
+    }
+    res.json("There is book with that title already so can't add")
 })
 
 // assumes req.body takes form { _id:5d91fb30f3f81b282d7be0dd } etc.
 app.post( '/remove', async (req,res) => {
-    const result = await collection.deleteOne({ 
-      _id:new ObjectId( req.body._id ) 
-    })
-    
-    res.json( result )
+
+    let title = req.body.title;
+    const result2 = await collection.findOne({ title: req.body.title });
+    if (result2) {
+        const result = await collection.deleteOne({ 
+            _id:new ObjectId( result2._id )
+            })
+        console.log(`Successfully deleted document with title: ${title}`);
+        res.json( result)
+    }else {
+        console.log(`No documents found with title: ${title}`);
+    }
+    //console.log(req.body)
+    res.json("couldn't successfully delete")
 })
 
 app.post( '/update', async (req,res) => {
@@ -59,8 +84,7 @@ app.post( '/update', async (req,res) => {
 })
 
 //cookies
-const cookie  = require( 'cookie-session' ),
-hbs     = require( 'express-handlebars' ).engine
+
 
 
 // we're going to use handlebars, but really all the template
@@ -71,9 +95,6 @@ app.set(    'view engine', 'handlebars' )
 app.set(    'views',       './views' )
 
 
-// use express.urlencoded to get data sent by defaut form actions
-// or GET requests
-app.use( express.urlencoded({ extended:true }) )
 
 // cookie middleware! The keys are used for encryption and should be
 // changed

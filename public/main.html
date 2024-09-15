@@ -48,7 +48,7 @@
     Years must be entered in the 1000s and less than 2025</p>
 
     <!--Book ID will be the unique identifier, I will make these my own-->
-
+    <form action='/add' method='POST'>
     <div class="field"><h5>Title:</h5> </div>
     <input type="text" id="title" name="title" required minlength="1" maxlength="40" size="30" >
     
@@ -67,25 +67,23 @@
     <p id="options">Here is a list of ideas for genre entries:
       (fiction, non-fiction, sci-fi, fantasy, and romance)
     </p>
-    
    
-
-    <button id="newBook">submit</button><br>
-
-    <div class="message"><p id="canAdd">Successfully Added</p></div>
-    <div class="message"><p id="canNotAdd">Couldn't be Added</p></div>
-
+    <input type='submit'>
+    <!--<button type= 'submit' id="newBook">submit</button><br>-->
+    </form>
   </div>
    
 
     <div class="box">
     <h3>Delete Entry</h3>
 
+
+    <form action='/remove' method='POST'>
     <div class="field"><h5>Title:</h5></div>
-    <!--not sure what the best way to go about this is-->
-    <input type="text" id="delTitle" name="delTitle" required minlength="1" maxlength="40" size="30" >
+    <input type="text" id="title" name="title" required minlength="1" maxlength="40" size="30" >
 
     <button id="deleteBook">delete</button><br>
+  </form>
     <div class="message"><p id="canDel">Successfully Deleted</p></div>
     <div class="message"><p id="canNotDel">Couldn't be Deleted</p></div>
 
