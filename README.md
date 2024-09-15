@@ -4,7 +4,7 @@
 
 - Link to Project: <https://a3-alden-cutler.onrender.com>
 
-#### Description
+### Description
 
 - **Goal of the Application**: The goal of this application is to provide a comprehensive student gradebook system that allows users to add, update, and delete student records, as well as view real-time statistics about the students.
 - **Challenges Faced**:
