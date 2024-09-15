@@ -1,51 +1,92 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>CS4241 Assignment 3</title>
+    <title>Login - CS4241 Assignment 3</title>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="description" content="This is a student gradebook application for CS4241 Assignment 3." />
+    <meta
+      name="description"
+      content="This is a student gradebook application for CS4241 Assignment 3."
+    />
     <script src="js/main.js"></script>
     <script src="js/student.js" type="module"></script>
     <!-- get rid of favicon error -->
     <link rel="icon" href="data:;base64,iVBORw0KGgo=" />
 
     <!-- CSS Template from https://simplecss.org/ -->
-    <link rel="stylesheet" href="https://cdn.simplecss.org/simple.min.css">
-    
+    <link rel="stylesheet" href="https://cdn.simplecss.org/simple.min.css" />
+
     <!-- This stylesheet is for adding any extra styling on top of the template. -->
-    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/styles.css" />
   </head>
   <body>
     <div id="login">
-      <h1>Login</h1>
+      <h1 style="text-align: center;">Login</h1>
 
       <form>
+        <label for="username">Username: </label>
         <input type="text" id="username" placeholder="Username" />
+        <label for="password">Password: </label>
         <input type="password" id="password" placeholder="Password" />
-        <button id="login-button">Login</button>
-        <button id="create-account">Create Account</button>
+        <div class="button-group">
+          <button id="login-button">Login</button>
+          <button id="create-account">Create Account</button>
+        </div>
       </form>
     </div>
 
-    <div id="gradebook" style="display: none;">
+    <div id="gradebook" style="display: none; text-align: center;">
       <h1>Student Gradebook</h1>
-      <form>
-        <input type="text" id="name" placeholder="Student Name" />
-        <select id="class">
-          <option value="">Select Student Year/Type</option>
-          <option value="freshman">Freshman</option>
-          <option value="sophomore">Sophomore</option>
-          <option value="junior">Junior</option>
-          <option value="senior">Senior</option>
-          <option value="grad">Grad</option>
-          <option value="part-time">Part-Time</option>
-        </select>
-        <input type="number" id="grade" placeholder="Final Grade (Number)" />
-        <button id="submit">Add/Update Student</button>
+      <form id="add-student">
+        <div class="inputs">
+          <div class="input-group">
+            <label for="name">Name</label>
+            <input type="text" id="name" placeholder="Student Name" />
+          </div>
+  
+          <div class="input-group">
+            <label for="class">Student Year/Type</label>
+            <select id="class">
+              <option value="">Select Student Year/Type</option>
+              <option value="freshman">Freshman</option>
+              <option value="sophomore">Sophomore</option>
+              <option value="junior">Junior</option>
+              <option value="senior">Senior</option>
+              <option value="grad">Grad</option>
+              <option value="part-time">Part-Time</option>
+            </select>
+          </div>
+  
+          <div class="input-group">
+            <label for="grade">Final Grade</label>
+            <input type="number" id="grade" placeholder="Final Grade (Number)" />
+          </div>
+        </div>
+
+        <div class="button-group">
+          <button id="submit">Add/Update Student</button>
+          <button id="info">Info/Help</button>
+        </div>
       </form>
 
-      <table>
+      <div id="modal" style="display: none">
+        <div id="modal-inner">
+          <h2>Info/Help</h2>
+          <p>
+            To add a student, fill out the form with the student's name,
+            year/type, and final grade. Click the "Add/Update Student" button to
+            add the student to the gradebook. If a student already exists with
+            the same name, their grade and class year will be updated.
+          </p>
+          <p>
+            To delete a student, simply press the delete button in the student's
+            row in the table.
+          </p>
+          <button id="close">Close</button>
+        </div>
+      </div>
+
+      <table id="grades">
         <caption>
           Student Grades
         </caption>
@@ -113,6 +154,7 @@
         </table>
       </div>
 
+      <hr>
       <div id="logout">
         <p>Logged in as <span id="current-user"></span>.</p>
         <button id="logout-button">Logout</button>

@@ -8,14 +8,48 @@ window.onload = async function () {
   const loginForm = document.getElementById("login");
   const gradebook = document.getElementById("gradebook");
   const currentUser = document.getElementById("current-user");
+  const help = document.getElementById("info");
+
+  // display help info
+  help.onclick = function (e) {
+    e.preventDefault();
+
+    // display modal
+    const modal = document.getElementById("modal");
+    modal.style.display = "block";
+
+    // close modal when user clicks outside of it
+    window.onclick = function (event) {
+      if (event.target == modal) {
+        modal.style.display = "none";
+      }
+    };
+
+    // close modal when user clicks the close button
+    const close = document.getElementById("close");
+    close.onclick = function () {
+      modal.style.display = "none";
+    };
+
+    // close modal when user presses escape key
+    window.onkeydown = function (event) {
+      if (event.key === "Escape") {
+        modal.style.display = "none";
+      }
+    }
+  };
 
   // handle login event
   loginButton.onclick = async function (e) {
     e.preventDefault();
 
     // input validation
-    if (!usernameInput.value || !passwordInput.value) {
-      alert("Please enter a username and password");
+    if (!usernameInput.value) {
+      alert("Please enter a username.");
+      return;
+    }
+    if (!passwordInput.value) {
+      alert("Please enter a password.");
       return;
     }
 
@@ -33,12 +67,15 @@ window.onload = async function () {
 
     // if the login was successful, fetch the students and stats
     let res = await response.json();
-    const userId = res.userId;
     alert(res.message);
-    if (res.success && (res.userId != null)) {
+    const userId = res.userId;
+    if (res.success && res.userId != null) {
       // hide the login form
       loginForm.style.display = "none";
       gradebook.style.display = "block";
+
+      // set page title
+      document.title = `${usernameInput.value}'s Gradebook`;
 
       // dynamically import the functions from student.js
       const handleAdd = await import("./student.js").then(

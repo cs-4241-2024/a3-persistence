@@ -3,6 +3,7 @@ const mongoose = require("mongoose");
 const path = require("path");
 const morgan = require("morgan");
 const serveStatic = require("serve-static");
+const errorHandler = require("errorhandler")
 require("dotenv").config();
 
 const app = express();
@@ -37,15 +38,16 @@ const Student = mongoose.model("Student", studentSchema);
 app.use(express.json());
 app.use(serveStatic(path.join(__dirname, dir), { index: "index.html" }));
 app.use(morgan("dev"));
+if (process.env.NODE_ENV === "development") {
+  app.use(errorHandler());
+}
 
 // GET request handlers
 app.get("/", (req, res) => {
-  // console.log(Date().valueOf(), ": GET: /");
   res.sendFile(path.join(__dirname, dir, "index.html"));
 });
 
 app.get("/students", async (req, res) => {
-  // console.log(Date().valueOf(), ": GET: /students");
   const students = await Student.find();
   console.log(students);
   res
@@ -54,7 +56,6 @@ app.get("/students", async (req, res) => {
 });
 
 app.get("/students/:id", async (req, res) => {
-  // console.log(Date().valueOf(), ": GET: /students/:id");
   const userId = req.params.id;
 
   try {
@@ -68,7 +69,6 @@ app.get("/students/:id", async (req, res) => {
       stats: await calculateClassGradeStatsDB(),
     });
   } catch (error) {
-    console.error(error);
     res.status(500).json({ message: "Internal Server Error" });
   }
 });
@@ -86,17 +86,14 @@ app.post("/login", async (req, res) => {
     } else {
       res
         .status(401)
-        .json({ success: false, message: "Login failed. Please try again." });
+        .json({ success: false, message: "Invalid username or password." });
     }
   } catch (err) {
-    console.error(err);
     res.status(500).json({ success: false, message: "Internal Server Error" });
   }
 });
 
 app.post("/create-account", async (req, res) => {
-  // console.log(Date().valueOf(), ": POST: /create-account");
-
   // handle the request
   try {
     const { username, password } = req.body;
@@ -115,8 +112,6 @@ app.post("/create-account", async (req, res) => {
 });
 
 app.post("/add", async (req, res) => {
-  // console.log(Date().valueOf(), ": POST: /add");
-
   // handle the request
   let student = req.body.student;
   let code = await addStudentDB(student, req.body.id);
@@ -140,8 +135,6 @@ app.post("/add", async (req, res) => {
 });
 
 app.post("/delete", async (req, res) => {
-  // console.log(Date().valueOf(), ": POST: /delete");
-
   // handle the request
   let student = req.body.name;
   let success = await deleteStudentDB(student, req.body.id);
@@ -153,6 +146,11 @@ app.post("/delete", async (req, res) => {
       stats: await calculateClassGradeStatsDB(),
     });
   } else {
+    // this theoretically shouldn't happen since the only way to delete a student is through the UI, 
+    // meaning the student exists in the database
+    // however, there is a scenario which I'm not exactly sure how to fix where the user can login twice before the page reloads
+    // in this scenario, it's possible that a student could be displayed twice in the table, meaning that if the user deletes the student,
+    // a "ghost" record would still be displayed, even though that student doesn't actually exist. This visual bug can be fixed by refreshing the page.
     res.status(400).send("400: Bad Request - Student not found");
   }
 });
