@@ -90,11 +90,11 @@ const revalidate = async () => {
 
     // Displaying new data
     let total = 0;
-    for (const [i, item] of data.entries()) {
+    for (const item of data) {
         // Each row
         tr = document.createElement("tr");
         tr.classList.add("record");
-        tr.id = `record-${i}`;
+        tr.id = `record-${item.index}`;
 
         let td = document.createElement("td");
         // Item Name
@@ -130,7 +130,7 @@ const revalidate = async () => {
         const deleteButton = document.createElement("button");
         deleteButton.textContent = "Delete";
         deleteButton.classList.add("recordButton");
-        deleteButton.onclick = () => onDelete(i);
+        deleteButton.onclick = () => onDelete(item.index);
         td.appendChild(deleteButton);
 
         // Adding everything to the row

@@ -9,3 +9,28 @@ export const client = new MongoClient(uri, {
         deprecationErrors: true,
     },
 });
+
+// Function to remove an element from an array by index
+export function removeGroceryByIndex(username, index) {
+    return client
+        .db("a3")
+        .collection("grocery-lists")
+        .updateOne({ username: username }, [
+            {
+                $set: {
+                    ["groceries"]: {
+                        $concatArrays: [
+                            { $slice: ["$groceries", index] },
+                            {
+                                $slice: [
+                                    "$groceries",
+                                    { $add: [index, 1] },
+                                    { $size: "$groceries" },
+                                ],
+                            },
+                        ],
+                    },
+                },
+            },
+        ]);
+}

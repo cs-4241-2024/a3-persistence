@@ -1,5 +1,5 @@
 import express from "express";
-import { client } from "./db.js";
+import { client, removeGroceryByIndex } from "./db.js";
 
 // App configuration
 const app = express();
@@ -12,8 +12,9 @@ app.get("/data", async (req, res) => {
     const groceryLists = client.db("a3").collection("grocery-lists");
     const list = await groceryLists.findOne({ username: "harbar20" });
     const groceries = list.groceries;
-    const result = groceries.map((grocery) => {
+    const result = groceries.map((grocery, index) => {
         return {
+            index,
             ...grocery,
             total: grocery.price * grocery.quantity,
         };
@@ -49,10 +50,13 @@ app.post("/data", async (req, res) => {
     res.send("Data updated successfully");
 });
 
-app.delete("/data", (req, res) => {
+app.delete("/data", async (req, res) => {
     const data = req.body;
-    const { index } = data;
-    appdata.splice(index, 1);
+
+    const { index, ...rest } = data;
+
+    removeGroceryByIndex("harbar20", index);
+
     res.send("Data deleted successfully");
 });
 
