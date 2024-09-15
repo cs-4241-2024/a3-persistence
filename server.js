@@ -2,15 +2,19 @@ const express = require('express');
 const { MongoClient, ObjectId } = require('mongodb');
 const bodyParser = require('body-parser');
 const cors = require('cors');
+const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
 
 const app = express();
 const port = 3000;
+const secretKey = 'your-secret-key'; // Use a secure key for JWT
 
 // MongoDB connection URI and Database
 const uri = 'mongodb+srv://ubervenx:nbajam123@foodorders.lhc94.mongodb.net/?retryWrites=true&w=majority&appName=FoodOrders';
 const client = new MongoClient(uri);
 const dbName = 'foodordersDB';
 const collectionName = 'orders';
+const usersCollectionName = 'users';
 
 // Middleware
 app.use(bodyParser.json());
@@ -19,10 +23,11 @@ app.use(express.static("public"));
 
 // Connect to MongoDB
 
-let db, ordersCollection;
+let db, ordersCollection, usersCollection;
 client.connect().then(() => {
   db = client.db(dbName);
   ordersCollection = db.collection(collectionName);
+  usersCollection = db.collection(usersCollectionName); // Users collection
   console.log('Connected to MongoDB');
 }).catch(err => {
   console.error('Failed to connect to MongoDB', err);
@@ -88,6 +93,71 @@ app.delete('/delete', async (req, res) => {
   } catch (error) {
     res.status(500).json({ message: 'Error deleting order', error });
   }
+});
+
+// User Registration Route
+app.post('/register', async (req, res) => {
+  const { username, password } = req.body;
+
+  try {
+    // Check if the username already exists
+    const existingUser = await usersCollection.findOne({ username });
+    if (existingUser) {
+      return res.status(400).json({ message: 'Username already exists' });
+    }
+
+    // Hash the password
+    const hashedPassword = await bcrypt.hash(password, 10);
+
+    // Insert new user into the database
+    const newUser = { username, password: hashedPassword };
+    await usersCollection.insertOne(newUser);
+
+    res.status(201).json({ message: 'User registered successfully' });
+  } catch (error) {
+    res.status(500).json({ message: 'Error registering user', error });
+  }
+});
+
+// User Login Route
+app.post('/login', async (req, res) => {
+  const { username, password } = req.body;
+
+  try {
+    // Find the user by username
+    const user = await usersCollection.findOne({ username });
+    if (!user) {
+      return res.status(400).json({ message: 'Invalid username or password' });
+    }
+
+    // Compare the password with the hashed password in the database
+    const isMatch = await bcrypt.compare(password, user.password);
+    if (!isMatch) {
+      return res.status(400).json({ message: 'Invalid username or password' });
+    }
+
+    // Generate a JWT token
+    const token = jwt.sign({ userId: user._id }, secretKey, { expiresIn: '1h' });
+
+    res.json({ message: 'Login successful', token });
+  } catch (error) {
+    res.status(500).json({ message: 'Error logging in', error });
+  }
+});
+
+function authenticateToken(req, res, next) {
+  const token = req.headers['authorization'];
+  if (!token) return res.status(401).json({ message: 'Access denied' });
+
+  jwt.verify(token, secretKey, (err, user) => {
+    if (err) return res.status(403).json({ message: 'Invalid token' });
+    req.user = user;
+    next();
+  });
+}
+
+app.get('/protected', authenticateToken, (req, res) => {
+  res.json({ message: 'This is a protected route', user: req.user });
 });
 
 // Serve static files (HTML, CSS, JS)

@@ -4,41 +4,53 @@
   <title>CS4241 Assignment 3</title>
   <meta charset="utf-8" />
   <script src="js/main.js" defer></script>
-  <link rel="stylesheet" href="css/main.css" />
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
   <link rel="icon" href="data:;base64,iVBORw0KGgo=" />
 </head>
-<body>
-<form id="orderForm">
-  <h1>Restaurant Service</h1>
+<body class="bg-orange-100 flex justify-center items-center h-screen font-sans">
+
+<form id="orderForm" class="bg-white shadow-xl rounded-lg p-8 w-full max-w-md space-y-6">
+  <h1 class="text-4xl font-serif text-red-600 font-bold">Restaurant Service</h1>
 
   <!-- Name input field -->
-  <label for="nameInput">Input your name here:</label><br />
-  <input type="text" id="nameInput" required /><br />
+  <div class="space-y-2">
+    <label for="nameInput" class="block text-yellow-600 font-bold">Input your name here:</label>
+    <input type="text" id="nameInput" class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:border-green-500" required />
+  </div>
 
   <!-- Food selection dropdown -->
-  <label for="foodSelect">What food do you want to order?</label><br />
-  <select id="foodSelect" required>
-    <option value="10">Burger ($10)</option>
-    <option value="5">Fries ($5)</option>
-    <option value="3">Milkshake ($3)</option>
-  </select><br />
+  <div class="space-y-2">
+    <label for="foodSelect" class="block text-yellow-600 font-bold">What food do you want to order?</label>
+    <select id="foodSelect" class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:border-green-500" required>
+      <option value="10">Burger ($10)</option>
+      <option value="5">Fries ($5)</option>
+      <option value="3">Milkshake ($3)</option>
+    </select>
+  </div>
 
   <!-- Quantity input field -->
-  <label for="quantityInput">Quantity amount:</label><br />
-  <input type="number" id="quantityInput" name="quantity" min="1" max="5" value="1" required /><br />
+  <div class="space-y-2">
+    <label for="quantityInput" class="block text-yellow-600 font-bold">Quantity amount:</label>
+    <input type="number" id="quantityInput" name="quantity" min="1" max="5" value="1" class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:border-green-500" required />
+  </div>
 
   <!-- Submit button -->
-  <button type="submit" class="submit-btn">Submit</button>
+  <button type="submit" class="w-full bg-red-600 text-white py-3 rounded-lg hover:bg-red-700 transition-colors">
+    Submit
+  </button>
 
   <!-- Cumulative total price display -->
-  <div id="totalPriceField">
-    <h3>Cumulative Total Price: $0</h3>
+  <div id="totalPriceField" class="flex justify-center mt-4">
+    <h3 class="text-xl font-bold text-red-600">Cumulative Total Price: $0</h3>
   </div>
 </form>
 
 <!-- Ordered items list -->
-<h3>Ordered Items:</h3>
-<ul id="orderedItemsList"></ul>
+<h3 class="text-xl font-serif text-red-600 mt-8">Ordered Items:</h3>
+<ul id="orderedItemsList" class="space-y-4 mt-4">
+  <!-- Items will be dynamically added here -->
+</ul>
 
 </body>
 </html>
