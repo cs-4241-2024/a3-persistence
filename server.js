@@ -9,7 +9,6 @@ const dir = "public/";
 const port = 3000;
 
 app.get("/data", async (req, res) => {
-    // getting data from a3 database in grocery-lists collection
     const groceryLists = client.db("a3").collection("grocery-lists");
     const list = await groceryLists.findOne({ username: "harbar20" });
     const groceries = list.groceries;
@@ -32,16 +31,20 @@ app.put("/data", (req, res) => {
     res.send("Data updated successfully");
 });
 
-app.post("/data", (req, res) => {
+app.post("/data", async (req, res) => {
     const data = req.body;
 
-    console.log(data);
-
-    // Derived value
-    data.total = data.price * data.quantity;
-    appdata.push(data);
-
-    console.log(appdata);
+    const groceryLists = client.db("a3").collection("grocery-lists");
+    const list = await groceryLists.updateOne(
+        {
+            username: "harbar20",
+        },
+        {
+            $push: {
+                groceries: data,
+            },
+        }
+    );
 
     res.send("Data updated successfully");
 });
