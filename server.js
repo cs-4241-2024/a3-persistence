@@ -2,6 +2,8 @@ const express = require('express');
 const { MongoClient, ObjectId } = require('mongodb');
 const bodyParser = require('body-parser');
 const cors = require('cors');
+const helmet = require('helmet');
+const morgan = require('morgan');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
@@ -20,6 +22,8 @@ const usersCollectionName = 'users';
 app.use(bodyParser.json());
 app.use(cors());
 app.use(express.static("public"));
+app.use(helmet());
+app.use(morgan('tiny'));
 
 // Connect to MongoDB
 
