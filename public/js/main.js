@@ -24,15 +24,14 @@ const submit = async function( event ) {
     secondvalue: secondvalue.value,
     operator: operator
   }
-  body = JSON.stringify( json )
 
-  const response = await fetch( '/submit', {
-    method:'POST',
-    body 
+  fetch( '/submit', {
+    method:  'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body:    JSON.stringify( json )
   })
-
-  const result = await response.text()
-  document.getElementById( 'equation' ).innerHTML = firstvalue.value + operatorSymbol + secondvalue.value + ' = ' + result
+  .then( response => response.json() )
+  .then( result => document.getElementById( 'equation' ).innerHTML = firstvalue.value + operatorSymbol + secondvalue.value + ' = ' + result)
 }
 
 window.onload = function() {
