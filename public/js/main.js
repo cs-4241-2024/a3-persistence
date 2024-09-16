@@ -74,7 +74,16 @@ const submit = async function(event) {
 window.onload = function() {
   const submitButton = document.querySelector("#submitButton");
   submitButton.onclick = submit;
-
-  makeRequest(); // Populate table initially
-};
-
+  const getData = async function() {
+    const body = JSON.stringify({});
+    const response = await fetch('/docs', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body
+    });
+  }
+  getData();
+  //makeRequest(); // Populate table initially
+}
