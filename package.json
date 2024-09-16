@@ -1,0 +1,16 @@
+{
+  "name": "",
+  "version": "",
+  "description": "",
+  "author": "",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "mime": "^2.4.4",
+    "mongodb": "^6.9.0"
+  },
+  "engines": {
+    "node": "16.x"
+  }
+}
