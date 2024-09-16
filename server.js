@@ -1,3 +1,5 @@
+require("dotenv").config()
+console.log(process.env.USER)
 const express = require("express"),
       { MongoClient, ObjectId } = require("mongodb"),
       app = express()
