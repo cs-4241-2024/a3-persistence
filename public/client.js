@@ -14,25 +14,18 @@ const submit = async function( event ) {
   const input2 = document.querySelector( '#game' ).value
   const input3 = document.querySelector( '#score' ).value
   
-  
   const response = await fetch( '/submit', {
     method:'POST',
+    headers: {
+      'Content-type': 'application/json'
+    },
     body: JSON.stringify({
       yourname: input,
       game: input2,
       score: input3
-      
     })
   })
-
-  const data = await response.json()
-
-  data.forEach((element) => {
-    console.log(element.yourname, element.game, element.score, element.rank)
-    const li = document.createElement('li')
-    li.innerText = 'Name: ' + element.yourname + ', Game: ' + element.game + ', Score: ' + element.score + ', Rank: ' + element.rank + '  ';
-    ul.appendChild(li)
-  })
+  print();
 }
 
 const del = async function ( event ) {
@@ -46,7 +39,10 @@ const del = async function ( event ) {
   const input3 = document.querySelector( '#score' ).value
   
   const response = await fetch( '/delete', {
-    method:'DELETE',
+    method:'POST',
+    headers: {
+      'Content-type': 'application/json'
+    },
     body: JSON.stringify({ 
       yourname: input,
       game: input2,
@@ -54,15 +50,7 @@ const del = async function ( event ) {
 
     })
   })
-  
-  const data = await response.json()
-  
-  data.forEach((element) => {
-    console.log(element.yourname, element.game, element.score, element.rank)
-    const li = document.createElement('li')
-    li.innerText = 'Name: ' + element.yourname + ', Game: ' + element.game + ', Score: ' + element.score + ', Rank: ' + element.rank + '  ';
-    ul.appendChild(li)
-  })
+  print();
 }
 
 const modify = async function( event ) {
@@ -85,6 +73,9 @@ const modify = async function( event ) {
   
   const response = await fetch( '/modify', {
     method:'POST',
+    headers: {
+      'Content-type': 'application/json'
+    },
     body: JSON.stringify({
       yourname1: input,
       game1: input2,
@@ -95,9 +86,22 @@ const modify = async function( event ) {
       
     })
   })
+  print();
+}
 
+const print = async function() {  
+  const ul = document.querySelector('ul')
+  ul.innerHTML = ''
+  
+  const response = await fetch( '/docs', {
+    method: 'GET',
+    headers: {
+      'Content-type': 'application/json'
+    }
+  })
+  
   const data = await response.json()
-
+  console.log(data)
   data.forEach((element) => {
     console.log(element.yourname, element.game, element.score, element.rank)
     const li = document.createElement('li')
