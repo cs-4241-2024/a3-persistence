@@ -1,0 +1,14 @@
+{
+  "name": "Webware-A2",
+  "version": "",
+  "description": "Simple Task Logging",
+  "author": "Owen Rago",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.21.0",
+    "mime": "^2.6.0",
+    "mongodb": "^6.9.0"
+  }
+}
