@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>CS4241 Assignment 3</title>
+  <meta charset="utf-8">
+  <link rel="stylesheet" href="style.css">
+  <script src="script.js"></script>
+</head>
+
+<body>
+  <div class="centered">
+    <label for="number">Inserted Number:</label>
+    <input type="number" id="number" name="fname"><br><br>
+    <label for="operation">Your Operation:</label>
+    <input type="text" id="operation" name="lname"><br><br>
+    <p id="KindsOfDivision">Only whole numbered integers are allowed in the first box (you can write negative ones)</p>
+    <p id="KindsOfDivision2">Please note the only aceptable options for the second box are: Add, Sub, Mult, Div</p>
+    <button onclick="submit()">Submit</button>
+  </div>
+  <br />
+  <div class="centered">
+    <table id="myTable"></table>
+    <p>Don't like your latest result? Press this button to remove the latest entry!</p>
+    <button onclick="kill()">Kill!</button>
+  </div>
+
+</body>
+
+</html>

@@ -1,0 +1,21 @@
+{
+  "name": "cr-4241-simple-glitch",
+  "version": "0.1.0",
+  "description": "WPI CS 4241 third assignment",
+  "author": "Elijah Rothschild",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "engines": {
+    "node": "16.x"
+  },
+  "main": "server.js",
+  "keywords": [],
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.20.3",
+    "express": "^4.20.0",
+    "mongodb": "^6.8.1",
+    "path": "^0.12.7"
+  }
+}
