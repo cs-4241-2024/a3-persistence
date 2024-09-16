@@ -23,12 +23,12 @@ app.get("/data", async (req, res) => {
     res.json(result);
 });
 
-app.put("/data", (req, res) => {
+app.put("/data", async (req, res) => {
     const data = req.body;
     const { index } = data;
 
     const groceryLists = client.db("a3").collection("grocery-lists");
-    const list = groceryLists.updateOne(
+    await groceryLists.updateOne(
         {
             username: "harbar20",
         },
@@ -46,7 +46,7 @@ app.post("/data", async (req, res) => {
     const data = req.body;
 
     const groceryLists = client.db("a3").collection("grocery-lists");
-    const list = await groceryLists.updateOne(
+    await groceryLists.updateOne(
         {
             username: "harbar20",
         },
@@ -63,7 +63,7 @@ app.post("/data", async (req, res) => {
 app.delete("/data", async (req, res) => {
     const data = req.body;
 
-    const { index, ...rest } = data;
+    const { index } = data;
 
     removeGroceryByIndex("harbar20", index);
 

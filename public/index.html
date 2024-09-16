@@ -1,33 +1,34 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <title>CS4241 Assignment 2</title>
-        <meta charset="utf-8" />
-        <script src="js/main.js"></script>
-        <link rel="stylesheet" href="css/main.css" />
 
-        <!-- get rid of favicon error -->
-        <link rel="icon" href="data:;base64,iVBORw0KGgo=" />
-    </head>
-    <body>
-        <h1>Your Grocery List</h1>
-        <div class="mainDiv">
-            <div class="listDiv">
-                <table id="list"></table>
-                <h2 class="grandTotal">Grand Total: $<span id="total"></span></h2>
-            </div>
-            <form class="formDiv">
-                <input type="text" id="itemName" placeholder="item" required />
-                <input
-                    type="number"
-                    id="itemPrice"
-                    step="0.25"
-                    placeholder="price"
-                    required
-                />
-                <input type="number" id="itemQuantity" placeholder="#" required />
-                <button id="newItemSubmit">submit</button>
-            </form>
+<head>
+    <title>CS4241 Assignment 2</title>
+    <meta charset="utf-8" />
+    <script src="js/main.js"></script>
+    <link rel="stylesheet" href="css/main.css" />
+    <link rel="stylesheet" href="https://unpkg.com/blocks.css/dist/blocks.min.css" />
+</head>
+
+<body>
+    <h1 class="block">Your Grocery List</h1>
+    <h3>Edit the table by double clicking on a section.</h3>
+    <div class="mainDiv">
+        <div class="listDiv">
+            <h3>Items</h3>
+            <table id="list" class="block"></table>
+            <h2 class="grandTotal">Grand Total: $<span id="total"></span></h2>
         </div>
-    </body>
+        <form class="formDiv">
+            <h3>Add Item</h3>
+            <div class="formItem">
+                <input class="block" type="text" id="itemName" placeholder="item name" required></input>
+                <input class="block" type="number" id="itemPrice" step="0.25" placeholder="price" required></input>
+                <input class="block" type="number" id="itemQuantity" placeholder="#" required></input>
+            </div>
+            <textarea class="block" id="itemDescription" placeholder="item description"></textarea>
+            <button id="newItemSubmit" class="block accent round">submit</button>
+        </form>
+    </div>
+</body>
+
 </html>

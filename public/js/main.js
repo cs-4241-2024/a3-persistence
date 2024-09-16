@@ -27,10 +27,12 @@ const submit = async function (event) {
     const nameInput = document.querySelector("#itemName"),
         quantityInput = document.querySelector("#itemQuantity"),
         priceInput = document.querySelector("#itemPrice"),
+        descriptionInput = document.querySelector("#itemDescription"),
         json = {
             name: nameInput.value,
             quantity: Number(quantityInput.value),
             price: Number(priceInput.value),
+            description: descriptionInput.value,
         },
         body = JSON.stringify(json);
 
@@ -58,6 +60,7 @@ const submit = async function (event) {
     nameInput.value = "";
     priceInput.value = "";
     quantityInput.value = "";
+    descriptionInput.value = "";
 };
 
 window.onload = async function () {
@@ -70,7 +73,7 @@ window.onload = async function () {
 const revalidate = async () => {
     // Building the table layout
     let tr = document.createElement("tr");
-    const headers = ["Item", "Price", "Quantity", "Total"];
+    const headers = ["Item", "Description", "Price", "Quantity", "Total"];
     headers.forEach((headerText) => {
         const th = document.createElement("th");
         th.textContent = headerText;
@@ -103,6 +106,13 @@ const revalidate = async () => {
         td.onblur = editableListener;
         td.classList.add("name");
         tr.appendChild(td);
+        // Item Description
+        td = document.createElement("td");
+        td.innerHTML = item.description || "";
+        td.contentEditable = true;
+        td.onblur = editableListener;
+        td.classList.add("description");
+        tr.appendChild(td);
         // Item Price
         td = document.createElement("td");
         td.innerHTML = item.price;
@@ -129,7 +139,7 @@ const revalidate = async () => {
         td = document.createElement("td");
         const deleteButton = document.createElement("button");
         deleteButton.textContent = "Delete";
-        deleteButton.classList.add("recordButton");
+        deleteButton.classList.add("recordButton", "block", "round");
         deleteButton.onclick = () => onDelete(item.index);
         td.appendChild(deleteButton);
 

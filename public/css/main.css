@@ -1,6 +1,4 @@
 body {
-    background: black;
-    color: white;
     font-family: "Segoe UI", sans-serif;
     text-align: center;
 }
@@ -20,6 +18,10 @@ td {
     padding: 0.5rem;
 }
 
+td:hover {
+    cursor: text;
+}
+
 button {
     background: white;
     border: 1px solid black;
@@ -27,15 +29,15 @@ button {
     padding: 0.5rem;
 }
 
-button:hover {
-    background: darkgrey;
-    color: white;
-    cursor: pointer;
-}
-
 input {
     border: 1px solid white;
     padding: 0.5rem;
+}
+
+textarea {
+    width: 25rem;
+    height: 5rem;
+    justify-self: center;
 }
 
 .mainDiv {
@@ -48,6 +50,10 @@ input {
 }
 
 .formDiv {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
     width: 50%;
 }
 
@@ -84,14 +90,19 @@ input {
     padding: 0.5rem;
 }
 
-#itemName {
-    width: 20rem;
+.formItem {
+    display: flex;
+    flex-direction: row;
 }
 
-#itemQuantity {
-    width: 2rem;
+#itemName {
+    width: 18rem;
 }
 
 #itemPrice {
+    width: 5rem;
+}
+
+#itemQuantity {
     width: 3rem;
 }
