@@ -1,4 +1,6 @@
 const express = require('express');
+const cookie = require( 'cookie-session' );
+const hbs = require( 'express-handlebars').engine;
 const fs = require('fs');
 const mime = require('mime');
 const path = require('path');
