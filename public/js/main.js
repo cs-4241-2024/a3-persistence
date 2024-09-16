@@ -1,4 +1,67 @@
-const submit = async function (event) {
+const register = async (event) => {
+  event.preventDefault();
+  const username = document.querySelector('#registerUsername').value;
+  const password = document.querySelector('#registerPassword').value;
+
+  console.log('Register function called');
+  console.log('Username:', username);
+  console.log('Password:', password);
+
+  const response = await fetch('/register', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ username, password })
+  });
+
+  console.log('Response status:', response.status);
+
+  if (response.ok) {
+    alert('Registration successful');
+  } else {
+    const errorText = await response.text();
+    alert(`Registration failed: ${errorText}`);
+  }
+};
+
+document.querySelector("#registerForm").onsubmit = register;
+
+
+const login = async (event) => {
+  event.preventDefault();
+  const username = document.querySelector('#loginUsername').value;
+  const password = document.querySelector('#loginPassword').value;
+
+  try {
+    const response = await fetch('/login', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: new URLSearchParams({ username, password })
+    });
+
+    if (response.ok) {
+      document.getElementById('authContainer').style.display = 'none';
+      document.getElementById('todoContainer').style.display = 'block';
+      loadTasks();
+    } else {
+      alert('Login failed');
+    }
+  } catch (error) {
+    console.error('Error during login:', error);
+    alert('Login failed due to a network error');
+  }
+};
+
+const logout = async () => {
+  try {
+    await fetch('/logout');
+    document.getElementById('authContainer').style.display = 'block';
+    document.getElementById('todoContainer').style.display = 'none';
+  } catch (error) {
+    console.error('Error during logout:', error);
+    alert('Logout failed due to a network error');
+  }
+};
+const submit = async (event) => {
   event.preventDefault();
 
   const inputTask = document.querySelector('#task');
@@ -12,7 +75,7 @@ const submit = async function (event) {
     created_at: new Date().toISOString()
   };
 
-  const response = await fetch('/add', {
+  const response = await fetch('/data', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(newItem)
@@ -22,8 +85,8 @@ const submit = async function (event) {
   updateTable(data);
 };
 
-const deleteItem = async function (id) {
-  const response = await fetch(`/delete/${id}`, {
+const deleteItem = async (id) => {
+  const response = await fetch(`/data/${id}`, {
     method: 'DELETE'
   });
 
@@ -31,7 +94,7 @@ const deleteItem = async function (id) {
   updateTable(data);
 };
 
-const updateTable = function (data) {
+const updateTable = (data) => {
   const resultsTable = document.getElementById('resultsTable').getElementsByTagName('tbody')[0];
   resultsTable.innerHTML = '';
 
@@ -50,18 +113,18 @@ const updateTable = function (data) {
     createdAtCell.textContent = new Date(item.created_at).toLocaleDateString();
     dueDateCell.textContent = item.due_date || 'No Due Date';
 
-    taskCell.onclick = () => makeEditable(taskCell, 'task', item.id);
-    descriptionCell.onclick = () => makeEditable(descriptionCell, 'description', item.id);
-    priorityCell.onclick = () => makePriorityEditable(priorityCell, item.id);
+    taskCell.onclick = () => makeEditable(taskCell, 'task', item._id);
+    descriptionCell.onclick = () => makeEditable(descriptionCell, 'description', item._id);
+    priorityCell.onclick = () => makePriorityEditable(priorityCell, item._id);
 
     const deleteButton = document.createElement('button');
     deleteButton.textContent = 'Delete';
-    deleteButton.onclick = () => deleteItem(item.id);
+    deleteButton.onclick = () => deleteItem(item._id);
     actionCell.appendChild(deleteButton);
   });
 };
 
-const makeEditable = function (cell, field, id) {
+const makeEditable = (cell, field, id) => {
   const originalText = cell.textContent;
   const input = document.createElement('input');
   input.type = 'text';
@@ -70,16 +133,15 @@ const makeEditable = function (cell, field, id) {
   cell.appendChild(input);
   input.focus();
 
-  // Make input field match cell dimensions
   input.style.width = '100%';
   input.style.boxSizing = 'border-box';
 
-  input.onblur = async function () {
+  input.onblur = async () => {
     const newValue = input.value;
     cell.innerHTML = newValue;
 
-    const updatedItem = { id, [field]: newValue, created_at: new Date().toISOString() };
-    await fetch('/update', {
+    const updatedItem = { _id: id, [field]: newValue, created_at: new Date().toISOString() };
+    await fetch('/data', {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(updatedItem)
@@ -90,14 +152,14 @@ const makeEditable = function (cell, field, id) {
     updateTable(data);
   };
 
-  input.onkeypress = function (event) {
+  input.onkeypress = (event) => {
     if (event.key === 'Enter') {
       input.blur();
     }
   };
 };
 
-const makePriorityEditable = function (cell, id) {
+const makePriorityEditable = (cell, id) => {
   const originalText = cell.textContent;
   const select = document.createElement('select');
 
@@ -115,16 +177,15 @@ const makePriorityEditable = function (cell, id) {
   cell.appendChild(select);
   select.focus();
 
-
   select.style.width = '100%';
   select.style.boxSizing = 'border-box';
 
-  select.onblur = select.onchange = async function () {
+  select.onblur = select.onchange = async () => {
     const newValue = select.value;
     cell.innerHTML = newValue;
 
-    const updatedItem = { id, priority: newValue, created_at: new Date().toISOString() };
-    await fetch('/update', {
+    const updatedItem = { _id: id, priority: newValue, created_at: new Date().toISOString() };
+    await fetch('/data', {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(updatedItem)
@@ -136,11 +197,15 @@ const makePriorityEditable = function (cell, id) {
   };
 };
 
-window.onload = async function () {
-  const button = document.querySelector("button[type='submit']");
-  button.onclick = submit;
-
+const loadTasks = async () => {
   const response = await fetch('/data');
   const data = await response.json();
   updateTable(data);
+};
+
+window.onload = () => {
+  document.querySelector("#registerForm").onsubmit = register;
+  document.querySelector("#loginForm").onsubmit = login;
+  document.querySelector("#logoutButton").onclick = logout;
+  document.querySelector("button[type='submit']").onclick = submit;
 };

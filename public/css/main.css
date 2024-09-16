@@ -33,7 +33,6 @@ h2 {
     margin-bottom: 10px;
 }
 
-
 #dataForm {
     display: flex;
     flex-direction: column;
@@ -86,7 +85,6 @@ h2 {
 #resultsTable tbody tr:hover {
     background: #444;
 }
-
 
 @media (max-width: 600px) {
     #resultsTable,
