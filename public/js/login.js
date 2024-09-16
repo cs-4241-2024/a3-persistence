@@ -31,9 +31,6 @@ document.addEventListener('DOMContentLoaded', function () {
             console.log('Response:', data); // Debug log
 
             if (response.ok) {
-                // If login is successful, store the JWT token in localStorage
-                //localStorage.setItem('token', data.token);
-
                 // Redirect to the restaurant app at index.html
                 window.location.href = 'index.html';
             } else {

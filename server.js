@@ -5,11 +5,12 @@ const cors = require('cors');
 const helmet = require('helmet');
 const morgan = require('morgan');
 const bcrypt = require('bcrypt');
-const jwt = require('jsonwebtoken');
+const cookieParser = require('cookie-parser');
 
 const app = express();
 const port = 3000;
-const secretKey = 'your-secret-key'; // Use a secure key for JWT
+const sessionCookieName = 'userSession';
+
 
 // MongoDB connection URI and Database
 const uri = 'mongodb+srv://ubervenx:nbajam123@foodorders.lhc94.mongodb.net/?retryWrites=true&w=majority&appName=FoodOrders';
@@ -24,6 +25,7 @@ app.use(cors());
 app.use(express.static("public"));
 app.use(helmet());
 app.use(morgan('tiny'));
+app.use(cookieParser());
 
 // Connect to MongoDB
 
@@ -37,18 +39,8 @@ client.connect().then(() => {
   console.error('Failed to connect to MongoDB', err);
 });
 
-
-// Connect to MongoDB
-/*
-async function getOrders(){
-  const orders = await client.db(dbName).collection(collectionName);
-  console.log("Hello 2")
-}
-
-let ordersCollection = getOrders;
-*/
 // GET request to fetch all orders
-app.get('/orders', async (req, res) => {
+app.get('/orders', authenticateUser, async (req, res) => {
   console.log("Hello!")
   try {
     const orders = await ordersCollection.find().toArray();
@@ -59,7 +51,7 @@ app.get('/orders', async (req, res) => {
 });
 
 // POST request to create a new order
-app.post('/submit', async (req, res) => {
+app.post('/submit', authenticateUser, async (req, res) => {
   try {
     const { name, foodName, foodPrice, quantity } = req.body;
     const newOrder = { name, foodName, foodPrice, quantity };
@@ -72,7 +64,7 @@ app.post('/submit', async (req, res) => {
 });
 
 // PUT request to update an existing order
-app.put('/edit', async (req, res) => {
+app.put('/edit', authenticateUser, async (req, res) => {
   const { id, name, foodName, foodPrice, quantity } = req.body;
   try {
     const result = await ordersCollection.updateOne(
@@ -88,7 +80,7 @@ app.put('/edit', async (req, res) => {
 });
 
 // DELETE request to delete an order
-app.delete('/delete', async (req, res) => {
+app.delete('/delete', authenticateUser, async (req, res) => {
   const { id } = req.body;
   try {
     const result = await ordersCollection.deleteOne({ _id: new ObjectId(id) });
@@ -146,30 +138,32 @@ app.post('/login', async (req, res) => {
       return res.status(400).json({ message: 'Invalid username or password' });
     }
 
-    // Generate a JWT token
-    const token = jwt.sign({ userId: user._id }, secretKey, { expiresIn: '1h' });
+    // Set a cookie to track the session
+    res.cookie(sessionCookieName, { userId: user._id }, { httpOnly: true, maxAge: 3600000 }); // 1 hour expiration
 
-    res.json({ message: 'Login successful', token });
+    res.json({ message: 'Login successful' });
   } catch (error) {
     console.error('Error logging in:', error);
     res.status(500).json({ message: 'Error logging in', error });
   }
 });
 
-
-function authenticateToken(req, res, next) {
-  const token = req.headers['authorization'];
-  if (!token) return res.status(401).json({ message: 'Access denied' });
-
-  jwt.verify(token, secretKey, (err, user) => {
-    if (err) return res.status(403).json({ message: 'Invalid token' });
-    req.user = user;
-    next();
-  });
+// Middleware to authenticate user using cookies
+function authenticateUser(req, res, next) {
+  const sessionCookie = req.cookies[sessionCookieName];
+  if (!sessionCookie) return res.status(401).json({ message: 'Access denied. Please login.' });
+  req.user = sessionCookie;
+  next();
 }
 
-app.get('/protected', authenticateToken, (req, res) => {
+app.get('/protected', authenticateUser, (req, res) => {
   res.json({ message: 'This is a protected route', user: req.user });
+});
+
+// Logout route to clear the cookie
+app.post('/logout', (req, res) => {
+  res.clearCookie(sessionCookieName);
+  res.json({ message: 'Logged out successfully' });
 });
 
 // Serve static files (HTML, CSS, JS)

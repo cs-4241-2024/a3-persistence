@@ -2,6 +2,29 @@
 let orderedItemsArray = [];
 let cumulativeTotalPrice = 0;
 
+// Function to check if the user is authenticated
+const checkAuth = async function () {
+  try {
+    const response = await fetch('/protected', {
+      method: 'GET'
+    });
+
+    if (!response.ok) {
+      throw new Error('Not authenticated');
+    }
+
+    console.log('User is authenticated');
+    // If authenticated, fetch the initial orders
+    fetchInitialOrders();
+
+  } catch (error) {
+    console.error('User not authenticated:', error);
+    // Redirect to login page if not authenticated
+    window.location.href = 'login.html';
+  }
+};
+
+
 // Function to fetch initial orders from the server (MongoDB)
 const fetchInitialOrders = async function () {
   try {
@@ -114,7 +137,7 @@ async function addItem(event) {
 
 // Attach event listener to the form
 window.onload = function() {
-  fetchInitialOrders();
+  checkAuth(); // Check if the user is authenticated
 
   // Add event listener to handle form submission
   const orderForm = document.querySelector("#orderForm");
