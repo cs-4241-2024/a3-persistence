@@ -1,6 +1,8 @@
 <!doctype html>
 <html lang="en">
   <head>
+    <title>CS4241 Assignment 3</title>
+    <meta charset="utf-8">
     <link rel="stylesheet" href="./node_modules/nes.css/css/nes.min.css">
     <link href="https://fonts.googleapis.com/css?family=Press+Start+2P" rel="stylesheet">
     <link href="https://unpkg.com/nes.css@latest/css/nes.min.css" rel="stylesheet" />
@@ -12,17 +14,17 @@
       }
     </style>
   </head>
-  <body>
+  <body style="background-color:#000000">
     <h1 class="nes-text is-primary">
       Login
     </h1>
-    <p class="nes-text is-error">
+    <p class="nes-text is-warning">
       Note: Submitting a username-password combination that doesn't already exist in the database will create an account with those credentials.
     </p>
     <form action="/login" method="POST">
-      <label class="nes-text is-success">Username: </label><input type="text" name="username" class="nes-balloon"><br>
-      <label class="nes-text is-success">Password: </label><input type="password" name="password" class="nes-balloon"><br><br>
-      <input type="submit" class="nes-btn is-primary">
+      <label class="nes-text is-success">Username: <input type="text" name="username" class="nes-balloon"></label><br>
+      <label class="nes-text is-success">Password: <input type="password" name="password" class="nes-balloon"></label><br><br>
+      <input type="submit" class="nes-btn">
     </form>
   </body>
 </html>
