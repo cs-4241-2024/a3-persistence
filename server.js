@@ -45,12 +45,17 @@ async function run() {
     // https://stackoverflow.com/questions/10827242/understanding-the-post-redirect-get-pattern 
     res.redirect( 'main.html' )
    }else{
-    // password incorrect, redirect back to login page
+     let count2 = await collection.count({username: req.body.username}, {limit: 1})
+     if(count2){
+       // password incorrect, redirect back to login page
+       res.sendFile( __dirname + '/views/index.html' )
+     }else{
     let values = {username: req.body.username, password: req.body.password};
     await collection.insertOne(values)
     req.session.login = true
     res.redirect( 'main.html' )
     }
+   }
   })
 
   // add some middleware that always sends unauthenicaetd users to the login page
