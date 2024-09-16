@@ -114,8 +114,6 @@ async function addItem(event) {
 
 // Attach event listener to the form
 window.onload = function() {
-  //window.location.href = 'login.html';
-
   fetchInitialOrders();
 
   // Add event listener to handle form submission

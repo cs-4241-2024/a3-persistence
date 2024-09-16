@@ -123,15 +123,21 @@ app.post('/register', async (req, res) => {
 app.post('/login', async (req, res) => {
   const { username, password } = req.body;
 
+  console.log('Request Body:', req.body); // Debug log
+
   try {
     // Find the user by username
     const user = await usersCollection.findOne({ username });
+    console.log('User found:', user); // Debug log
+
     if (!user) {
       return res.status(400).json({ message: 'Invalid username or password' });
     }
 
     // Compare the password with the hashed password in the database
     const isMatch = await bcrypt.compare(password, user.password);
+    console.log('Password match:', isMatch); // Debug log
+
     if (!isMatch) {
       return res.status(400).json({ message: 'Invalid username or password' });
     }
@@ -141,9 +147,11 @@ app.post('/login', async (req, res) => {
 
     res.json({ message: 'Login successful', token });
   } catch (error) {
+    console.error('Error logging in:', error);
     res.status(500).json({ message: 'Error logging in', error });
   }
 });
+
 
 function authenticateToken(req, res, next) {
   const token = req.headers['authorization'];
