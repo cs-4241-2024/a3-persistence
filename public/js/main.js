@@ -9,10 +9,14 @@ const makeRequest = async function(todo, Atype, Adate) {
   }
 
   const body = JSON.stringify(json);
-  const response = await fetch('/submit', {
+  const response = await fetch('/add-doc', {
     method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
     body
   });
+
 
   const text = await response.json();
   updateTable(text);
@@ -50,12 +54,6 @@ const updateTable = function(data) {
     deleteButton.onclick = () => deleteRow(i); // Send the index to the delete function
     deleteCell.appendChild(deleteButton);
 
-    // const editCell = row.insertCell(5);
-    // const editButton = document.createElement('button');
-    // editButton.className = 'editButton';
-    // editButton.textContent = 'Edit';
-    // editButton.onclick = () => editRow(row);
-    // editCell.appendChild(editButton);
   }
 };
 
@@ -74,16 +72,7 @@ const submit = async function(event) {
 window.onload = function() {
   const submitButton = document.querySelector("#submitButton");
   submitButton.onclick = submit;
-  const getData = async function() {
-    const body = JSON.stringify({});
-    const response = await fetch('/docs', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body
-    });
-  }
-  getData();
-  //makeRequest(); // Populate table initially
-}
+
+  makeRequest(); // Populate table initially
+};
+

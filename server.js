@@ -1,30 +1,4 @@
-// const http = require( 'http' ),
-//       fs   = require( 'fs' ),
-//       // IMPORTANT: you must run `npm install` in the directory for this assignment
-//       // to install the mime library if you're testing this on your local machine.
-//       // However, Glitch will install it automatically by looking in your package.json
-//       // file.
-//       mime = require( 'mime' ),
-//       dir  = 'public/',
-//       port = 3000
-// const express = require('express');
-// const app = express();
-// const PORT = process.env.PORT || 3000;
-// const mongoose = require('mongoose');
 
-
-// // Connect to MongoDB
-// mongoose.connect('mongodb+srv://asjacob:Webware25@cluster0.9xsgz.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0');
-
-// const db = mongoose.connection;
-// db.on('error', console.error.bind(console, 'MongoDB connection error:'));
-// db.once('open', () => {
-//   console.log('Connected to MongoDB');
-// });
-
-// app.listen(PORT, () => {
-//   console.log(`Server is running on port ${PORT}`);
-// });
 
 require("dotenv").config();
 
@@ -35,7 +9,6 @@ const express = require("express"),
 app.use(express.static("public") )
 app.use(express.json() )
 
-//const uri = `mongodb+srv://asjacob:Webware25@cluster0.9xsgz.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0`
 const uri = 'mongodb+srv://asjacob:Webware25@cluster0.9xsgz.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0'
 const client = new MongoClient( uri )
 
@@ -45,8 +18,8 @@ async function run() {
   console.log("Hi");
   await client.connect()
   console.log("Connected to DB");
-  collection = await client.db("datatest").collection("test")
-  // route to get all docs
+  collection = await client.db("datatest").collection("List")
+
 }
 
 app.post("/docs", async (req, res) => {
@@ -69,6 +42,48 @@ app.use( (req,res,next) => {
     res.status( 503 ).send()
   }
 })
+
+// app.post("/delete-doc", async (req, res) => {
+//   if (collection !== null) {
+//     const newDoc = req.body;
+//   }
+// }
+
+// Route to add a document and return all documents
+
+app.post("/add-doc", async (req, res) => {
+  if (collection !== null) {
+    // Add a new item to the collection
+    const newDoc = req.body;
+    if (Object.keys(newDoc).length !== 0) {
+      if (newDoc.type === 'work') {
+        newDoc.priority = 1;
+      } else if (newDoc.type === 'school') {
+        newDoc.priority = 2;
+      } else if (newDoc.type === 'personal') {
+        newDoc.priority = 3;
+      }
+      await collection.insertOne(newDoc);
+
+      // Update priority by type and date and order
+      const docs = await collection.find({}).sort({ type: -1, date: 1 }).toArray();
+      const updatedDocs = docs.map((doc, index) => ({
+        ...doc,
+        priority: index + 1
+      }));
+
+      // update documents with the new priority
+      await Promise.all(updatedDocs.map(doc =>
+        collection.updateOne({ _id: doc._id }, { $set: { priority: doc.priority } })
+      ));
+    }
+    const docs =  await collection.find({}).sort({ type: -1, date: 1 }).toArray();
+    res.json(docs);
+  } else {
+    res.status(503).send("Service unavailable");
+  }
+});
+
 
 // let appdata = [
 //   { 'ToDo': 'MQP prototype', 'type': 'work', 'date': "9-11-2024", 'priority': '1'},
