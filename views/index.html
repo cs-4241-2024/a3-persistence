@@ -1,42 +1,28 @@
 <!doctype html>
 <html lang="en">
   <head>
-    <title>CS4241 Assignment 2</title>
-    <meta charset="utf-8">
-    <script src="client.js"></script>
-    <link rel="stylesheet" href="style.css">
-    
-    <!-- get rid of favicon error -->
-    <link rel="icon" href="data:;base64,iVBORw0KGgo=">
+    <link rel="stylesheet" href="./node_modules/nes.css/css/nes.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Press+Start+2P" rel="stylesheet">
+    <link href="https://unpkg.com/nes.css@latest/css/nes.min.css" rel="stylesheet" />
+    <style>
+      html, body, pre, code, kbd, samp {
+          font-family: "Press Start 2P", system-ui;
+          font-weight: 400;
+          font-style: normal;
+      }
+    </style>
   </head>
   <body>
-    <h1>
-      Arcade Scoreboard
+    <h1 class="nes-text is-primary">
+      Login
     </h1>
-    <h3>
-      This is an arcade game scoreboard. Submit your Name, Game and Score in the fields below.
-      You will receive a letter rank based on your score.
-      <br> Click the Submit button to submit your scores.
-      <br> Click the Delete button to delete a score from the database that EXACTLY matches the fields
-      you entered (you do not need to input rank).
-    </h3>
-    <form>
-      Name: <input type="text" id="yourname" value="Name"> <br><br>
-      Game: <input type="text" id="game" value="Game"> <br><br>
-      Score: <input type="text" id="score" value="Score"> <br><br>
-      <button id="submit">Submit</button>
-      <button id="delete">Delete</button><br><br><br>
+    <p class="nes-text is-error">
+      Note: Submitting a username-password combination that doesn't already exist in the database will create an account with those credentials.
+    </p>
+    <form action="/login" method="POST">
+      <label class="nes-text is-success">Username: </label><input type="text" name="username" class="nes-balloon"><br>
+      <label class="nes-text is-success">Password: </label><input type="password" name="password" class="nes-balloon"><br><br>
+      <input type="submit" class="nes-btn is-primary">
     </form>
-    <form2>
-      Existing Name: <input type="text" id="yourname1" value="Name1">
-      New Name: <input type="text" id="yourname2" value="Name2"> <br><br>
-      Existing Game: <input type="text" id="game1" value="Game1">
-      New Game: <input type="text" id="game2" value="Game2"> <br><br>
-      Existing Score: <input type="text" id="score1" value="Score1">
-      New Score: <input type="text" id="score2" value="Score2"> <br><br>
-      <button id="modify">Modify</button><br><br><br>
-    </form2>
-    <ul>
-    </ul>
   </body>
 </html>
