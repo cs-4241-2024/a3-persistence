@@ -2,7 +2,8 @@
 <html lang='en'>
   <head>
     <title>CS4241 Assignment 3</title>
-    <link rel="stylesheet" type="text/css" href="indexStyle.css">
+      <!--<link rel="stylesheet" type="text/css" href="indexStyle.css"> -->
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.2/css/bulma.min.css">
     <meta charset="utf-8">
     <link rel="prefetch"  href="index.html"> <!--idk about this link-->
 
@@ -23,8 +24,11 @@
     <link rel="icon" href="data:;base64,iVBORw0KGgo=">
   </head>
   <body>
+    <div class="container" style="text-align: center;">
     <header>CS4241 Assignment 3</header>
-    <h2>Book Collection Manager</h2>
+    <h2 class="title">Book Collection Manager</h2>
+    <div class="box is-centered" style="width: 500px; margin-left: auto; margin-right: auto;">
+      
     <form action='/login' method='POST'>
       <p>Please login to our account</p>
       <div class="field"><h5>Username:</h5>
@@ -33,11 +37,13 @@
       <div class="field"><h5>Password:</h5>
         <input type='password' name='password' required minlength="1" maxlength="40" size="30">
     </div>
-      <input type='submit'>
+      <input class="button is-primary" type='submit'>
     </form>
-    <p>
+  </div>
+  <p>
     {{{msg}}}
     </p>
+    </div>
 
     
   </body>

@@ -51,9 +51,9 @@ app.post( '/add', async (req,res) => {
     if (!result2) {
     const result = await collection.insertOne( req.body )
     console.log(req.body)
-    res.json( result )
+    res.render('mainAdd', { msg:'successfully added', layout:false })
     }
-    res.json("There is book with that title already so can't add")
+    res.render('mainAdd', { msg:'There is book with that title already so it could not be added', layout:false })
 })
 
 // assumes req.body takes form { _id:5d91fb30f3f81b282d7be0dd } etc.
@@ -66,12 +66,11 @@ app.post( '/remove', async (req,res) => {
             _id:new ObjectId( result2._id )
             })
         console.log(`Successfully deleted document with title: ${title}`);
-        res.json( result)
+        res.render('mainRem', { msg:'Successfully deleted', layout:false })
     }else {
         console.log(`No documents found with title: ${title}`);
+        res.render('mainRem', { msg:'Could not successfully deleted', layout:false })
     }
-    //console.log(req.body)
-    res.json("couldn't successfully delete")
 })
 
 app.post( '/update', async (req,res) => {
