@@ -6,12 +6,11 @@ function fetchTableData() {
     .then(data => {
       let tableBody = document.getElementById('tableBody');
       tableBody.innerHTML = '';
-      let age = data['table']['age'];
-      let time = data['table']['time'];
       data['table'].forEach(curRow => {
         const row = document.createElement('tr');
         console.log(curRow);
-
+        const age = Number(curRow['age']);
+        const time = Number(curRow['time']);
         Object.keys(curRow).forEach(field => {
           let cell = document.createElement('td');
           let div = document.createElement('div');
@@ -56,11 +55,11 @@ const submit = async function( event ) {
   let data = []
   for (let i = 1; i < table.rows.length; i++) {
     let tableRow = table.rows[i];
-    let rowData = [];
+    let rowData = {};
 
-    for (let j = 0; j < tableRow.cells.length - 2; j++) {
-      rowData.push(tableRow.cells[j].innerText);
-    }
+    rowData['task'] = tableRow.cells[0].innerText;
+    rowData['age'] = tableRow.cells[1].innerText;
+    rowData['time'] = tableRow.cells[2].innerText;
 
     data.push(rowData);
   }
@@ -70,7 +69,10 @@ const submit = async function( event ) {
 
   const response = await fetch( '/api/saveTable', {
     method:'POST',
-    body
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body,
   })
 
   const text = await response.text()
