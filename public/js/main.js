@@ -25,13 +25,17 @@ const makeRequest = async function(todo, Atype, Adate) {
 // Function to delete a row
 const deleteRow = async function(id) {
   const body = JSON.stringify({ id }); // Send the id or index of the row to delete
-  const response = await fetch('/delete', {
-    method: 'DELETE',
+  const response = await fetch('/delete-doc', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
     body
   });
 
   const text = await response.json();
   updateTable(text);
+
 };
 
 

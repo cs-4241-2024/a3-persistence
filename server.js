@@ -43,11 +43,37 @@ app.use( (req,res,next) => {
   }
 })
 
-// app.post("/delete-doc", async (req, res) => {
-//   if (collection !== null) {
-//     const newDoc = req.body;
-//   }
-// }
+app.post("/delete-doc", async (req, res) => {
+  if (collection !== null) {
+    const priorityNumber = req.body.id +1;
+    const result = await collection.findOneAndDelete({ priority: priorityNumber });
+
+// Retrieve and sort all remaining documents by type (reverse order) and date
+const docs = await collection.find({})
+  .sort({ type: -1, date: 1 }) // Sort type in reverse order and date in ascending order
+  .toArray();
+
+// Update priority based on the new sorted order
+const updatedDocs = docs.map((doc, index) => ({
+  ...doc,
+  priority: index + 1
+}));
+
+// Bulk update documents with the new priority
+await Promise.all(updatedDocs.map(doc =>
+  collection.updateOne({ _id: doc._id }, { $set: { priority: doc.priority } })
+));
+
+// Retrieve and return all documents from the collection in the desired order
+const finalDocs = await collection.find({})
+  .sort({ type: -1, date: 1 }) // Again sort by type in reverse order and date in ascending order
+  .toArray();
+
+res.json(finalDocs);
+  }
+
+});
+
 
 // Route to add a document and return all documents
 
