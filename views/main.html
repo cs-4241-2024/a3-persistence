@@ -18,29 +18,29 @@
     <!-- get rid of favicon error -->
     <link rel="icon" href="data:;base64,iVBORw0KGgo=">
   </head>
-  <body>
+  <body style="background-color:#000000">
     <h1 class="nes-text is-primary">
       Arcade Scoreboard
     </h1>
-    <h3 class="nes-text is-warning">
+    <p class="nes-text is-warning">
       This is an arcade game scoreboard. Submit your Name, Game and Score in the fields below.
       You will receive a letter rank based on your score.
       <br>When deleting and modifying, make sure all the fields exactly match the fields of the existing record (you don't need to input rank).
-    </h3>
+    </p>
     <form>
-      <label class="nes-text is-success">Name: </label><input type="text" id="yourname" value="Name"> <br><br>
-      <label class="nes-text is-success">Game: </label><input type="text" id="game" value="Game"> <br><br>
-      <label class="nes-text is-success">Score: </label><input type="text" id="score" value="Score"> <br><br>
+      <label class="nes-text is-success">Name: <input aria-labelledby="yourname" type="text" id="yourname" value="Name"></label> <br><br>
+      <label class="nes-text is-success">Game: <input type="text" id="game" value="Game"></label> <br><br>
+      <label class="nes-text is-success">Score: <input type="text" id="score" value="Score"></label> <br><br>
       <button id="submit" class="nes-btn is-success">Submit</button>
       <button id="delete" class="nes-btn is-error">Delete</button><br><br><br>
     </form>
     <form2>
-      <label class="nes-text is-success">Existing Name: </label><input type="text" id="yourname1" value="Name1">
-      <label class="nes-text is-success">New Name: </label><input type="text" id="yourname2" value="Name2"> <br><br>
-      <label class="nes-text is-success">Existing Game: </label><input type="text" id="game1" value="Game1">
-      <label class="nes-text is-success">New Game: </label><input type="text" id="game2" value="Game2"> <br><br>
-      <label class="nes-text is-success">Existing Score: </label><input type="text" id="score1" value="Score1">
-      <label class="nes-text is-success">New Score: </label><input type="text" id="score2" value="Score2"> <br><br>
+      <label class="nes-text is-success">Existing Name: <input type="text" id="yourname1" value="Name1"></label>
+      <label class="nes-text is-success">New Name: <input type="text" id="yourname2" value="Name2"></label> <br><br>
+      <label class="nes-text is-success">Existing Game: <input type="text" id="game1" value="Game1"></label>
+      <label class="nes-text is-success">New Game: <input type="text" id="game2" value="Game2"></label> <br><br>
+      <label class="nes-text is-success">Existing Score: <input type="text" id="score1" value="Score1"></label>
+      <label class="nes-text is-success">New Score: <input type="text" id="score2" value="Score2"></label> <br><br>
       <button id="modify" class="nes-btn is-warning">Modify</button><br><br><br>
     </form2>
     <ul class="nes-text is-primary">
