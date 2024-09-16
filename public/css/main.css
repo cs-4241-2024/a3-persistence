@@ -1,0 +1,67 @@
+body {
+    background: #f8f5f0;
+    color: #302f2f;
+    font-family: Nunito;
+}
+
+h1{
+    color: #052259;
+}
+
+table{
+    border: 2px solid #302f2f;
+    border-collapse: collapse;
+    width: 50%;
+    font-family: "Nunito", sans-serif;
+}
+
+thead{
+    border: 1px solid #302f2f;
+    font-family: "Nunito", sans-serif;
+    font-weight: bold;
+}
+
+th, td{
+    padding: 5px;
+    text-align: left;
+    border-bottom: 1px solid;
+    font-family: "Nunito", sans-serif;
+    font-weight: normal;
+}
+
+.box{
+    width: 1500px;
+    height: 2000px;
+    margin: 10px;
+    padding: 25px;
+}
+
+.table-box{
+    margin: 20px;
+    padding: 25px;
+}
+
+.form-box{
+    margin: 20px;
+    padding: 25px;
+}
+
+form{
+    position: relative;
+    padding: 0px;
+    box-sizing: border-box;
+    display: grid;
+    grid-gap: 5px;
+    column-gap: 5px;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: 2em 2em 2em 5em;
+}
+
+.button{
+    background-color: white;
+    border-color: #052259;
+    color: #052259;
+    width: 50px;
+    height: 30px;
+    text-align: center;
+}

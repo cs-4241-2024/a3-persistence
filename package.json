@@ -1,0 +1,15 @@
+{
+  "name": "a3-piperoco23-piper-oconnell",
+  "version": "0.0.1",
+  "description": "WPI A3",
+  "author": "Piper O'Connell",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.16.4",
+    "body-parser": "^1.19.0",
+    "lowdb": "^1.0.0"
+  },
+  "engines": {"node": "16.x"}
+}
