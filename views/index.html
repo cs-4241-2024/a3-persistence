@@ -1,10 +1,38 @@
 <!doctype html>
 <html lang='en'>
-<body>
-<form action='/login' method='POST'>
-    <input type='text' name='username'>
-    <input type='password' name='password'>
-    <input type='submit'>
-</form>
-</body>
+    <head>
+        <title>Login</title>
+        <meta charset="utf-8">
+        <link rel="icon" href="data:;base64,iVBORw0KGgo=">
+
+        <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1">
+        <link rel="stylesheet" href="css/main.css">
+    </head>
+    <body class="is-fullheight" style="height: 100svh">
+        <div class="flex-vertical container">
+            <form class="is-fullheight" action='/login' method='POST'>
+                <div class="field">
+                    <p class="control has-icons-left has-icons-right">
+                        <input class="input" type="text" name="username" placeholder="Username" />
+                        <span class="icon is-small is-left">
+              <i class="fas fa-envelope"></i>
+            </span>
+                        <span class="icon is-small is-right">
+              <i class="fas fa-check"></i>
+            </span>
+                    </p>
+                </div>
+                <div class="field">
+                    <p class="control has-icons-left">
+                        <input class="input" type="password" name="password"placeholder="Password" />
+                        <span class="icon is-small is-left">
+              <i class="fas fa-lock"></i>
+            </span>
+                    </p>
+                </div>
+                <button class="button" type="submit">Submit</button>
+            </form>
+        </div>
+
+    </body>
 </html>

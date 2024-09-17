@@ -8,6 +8,7 @@ body {
   align-items: center;
   flex-direction: column;
   display: flex;
+  overflow: auto;
 }
 
 h1 {
@@ -105,6 +106,6 @@ button:active {
 .flex-horizontal {
   display: flex;
   justify-content: center;
-  align-items: start;
+  align-items: center;
   flex-direction: row;
 }
