@@ -93,11 +93,12 @@ app.get("/data", async (req, res) => {
 app.put("/data", async (req, res) => {
     const data = req.body;
     const { index } = data;
+    const accessToken = req.headers.authorization.split(" ")[1];
 
     const groceryLists = client.db("a3").collection("grocery-lists");
     await groceryLists.updateOne(
         {
-            username: "harbar20",
+            accessToken: accessToken,
         },
         {
             $set: {

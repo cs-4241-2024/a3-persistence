@@ -4,7 +4,8 @@
     "description": "",
     "author": "harbar20",
     "scripts": {
-        "start": "node --env-file=.env server.js"
+        "build": "npm install",
+        "start": "node server.js"
     },
     "dependencies": {
         "cookie-parser": "^1.4.6",
@@ -13,7 +14,8 @@
         "mime": "^2.4.4",
         "mongodb": "^6.8.1",
         "passport": "^0.7.0",
-        "passport-github2": "^0.1.12"
+        "passport-github2": "^0.1.12",
+        "vercel": "^28.18.5"
     },
     "type": "module"
 }
