@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <script src="js/main.js"></script>
+    <link rel="stylesheet" href="css/main.css">
+    <title>Yarn Project Cost Calculator</title>
+    <!-- get rid of favicon error -->
+    <link rel="icon" href="data:;base64,iVBORw0KGgo=">
+  </head>
+  <body>
+    <div>
+      <div class="content-holder">
+        <p>
+          Enter New Table Record
+        </p>
+
+        <form>
+          <div>
+            <p>
+              Project Name
+            </p>
+            <input type="text" id="project-name" value="Name">
+          </div>
+          <div>
+            <p>
+              Skein count
+            </p>
+            <input type="number" id="yarn-count" value="0">
+          </div>
+          <div>
+            <p>
+              Yarn Type
+            </p>
+            <select id="yarn-type">
+              <option value="None" selected="selected">Choose Type...</option>
+              <option value="Chenille">Chenille</option>
+              <option value="Worsted Weight">Worsted Weight</option>
+              <option value="Acrylic">Acrylic</option>
+              <option value="Velvet">Velvet</option>
+              <option value="Cashmere Wool">Cashmere Wool</option>
+              <option value="Faux Fur">Faux Fur</option>
+            </select>
+          </div>
+          <div>
+            <p></p>
+            <button class="submit" id="submit">submit</button>
+          </div>
+        </form>
+      </div>
+    </div>
+    <div>
+      <div class="content-holder">
+        <p>
+          Results    
+        </p>
+        <table id="records">
+          <tr id="field-lables">
+            <th>Project Name</th>
+            <th>Skeins Of Yarn</th>
+            <th>Type Of Yarn</th>
+            <th>Total Cost</th>
+          </tr>    
+        </table>
+      </div>
+    </div>
+  </body>
+</html>
