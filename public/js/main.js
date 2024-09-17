@@ -38,6 +38,46 @@ const deleteRow = async function(id) {
 
 };
 
+const changeRow = async function(id) {
+  console.log(id);
+  var table = document.getElementById("myList");
+  var row = table.row[id+1];
+
+  // document.getElementById('popupId').value = item._id;
+  document.getElementById('popupToDo').value = row.cells[0];
+  document.getElementById('popupType').value = row.cells[1];
+  document.getElementById('popupDate').value = row.cells[2];
+
+  document.getElementById('popup').classList.add('active');
+  document.getElementById('popupOverlay').classList.add('active');
+};
+
+const closePopup = function() {
+  document.getElementById('popup').classList.remove('active');
+  document.getElementById('popupOverlay').classList.remove('active');
+};
+
+
+const saveChanges = async function() {
+  //const id = document.getElementById('popupId').value;
+  const ToDo = document.getElementById('popupToDo').value;
+  const type = document.getElementById('popupType').value;
+  const date = document.getElementById('popupDate').value;
+
+  const body = JSON.stringify({ ToDo, type, date });
+  const response = await fetch('/update-doc', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body
+  });
+
+  const text = await response.json();
+  updateTable(text);
+  closePopup();
+};
+
+
+
 
 const updateTable = function(data) {
   var table = document.getElementById("myList");
@@ -53,10 +93,16 @@ const updateTable = function(data) {
     row.insertCell(3).textContent = item.priority;
 
     const deleteCell = row.insertCell(4);
+    const changeCell = row.insertCell(5)
     const deleteButton = document.createElement('button');
+    const changeButton = document.createElement('button');
     deleteButton.textContent = 'Delete';
+    changeButton.textContent = 'Change';
+    
     deleteButton.onclick = () => deleteRow(i); // Send the index to the delete function
+    changeButton.onclick = () => changeRow(i);
     deleteCell.appendChild(deleteButton);
+    changeCell.appendChild(changeButton);
 
   }
 };
@@ -76,6 +122,8 @@ const submit = async function(event) {
 window.onload = function() {
   const submitButton = document.querySelector("#submitButton");
   submitButton.onclick = submit;
+  document.querySelector("#saveButton").onclick = saveChanges;
+  document.querySelector("#closeButton").onclick = closePopup;
 
   makeRequest(); // Populate table initially
 };

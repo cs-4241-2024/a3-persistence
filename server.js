@@ -110,6 +110,47 @@ app.post("/add-doc", async (req, res) => {
   }
 });
 
+app.post("/update-doc", async (req, res) => {
+  if (collection !== null) {
+    const { ToDo, type, date } = req.body;
+
+    // Validate input
+    if (!ToDo || !type || !date) {
+      return res.status(400).send("Invalid input");
+    }
+
+    // Prepare the document to update
+    const updatedDoc = {
+      ToDo,
+      type,
+      date
+    };
+
+    // Update the document with the given id
+    const result = await collection.updateOne({ _id: new ObjectId( req.body._id ) },
+    {
+      $set: {
+        ToDo: req.body.ToDo,
+        type: req.body.type,
+        date: req.body.date
+      }
+    });
+
+    if (result.matchedCount === 0) {
+      return res.status(404).send("Document not found");
+    }
+
+    // Retrieve and return all documents from the collection in the desired order
+    const docs = await collection.find({})
+      .sort({ type: -1, date: 1 }) // Sort type in reverse order and date in ascending order
+      .toArray();
+
+    res.json(docs);
+  } else {
+    res.status(503).send("Service unavailable");
+  }
+});
+
 
 // let appdata = [
 //   { 'ToDo': 'MQP prototype', 'type': 'work', 'date': "9-11-2024", 'priority': '1'},
