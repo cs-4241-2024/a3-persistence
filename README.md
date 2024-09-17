@@ -107,7 +107,9 @@ Include a very brief summary of your project here. Images are encouraged, along 
 - the five Express middleware packages you used and a short (one sentence) summary of what each one does. If you use a custom function for *one* (and one alone) middleware please 
 add a little more detail about what it does.
 
-![img.png](img.png)
+## Lighthouse Tests
+- **Login Page**: ![login.png](login.png)
+
 
 ## Technical Achievements
 - **Tech Achievement 1**: I used OAuth authentication via the GitHub strategy
