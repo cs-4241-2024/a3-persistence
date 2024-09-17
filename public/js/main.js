@@ -63,6 +63,13 @@ const submit = async function (event) {
     descriptionInput.value = "";
 };
 
+document.onreadystatechange = function (e) {
+    if (document.cookie == "") {
+        location.href = "/login.html";
+        return;
+    }
+};
+
 window.onload = async function () {
     const button = document.querySelector("#newItemSubmit");
     button.onclick = submit;
@@ -73,13 +80,7 @@ window.onload = async function () {
 const revalidate = async () => {
     // Building the table layout
     let tr = document.createElement("tr");
-    const headers = [
-        "Item",
-        "Description",
-        "Price",
-        "Quantity",
-        "Total"
-    ];
+    const headers = ["Item", "Description", "Price", "Quantity", "Total"];
     headers.forEach((headerText) => {
         const th = document.createElement("th");
         th.textContent = headerText;
@@ -93,7 +94,13 @@ const revalidate = async () => {
 
     // Displaying loading icon while revalidating
     document.querySelector("#list").appendChild(loading);
-    const response = await fetch("/data");
+    const accessToken = document.cookie.split(";")[0].split("=")[1];
+    const response = await fetch("/data", {
+        headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${accessToken}`,
+        },
+    });
     const data = await response.json();
     document.querySelector("#list").removeChild(loading);
 
