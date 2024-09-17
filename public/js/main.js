@@ -11,16 +11,20 @@ const submit = async function( event ) {
         input2 = document.querySelector('#reps'),
         input3 = document.querySelector('#sets'),
         json = { exercise: input.value,  reps: input2.value, sets: input3.value, },
-        body = JSON.stringify( json )
+        body = JSON.stringify( json );
 
 
   const response = await fetch( '/submit', {
     method:'POST',
+    headers: { 'Content-Type': 'application/json' },  // Ensure JSON is sent properly
     body
   })
 
   const text = await response.json()
   console.log( 'text:', text )
+  console.log( 'text:' +  JSON.stringify(text) )
+
+  console.log('type of text ' + typeof(text))
 
   //Resets the values in the inputs
   document.getElementById('exercise').value = ""
@@ -28,6 +32,7 @@ const submit = async function( event ) {
   document.getElementById('sets').value = ""
   document.getElementById('exercise').focus();
 
+  console.log('Stuff to build the table ' + text)
   buildTable(text) //to build the table
 }
 
@@ -50,7 +55,7 @@ function buildTable(text){
 
 thead.appendChild(row);
 table.appendChild(thead);
-  text.data.forEach((rowData, index) =>{
+  text.forEach((rowData, index) =>{
     const row = document.createElement('tr');
     
     const exerciseCell = document.createElement('td')
@@ -100,6 +105,7 @@ const deleteRow = async function(row){
   console.log('Delete Row ' + row)
   const response = await fetch( '/delete', {
     method:'POST',
+    headers: { 'Content-Type': 'application/json' },  // Ensure JSON is sent properly
     body: JSON.stringify({index: row})
   })
 
@@ -114,6 +120,7 @@ const clearPage = async function(event){
 
   const response = await fetch( '/clear', {
     method:'POST',
+    headers: { 'Content-Type': 'application/json' },  // Ensure JSON is sent properly
     body: JSON.stringify({obj: 1})
   })
 
@@ -136,12 +143,13 @@ window.onload = async function() {
   clearButton.onclick = clearPage;
   document.getElementById('exercise').focus();
 
-  // const response = await fetch( '/onLoad', {
-  //   method:'POST',
-  //   body: JSON.stringify({obj: 1})
-  // })
+  const response = await fetch( '/onLoad', {
+    method:'POST',
+    headers: { 'Content-Type': 'application/json' },  // Ensure JSON is sent properly
+    body: JSON.stringify({obj: 1})
+  })
 
-  // const text = await response.json()
+  const text = await response.json()
 
-  // buildTable(text);
+  buildTable(text);
 }
