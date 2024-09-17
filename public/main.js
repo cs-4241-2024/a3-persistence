@@ -1,8 +1,3 @@
-// Function to sleep for a given number of milliseconds
-function sleep(ms) {
-  return new Promise(resolve => setTimeout(resolve, ms));
-}
-
 const submit = async function( event ) {
     // stop form submission from trying to load
     // a new .html page for displaying results...
@@ -14,28 +9,21 @@ const submit = async function( event ) {
     const input2 = document.querySelector('#author');
     const input3 = document.querySelector('#year');
     const input4 = document.querySelector('#genre');
-    const input5 = document.querySelector('#ranking');
-    const input6 = "add", //giving it a task
-          json = { "title": input.value,"author":input2.value,"year":Number(input3.value),"genre":input4.value,"ranking":Number(input5.value),"task":input6},
+    const input5 = document.querySelector('#ranking'),
+          json = { "title": input.value,"author":input2.value,"year":Number(input3.value),"genre":input4.value,"ranking":Number(input5.value)},
           body = JSON.stringify( json )
   
-    const response = await fetch( '/submit', {
+    const response = await fetch( '/add', {
       method:'POST', //POST is 
+      headers: {
+        'Content-Type': 'application/json'
+      },
       body
     })
     if (response.status==200) {//making a message show up to the user to see successfully added or deleted
       displayer();
-      const element =document.querySelector("#canAdd")
-      element.style.visibility = "visible";
-      await sleep(5000); // 5000 ms = 5 seconds
-      element.style.visibility = "hidden";
-      
 
     } else if (response.status==400) { //error for you can't add it to the dataset but whatever i do not know how to tell the user that
-      const element =document.querySelector("#canNotAdd")
-      element.style.visibility = "visible";
-      await sleep(10000); // 10000 ms = 10 seconds
-      element.style.visibility = "hidden";
       throw new Error(`HTTP error! Status: Book already exsists in the Manager. Add a different book`);
       //I will update the status or a pop up thing with ID so it won't add to it since it's incorrect
     }
@@ -53,27 +41,21 @@ const submit = async function( event ) {
     event.preventDefault()
     
     const input = document.querySelector( '#delTitle');
-    const input2 = "delete",
-          json = { "title": input.value, "task":input2},
+          json = { "title": input.value},
           body = JSON.stringify( json )
   
-    const response = await fetch( '/deleter', {
+    const response = await fetch( '/remove', {
       method:'POST', 
+      headers: {
+        'Content-Type': 'application/json'
+      },
       body
     })
 
     if (response.status==200) {//making a message show up to the user to see successfully added or deleted
       displayer();
-      const element =document.querySelector("#canDel")
-      element.style.visibility = "visible";
-      await sleep(5000); // 5000 ms = 5 seconds
-      element.style.visibility = "hidden";
 
     } else if (response.status==400) {//error for you can't delete it to the dataset but whatever i do not know how to tell the user that
-      const element =document.querySelector("#canNotDel")
-      element.style.visibility = "visible";
-      await sleep(10000); // 10000 ms = 10 seconds
-      element.style.visibility = "hidden";
       throw new Error(`HTTP error! Status: Book can't be deleted because it is not in the table`);
       //I will update the status or a pop up thing with ID so it won't add to it since it's incorrect
     }
@@ -94,8 +76,7 @@ const submit = async function( event ) {
           body = JSON.stringify( json )
   
     const response = await fetch( '/displayer', {
-      method:'POST',
-      body
+      method:'GET'
     })
     if (response.status==200) {//request successful
 
@@ -114,9 +95,11 @@ const submit = async function( event ) {
       let row = document.createElement('tr');
 
       for (const key in text[i]) {
+        if (key!=="_id") {
         let cell = document.createElement('td');
         cell.textContent = text[i][key]; // Set the content of the cell
         row.appendChild(cell);
+      }
       }
       tableBody.appendChild(row);
     }
@@ -139,26 +122,22 @@ const submit = async function( event ) {
     const input2 = document.querySelector( '#col');
     const input3 = document.querySelector( '#newVal');
     const input4 = "change",
-          json = { "row": Number(input.value),"col":Number(input2.value), "newVal":input3.value,"task":input4},
+          json = { "row": Number(input.value),"col":Number(input2.value), "newVal":input3.value},
           body = JSON.stringify( json )
   
-    const response = await fetch( '/change', {
-      method:'POST', 
+    const response = await fetch( '/update', {
+      method:'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      }, 
       body
     })
     if (response.status==200) {//request successful
       displayer();
-      const element =document.querySelector("#canChange")
-      element.style.visibility = "visible";
-      await sleep(5000); // 5000 ms = 5 seconds
-      element.style.visibility = "hidden";
+      
 
     } else if (response.status==400) {
       //no change
-      const element =document.querySelector("#canNotChange")
-      element.style.visibility = "visible";
-      await sleep(10000); // 10000 ms = 10 seconds
-      element.style.visibility = "hidden";
       throw new Error(`HTTP error! Status: Could not change Entry in the Table`);
     }
     const text = await response.json()

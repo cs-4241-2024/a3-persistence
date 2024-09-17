@@ -70,8 +70,7 @@
       (fiction, non-fiction, sci-fi, fantasy, and romance)
     </p>
    
-    <input type='submit' class="button is-primary" style="display: block; margin: auto;">
-    <!--<button type= 'submit' id="newBook">submit</button><br>-->
+    <input type='submit' id="newBook" class="button is-primary" style="display: block; margin: auto;">
     </form>
   </div>
 
@@ -81,12 +80,12 @@
       <p class="title is-3">Delete Entry</p>
 
 
-    <form action='/remove' method='POST'>
+    
     <h5 class = "has-text-link" style="display: inline-block;" >Title:</h5>
-    <input type="text" id="title" name="title" required minlength="1" maxlength="40" size="30" style="display: inline-block;"><br>
+    <input type="text" id="delTitle" name="title" required minlength="1" maxlength="40" size="30" style="display: inline-block;"><br>
 
     <button id="deleteBook" class="button is-primary" style="display: block; margin: auto;">delete</button>
-  </form>
+  
 
     </div>
 
@@ -118,7 +117,7 @@
       <input id="col" type="number" min="0" max="100" style="display: inline-block;"><br>
       <p>put in the what you want to change the entry in the table to</p>
       <input id="newVal"><br>
-      <button id="changing" class="button is-primary" style="display: block; margin: auto;">Press Here to change the data</button>
+      <button type = 'submit' id="changing" class="button is-primary" style="display: block; margin: auto;">Press Here to change the data</button>
     </div>
   </div>
 

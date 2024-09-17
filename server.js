@@ -20,11 +20,11 @@ let collection = null
 
 async function run() {
   await client.connect() //wait for client to connect...
-  collection = await client.db("database").collection("name") //my database here collecction variable
+  collection = await client.db("database").collection("namey") //my database here collecction variable
 
   // route to get all docs
-  app.get("/docs", async (req, res) => {
-    if (collection !== null) {
+  app.get("/displayer", async (req, res) => {
+    if (collection !== null) {//this returns the whole thing
       const docs = await collection.find({}).toArray()// find allows you to pass something in, if blank returns everything inside collection and return results as array
       res.json( docs )
     }
@@ -49,12 +49,52 @@ app.use( express.urlencoded({ extended:true }) )
 app.post( '/add', async (req,res) => {
     const result2 = await collection.findOne({ title: req.body.title });
     if (!result2) {
-    const result = await collection.insertOne( req.body )
-    console.log(req.body)
-    res.render('mainAdd', { msg:'successfully added', layout:false })
+        //we can add
+        req.body.authorStars = 0;
+        const result = await collection.insertOne( req.body )
+        console.log(req.body)
+        //now to do the derivied part of this 
+        let docs = await collection.find({}).toArray()
+        let arrayStars = [];
+        for (let i=0;i<docs.length;i++) {
+        //row
+        let rowAuthor = docs[i].author;
+        let rowStar = docs[i].ranking;
+  
+        for (let j=0;j<docs.length;j++) {
+          if (!(i==j) && rowAuthor===docs[j].author) {
+            rowStar = rowStar + docs[j].ranking;
+          }
+        }
+        arrayStars.push(rowStar);
+      }
+      //let arrayStar = [];
+      for (let i=0;i<arrayStars.length;i++) {
+        let num = 1;
+        let arrayAbove = []
+        for (let j=0;j<arrayStars.length;j++) {
+          
+          //compare with the others in the list and making sure the ones with the same amount of stars in not counted twice
+          if (!(i==j) &&arrayStars[j]>arrayStars[i] && !(arrayAbove.includes(arrayStars[j]))) {
+            arrayAbove.push(arrayStars[j]);
+            num = num + 1;
+          }
+        }
+        //updating
+        let result = await collection.updateOne(
+            { _id: new ObjectId( docs[i]._id ) },
+            { $set:{ authorStars:num } }
+          )
+        //docs[i].authorStars = num;//correctly placing the right number
+      }
+      //gotta do derivied part
+
+    res.render('mainAdd', { msg:'successfully added', table:docs, layout:false })
+    } else {
+        res.render('mainAdd', { msg:'There is book with that title already so it could not be added', layout:false })
     }
-    res.render('mainAdd', { msg:'There is book with that title already so it could not be added', layout:false })
 })
+
 
 // assumes req.body takes form { _id:5d91fb30f3f81b282d7be0dd } etc.
 app.post( '/remove', async (req,res) => {
@@ -66,6 +106,46 @@ app.post( '/remove', async (req,res) => {
             _id:new ObjectId( result2._id )
             })
         console.log(`Successfully deleted document with title: ${title}`);
+
+        //now to do the derivied part of this 
+        let docs = await collection.find({}).toArray()
+        let arrayStars = [];
+        for (let i=0;i<docs.length;i++) {
+        //row
+        let rowAuthor = docs[i].author;
+        let rowStar = docs[i].ranking;
+  
+        for (let j=0;j<docs.length;j++) {
+          if (!(i==j) && rowAuthor===docs[j].author) {
+            rowStar = rowStar + docs[j].ranking;
+          }
+        }
+        arrayStars.push(rowStar);
+      }
+      //let arrayStar = [];
+      for (let i=0;i<arrayStars.length;i++) {
+        let num = 1;
+        let arrayAbove = []
+        for (let j=0;j<arrayStars.length;j++) {
+          
+          //compare with the others in the list and making sure the ones with the same amount of stars in not counted twice
+          if (!(i==j) &&arrayStars[j]>arrayStars[i] && !(arrayAbove.includes(arrayStars[j]))) {
+            arrayAbove.push(arrayStars[j]);
+            num = num + 1;
+          }
+        }
+        //updating
+        let result = await collection.updateOne(
+            { _id: new ObjectId( docs[i]._id ) },
+            { $set:{ authorStars:num } }
+          )
+      }
+      //gotta do derivied part
+
+
+
+
+
         res.render('mainRem', { msg:'Successfully deleted', layout:false })
     }else {
         console.log(`No documents found with title: ${title}`);
@@ -74,12 +154,79 @@ app.post( '/remove', async (req,res) => {
 })
 
 app.post( '/update', async (req,res) => {
-    const result = await collection.updateOne(
-      { _id: new ObjectId( req.body._id ) },
-      { $set:{ name:req.body.name } }
-    )
+    let result;
+    let docs = await collection.find({}).toArray()
+    if (req.body.col < 5 && req.body.col>-1 && Number(req.body.newVal)>0) {
+        if (req.body.col==2) {
+            let result = await collection.updateOne(
+                { _id: new ObjectId( docs[req.body.row]._id ) },
+                { $set:{ year:req.body.newVal } }
+              )
+            
   
-    res.json( result )
+          } else if (req.body.col==4) {
+            let result = await collection.updateOne(
+                { _id: new ObjectId( docs[req.body.row]._id ) },
+                { $set:{ ranking:Number(req.body.newVal) } }
+              )
+            
+            let arrayStars = [];
+        for (let i=0;i<docs.length;i++) {
+        //row
+        let rowAuthor = docs[i].author;
+        let rowStar = docs[i].ranking;
+  
+        for (let j=0;j<docs.length;j++) {
+          if (!(i==j) && rowAuthor===docs[j].author) {
+            rowStar = rowStar + docs[j].ranking;
+          }
+        }
+        arrayStars.push(rowStar);
+      }
+      //let arrayStar = [];
+      for (let i=0;i<arrayStars.length;i++) {
+        let num = 1;
+        let arrayAbove = []
+        for (let j=0;j<arrayStars.length;j++) {
+          
+          //compare with the others in the list and making sure the ones with the same amount of stars in not counted twice
+          if (!(i==j) &&arrayStars[j]>arrayStars[i] && !(arrayAbove.includes(arrayStars[j]))) {
+            arrayAbove.push(arrayStars[j]);
+            num = num + 1;
+          }
+        }
+        //updating
+        let result = await collection.updateOne(
+            { _id: new ObjectId( docs[i]._id ) },
+            { $set:{ authorStars:num } }
+          )
+        //docs[i].authorStars = num;//correctly placing the right number
+      }
+      //gotta do derivied part
+    }   
+    } else if (req.body.col<5 && req.body.col>=0 && req.body.newVal != "") {
+        console.log("here");
+        if (req.body.col==0) {
+            let result = await collection.updateOne(
+                { _id: new ObjectId( docs[req.body.row]._id ) },
+                { $set:{ title:req.body.newVal } }
+              )
+
+        } else if (req.body.col==1) {
+            let result = await collection.updateOne(
+                { _id: new ObjectId( docs[req.body.row]._id ) },
+                { $set:{ author:req.body.newVal } }
+              )
+
+        } else if (req.body.col==3) {
+            let result = await collection.updateOne(
+                { _id: new ObjectId( docs[req.body.row]._id ) },
+                { $set:{ genre:req.body.newVal } }
+              )
+
+        }
+    }
+    res.json( result )//could do a different render
 })
 
 //cookies
@@ -110,7 +257,9 @@ app.post( '/login', (req,res)=> {
     
     // below is *just a simple authentication example* 
     // for A3, you should check username / password combos in your database
-    if( req.body.password === 'test' ) {
+    
+
+    if(req.body.password === 'test') { //req.body.password === 'test'
       // define a variable that we can check in other middleware
       // the session object is added to our requests by the cookie-session middleware
       req.session.login = true
@@ -149,5 +298,6 @@ app.post( '/login', (req,res)=> {
 
 
 run()
+
 
 app.listen(3000)
