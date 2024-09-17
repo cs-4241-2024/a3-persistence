@@ -1,46 +1,52 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Login your credentials/register a user hear">
+    <meta name="description" content="Log in or register to access your account">
     <title>Login Page</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&family=Playfair+Display:wght@400;700&display=swap" as="style">
     <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
     <script src="js/login.js" defer></script>
+    <link rel="icon" href="data:;base64,iVBORw0KGgo=" />
 </head>
+
 <body class="bg-orange-100 flex justify-center items-center h-screen font-sans">
 
-<form id="login-form" class="bg-white shadow-xl rounded-lg p-8 w-full max-w-md space-y-6">
-    <h1 class="text-4xl font-serif text-red-600 font-bold">Login</h1>
+<!-- Login Form -->
+<form id="login-form" class="bg-white shadow-xl rounded-lg p-8 w-full max-w-md space-y-6" aria-label="Login Form">
+    <h1 class="text-4xl font-serif text-red-700 font-bold">Login</h1>
 
     <!-- Username input field -->
     <div class="space-y-2">
-        <label for="username" class="block text-yellow-600 font-bold">Username:</label>
-        <input type="text" id="username" name="username" class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:border-green-500" required />
+        <label for="username" class="block text-gray-800 font-bold">Username:</label>
+        <input type="text" id="username" name="username" autocomplete="username" class="w-full p-3 border border-gray-400 rounded-lg focus:outline-none focus:border-green-500" required aria-required="true" aria-label="Enter your username" />
     </div>
 
     <!-- Password input field -->
     <div class="space-y-2">
-        <label for="password" class="block text-yellow-600 font-bold">Password:</label>
-        <input type="password" id="password" name="password" class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:border-green-500" required />
+        <label for="password" class="block text-gray-800 font-bold">Password:</label>
+        <input type="password" id="password" name="password" autocomplete="current-password" class="w-full p-3 border border-gray-400 rounded-lg focus:outline-none focus:border-green-500" required aria-required="true" aria-label="Enter your password" />
     </div>
 
     <!-- Submit button for login -->
-    <button type="submit" id="login-btn" class="w-full bg-red-600 text-white py-3 rounded-lg hover:bg-red-700 transition-colors">
+    <button type="submit" id="login-btn" class="w-full bg-red-700 text-white py-3 rounded-lg hover:bg-red-800 transition-colors" aria-label="Log in to your account">
         Login
     </button>
 
     <!-- Register button -->
-    <button type="button" id="register-btn" class="w-full bg-green-600 text-white py-3 rounded-lg hover:bg-green-700 transition-colors">
+    <button type="button" id="register-btn" class="w-full bg-green-700 text-white py-3 rounded-lg hover:bg-green-800 transition-colors" aria-label="Register a new account">
         Register
     </button>
 
-    <!-- Optional: Signup link or forgot password -->
+    <!-- Signup link or forgot password -->
     <div class="text-center mt-4">
-        <a href="#" class="text-yellow-600 hover:underline">Forgot your password?</a>
+        <a href="#" class="text-red-700 hover:underline" aria-label="Forgot your password">Forgot your password?</a>
     </div>
 </form>
 
 </body>
+
 </html>

@@ -42,6 +42,13 @@ const fetchInitialOrders = async function () {
 
     console.log("Fetched orders:", data.orders);
 
+    // Check if the user has any orders
+    if (orderedItemsArray.length === 0) {
+      const orderedItemsList = document.querySelector("#orderedItemsList");
+      orderedItemsList.innerHTML = `<li>No orders found for this user.</li>`;
+      return;
+    }
+
     // Recalculate the cumulative total price
     cumulativeTotalPrice = orderedItemsArray.reduce(
         (total, item) => total + item.foodPrice * item.quantity,

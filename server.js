@@ -43,7 +43,8 @@ client.connect().then(() => {
 app.get('/orders', authenticateUser, async (req, res) => {
   console.log("Hello!")
   try {
-    const orders = await ordersCollection.find().toArray();
+    const userId = req.user.userId; // Get the userId from the session cookie
+    const orders = await ordersCollection.find({ userId: new ObjectId(userId) }).toArray();
     res.json({ orders });
   } catch (error) {
     res.status(500).json({ message: 'Error fetching orders', error });
@@ -54,7 +55,11 @@ app.get('/orders', authenticateUser, async (req, res) => {
 app.post('/submit', authenticateUser, async (req, res) => {
   try {
     const { name, foodName, foodPrice, quantity } = req.body;
-    const newOrder = { name, foodName, foodPrice, quantity };
+    const userId = req.user.userId; // Get the userId from the session cookie
+
+    const newOrder = {
+      userId: new ObjectId(userId), name, foodName, foodPrice, quantity
+    };
     const result = await ordersCollection.insertOne(newOrder);
     const orderWithId = { ...newOrder, _id: result.insertedId };
     res.status(200).json({ message: 'Order created', order: orderWithId });
@@ -151,8 +156,10 @@ app.post('/login', async (req, res) => {
 // Middleware to authenticate user using cookies
 function authenticateUser(req, res, next) {
   const sessionCookie = req.cookies[sessionCookieName];
+
   if (!sessionCookie) return res.status(401).json({ message: 'Access denied. Please login.' });
-  req.user = sessionCookie;
+
+  req.user = sessionCookie; // Add userId to req.user
   next();
 }
 

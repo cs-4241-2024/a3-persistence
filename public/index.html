@@ -1,29 +1,35 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <title>CS4241 Assignment 3</title>
   <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="This is the main application housing the food ordering system">
   <script src="js/main.js" defer></script>
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
   <link rel="icon" href="data:;base64,iVBORw0KGgo=" />
+  <meta name="robots" content="index, follow">
+  <meta name="author" content="Your Name">
 </head>
-<body class="bg-orange-100 flex justify-center items-center h-screen font-sans">
 
-<form id="orderForm" class="bg-white shadow-xl rounded-lg p-8 w-full max-w-md space-y-6">
-  <h1 class="text-4xl font-serif text-red-600 font-bold">Restaurant Service</h1>
+<body class="bg-orange-100 flex justify-center items-center min-h-screen font-sans">
+
+<form id="orderForm" class="bg-white shadow-xl rounded-lg p-8 w-full max-w-md space-y-6" aria-labelledby="formTitle">
+  <h1 id="formTitle" class="text-4xl font-serif text-red-600 font-bold">Restaurant Service</h1>
 
   <!-- Name input field -->
   <div class="space-y-2">
-    <label for="nameInput" class="block text-yellow-600 font-bold">Input your name here:</label>
-    <input type="text" id="nameInput" class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:border-green-500" required />
+    <label for="nameInput" class="block text-yellow-700 font-semibold">Input your name here:</label>
+    <input type="text" id="nameInput" class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:border-green-600"
+           placeholder="John Doe" aria-required="true" required />
   </div>
 
   <!-- Food selection dropdown -->
   <div class="space-y-2">
-    <label for="foodSelect" class="block text-yellow-600 font-bold">What food do you want to order?</label>
-    <select id="foodSelect" class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:border-green-500" required>
+    <label for="foodSelect" class="block text-yellow-700 font-semibold">What food do you want to order?</label>
+    <select id="foodSelect" class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:border-green-600" aria-required="true" required>
       <option value="10">Burger ($10)</option>
       <option value="5">Fries ($5)</option>
       <option value="3">Milkshake ($3)</option>
@@ -32,26 +38,34 @@
 
   <!-- Quantity input field -->
   <div class="space-y-2">
-    <label for="quantityInput" class="block text-yellow-600 font-bold">Quantity amount:</label>
-    <input type="number" id="quantityInput" name="quantity" min="1" max="5" value="1" class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:border-green-500" required />
+    <label for="quantityInput" class="block text-yellow-700 font-semibold">Quantity amount:</label>
+    <input type="number" id="quantityInput" name="quantity" min="1" max="5" value="1" class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:border-green-600"
+           aria-required="true" required />
   </div>
 
   <!-- Submit button -->
-  <button type="submit" class="w-full bg-red-600 text-white py-3 rounded-lg hover:bg-red-700 transition-colors">
+  <button type="submit" class="w-full bg-red-600 text-white py-3 rounded-lg hover:bg-red-700 transition-all">
     Submit
   </button>
 
   <!-- Cumulative total price display -->
   <div id="totalPriceField" class="flex justify-center mt-4">
-    <h3 class="text-xl font-bold text-red-600">Cumulative Total Price: $0</h3>
+    <p class="text-xl font-bold text-red-600">Cumulative Total Price: $0</p>
   </div>
+
+  <footer class="text-center mt-10 text-gray-600">
+    <p>© 2024 Restaurant Service. All rights reserved.</p>
+  </footer>
+
 </form>
 
 <!-- Ordered items list -->
-<h3 class="text-xl font-serif text-red-600 mt-8">Ordered Items:</h3>
-<ul id="orderedItemsList" class="space-y-4 mt-4">
+<h1 class="text-xl font-serif text-red-600 mt-8">Ordered Items:</h1>
+<ul id="orderedItemsList" class="space-y-4 mt-4 list-disc pl-5">
   <!-- Items will be dynamically added here -->
 </ul>
 
 </body>
+
 </html>
+
