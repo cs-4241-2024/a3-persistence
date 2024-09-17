@@ -1,8 +1,8 @@
 {
-  "name": "",
-  "version": "",
-  "description": "",
-  "author": "",
+  "name": "Name",
+  "version": "v1",
+  "description": "Descr",
+  "author": "Me",
   "scripts": {
     "start": "node server.js"
   },
@@ -13,6 +13,6 @@
     "mongodb": "^6.9.0"
   },
   "engines": {
-    "node": "16.x"
+    "node": "20.x"
   }
 }

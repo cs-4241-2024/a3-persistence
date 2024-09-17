@@ -14,7 +14,7 @@ const submit = async function( event ) {
         body = JSON.stringify( json )
  //console.log(input)
   const response = await fetch( '/data', {
-    method:'POST',
+    method:'add',
     body
   })
   let data = await response.json();
@@ -48,7 +48,7 @@ const submit = async function( event ) {
 async function deleteItem(evt) {
   let tag = evt.target.id;
   const response = await fetch('/data', {
-    method: 'DELETE',
+    method: 'remove',
     body: JSON.stringify({tag}),
   });
   let data = await response.json();
@@ -138,7 +138,7 @@ async function saveItem(evt) {
         body = JSON.stringify( json )
  //console.log(input)
   const response = await fetch( '/data', {
-    method:'PUT',
+    method:'update',
     body
   })
   let data = await response.json();
