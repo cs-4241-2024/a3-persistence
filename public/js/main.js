@@ -73,7 +73,13 @@ window.onload = async function () {
 const revalidate = async () => {
     // Building the table layout
     let tr = document.createElement("tr");
-    const headers = ["Item", "Description", "Price", "Quantity", "Total"];
+    const headers = [
+        "Item",
+        "Description",
+        "Price",
+        "Quantity",
+        "Total"
+    ];
     headers.forEach((headerText) => {
         const th = document.createElement("th");
         th.textContent = headerText;
@@ -141,9 +147,7 @@ const revalidate = async () => {
         deleteButton.textContent = "Delete";
         deleteButton.classList.add("recordButton", "block", "round");
         deleteButton.onclick = () => onDelete(item.index);
-        td.appendChild(deleteButton);
-
-        // Adding everything to the row
+        td.innerHTML = deleteButton.outerHTML;
         tr.appendChild(td);
 
         document.querySelector("#list").appendChild(tr);

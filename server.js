@@ -5,8 +5,22 @@ import { client, removeGroceryByIndex } from "./db.js";
 const app = express();
 app.use(express.json());
 app.use(express.static("public"));
-const dir = "public/";
 const port = 3000;
+
+// passport.use(
+//     new GitHubStrategy(
+//         {
+//             clientID: process.env.GITHUB_CLIENT_ID,
+//             clientSecret: process.env.GITHUB_CLIENT_SECRET,
+//             callbackURL: process.env.GITHUB_CALLBACK_URL,
+//         },
+//         function (accessToken, refreshToken, profile, done) {
+//             User.findOrCreate({ githubId: profile.id }, function (err, user) {
+//                 return done(err, user);
+//             });
+//         }
+//     )
+// );
 
 app.get("/data", async (req, res) => {
     const groceryLists = client.db("a3").collection("grocery-lists");
