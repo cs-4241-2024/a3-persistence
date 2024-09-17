@@ -1,14 +1,17 @@
+//Middle-ware used: Cookie-session, handlebars
 const express = require('express');
 const cookie = require( 'cookie-session' );
 const hbs = require( 'express-handlebars').engine;
-const fs = require('fs');
-const mime = require('mime');
+//const fs = require('fs');
+//const mime = require('mime');
 const path = require('path');
 const app = express();
 const port = 3000;
+
 const { MongoClient, ServerApiVersion } = require("mongodb");
 const uri = "mongodb+srv://jmsmith2:testingwizard456@assignment3-database.oiv2l.mongodb.net/?retryWrites=true&w=majority&appName=Assignment3-Database"
 
+//MongoDB Client Initializaiton
 const client = new MongoClient(uri, {
   serverApi: {
     version: ServerApiVersion.v1,
@@ -16,6 +19,8 @@ const client = new MongoClient(uri, {
     deprecationErrors: true,
   }
 });
+
+//Run database
 let collection = null;
 async function run() {
   try {
@@ -32,35 +37,75 @@ async function run() {
 }
 run().catch(console.dir);
 
-
 let appdata = [
   { 'employeeid': '123456789', 'name': 'John Doe', 'salary': 57000, 'regdate': 2021, 'expdate': 2026 },
   { 'employeeid': '987563409', 'name': 'Jack Smith', 'salary': 75000, 'regdate': 2019, 'expdate': 2024 },
   { 'employeeid': '456891237', 'name': 'Jane Lee', 'salary': 90000, 'regdate': 2020, 'expdate': 2025 }
 ];
 
+
+// Middleware to parse JSON and URL-encoded data
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-app.use(express.static('public'));
+// Session cookies middleware for user login
+app.use(cookie({
+  name: 'session',
+  keys: ['key1', 'key2'],
+  maxAge: 24 * 60 * 60 * 1000 // 24 hours
+}));
 
-app.get('/', (req, res) => {
+// Middleware to protect routes and check for login
+function requireLogin(req, res, next) {
+  if (!req.session.login) {
+    return res.redirect('/login'); // Redirect to login if not authenticated
+  }
+  next();
+}
+
+// Serve login page
+app.get('/login', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'login.html'));
+});
+
+// Handle login request
+app.post('/login', (req, res) => {
+  console.log(req.body);
+
+  if (req.body.password === 'wizard') {
+    req.session.login = true; // Set session login flag
+    res.redirect('/'); // Redirect to the index.html
+  } else {
+    res.sendFile(path.join(__dirname, 'public', 'login.html'));
+  }
+});
+
+//Access index.html on login
+app.get('/', requireLogin, (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
-app.get('/data', (req, res) => {
+//Access public folder
+app.use(express.static('public'));
+
+// Fetch employee data (protected route)
+app.get('/data', requireLogin, (req, res) => {
   res.status(200).json(appdata);
 });
 
-app.get("/docs", async (req, res) => {
+// Fetch documents from MongoDB (protected route)
+app.get('/docs', requireLogin, async (req, res) => {
   if (collection !== null) {
-    const docs = await collection.find({}).toArray()
-    console.log(docs)
-    res.json( docs )
+    const docs = await collection.find({}).toArray();
+    console.log(docs);
+    res.json(docs);
+  } else {
+    res.status(500).send('No MongoDB collection found');
   }
-})
+});
 
-app.post('/submit', (req, res) => {
+// Submit new employee data (protected route)
+app.post('/submit', requireLogin, (req, res) => {
   const newData = req.body;
   const newEntry = {
     employeeid: newData.employeeid,
@@ -69,12 +114,13 @@ app.post('/submit', (req, res) => {
     regdate: newData.regdate,
     expdate: parseInt(newData.regdate) + 5
   };
-  
+
   appdata.push(newEntry);
   res.status(200).json(appdata);
 });
 
-app.put('/edit/:index', (req, res) => {
+// Edit employee data by index (protected route)
+app.put('/edit/:index', requireLogin, (req, res) => {
   const index = parseInt(req.params.index);
   const updatedData = req.body;
 
@@ -92,7 +138,8 @@ app.put('/edit/:index', (req, res) => {
   }
 });
 
-app.delete('/delete/:index', (req, res) => {
+// Delete employee data by index (protected route)
+app.delete('/delete/:index', requireLogin, (req, res) => {
   const index = parseInt(req.params.index);
 
   if (index >= 0 && index < appdata.length) {
@@ -103,6 +150,13 @@ app.delete('/delete/:index', (req, res) => {
   }
 });
 
+// Handle logout
+app.post('/logout', (req, res) => {
+  req.session = null; // Destroy the session
+  res.redirect('/login'); // Redirect to the login page
+});
+
+// Start the server
 app.listen(process.env.PORT || port, () => {
   console.log(`Server is running on port ${port}`);
 });
