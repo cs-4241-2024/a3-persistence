@@ -5,9 +5,12 @@
     <meta charset="utf-8">
     <script src="js/main.js"></script>
     <link rel="stylesheet" href="css/main.css">
-    
+<!--    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.2/css/bulma.min.css">-->
+
     <!-- get rid of favicon error -->
     <link rel="icon" href="data:;base64,iVBORw0KGgo=">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -51,6 +54,232 @@
         <button id="alter">alter data</button>
       </form>
 
+    </div>
+    <form>
+      <div class="flex-horizontal">
+        <div class="flex-vertical">
+          <label for="match-type">Match Type:</label>
+          <span class="flex-horizontal">
+          <input type="radio" id="round-robin" name="match-type" value="round-robin">
+          <label for="round-robin">Round Robin</label>
+        </span>
+          <span class="flex-horizontal">
+          <input type="radio" id="elimination" name="match-type" value="elimination">
+        <label for="elimination">Elimination</label>
+        </span>
+        </div>
+
+        <div class="flex-vertical">
+          <label for="match-format">Match Format:</label>
+          <span class="flex-horizontal">
+
+      <input type="radio" id="singles" name="match-format" value="singles">
+      <label for="singles">Singles</label>
+      </span>
+          <span class="flex-horizontal">
+      <input type="radio" id="doubles" name="match-format" value="doubles">
+      <label for="doubles">Doubles</label>
+      </span>
+        </div>
+
+
+      </div>
+
+
+
+
+
+      <h2>Game Results</h2>
+
+    <div class="field">
+      <label class="label" for="match">Match:</label>
+      <div class="select">
+        <select  id="match" name="match">
+          <option value="">Choose Match Type</option>
+          <option value="Singles 1">Singles 1</option>
+          <option value="Singles 2">Singles 2</option>
+          <option value="Singles 3">Singles 3</option>
+          <option value="Singles 4">Singles 4</option>
+          <option value="Doubles 1">Doubles 1</option>
+          <option value="Doubles 2">Doubles 2</option>
+          <option value="Doubles 3">Doubles 3</option>
+        </select>
+      </div>
+
+    </div>
+
+      <datalist id="schools">
+        <option value="SAN">Sandburg</option>
+        <option value="AND">Andrew</option>
+        <option value="NT">New Trier</option>
+        <option value="DGN">Downers Grove North</option>
+        <option value="FR">Fremd</option>
+        <option value="HER">Hersey</option>
+        <option value="HS">Hinsdale South</option>
+        <option value="LT">Lockport</option>
+        <option value="NN">Naperville North</option>
+        <option value="DF">Deerfield</option>
+        <option value="WY">Whitney Young</option>
+        <option value="YK">York</option>
+      </datalist>
+    <div class="scores">
+      <h3>Scores:</h3>
+      <table>
+        <tr>
+          <th>Schools</th>
+
+          <th class="school-a">
+            <input list="schools" id="schoolA" name="schoolA" placeholder="Select School" required>
+          </th>
+          <th class="school-b">
+            <input list="schools" id="schoolB" name="schoolB" placeholder="Select School" required>
+          </th>
+        </tr>
+        <tr>
+          <td>PLAYER 1</td>
+          <td><input type="text" id="playerA1" name="playerA1" placeholder="NT1"></td>
+          <td><input type="text" id="playerB1" name="playerB1" placeholder="AND2"></td>
+        </tr>
+        <tr>
+          <td>PLAYER 2</td>
+          <td><input type="text" id="playerA2" name="playerA2" placeholder="NT2"></td>
+          <td><input type="text" id="playerB2" name="playerB2" placeholder="AND4"></td>
+        </tr>
+        <tr>
+          <td>GAME 1</td>
+          <td><input type="number" name="game1A" min="0" value="0"></td>
+          <td><input type="number" name="game1B" min="0" value="0"></td>
+        </tr>
+        <tr>
+          <td>GAME 2</td>
+          <td><input type="number" name="game2A" min="0" value="0"></td>
+          <td><input type="number" name="game2B" min="0" value="0"></td>
+        </tr>
+        <tr>
+          <td>GAME 3</td>
+          <td><input type="number" name="game3A" min="0" value="0"></td>
+          <td><input type="number" name="game3B" min="0" value="0"></td>
+        </tr>
+      </table>
+    </div>
+
+    <div class="submit-clear">
+      <button type="submit">Submit</button>
+      <button type="button" onclick="clearForm()">Clear</button>
+    </div>
+    </form>
+    <div class="match-box">
+      <div class="match-info">02:30 Men's Singles Group Play Stage - Group D</div>
+      <div class="match-header">Badminton</div>
+
+      <div class="match-details flex-horizontal">
+        <div class="country">
+          <img src="https://flagcdn.com/w20/jp.png" class="flag" alt="Japan">
+          <span class="winner">JPN NISHIMOTO Kenta</span>
+          <span class="checkmark">✔</span>
+        </div>
+        <div class="flex-horizontal">
+          <div>2</div>
+          <div>21</div>
+          <div>21</div>
+        </div>
+      </div>
+
+      <div class="match-details flex-horizontal">
+        <div class="country">
+          <img src="https://flagcdn.com/w20/kz.png" class="flag" alt="Kazakhstan">
+          <span>KAZ Dmitriy PANARIN</span>
+        </div>
+        <div class="flex-horizontal">
+          <div>0</div>
+          <div>5</div>
+          <div>11</div>
+        </div>
+      </div>
+    </div>
+    <div class="field">
+      <label class="label">Name</label>
+      <div class="control">
+        <input class="input" type="text" placeholder="Text input">
+      </div>
+    </div>
+
+    <div class="field">
+      <label class="label">Username</label>
+      <div class="control has-icons-left has-icons-right">
+        <input class="input is-success" type="text" placeholder="Text input" value="bulma">
+        <span class="icon is-small is-left">
+      <i class="fas fa-user"></i>
+    </span>
+        <span class="icon is-small is-right">
+      <i class="fas fa-check"></i>
+    </span>
+      </div>
+      <p class="help is-success">This username is available</p>
+    </div>
+
+    <div class="field">
+      <label class="label">Email</label>
+      <div class="control has-icons-left has-icons-right">
+        <input class="input is-danger" type="email" placeholder="Email input" value="hello@">
+        <span class="icon is-small is-left">
+      <i class="fas fa-envelope"></i>
+    </span>
+        <span class="icon is-small is-right">
+      <i class="fas fa-exclamation-triangle"></i>
+    </span>
+      </div>
+      <p class="help is-danger">This email is invalid</p>
+    </div>
+
+    <div class="field">
+      <label class="label">Subject</label>
+      <div class="control">
+        <div class="select">
+          <select>
+            <option>Select dropdown</option>
+            <option>With options</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <div class="field">
+      <label class="label">Message</label>
+      <div class="control">
+        <textarea class="textarea" placeholder="Textarea"></textarea>
+      </div>
+    </div>
+
+    <div class="field">
+      <div class="control">
+        <label class="checkbox">
+          <input type="checkbox">
+          I agree to the <a href="#">terms and conditions</a>
+        </label>
+      </div>
+    </div>
+
+    <div class="field">
+      <div class="control">
+        <label class="radio">
+          <input type="radio" name="question">
+          Yes
+        </label>
+        <label class="radio">
+          <input type="radio" name="question">
+          No
+        </label>
+      </div>
+    </div>
+
+    <div class="field is-grouped">
+      <div class="control">
+        <button class="button is-link">Submit</button>
+      </div>
+      <div class="control">
+        <button class="button is-link is-light">Cancel</button>
+      </div>
     </div>
   </body>
 </html>
