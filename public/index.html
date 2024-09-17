@@ -6,15 +6,18 @@
   <meta charset="utf-8">
   <link rel="stylesheet" href="style.css">
   <script src="script.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/js-cookie@3.0.5/dist/js.cookie.min.js"></script>
 </head>
 
 <body>
   <div class="centered">
     <h1>Welcome the Calculator!</h1>
     <p>Please Sign in</p>
-    <label for="Username">Username:</label>
-    <input type="text" id="Username"><br><br>
-    <button onclick="enter()">Enter</button>
+    
+      <label for="Username">Username:</label>
+      <input type="text" id="Username" name="Username"><br><br>
+      <button onclick="handleLogIn()">Log In</button>
+    
   </div>
 </body>
 

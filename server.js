@@ -3,10 +3,11 @@ const express = require('express')
 const app = express()
 const bodyParser = require('body-parser')
 const path = require('path')
+//added cookies on the other script
 //THIS IS APPDATA
 //appData = []
 
-app.use(express.static(__dirname + '/public'));
+//app.use(express.static(__dirname + '/public'));
 
 const { MongoClient, ServerApiVersion, LEGAL_TLS_SOCKET_OPTIONS } = require('mongodb');
 const { setDefaultResultOrder } = require('dns');
@@ -34,8 +35,22 @@ app.use(
     extended: true,
   })
 )
-app.use(express.json())
 
+async function run() {
+  try {
+    // Connect the client to the server	(optional starting in v4.7)
+    await client.connect();
+    // Send a ping to confirm a successful connection
+    await client.db("admin").command({ ping: 1 });
+    console.log("Pinged your deployment. You successfully connected to MongoDB!");
+    collection = await client.db("Project_3_Database").collection("My stuff");
+    const listener = app.listen(process.env.PORT || 3000)
+  } finally {
+    // Ensures that the client will close when you finish/error
+    //await client.close();
+  }
+}
+run().catch(console.dir);
 
 app.get('/data', async (req, res) => {
   //let foundData = 
@@ -55,32 +70,37 @@ app.post('/submit', async (req, res) => {
   res.writeHead(200, { 'Content-Type': 'application/json' })
   let currUserName = req.body.name;
   //console.log(req.body);
-
+  let currTotal;
   //let currName = req.query.name;
-  let currTotal = 0;
+  //console.log(JSON.stringify(req.body));
+
+  //let latestValue;
+  //console.log(currUserName);
+  //let currName = req.query.name;
+  
   let result = await collection.find({
     name: currUserName,
-  }).toArray().then();
+  }).toArray();
+  result.sort((a, b) => a.timestamp - b.timestamp);
+  let latest = result[result.length - 1].total;
 
-  if (result != null) {
-    console.log(result);
-    currTotal = result[result.length - 1].total;
-  }
+
+  //console.log(currTotal);
   if (req.body.operation == "Add") {
     //console.log("Made inside the add operation")
-    currTotal = currTotal + Number(req.body.number);
+    latest = latest + Number(req.body.number);
   }
   if (req.body.operation == "Sub") {
-    currTotal = currTotal - Number(req.body.number);
+    latest = latest - Number(req.body.number);
   }
   if (req.body.operation == "Mult") {
-    currTotal = currTotal * Number(req.body.number);
+    latest = latest * Number(req.body.number);
   }
   if (req.body.operation == "Div") {
-    currTotal = currTotal / Number(req.body.number);
+    latest = latest / Number(req.body.number);
   }
 
-  let newValues = { 'number': Number(req.body.number), 'operation': req.body.operation, 'total': currTotal, 'name': currUserName, 'timestamp': Math.floor(Date.now() / 1000) };
+  let newValues = { 'number': Number(req.body.number), 'operation': req.body.operation, 'total': latest, 'name': currUserName, 'timestamp': Math.floor(Date.now() / 1000) };
   //latestInput = newValues;
   //appData.push({ 'firstnum': Number(req.body.firstnum), 'lastnum': req.body.lastnum, 'total': currentTotal });
   let rezult = await collection.insertOne(newValues);
@@ -89,45 +109,38 @@ app.post('/submit', async (req, res) => {
 
 
 app.post('/enter', async (req, res) => {
-  //let foundData = 
-  
-  res.writeHead(200, { 'Content-Type': 'text/html' })
-  
   let currName = req.body.name;
+  let found = await collection.find({name: currName,}).toArray()
   console.log(currName);
-  let result = await collection.find({
-    name: currName,
-  }).toArray()
-  console.log(currName);
-  console.log(result);
-  console.log(res.json(result));
-  if(result != null)
+  if(found == null)
   {
-    
-    res.sendFile(path.join(__dirname, 'public', 'calculate.html'));
-    //res.write(result);
-    //next();
-  }
-  else
-  {
-    let newValues = { 'name': currName };
-    let rezult = await collection.insertOne(newValues);
-    res.sendFile(path.join(__dirname, 'public', 'calculate.html'));
-    //next();
-    //res.write(result);
-  }
-  res.end();
+    let newValues = {'name': currName};
+    let result = await collection.insertOne(newValues);
+  } 
+  
+  res.sendFile(path.join(__dirname, 'public', 'calculate.html'));
 })
 
-
-
 app.post('/kill', async (req, res) => {
-  res.writeHead(200, { 'Content-Type': 'application/json' })
+  res.writeHead(200, { 'Content-Type': 'application/json' });
 
+  console.log(JSON.stringify(req.body));
 
-  let poppedValue = collection.find({ firstnum: 'latestInput.firstnum' })
+  let currUserName = req.body.name;
+  //let latestValue;
+  //console.log(currUserName);
+  //let currName = req.query.name;
+  
+  let result = await collection.find({
+    name: currUserName,
+  }).toArray();
 
-  //res.end(JSON.stringify(appData))
+  result.sort((a, b) => a.timestamp - b.timestamp);
+  let latest = result[result.length - 1];
+  //console.log(latest);
+  await collection.deleteOne(latest);
+  
+  res.end(JSON.stringify(latest));
 })
 
 /*res.writeHead(200, { 'Content-Type': 'application/json' })
@@ -158,18 +171,3 @@ if (responce[responce.length - 1].lastnum == "Add" || responce[responce.length -
 
 
 
-async function run() {
-  try {
-    // Connect the client to the server	(optional starting in v4.7)
-    await client.connect();
-    // Send a ping to confirm a successful connection
-    await client.db("admin").command({ ping: 1 });
-    console.log("Pinged your deployment. You successfully connected to MongoDB!");
-    collection = await client.db("Project_3_Database").collection("My stuff");
-    const listener = app.listen(process.env.PORT || 3000)
-  } finally {
-    // Ensures that the client will close when you finish/error
-    //await client.close();
-  }
-}
-run().catch(console.dir);
