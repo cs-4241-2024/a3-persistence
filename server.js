@@ -1,25 +1,3 @@
-// const express = require("express"),
-//   { MongoClient, ObjectId } = require("mongodb"),
-//   app = express();
-// const http = require('http');
-// const PORT = 3000;
-
-// // const uri = "mongodb+srv://supermanbritt2003:Y97Dvkvgd0tm3zjN@a3.cfniv.mongodb.net/?retryWrites=true&w=majority&appName=A3";
-
-// const uri = "mongodb+srv://supermanbritt2003:" + process.env.db_password + "@a3.cfniv.mongodb.net/?retryWrites=true&w=majority&appName=A3";
-
-// async function connect() {
-//   try {
-//     await mongoose.connect(uri);
-//     console.log("Connected to MongoDB");
-//   } catch (error) {
-//     console.log(error);
-//   }
-// }
-// connect();
-// app.listen(PORT, () => console.log('Server started on ${PORT}'));
-
-///////////
 const express = require("express"),
   { MongoClient, ObjectId } = require("mongodb"),
   app = express()
