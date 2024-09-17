@@ -15,12 +15,17 @@ hbs     = require( 'express-handlebars' ).engine
 
 const uri = `mongodb+srv://${process.env.MYUSER}:${process.env.PASS}@${process.env.HOST}`
 const client = new MongoClient( uri )
-
+const db = client.db("database")
+let userCollection = null
 let collection = null
+let collectionName = null
 
 async function run() {
   await client.connect() //wait for client to connect...
-  collection = await client.db("database").collection("namey") //my database here collecction variable
+  //if (collectionName!==null) {collection = await client.db("database").collection(collectionName)}
+   //my database here collecction variable
+   collection = await client.db("database").collection("namey") //default cause otherwise get 503 error  in app.use
+  userCollection = await client.db("database").collection("accounts")
 
   // route to get all docs
   app.get("/displayer", async (req, res) => {
@@ -249,7 +254,39 @@ app.use( cookie({
   keys: ['access1', 'access2'] //previously were key1 and key2
 }))
 
-app.post( '/login', (req,res)=> {
+app.post( '/createAccount', (req,res)=> {
+    res.redirect( 'create.html' )
+})
+
+app.post( '/newAccount', async (req,res)=> {
+
+    if (req.body.password!=="") {
+
+        const docs = await userCollection.find({}).toArray()
+        let add = 1;
+        for (i=0;i<docs.length;i++) {
+            if (req.body.unsername===docs[i].username) {
+                add = 0;
+            }
+        }
+        if (add===1) {
+            const result = await userCollection.insertOne( req.body)
+            res.render('index', { msg:'successfully created account, now log in', table:docs, layout:false })
+        }
+        else {
+            res.render('create', { msg:'could not create account', layout:false })
+        }
+    } else {
+        res.render('create', { msg:'could not create account', layout:false })
+    }
+    
+})
+
+
+
+
+
+app.post( '/login', async (req,res)=> {
     // express.urlencoded will put your key value pairs 
     // into an object, where the key is the name of each
     // form field and the value is whatever the user entered
@@ -257,9 +294,24 @@ app.post( '/login', (req,res)=> {
     
     // below is *just a simple authentication example* 
     // for A3, you should check username / password combos in your database
-    
+    //const user = db.getUser(req.body.username); <--not working
+    //printjson(user); <--not working
+    //use accounts
+    //db.getUser("appClient")
+    const docs = await userCollection.find({}).toArray()
+    let loginSuccessful = 0;
+    for (i=0;i<docs.length;i++) {
+        if (req.body.password ===docs[i].password && req.body.username ===docs[i].username) {
+            loginSuccessful = 1;
+            console.log(req.body.username)
+            collectionName = req.body.username;
+            collection = await client.db("database").collection(req.body.username);
+        }
+    }
 
-    if(req.body.password === 'test') { //req.body.password === 'test'
+
+
+    if(loginSuccessful) { 
       // define a variable that we can check in other middleware
       // the session object is added to our requests by the cookie-session middleware
       req.session.login = true
