@@ -1,7 +1,8 @@
 require('dotenv').config();
 const express = require("express"),
       { MongoClient, ObjectId } = require("mongodb"),
-      app = express();
+      app = express()
+
 
 app.use(express.static("public"));
 app.use(express.json());
@@ -14,10 +15,34 @@ let collection = null;
 
 async function run() {
   await client.connect();
-  collection = await client.db("A3").collection("workoutData");  // Changed collection name for clarity
+  collection = await client.db("A3").collection("workoutData");
 }
 
 run();
+
+app.post( '/login', (req,res)=> {
+  // express.urlencoded will put your key value pairs 
+  // into an object, where the key is the name of each
+  // form field and the value is whatever the user entered
+  console.log( req.body )
+  
+  // below is *just a simple authentication example* 
+  // for A3, you should check username / password combos in your database
+  if( req.body.password === 'test' ) {
+    // define a variable that we can check in other middleware
+    // the session object is added to our requests by the cookie-session middleware
+    req.session.login = true
+    
+    // since login was successful, send the user to the main content
+    // use redirect to avoid authentication problems when refreshing
+    // the page or using the back button, for details see:
+    // https://stackoverflow.com/questions/10827242/understanding-the-post-redirect-get-pattern 
+    res.redirect( 'home.html' )
+  }else{
+    // password incorrect, redirect back to login page
+    res.sendFile( __dirname + '/public/index.html' )
+  }
+})
 
 // Route to get all documents (equivalent to /onLoad)
 app.get("/docs", async (req, res) => {

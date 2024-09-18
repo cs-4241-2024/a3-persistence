@@ -183,15 +183,17 @@ const clearPage = async function(event){
 
 //sets the button functions onload and focuses on the first box
 window.onload = async function() {
-  const submitButton = document.getElementById("submit")
-  submitButton.onclick = submit;
-  const clearButton = document.getElementById("clear")
-  clearButton.onclick = clearPage;
-  document.getElementById('exercise').focus();
-
-  const response = await fetch( '/docs', {
-    method:'GET'
-  })
-  const text = await response.json()
-  buildTable(text);
+  if (document.getElementById('homePage')) {
+    const submitButton = document.getElementById("submit")
+    submitButton.onclick = submit;
+    const clearButton = document.getElementById("clear")
+    clearButton.onclick = clearPage;
+    document.getElementById('exercise').focus();
+  
+    const response = await fetch( '/docs', {
+      method:'GET'
+    })
+    const text = await response.json()
+    buildTable(text);
+  }
 }

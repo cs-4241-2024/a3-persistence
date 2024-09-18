@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>CS4241 Assignment 3</title>
+    <meta charset="utf-8">
+    <script src="js/main.js"></script>
+    <link rel="stylesheet" href="css/main.css">
+    
+    <!-- get rid of favicon error -->
+    <link rel="icon" href="data:;base64,iVBORw0KGgo=">
+  </head>
+  <body id = 'homePage'>
+    <div class="container">
+      <h1>Workout Log</h1>
+      <form class="form-group"> 
+        <label>Exercise:</label>
+        <input type="text" id="exercise" class="input-field"> 
+        <label>Sets:</label>
+        <input type="text" id="sets" class="input-field">
+        <label>Repetitions:</label>
+        <input type="text" id="reps" class="input-field">
+        <label>Weight:</label>
+        <input type="text" id="weight" class="input-field">
+        <button id="submit" class="btn">Submit</button>
+      </form>
+      <button id="clear" >Clear Workout</button>
+      <table id="results"></table>
+    </div>
+  </body>
+</html>
