@@ -256,3 +256,22 @@ async function deleteItem(id) {
     renderOrderedItems();
   }
 }
+
+document.getElementById('logoutButton').addEventListener('click', function (event) {
+  event.preventDefault(); // Prevent the default form submission behavior
+
+  fetch('/logout', {
+    method: 'POST',
+    credentials: 'include' // Ensures cookies are sent with the request
+  })
+      .then(response => {
+        if (response.redirected) {
+          window.location.href = response.url; // Redirect to the login page
+        } else {
+          alert('Error logging out');
+        }
+      })
+      .catch(error => {
+        console.error('Error logging out:', error);
+      });
+});

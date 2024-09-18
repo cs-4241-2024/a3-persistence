@@ -6,6 +6,9 @@ const helmet = require('helmet');
 const morgan = require('morgan');
 const bcrypt = require('bcrypt');
 const cookieParser = require('cookie-parser');
+const passport = require('passport');
+const GitHubStrategy = require('passport-github2').Strategy;
+const session = require('express-session');
 
 const app = express();
 const port = 3000;
@@ -26,6 +29,10 @@ app.use(express.static("public"));
 app.use(helmet());
 app.use(morgan('tiny'));
 app.use(cookieParser());
+app.use(session({ secret: '42dfd2cb249c5aa8ecba0cd74d3786ab2fedb5c4', resave: false, saveUninitialized: true }));
+app.use(passport.initialize());
+app.use(passport.session());
+
 
 // Connect to MongoDB
 
@@ -39,8 +46,61 @@ client.connect().then(() => {
   console.error('Failed to connect to MongoDB', err);
 });
 
+// Passport.js GitHub OAuth strategy
+passport.use(new GitHubStrategy({
+      clientID: 'Ov23liKKkkIRlW5gfSGg',
+      clientSecret: '42dfd2cb249c5aa8ecba0cd74d3786ab2fedb5c4',
+      callbackURL: 'http://localhost:3000/auth/github/callback'
+    },
+    async (accessToken, refreshToken, profile, done) => {
+      try {
+        // Check if the user exists in the database
+        let user = await usersCollection.findOne({ githubId: profile.id });
+
+        if (!user) {
+          // If user doesn't exist, create a new one
+          const newUser = {
+            username: profile.username,
+            githubId: profile.id,
+            displayName: profile.displayName
+          };
+          const result = await usersCollection.insertOne(newUser);
+          user = result.ops[0];
+        }
+
+        return done(null, user);
+      } catch (error) {
+        return done(error);
+      }
+    }
+));
+
+// Serialize and deserialize user instances
+passport.serializeUser((user, done) => {
+  done(null, user._id);
+});
+
+passport.deserializeUser(async (id, done) => {
+  try {
+    const user = await usersCollection.findOne({ _id: new ObjectId(id) });
+    done(null, user);
+  } catch (error) {
+    done(error, null);
+  }
+});
+
+// GitHub OAuth routes
+app.get('/auth/github', passport.authenticate('github', { scope: ['user:email'] }));
+
+// GitHub OAuth callback route
+app.get('/auth/github/callback', passport.authenticate('github', { failureRedirect: '/' }), (req, res) => {
+  // Successful authentication, set a cookie and redirect
+  res.cookie(sessionCookieName, { userId: req.user._id }, { httpOnly: true, maxAge: 3600000 }); // 1 hour expiration
+  res.redirect('/');
+});
+
 // GET request to fetch all orders
-app.get('/orders', authenticateUser, async (req, res) => {
+app.get('/orders', passportAuthenticated, async (req, res) => {
   console.log("Hello!")
   try {
     const userId = req.user.userId; // Get the userId from the session cookie
@@ -52,7 +112,7 @@ app.get('/orders', authenticateUser, async (req, res) => {
 });
 
 // POST request to create a new order
-app.post('/submit', authenticateUser, async (req, res) => {
+app.post('/submit', passportAuthenticated, async (req, res) => {
   try {
     const { name, foodName, foodPrice, quantity } = req.body;
     const userId = req.user.userId; // Get the userId from the session cookie
@@ -69,7 +129,7 @@ app.post('/submit', authenticateUser, async (req, res) => {
 });
 
 // PUT request to update an existing order
-app.put('/edit', authenticateUser, async (req, res) => {
+app.put('/edit', passportAuthenticated, async (req, res) => {
   const { id, name, foodName, foodPrice, quantity } = req.body;
   try {
     const result = await ordersCollection.updateOne(
@@ -85,7 +145,7 @@ app.put('/edit', authenticateUser, async (req, res) => {
 });
 
 // DELETE request to delete an order
-app.delete('/delete', authenticateUser, async (req, res) => {
+app.delete('/delete', passportAuthenticated, async (req, res) => {
   const { id } = req.body;
   try {
     const result = await ordersCollection.deleteOne({ _id: new ObjectId(id) });
@@ -146,7 +206,14 @@ app.post('/login', async (req, res) => {
     // Set a cookie to track the session
     res.cookie(sessionCookieName, { userId: user._id }, { httpOnly: true, maxAge: 3600000 }); // 1 hour expiration
 
-    res.json({ message: 'Login successful' });
+    // Log the user in with Passport
+    req.login(user, (err) => {
+      if (err) {
+        return res.status(500).json({ message: 'Error logging in', error: err });
+      }
+      res.json({ message: 'Login successful' });
+    });
+
   } catch (error) {
     console.error('Error logging in:', error);
     res.status(500).json({ message: 'Error logging in', error });
@@ -163,14 +230,44 @@ function authenticateUser(req, res, next) {
   next();
 }
 
-app.get('/protected', authenticateUser, (req, res) => {
+//Updated Middleware to authenticate users via cookies or GitHub
+function passportAuthenticated(req, res, next) {
+  if (req.isAuthenticated()) {
+    // If Passport has authenticated the user (GitHub or session-based)
+    return next();
+  } else if (req.cookies[sessionCookieName]) {
+    // If user is authenticated via cookies (traditional login)
+    req.user = req.cookies[sessionCookieName]; // Add userId to req.user
+    return next();
+  } else {
+    return res.status(401).json({ message: 'Access denied. Please login.' });
+  }
+}
+
+app.get('/protected', passportAuthenticated, (req, res) => {
   res.json({ message: 'This is a protected route', user: req.user });
 });
 
 // Logout route to clear the cookie
 app.post('/logout', (req, res) => {
-  res.clearCookie(sessionCookieName);
-  res.json({ message: 'Logged out successfully' });
+  req.logout((err) => {
+    if (err) {
+      return res.status(500).json({ message: 'Error logging out', error: err });
+    }
+
+    // Clear session cookie for traditional login
+    res.clearCookie(sessionCookieName);
+
+    // Destroy the session for OAuth (GitHub login)
+    req.session.destroy((err) => {
+      if (err) {
+        return res.status(500).json({ message: 'Error destroying session', error: err });
+      }
+
+      // Redirect to the homepage or login page after logging out
+      res.redirect('/');
+    });
+  });
 });
 
 // Serve static files (HTML, CSS, JS)

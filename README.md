@@ -109,16 +109,27 @@ add a little more detail about what it does.
 
 ## Lighthouse Tests
 - **Login Page**: ![login.png](login.png)
+- **Main Page**: ![main.png](main.png)
 
 
 ## Technical Achievements
-- **OAuth for GitHub**: ...
+- **OAuth for GitHub**: Implemented OAuth for GitHub users. Set authentication for both cookies and passport (traditional Logjn and OAuth Login)
+- **Unique Data for each particular user**: Each user logged in has unique data that is created by the authenticated user. 
+- **Added log out button**: Added a logout button that clears the cookies cached by the user and restricts the user from reentering without logging in again.
 - **Hosted on a different site**: I used Vercel as another hosting site for the application other than glitch. I was able to quickly deploy my project and use my GitHub to display all my repositories needed for A3. However, the main issue is not being able to use my MongoDB database for some reason.
+- **HTML Forms**: I have used the correct HTML form inputs to gather data from the user, which includes their login credentials and their food orders. The data inputted is then captured using res and req with body to send the data into the server.
+- **MongoDB and Express Middleware**: I have incorporated the MongoDB and Express Middleware to house the data provided by the user, which includes their login credentials and their food orders.
+- **Add/Edit/Delete**: I have given the ability to add,edit and delete their data from the database which is also reflected in the MongoDB database. I have added these functions in the Server.js file.
+- **Different Middlewares used**: I have incorporated other Middlewares to enhance runtime and help with security. These middlewares are: Cors, Body-parser, Helmet, Morgan, Cookie-parser, Express-static and more. Check the Middleware section in my Server.js file.
+- **Persistent Data**: My data displayed on the application is reflective on the MongoDB database. The data can be modified and is still reflective on the database, whether you add, edit, or delete the data.
+- **Server requests using Fetch**: I made all of my functions in Main.js using fetch to use server requests, which includes the function to fetch all initial orders from a particular user, functions working with the data for each other, adding food orders, and also for logging/registering a user into the application.
 - **Lighthouse Test**: I have achieved 100% for all the lighthouse tests on this assignment. Look at the pictures above.
-- 
 
 ## Design/Evaluation Achievements
-- **Design Achievement 1**: I followed the following tips from the W3C Web Accessibility Initiative...
+- **W3C Accessibility**: I followed the following tips from the W3C Web Accessibility Initiative:
+- **CSS Framework**: I have implemented Tailwind as my main CSS Framework, which is used in both login.html and index.html. Look at the top of the html files for the stylesheet.
+- 
+                        
 
 ### Websites
 - **Glitch**: 
