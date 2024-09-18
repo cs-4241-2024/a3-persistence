@@ -65,21 +65,23 @@ const loadTable = async function() {
   while (table.firstChild) {
     table.removeChild(table.lastChild)
   }
-
+  
   for (let i = 0; i < 11; i++) {
     let tr = table.appendChild(document.createElement("tr"))
     // for each level of spell,
     // create a row of data
     // that corresponds to it.
     let json = { "command": "loadtable", "payload": i}
-    body = JSON.stringify(json)
+    //body = JSON.stringify(json)
+    //console.log(body)
+
 
     let response = await fetch( '/loadTable', {
     method:'POST',
-    body 
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify(json),
     })
-
-  
+    
     let resp = await response.text()
     let tabledata = JSON.parse(resp)
     console.log(tabledata)

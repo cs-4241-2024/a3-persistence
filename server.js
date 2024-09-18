@@ -10,6 +10,8 @@ const express = require('express'),
       app = express()
 
 app.use( express.urlencoded({ extended:true }) ) //allows you to use req.body   bady-parser
+
+app.use(express.json());
 const logger = (req,res,next) => {
         console.log( 'url:', req.url )
         next()
@@ -450,13 +452,12 @@ app.post( '/submit', (req, res ) => {
 })
 
 app.post( '/loadTable', (req, res ) => {
-
   if (req.body.payload > 1) {
     let datarow = appdata[req.body.payload]
     datarow.remaining = datarow.available - datarow.used
-    }
-    res.writeHead( 200, "OK", {'Content-Type': 'text' })
-    res.end(JSON.stringify(appdata[req.body.payload]))
+  }
+  res.writeHead( 200, "OK", {'Content-Type': 'text' })
+  res.end(JSON.stringify(appdata[req.body.payload]))
 })
 
 app.post( '/longRest', (req, res ) => {
