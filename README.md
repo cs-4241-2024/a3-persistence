@@ -5,6 +5,10 @@ Assignment 3 - Persistence: Two-tier Web Application with Database, Express serv
 
 glitch: https://glitch.com/~a3-piper-oconnell
 
+**Instructions**:
+- Logging in with no username/password will show all data.
+- tester login: admin - password
+
 **The Goal of the Application**:
 - The goal of the application is to store data on someones name, favorite type of cookie, favorite type of ice cream, and any comments they want to make.
 - The dataset will then give each user a type of cake based off of their favorite type of ice cream and cookies.
