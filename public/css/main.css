@@ -108,3 +108,8 @@ button:hover {
 .overlay.active {
   display: block; /* Visible when active */
 }
+#popupPriority {
+  background-color: transparent; /* Makes the background transparent */
+  font-size: 16px; /* Matches the font size of other fields */
+  cursor: default; /* Changes the cursor to indicate it’s not editable */
+}

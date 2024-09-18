@@ -45,9 +45,10 @@ const changeRow = async function(id) {
 
   // document.getElementById('popupId').value = item._id;
   console.log(row.cells[0]);
-  document.getElementById('popupToDo').value = row.cells[0];
-  document.getElementById('popupType').value = row.cells[1];
-  document.getElementById('popupDate').value = row.cells[2];
+  document.getElementById('popupToDo').value = row.cells[0].textContent;
+  document.getElementById('popupType').value = row.cells[1].textContent;
+  document.getElementById('popupDate').value = row.cells[2].textContent;
+  document.getElementById('popupPriority').value = row.cells[3].textContent;
 
   document.getElementById('popup').classList.add('active');
   document.getElementById('popupOverlay').classList.add('active');
@@ -60,12 +61,12 @@ const closePopup = function() {
 
 
 const saveChanges = async function() {
-  //const id = document.getElementById('popupId').value;
+  const priority = document.getElementById('popupPriority').value;
   const ToDo = document.getElementById('popupToDo').value;
   const type = document.getElementById('popupType').value;
   const date = document.getElementById('popupDate').value;
-
-  const body = JSON.stringify({ ToDo, type, date });
+  const newjson = { priority: priority, ToDo: ToDo, type: type, date: date };
+  const body = JSON.stringify(newjson);
   const response = await fetch('/update-doc', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
