@@ -1,4 +1,14 @@
-import Cookies from "js-cookie";
+const parseCookies = () => {
+    const cookies = document.cookie.split(";");
+    const result = {};
+
+    for (const cookie of cookies) {
+        const [key, value] = cookie.split("=");
+        result[key] = value;
+    }
+
+    return result;
+};
 
 const validateInput = function (json) {
     if (json.name == null || json.name == "") {
@@ -64,7 +74,7 @@ const submit = async function (event) {
 };
 
 document.onreadystatechange = function (e) {
-    if (!Cookies.get("accessToken")) {
+    if (!parseCookies().accessToken) {
         location.href = "/login.html";
         return;
     }
@@ -94,7 +104,7 @@ const revalidate = async () => {
 
     // Displaying loading icon while revalidating
     document.querySelector("#list").appendChild(loading);
-    const accessToken = document.cookie.split(";")[0].split("=")[1];
+    const accessToken = parseCookies().accessToken;
     const response = await fetch("/data", {
         headers: {
             "Content-Type": "application/json",

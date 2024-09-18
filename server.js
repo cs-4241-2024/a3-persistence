@@ -36,8 +36,6 @@ passport.use(
             callbackURL: process.env.GITHUB_CALLBACK_URL,
         },
         async function (accessToken, refreshToken, profile, done) {
-            console.log(profile);
-
             const groceryLists = client.db("a3").collection("grocery-lists");
 
             // Check if the user exists in the database
