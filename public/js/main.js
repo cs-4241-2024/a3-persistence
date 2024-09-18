@@ -4,7 +4,7 @@ const parseCookies = () => {
 
     for (const cookie of cookies) {
         const [key, value] = cookie.split("=");
-        result[key] = value;
+        result[key.trim()] = value.trim();
     }
 
     return result;
