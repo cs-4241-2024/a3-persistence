@@ -3,6 +3,10 @@ const parseCookies = () => {
     const result = {};
 
     for (const cookie of cookies) {
+        if (!cookie.includes("=")) {
+            continue;
+        }
+
         const [key, value] = cookie.split("=");
         result[key.trim()] = value.trim();
     }
