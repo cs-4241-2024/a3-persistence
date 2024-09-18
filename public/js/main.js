@@ -60,13 +60,13 @@ const displayTab = async function () {
   console.log("displaying table");
   const tabBody = document.querySelector("#body");
   tabBody.innerHTML = "";
-  
-    const response = await fetch("/docs");
-    if (!response.ok) {
-      throw new Error("Failed to fetch documents.");
-    }
 
-    const dataset = await response.json();
+  const response = await fetch("/docs");
+  if (!response.ok) {
+    throw new Error("Failed to fetch documents.");
+  }
+
+  const dataset = await response.json();
 
   for (const entry of dataset) {
     const row = document.createElement("tr");
@@ -82,7 +82,7 @@ const displayTab = async function () {
     const deadlineCell = document.createElement("td");
     deadlineCell.textContent = entry.deadline;
     row.appendChild(deadlineCell);
-    
+
     const priorityCell = document.createElement("td");
     priorityCell.textContent = entry.priority;
     row.appendChild(priorityCell);
@@ -111,7 +111,7 @@ const submit = async function (event) {
     notes: document.querySelector("#notes").value, // Notes (string)
     deadline: document.querySelector("#deadline").value, // Deadline (date)
   };
-  
+
   const body = JSON.stringify(entry);
   console.log(entry);
 
@@ -122,7 +122,7 @@ const submit = async function (event) {
       body,
     });
 
-    const data = await response.json();
+    const data = await response.json(event);
     if (response.ok) {
       console.log("Received data:", data);
       displayTab();
@@ -138,4 +138,21 @@ window.onload = async function () {
   const form = document.querySelector("#todoForm");
   form.onsubmit = submit;
   displayTab();
+
+  document.getElementById("logout").addEventListener("click", async () => {
+    console.log("Requesting to log out");
+    try {
+      const response = await fetch("/logout", {
+        method: "POST",
+      });
+
+      if (response.ok) {
+        window.location.href = "/index.html";
+      } else {
+        console.error("Failed to log out");
+      }
+    } catch (error) {
+      console.error("Error during logout:", error);
+    }
+  });
 };
