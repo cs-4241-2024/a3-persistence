@@ -1,0 +1,12 @@
+{
+  "name": "cs-4241-server",
+  "version": "0.1.0",
+  "description": "CS 4241 Assignment 3",
+  "author": "James Cannon",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "mime": "^2.4.4"
+  }
+}

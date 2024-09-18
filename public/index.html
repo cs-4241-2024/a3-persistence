@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>CS4241 Assignment 3</title>
+    <meta charset="utf-8" />
+    <script src="js/main.js"></script>
+    <link rel="stylesheet" href="css/main.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="icon" href="data:;base64,iVBORw0KGgo=" />
+  </head>
+  <body>
+    <h1>Game Wishlist</h1>
+    <p>
+      Ever needed to keep track of games you've been meaning to play? Just enter
+      the title of a game, the genre, its cost (no $), and any discount it has
+      (no %, 0-100).
+    </p>
+    <form>
+      <input type="text" id="game" placeholder="Enter game title" required />
+      <input type="text" id="genre" placeholder="Enter genre" required />
+      <input type="text" id="cost" placeholder="Enter cost" required />
+      <input type="text" id="discount" placeholder="Enter discount" required />
+      <button class="button" id="submit">Submit</button>
+    </form>
+    <table id="data">
+      <thead>
+        <tr>
+          <th>Game Title</th>
+          <th>Genre</th>
+          <th>Cost</th>
+          <th>Discount</th>
+          <th>Discounted Cost</th>
+        </tr>
+      </thead>
+      <tbody id="bodyData"></tbody>
+    </table>
+  </body>
+</html>
