@@ -112,7 +112,14 @@ add a little more detail about what it does.
 
 
 ## Technical Achievements
-- **Tech Achievement 1**: I used OAuth authentication via the GitHub strategy
+- **OAuth for GitHub**: ...
+- **Hosted on a different site**: I used Vercel as another hosting site for the application other than glitch. I was able to quickly deploy my project and use my GitHub to display all my repositories needed for A3. However, the main issue is not being able to use my MongoDB database for some reason.
+- **Lighthouse Test**: I have achieved 100% for all the lighthouse tests on this assignment. Look at the pictures above.
+- 
 
-### Design/Evaluation Achievements
+## Design/Evaluation Achievements
 - **Design Achievement 1**: I followed the following tips from the W3C Web Accessibility Initiative...
+
+### Websites
+- **Glitch**: 
+- **Vercel**:

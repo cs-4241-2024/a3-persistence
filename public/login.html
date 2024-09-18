@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Log in or register to access your account">
-    <title>Login Page</title>
+    <title>Login to Quick-Bites Food Service</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <link rel="preload" href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&family=Playfair+Display:wght@400;700&display=swap" as="style">
     <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
@@ -13,26 +13,35 @@
     <link rel="icon" href="data:;base64,iVBORw0KGgo=" />
 </head>
 
+<style>
+    :focus {
+        outline: 2px solid #4CAF50;
+        outline-offset: 2px;
+    }
+</style>
+
 <body class="bg-orange-100 flex justify-center items-center h-screen font-sans">
 
 <!-- Login Form -->
 <form id="login-form" class="bg-white shadow-xl rounded-lg p-8 w-full max-w-md space-y-6" aria-label="Login Form">
-    <h1 class="text-4xl font-serif text-red-700 font-bold">Login</h1>
+    <h1 class="text-4xl font-serif text-red-700 font-bold">Quick-Bites!</h1>
 
     <!-- Username input field -->
     <div class="space-y-2">
         <label for="username" class="block text-gray-800 font-bold">Username:</label>
-        <input type="text" id="username" name="username" autocomplete="username" class="w-full p-3 border border-gray-400 rounded-lg focus:outline-none focus:border-green-500" required aria-required="true" aria-label="Enter your username" />
+        <input type="text" id="username" name="username" autocomplete="username" aria-describedby="username-help" class="w-full p-3 border border-gray-400 rounded-lg focus:outline-none focus:border-green-500" required aria-required="true" aria-label="Enter your username" />
+        <p id="username-help" class="text-sm text-gray-600">Please enter your username (e.g., email or username).</p>
     </div>
 
     <!-- Password input field -->
     <div class="space-y-2">
         <label for="password" class="block text-gray-800 font-bold">Password:</label>
         <input type="password" id="password" name="password" autocomplete="current-password" class="w-full p-3 border border-gray-400 rounded-lg focus:outline-none focus:border-green-500" required aria-required="true" aria-label="Enter your password" />
+        <p id="password-help" class="text-sm text-gray-600">Your password should be at least 8 characters long.</p>
     </div>
 
     <!-- Submit button for login -->
-    <button type="submit" id="login-btn" class="w-full bg-red-700 text-white py-3 rounded-lg hover:bg-red-800 transition-colors" aria-label="Log in to your account">
+    <button type="submit" class="w-full bg-red-700 text-white py-3 rounded-lg hover:bg-red-800 transition-colors focus:outline-none focus:ring-2 focus:ring-red-700">
         Login
     </button>
 
@@ -41,10 +50,9 @@
         Register
     </button>
 
-    <!-- Signup link or forgot password -->
-    <div class="text-center mt-4">
-        <a href="#" class="text-red-700 hover:underline" aria-label="Forgot your password">Forgot your password?</a>
-    </div>
+    <footer class="text-center mt-10 text-gray-600">
+        <p>© 2024 Quick-Bites Service. All rights reserved.</p>
+    </footer>
 </form>
 
 </body>
