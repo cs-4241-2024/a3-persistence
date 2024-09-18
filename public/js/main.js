@@ -3,9 +3,6 @@ let lastRow = {};
 let username = null;
 let password = null;
 const showData = function (data) {
-	//TODO: Make it so null data cannot be displayed (like the log in entry)
-	//TODO: Make it so only the data associated with the user is displayed
-	//TODO: Remove the letter C from the last row
 	const dataTable = document.querySelector('#dataTable');
 	let innerHTMLString = `
   <tr>
@@ -13,31 +10,32 @@ const showData = function (data) {
     <th>Class Name</th>
     <th>Assignment</th>
     <th>Days Left</th>
-    <th>Due Date</th>c
+    <th>Due Date</th>
   </tr>`;
 	// console.log("Data: ", data);
 	// lastRow = data[data.length - 1];
 	// console.log("Last Row" + lastRow);
 	data.forEach(element => {
-		// const tableRow
-		innerHTMLString += `<tr>
+		if (element.classCode != null) {
+			innerHTMLString += `<tr>
     <td>${element.classCode}</td>
     <td>${element.className}</td>
     <td>${element.assignment}</td>
     <td>${element.daysLeft}</td>
     <td>${element.dueDate}</td>
-  </tr>`;
+  	</tr>`;
 
-		//Not optimal
-		lastRow = {
-			"Username": username,
-			"Password": password,
-			"classCode": element.classCode,
-			"className": element.className,
-			"assignment": element.assignment,
-			"daysLeft": element.daysLeft,
-			"dueDate": element.date
-		};
+			//Not optimal
+			lastRow = {
+				"Username": username,
+				"Password": password,
+				"classCode": element.classCode,
+				"className": element.className,
+				"assignment": element.assignment,
+				"daysLeft": element.daysLeft,
+				"dueDate": element.date
+			};
+		}
 
 	});
 	dataTable.innerHTML = innerHTMLString;
