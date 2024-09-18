@@ -1,6 +1,6 @@
 const express = require('express');
 const path = require('path');
-const { MongoClient, ServerApiVersion } = require('mongodb');
+const { MongoClient, ObjectId, ServerApiVersion } = require('mongodb');
 const session = require('express-session');
 const bcrypt = require('bcryptjs');
 const passport = require('passport');
@@ -35,7 +35,6 @@ async function connectToDatabase() {
 
 connectToDatabase();
 
-// Middleware
 app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, 'public')));
@@ -49,6 +48,7 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 
+// Passport.js configuration
 passport.use(new LocalStrategy(
     async function(username, password, done) {
         try {
@@ -69,40 +69,47 @@ passport.serializeUser(function(user, done) {
 
 passport.deserializeUser(async function(id, done) {
     try {
-        const user = await usersCollection.findOne({ _id: id });
+        const user = await usersCollection.findOne({ _id: new ObjectId(id) });
         done(null, user);
     } catch (error) {
         done(error);
     }
 });
 
+
 app.post('/register', async (req, res) => {
     const { username, password } = req.body;
-    console.log('Received data:', { username, password });
-
     if (!username || !password) {
-        console.error('Username and password are required');
-        return res.status(400).json({ message: 'Username and password required' });
+        return res.status(400).send('Username and password are required');
     }
-
     try {
         const hashedPassword = await bcrypt.hash(password, 10);
-        const result = await usersCollection.insertOne({ username, password: hashedPassword });
-        console.log('User registered:', result);
+        await usersCollection.insertOne({ username, password: hashedPassword });
         res.status(201).send('User registered');
     } catch (error) {
-        console.error('Error registering user:', error);
         res.status(500).send('Error registering user');
     }
 });
 
-app.post('/login', passport.authenticate('local'), (req, res) => {
-    res.status(200).send('Logged in');
+app.post('/login', (req, res, next) => {
+    passport.authenticate('local', (err, user, info) => {
+        if (err) return next(err);
+        if (!user) return res.status(401).send('Login failed: ' + info.message);
+        req.logIn(user, (err) => {
+            if (err) return next(err);
+            res.status(200).send('Login successful');
+        });
+    })(req, res, next);
 });
 
 app.get('/logout', (req, res) => {
-    req.logout();
-    res.redirect('/');
+    req.logout((err) => {
+        if (err) {
+            console.error('Error during logout:', err);
+            return res.status(500).send('Logout failed');
+        }
+        res.redirect('/');
+    });
 });
 
 app.get('/data', async (req, res) => {
@@ -132,7 +139,7 @@ app.delete('/data/:id', async (req, res) => {
     if (!req.isAuthenticated()) return res.status(401).send('Unauthorized');
     try {
         const id = req.params.id;
-        await todosCollection.deleteOne({ _id: id, userId: req.user._id });
+        await todosCollection.deleteOne({ _id: new ObjectId(id), userId: req.user._id });
         const todos = await todosCollection.find({ userId: req.user._id }).toArray();
         res.json(todos);
     } catch (error) {
@@ -144,7 +151,7 @@ app.put('/data', async (req, res) => {
     if (!req.isAuthenticated()) return res.status(401).send('Unauthorized');
     try {
         const updatedItem = req.body;
-        await todosCollection.updateOne({ _id: updatedItem._id, userId: req.user._id }, { $set: updatedItem });
+        await todosCollection.updateOne({ _id: new ObjectId(updatedItem._id), userId: req.user._id }, { $set: updatedItem });
         const todos = await todosCollection.find({ userId: req.user._id }).toArray();
         res.json(todos);
     } catch (error) {

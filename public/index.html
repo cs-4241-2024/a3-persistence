@@ -1,71 +1,75 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <title>To-Do List Application</title>
   <meta charset="utf-8">
-  <script src="js/main.js" defer></script>
-  <link rel="stylesheet" href="css/main.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Manage your tasks efficiently with our To-Do List application. Sign up to get started!">
+  <title>To-Do List Application</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="preload" as="style" onload="this.rel='stylesheet'">
   <link rel="icon" href="data:;base64,iVBORw0KGgo=">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Nerko+One&family=SUSE:wght@100..800&display=swap" rel="stylesheet">
+  <script src="js/main.js" defer></script>
 </head>
-<body>
-<h1 id="header">To-Do List</h1>
+<body class="bg-indigo-600 text-white font-sans flex items-center justify-center min-h-screen">
+<div class="text-center">
+  <h1 class="text-4xl my-8">To-Do List</h1>
 
-<div id="authContainer">
-  <div class="form-container">
-    <h2>Register</h2>
-    <form id="registerForm">
-      <input type="text" id="registerUsername" placeholder="Username" required>
-      <input type="password" id="registerPassword" placeholder="Password" required>
-      <button type="submit">Register</button>
-    </form>
+  <div id="authContainer" class="flex flex-col items-center mb-6">
+    <div class="form-container bg-gray-800 rounded-lg p-8 mb-6 w-full max-w-md">
+      <h2 class="text-xl mb-4">Register</h2>
+      <form id="registerForm" class="flex flex-col gap-4" aria-label="User Registration">
+        <input type="text" id="registerUsername" class="p-2 border border-gray-400 rounded text-black bg-gray-300 focus:bg-gray-300 focus:outline-none focus:border-blue-500" placeholder="Username" required>
+        <input type="password" id="registerPassword" class="p-2 border border-gray-400 rounded text-black bg-gray-300 focus:bg-gray-300 focus:outline-none focus:border-blue-500" placeholder="Password" required>
+        <button type="submit" class="p-2 bg-gray-600 hover:bg-gray-500 rounded">Register</button>
+      </form>
+    </div>
+
+    <div class="form-container bg-gray-800 rounded-lg p-8 w-full max-w-md">
+      <h2 class="text-xl mb-4">Login</h2>
+      <form id="loginForm" class="flex flex-col gap-4" aria-label="User Login">
+        <input type="text" id="loginUsername" class="p-2 border border-gray-400 rounded text-black bg-gray-300 focus:bg-gray-300 focus:outline-none focus:border-blue-500" placeholder="Username" required>
+        <input type="password" id="loginPassword" class="p-2 border border-gray-400 rounded text-black bg-gray-300 focus:bg-gray-300 focus:outline-none focus:border-blue-500" placeholder="Password" required>
+        <button type="submit" class="p-2 bg-gray-600 hover:bg-gray-500 rounded">Login</button>
+      </form>
+    </div>
   </div>
 
-  <div class="form-container">
-    <h2>Login</h2>
-    <form id="loginForm">
-      <input type="text" id="loginUsername" placeholder="Username" required>
-      <input type="password" id="loginPassword" placeholder="Password" required>
-      <button type="submit">Login</button>
-    </form>
+  <div id="todoContainer" class="hidden flex flex-col items-center">
+    <div class="form-container bg-gray-800 rounded-lg p-8 mb-6 w-full max-w-md">
+      <h2 class="text-xl mb-4">Create a task</h2>
+      <form id="dataForm" class="flex flex-col gap-4" aria-label="Create Task">
+        <input type="text" id="task" class="p-2 border border-gray-400 rounded text-black bg-gray-300 focus:bg-gray-300 focus:outline-none focus:border-blue-500" placeholder="Task Name" required>
+        <input type="text" id="description" class="p-2 border border-gray-400 rounded text-black bg-gray-300 focus:bg-gray-300 focus:outline-none focus:border-blue-500" placeholder="Description" required>
+        <select id="priority" class="p-2 border border-gray-400 rounded focus:bg-gray-300 focus:outline-none" required>
+          <option value="" disabled selected>Select priority</option>
+          <option value="Low">Low</option>
+          <option value="Medium">Medium</option>
+          <option value="High">High</option>
+        </select>
+        <button type="submit" class="p-2 bg-gray-600 hover:bg-gray-500 rounded">Add Task</button>
+      </form>
+    </div>
 
+    <h2 class="text-3xl my-6">Task List</h2>
+    <table id="resultsTable" class="w-full border-collapse mx-auto mb-8 max-w-2xl">
+      <thead>
+      <tr class="bg-gray-600">
+        <th class="p-4 border border-gray-400">Task</th>
+        <th class="p-4 border border-gray-400">Description</th>
+        <th class="p-4 border border-gray-400">Priority</th>
+        <th class="p-4 border border-gray-400">Created At</th>
+        <th class="p-4 border border-gray-400">Due Date</th>
+        <th class="p-4 border border-gray-400">Action</th>
+      </tr>
+      </thead>
+      <tbody>
+      </tbody>
+    </table>
+
+    <button id="logoutButton" class="p-2 bg-red-600 hover:bg-red-500 rounded">Logout</button>
   </div>
-</div>
-
-<div id="todoContainer" style="display:none;">
-  <div class="form-container">
-    <h2>Create a task</h2>
-    <form id="dataForm">
-      <input type="text" id="task" placeholder="Task Name" required>
-      <input type="text" id="description" placeholder="Description" required>
-      <select id="priority" required>
-        <option value="" disabled selected>Select priority</option>
-        <option value="Low">Low</option>
-        <option value="Medium">Medium</option>
-        <option value="High">High</option>
-      </select>
-      <button type="submit">Add Task</button>
-    </form>
-  </div>
-
-  <h2 id="tasklist">Task List</h2>
-  <table id="resultsTable">
-    <thead>
-    <tr>
-      <th>Task</th>
-      <th>Description</th>
-      <th>Priority</th>
-      <th>Created At</th>
-      <th>Due Date</th>
-      <th>Action</th>
-    </tr>
-    </thead>
-    <tbody></tbody>
-  </table>
-
-  <button id="logoutButton">Logout</button>
 </div>
 </body>
 </html>
