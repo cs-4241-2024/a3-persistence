@@ -2,8 +2,10 @@
 ## Calculator Web Page - Assignment 3
 Elijah Rothschild Assignment 3 - Persistence: Two-tier Web Application with Database, Express server, and CSS template
 
-https://webware-cs4241-earothschild.craftsteamg.com/
-https://github.com/Liswerd/a3-persistence
+(Digital ocean version)https://webware-cs4241-earothschild.craftsteamg.com/
+(Glitch backup version)https://a3-backupglitchpage.glitch.me/
+(Repository link)https://github.com/Liswerd/a3-persistence
+
 
 
 
