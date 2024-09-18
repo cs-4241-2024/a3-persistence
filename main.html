@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>CS4241 Assignment 3</title>
+    <meta name="description" content="CS4241 Assignment 3, site will be able to store the data from the database, and allow users to login">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="utf-8">
+    <script src="js/main.js"></script>
+    <!--     <link rel="stylesheet" href="css/main.css"> -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sakura.css/css/sakura.css" type="text/css">
+    <!--     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" /> -->
+    <!--     <style>
+            @import url('https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap');
+        </style> -->
+    <!-- get rid of favicon error -->
+    <!-- <link rel="icon" href="data:;base64,iVBORw0KGgo="> -->
+</head>
+<body class="box">
+<h1>The Cookie Jar</h1>
+<form name="testform" id="userinfo" class="form-box">
+    <label for="name">Name:</label>
+    <input type="text" id="name" name="user_name" />
+
+    <label for="cookie">Favorite Type of Cookie:</label>
+    <input type="text" id="cookie" name="favorite_cookie" />
+
+    <label for="icecream">Favorite Type of Ice Cream:</label>
+    <input type="text" id="icecream" name="favorite_icecream" />
+
+    <label for="other">Other:</label>
+    <textarea id="other" name="other"></textarea>
+
+    <button class="button" id="button">Enter</button>
+    <!--onclick="submit();" -->
+    <button class="button" id="deletebutton">Delete</button>
+    <button class="button" id="updateButton">Update</button>
+</form>
+<h2>Results Saved from Previous Users:</h2>
+<table id="target" class="table-box">
+    <thead>
+    <tr>
+        <th>Name</th>
+        <th>Cookie</th>
+        <th>Ice Cream</th>
+        <th>Other:</th>
+        <th>Cake:</th>
+        <!--         <th>Delete Entry</th> -->
+    </tr>
+    </thead>
+    <tbody id="tbody">
+    <!--            <tr>-->
+    <!--                <td>Piper</td>-->
+    <!--                <td>Chocolate Chip Cookies</td>-->
+    <!--                <td>Vanilla</td>-->
+    <!--                <td></td>-->
+    <!--&lt;!&ndash;                <td><button class="button" id="deleteButton" onclick="deleteData()"><span class="material-symbols-outlined">delete</span></button></td>&ndash;&gt;-->
+    <!--            </tr>-->
+    </tbody>
+</table>
+</body>
+</html>
