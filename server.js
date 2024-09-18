@@ -33,7 +33,8 @@ app.post('/submit', async (req, res) => {
   // Convert sets and reps to numbers before calculating total
   parsed.sets = parseInt(parsed.sets);
   parsed.reps = parseInt(parsed.reps);
-  parsed.total = parsed.sets * parsed.reps;  // Calculate the total based on sets and reps
+  parsed.weight = parseInt(parsed.weight)
+  parsed.total = parsed.sets * parsed.reps * parsed.weight;  // Calculate the total based on sets and reps
   console.log('This is parsed '+JSON.stringify(parsed))
 
   if (collection !== null) {
@@ -68,6 +69,25 @@ app.post('/delete', async (req, res) => {
     }
   }
 });
+
+app.post('/update', async (req, res) => {
+  const { id, updatedData } = req.body;  // Extract id and updated data from the request
+  
+  const total = updatedData.sets * updatedData.reps * updatedData.weight;
+
+
+  if (collection !== null) {
+    // Update the document with the new data
+    await collection.updateOne(
+      { _id: new ObjectId(id) }, 
+      { $set: updatedData });
+
+    // Return the updated documents after the update
+    const docs = await collection.find({}).toArray();
+    res.json(docs);
+  }
+});
+
 
 // Route to add data to the database (already in your assignment 3)
 app.post('/add', async (req, res) => {

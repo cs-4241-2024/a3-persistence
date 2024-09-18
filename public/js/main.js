@@ -10,7 +10,8 @@ const submit = async function( event ) {
   const input = document.querySelector( '#exercise' ),
         input2 = document.querySelector('#reps'),
         input3 = document.querySelector('#sets'),
-        json = { exercise: input.value,  reps: input2.value, sets: input3.value, },
+        input4 = document.querySelector('#weight'),
+        json = { exercise: input.value,  reps: input2.value, sets: input3.value, weight: input4.value},
         body = JSON.stringify( json );
 
 
@@ -19,7 +20,7 @@ const submit = async function( event ) {
     headers: { 'Content-Type': 'application/json' },  // Ensure JSON is sent properly
     body
   })
-
+  
   const text = await response.json()
   console.log( 'text:', text )
   console.log( 'text:' +  JSON.stringify(text) )
@@ -30,6 +31,7 @@ const submit = async function( event ) {
   document.getElementById('exercise').value = ""
   document.getElementById('reps').value = ""
   document.getElementById('sets').value = ""
+  document.getElementById('weight').value = ""
   document.getElementById('exercise').focus();
 
   console.log('Stuff to build the table ' + text)
@@ -46,7 +48,7 @@ function buildTable(text){
   const thead = document.createElement('thead');
   const row = document.createElement('tr');
 
-  const headers = ['Exercise', 'Reps', 'Sets', 'Total Weight', 'Edit', 'Delete'];
+  const headers = ['Exercise', 'Sets', 'Reps', 'Weight', 'Total Weight', 'Update', 'Delete'];
   headers.forEach(headerText => {
   const th = document.createElement('th');
   th.textContent = headerText;
@@ -60,21 +62,29 @@ table.appendChild(thead);
     
     const exerciseCell = document.createElement('td')
     exerciseCell.textContent = rowData.exercise
-
-    const repsCell = document.createElement('td')
-    repsCell.textContent = rowData.reps
+    exerciseCell.style.contentEditable = "true"
 
     const setsCell = document.createElement('td')
     setsCell.textContent = rowData.sets
+    setsCell.style.contentEditable = "true"
+
+    const repsCell = document.createElement('td')
+    repsCell.textContent = rowData.reps
+    repsCell.style.contentEditable = "true"
+
+    const weightCell = document.createElement('td')
+    weightCell.textContent = rowData.weight
+    weightCell.style.contentEditable = "true"
 
     const totalCell = document.createElement('td')
     totalCell.textContent = rowData.total
 
-    const editCell = document.createElement('td')
-    const editButton = document.createElement('button')
-    editButton.textContent = 'Edit';
-    editButton.classList.add('blue-button')
-    //editButton.onclick = edit
+    
+
+    const updateCell = document.createElement('td')
+    const updateButton = document.createElement('button')
+    updateButton.textContent = 'Update';
+    updateButton.classList.add('blue-button')
 
     const deleteCell = document.createElement('td')
     const deleteButton = document.createElement('button')
@@ -88,13 +98,18 @@ table.appendChild(thead);
       deleteRow(index, rowData);
     };
 
+    updateButton.onclick = function(){
+      updateRow(index, rowData)
+    }
+
     row.appendChild(exerciseCell)
-    row.appendChild(repsCell)
     row.appendChild(setsCell)
+    row.appendChild(repsCell)
+    row.appendChild(weightCell)
     row.appendChild(totalCell)
-    editCell.appendChild(editButton)
+    updateCell.appendChild(updateButton)
     deleteCell.appendChild(deleteButton)
-    row.appendChild(editCell)
+    row.appendChild(updateCell)
     row.append(deleteCell)
 
     table.appendChild(row)
@@ -112,6 +127,50 @@ const deleteRow = async function(row){
   const text = await response.json()
   buildTable(text)
 }
+
+const updateRow = async function (index, rowData) {
+  // Find the row corresponding to the update button
+  const table = document.getElementById('results');
+  const row = table.rows[index + 1];  // Skip the header row, hence +1
+
+  // Capture the edited data from the cells
+  const updatedData = {
+    exercise: row.cells[0].textContent.trim(),
+    sets: parseInt(row.cells[1].textContent.trim()),
+    reps: parseInt(row.cells[2].textContent.trim()),
+    weight: parseFloat(row.cells[3].textContent.trim()),
+    total: parseInt(row.cells[1].textContent.trim()) * parseInt(row.cells[2].textContent.trim()) * parseFloat(row.cells[3].textContent.trim())
+  };
+
+  async function updateRow(index, rowData) {
+  // Find the row corresponding to the update button
+  const table = document.getElementById('results');
+  const row = table.rows[index + 1];  // Skip the header row, hence +1
+
+  // Capture the edited data from the cells
+  const updatedData = {
+    exercise: row.cells[0].textContent.trim(),
+    sets: parseInt(row.cells[1].textContent.trim()),
+    reps: parseInt(row.cells[2].textContent.trim()),
+    weight: parseInt(row.cells[3].textContent.trim())
+  };
+
+  // Send a POST request to the server to update the document
+  const response = await fetch('/update', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      id: rowData._id,  // Pass the _id of the document to update
+      updatedData: updatedData
+    })
+  });
+
+  // Refresh the table with the updated data
+  const newData = await response.json();
+  buildTable(newData);  // Rebuild the table with the updated data from the server
+}
+
+
 
 //this should clear the page
 const clearPage = async function(event){
@@ -143,13 +202,9 @@ window.onload = async function() {
   clearButton.onclick = clearPage;
   document.getElementById('exercise').focus();
 
-  const response = await fetch( '/onLoad', {
-    method:'POST',
-    headers: { 'Content-Type': 'application/json' },  // Ensure JSON is sent properly
-    body: JSON.stringify({obj: 1})
+  const response = await fetch( '/docs', {
+    method:'GET'
   })
-
   const text = await response.json()
-
   buildTable(text);
 }
