@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <title>Spell Slot Tracker Login</title>
+        <meta charset="utf-8">
+        <script src="js/login.js"></script>
+        <meta name="viewport" content="width=device-width, initial-scale=.5">
+        <meta name="color-scheme" content="light dark">
+        <link rel="stylesheet" href="css/pico.min.css" />
+        <!-- get rid of favicon error -->
+        <link rel="icon" href="data:;base64,iVBORw0KGgo=">
+        
+    </head>
+    <body class="container">
+        <header>
+            <h1>
+                Spell Slot Tracker Login
+            </h1>
+        </header>
+        <main>
+            <form action="/login" method="POST">
+                <input id="username" type="username" name="username" placeholder="Username" aria-label="Username">
+                <input id="password" type="password" name="password" placeholder="Password" aria-label="Password">
+                <button type="submit"> Log in </button>
+            </form>
+        </main>
+    </body>
+</html>
