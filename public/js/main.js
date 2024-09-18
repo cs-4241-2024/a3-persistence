@@ -4,6 +4,8 @@ let username = null;
 let password = null;
 const showData = function (data) {
 	//TODO: Make it so null data cannot be displayed (like the log in entry)
+	//TODO: Make it so only the data associated with the user is displayed
+	//TODO: Make it so that entered data has an associated user
 	const dataTable = document.querySelector('#dataTable');
 	let innerHTMLString = `
   <tr>
