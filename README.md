@@ -25,7 +25,7 @@ glitch: https://glitch.com/~a3-piper-oconnell
 
 ### Technical Achievements
 
-- **Technical Achievement 1**: I achieved all four Google Lighthouse tests to 100% (please see Assets of the Glitch project, or the file on GitHub for the picture)
+- **Technical Achievement 1**: I achieved all four Google Lighthouse tests to 100% (please see Assets of the Glitch project, or the file on GitHub /screenshots/ for the picture)
 
 ### Design/Evaluation Achievements
 - **Design Achievement 1**: I followed the following tips from the W3C Web Accessibility Initiative...
