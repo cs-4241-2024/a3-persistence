@@ -71,22 +71,29 @@ app.post('/delete', async (req, res) => {
 });
 
 app.post('/update', async (req, res) => {
-  const { id, updatedData } = req.body;  // Extract id and updated data from the request
-  
-  const total = updatedData.sets * updatedData.reps * updatedData.weight;
+  const { id, updatedData } = req.body;  
 
+  // Convert sets, reps, and weight to integers
+  updatedData.sets = parseInt(updatedData.sets);
+  updatedData.reps = parseInt(updatedData.reps);
+  updatedData.weight = parseInt(updatedData.weight);
+
+  // Calculate the new total and update it in the updatedData object
+  updatedData.total = updatedData.sets * updatedData.reps * updatedData.weight;
 
   if (collection !== null) {
-    // Update the document with the new data
+    // Update the document with the new data, including the recalculated total
     await collection.updateOne(
       { _id: new ObjectId(id) }, 
-      { $set: updatedData });
+      { $set: updatedData }
+    );
 
     // Return the updated documents after the update
     const docs = await collection.find({}).toArray();
     res.json(docs);
   }
 });
+
 
 
 // Route to add data to the database (already in your assignment 3)

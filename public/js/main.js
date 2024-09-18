@@ -62,19 +62,19 @@ table.appendChild(thead);
     
     const exerciseCell = document.createElement('td')
     exerciseCell.textContent = rowData.exercise
-    exerciseCell.style.contentEditable = "true"
+    exerciseCell.contentEditable = "true"
 
     const setsCell = document.createElement('td')
     setsCell.textContent = rowData.sets
-    setsCell.style.contentEditable = "true"
+    setsCell.contentEditable = "true"
 
     const repsCell = document.createElement('td')
     repsCell.textContent = rowData.reps
-    repsCell.style.contentEditable = "true"
+    repsCell.contentEditable = "true"
 
     const weightCell = document.createElement('td')
     weightCell.textContent = rowData.weight
-    weightCell.style.contentEditable = "true"
+    weightCell.contentEditable = "true"
 
     const totalCell = document.createElement('td')
     totalCell.textContent = rowData.total
@@ -128,19 +128,6 @@ const deleteRow = async function(row){
   buildTable(text)
 }
 
-const updateRow = async function (index, rowData) {
-  // Find the row corresponding to the update button
-  const table = document.getElementById('results');
-  const row = table.rows[index + 1];  // Skip the header row, hence +1
-
-  // Capture the edited data from the cells
-  const updatedData = {
-    exercise: row.cells[0].textContent.trim(),
-    sets: parseInt(row.cells[1].textContent.trim()),
-    reps: parseInt(row.cells[2].textContent.trim()),
-    weight: parseFloat(row.cells[3].textContent.trim()),
-    total: parseInt(row.cells[1].textContent.trim()) * parseInt(row.cells[2].textContent.trim()) * parseFloat(row.cells[3].textContent.trim())
-  };
 
   async function updateRow(index, rowData) {
   // Find the row corresponding to the update button
