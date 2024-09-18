@@ -1,0 +1,323 @@
+/* CSS Templates:
+
+https://horizon-ui.com
+https://github.com/themeselection/sneat-bootstrap-html-admin-template-free
+https://bootstraptaste.com/nice-admin-bootstrap-admin-html-template/
+
+
+ */
+
+body {
+  font-family: "Noto Sans", serif;
+  background-color: #f4f4f4;
+  margin: 20px;
+  color: #252525;
+}
+
+h1 {
+  font-family: "Roboto Slab", serif;
+  color: #040404;
+  text-align: center;
+  margin-bottom: 30px;
+  font-size: 50px;
+  padding-left: 20px;
+}
+
+h2.title {
+  padding: 20px 0px 0px 20px;
+}
+
+h2 {
+  color: #000000;
+  text-align: center;
+  margin-top: 40px;
+}
+
+#logoutBtn {
+  display: block;
+  margin-left: auto;
+  background-color: #dc3545;
+  color: white;
+  padding: 10px;
+  border: none;
+  border-radius: 4px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+div.main {
+  display: flex;
+  /* grid-template-columns: 1fr 1fr; */
+  grid-gap: 20px;
+}
+
+/* Form Styling */
+form {
+  background-color: white;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  max-width: 500px;
+  margin: 20px auto 20px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  max-height: min-content;
+}
+
+form label {
+  display: block;
+  margin-bottom: 10px;
+  font-weight: bold;
+}
+
+form input,
+form textarea,
+form select {
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 20px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+form button {
+  width: 100%;
+  background-color: #252525;
+  color: white;
+  padding: 10px;
+  border: none;
+  border-radius: 4px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+form button:hover {
+  background-color: #000000;
+}
+
+/* Table Styling */
+
+/* General Layout */
+.container {
+  display: grid;
+  grid-template-columns: 1fr; /* Default to one column */
+  grid-gap: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+  /* padding: 20px; */
+}
+
+/* Table Styling Inside the Grid */
+.table-container {
+  display: grid;
+  grid-template-rows: auto;
+  background-color: white;
+  border-radius: 8px;
+  padding: 20px;
+  border: 1px solid #ccc;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+h2.completed-heading {
+  color: #000000;
+}
+
+/* Completed Table Header - Green */
+#completedTable thead {
+  background-color: #000000; /* Green background for Completed table */
+  color: white;
+}
+
+h2.inProgress-heading {
+  color: #000000;
+}
+
+/* In-Progress Table Header - Blue */
+#inProgressTable thead {
+  background-color: #000000; /* Blue background for In-Progress table */
+  color: white;
+}
+
+table {
+  width: 100%;
+  /* margin: 0 auto 20px; */
+  border-collapse: collapse;
+  background-color: #f9f9f9;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  table-layout: fixed;
+}
+
+thead {
+  background-color: #000000;
+  color: white;
+}
+
+thead,
+tbody tr {
+  display: table;
+  width: 100%;
+  table-layout: fixed;
+}
+
+th,
+td {
+  padding: 12px 15px;
+  border: 1px solid #ccc;
+  text-align: left;
+  word-wrap: break-word;
+  white-space: normal;
+  overflow: hidden;
+}
+
+td {
+  font-size: 0.9em;
+  /* max-width: 150px; */
+}
+
+/* Set specific width for the "Actions" column */
+th:last-child,
+td:last-child {
+  width: 250px;
+  text-align: center;
+}
+
+th:nth-child(2),
+td:nth-child(2) {
+  width: 180px;
+}
+
+/* tbody tr:nth-child(even) {
+  background-color: #f9f9f9;
+} */
+
+/* Scrollbar Styling */
+tbody::-webkit-scrollbar {
+  width: 8px;
+}
+
+tbody::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+tbody::-webkit-scrollbar-thumb {
+  background-color: #888;
+  border-radius: 10px;
+}
+
+tbody::-webkit-scrollbar-thumb:hover {
+  background-color: #555;
+}
+
+/* Pastel Red Row for Urgent Tasks */
+.pastel-red {
+  background-color: #f69090;
+}
+
+/* Button Styling Inside the Table */
+
+button {
+  padding: 6px 12px;
+  margin: 0 2px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+button.edit-btn {
+  background-color: #ffc107;
+  color: white;
+}
+
+button.edit-btn:hover {
+  background-color: #e0a800;
+}
+
+button.delete-btn {
+  background-color: #dc3545;
+  color: white;
+}
+
+button.delete-btn:hover {
+  background-color: #c82333;
+}
+
+button.complete-btn {
+  background-color: #28a745;
+  color: white;
+}
+
+button.complete-btn:hover {
+  background-color: #218838;
+}
+
+button.in-progress-btn {
+  background-color: #107af5;
+  color: white;
+}
+
+button.in-progress-btn:hover {
+  background-color: #0069d9;
+}
+
+@media (max-width: 768px) {
+  table,
+  form {
+    width: 100%;
+  }
+}
+
+/* Media Query for Smaller Screens */
+@media screen and (max-width: 1200px) {
+  table {
+    width: 100%;
+    font-size: 0.9rem;
+  }
+
+  th,
+  td {
+    padding: 8px;
+  }
+
+  th:last-child,
+  td:last-child {
+    width: 6rem;
+  }
+
+  th:nth-child(2),
+  td:nth-child(2) {
+    width: 6rem;
+  }
+
+  button {
+    padding: 6px 12px;
+    font-size: 0.9em;
+  }
+}
+
+/* Media Query for Extra Small Screens (Mobile) */
+@media screen and (max-width: 480px) {
+  table {
+    width: 100%;
+    font-size: 0.9rem;
+  }
+
+  th,
+  td {
+    padding: 5px;
+  }
+
+  th:last-child,
+  td:last-child {
+    width: 5rem;
+  }
+
+  th:nth-child(2),
+  td:nth-child(2) {
+    width: 5rem;
+  }
+
+  button {
+    padding: 4px 8px;
+    font-size: 0.9em;
+  }
+}
