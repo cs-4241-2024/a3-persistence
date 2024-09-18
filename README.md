@@ -75,9 +75,12 @@ ALL ACHIEVEMENTS MUST BE DESCRIBED IN YOUR README IN ORDER TO GET CREDIT FOR THE
 Course staff cannot be expected, for example, to have a personal Facebook, Google, or Twitter account to use when grading this assignment. 
 Please contact the course staff if you have any questions about this. THIS IS THE HARDEST ACHEIVEMENT OFFERED IN WEBWARE. You have been warned!  
 - (5 points) Instead of Glitch, host your site on a different service like [Heroku](https://www.heroku.com) or [Digital Ocean](https://www.digitalocean.com). Make sure to describe this a bit in your README. What was better about using the service you chose as compared to Glitch? What (if anything) was worse? 
-- (5 points) Get 100% (not 98%, not 99%, but 100%) in all four lighthouse tests required for this assignment.  
+- (5 points) Get 100% (not 98%, not 99%, but 100%) in all four lighthouse tests required for this assignment. 
+  ![Light House Photo 1](https://cdn.discordapp.com/attachments/1050226016670466089/1286016508660551740/lighthousePhoto1.png?ex=66ec5fb4&is=66eb0e34&hm=cb7ff1d286fe82af4e532db506c1e89d70d152c8a42c646c9fbb38f6731bead4&)
+  
 
-*Design/UX*
+
+*Design/UX*  
 - (10 points) Make your site accessible using the [resources and hints available from the W3C](https://www.w3.org/WAI/), Implement/follow twelve tips from their [tips for writing](https://www.w3.org/WAI/tips/writing/), [tips for designing](https://www.w3.org/WAI/tips/designing/), and [tips for development](https://www.w3.org/WAI/tips/developing/). *Note that all twelve must require active work on your part*. 
 For example, even though your page will most likely not have a captcha, you don't get this as one of your twelve tips to follow because you're effectively 
 getting it "for free" without having to actively change anything about your site. 
