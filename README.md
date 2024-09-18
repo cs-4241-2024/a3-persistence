@@ -1,7 +1,7 @@
 Assignment 3 - Persistence: Two-tier Web Application with Database, Express server, and CSS template
 ===
 
----
+
 
 ## Your Web Application Title
 
@@ -27,3 +27,20 @@ Student Database Management System with login functionality. Stores entries of s
   - I maintained repetition through consistent usage of fonts, button styles, and form layouts across all sections of my project. The font style used for the headings, inputs, and buttons remains uniform in order to ensure visual continuity and a professional appearance. Additionally, the button styles for different actions (like add, delete, and login, as stated above) are repeated with minor adjustments in color to signify their function, resulting in the user experience becoming more predictable and intuitive, as users learn that specific elements will behave similarly throughout the site.
   - In my project, elements are aligned to the left such that the form fields, buttons, and table content all line up vertically and create a tidy and professional appearance. The Semantic UI framework that I used has functionality that naturally aligns form elements, ensuring that input fields and buttons are visually pleasing and easy to navigate. This alignment helps to increase contrast by creating a clean layout where important elements stand out clearly. 
   - 
+=======
+your glitch (or alternative server) link e.g. https://rustic-workable-baryonyx.glitch.me/
+
+Include a very brief summary of your project here. Images are encouraged, along with concise, high-level text. Be sure to include:
+
+- the goal of the application
+- challenges you faced in realizing the application
+- what authentication strategy you chose to use and why (choosing one because it seemed the easiest to implement is perfectly acceptable)
+- what CSS framework you used and why
+  - include any modifications to the CSS framework you made via custom CSS you authored
+
+## Technical Achievements
+- **Tech Achievement 1**: I used OAuth authentication via the GitHub strategy
+
+### Design/Evaluation Achievements
+- **Design Achievement 1**: I followed the following tips from the W3C Web Accessibility Initiative...
+
