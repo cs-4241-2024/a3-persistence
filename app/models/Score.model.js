@@ -1,14 +1,13 @@
 const {mongoose} = require('mongoose');
 
-const Schema = mongoose.Schema;
-const ObjectId = Schema.ObjectId;
+const {Schema} = mongoose;
 
 const scoreSchema = new Schema({
-    objectId: ObjectId,
     name: String,
+    date: Date,
     points: String,
-    rank: Number,
-    date: Date
+    rank: Number
+
 });
 const Score = mongoose.model('Score', scoreSchema)
 
