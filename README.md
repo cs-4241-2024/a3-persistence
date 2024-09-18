@@ -8,6 +8,7 @@ https://github.com/Liswerd/a3-persistence
 
 
 This application is the same as before from project 2, and used the implimentation of cookies along with the use of the mongo database. It is a calculator that an individual is able to pick kinds of calculations they wish to make from a starting grand total value, and delete the lastest row inserted in case a mistake was made within the calculations. This was the easiest to impliment as well as the help I was able to recieve form the multiple TA's at office hours reccomended the use of this, so that is how I was able to complete the assignemnt. I had a very simple CSS base framework that changed a few of the things such as slightly altering the size of some of the text as well as realigning parts of the page to help with the lighthouse testing, mostly changing the font to be personally more readable. 
+To use, first on the index page type a name of the user you would like to impliment data for. Once that is inserted, you will have access to insert data for that use on the calculate page. After inserting data, you may leave the site and sign back in, and notice that the previous information that you typed in will still be there!
 
 
 ## Technical Achievements
