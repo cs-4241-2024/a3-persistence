@@ -5,6 +5,7 @@ let password = null;
 const showData = function (data) {
 	//TODO: Make it so null data cannot be displayed (like the log in entry)
 	//TODO: Make it so only the data associated with the user is displayed
+	//TODO: Remove the letter C from the last row
 	const dataTable = document.querySelector('#dataTable');
 	let innerHTMLString = `
   <tr>
@@ -29,6 +30,8 @@ const showData = function (data) {
 
 		//Not optimal
 		lastRow = {
+			"Username": element.username,
+			"Password": element.password,
 			"classCode": element.classCode,
 			"className": element.className,
 			"assignment": element.assignment,
@@ -43,7 +46,7 @@ const showData = function (data) {
 //Getting data for the table
 const getData = async function (event) {
 	if (loggedIn) {
-		const response = await fetch('/data', {
+		const response = await fetch(`/data/${username}`, {
 			method: 'GET',
 			headers: { "Content-Type": "application/json" },
 		});
@@ -98,7 +101,7 @@ const submit = async function (event) {
 }
 
 const deleteRow = async function (event) {
-	if (loggedIn) {
+	if (loggedIn && lastRow != {}) {
 		const response = await fetch('/delete', {
 			method: 'POST',
 			body: JSON.stringify(lastRow),

@@ -16,11 +16,10 @@ async function run() {
 run();
 
 //Get to-do list data
-app.get("/data", async (req, res) => {
+app.get("/data/:username", async (req, res) => {
 	if (collection !== null) {
-		// console.log("got here");//gets here somehow?
-		const docs = await collection.find({}).toArray();
-		// res.json(docs);
+		const username = req.params.username;
+		const docs = await collection.find({ Username: username }).toArray();
 		res.end(JSON.stringify(docs))
 	}
 })
