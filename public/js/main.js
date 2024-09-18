@@ -1,23 +1,27 @@
-const submit = async function( event ) {
+const submit = async function (event) {
   // stop form submission from trying to load
   // a new .html page for displaying results...
   // this was the original browser behavior and still
   // remains to this day
-  event.preventDefault()
+  event.preventDefault();
   
-  const input = document.querySelector( '#yourname' ),
-        json = { yourname: input.value },
-        body = JSON.stringify( json )
 
-  const response = await fetch( '/submit', {
-    method:'POST',
-    body 
-  })
+  const input = document.getElementsByClassName("In"),
+        json = input[0],
+        body = JSON.stringify(json);
+  
+  console.log(body);
 
-  const text = await response.text()
+  const response = await fetch("/update", {
+    method: "POST",
+    headers: { 'Content-Type': 'application/json' },
+    body,
+  });
 
-  console.log( 'text:', text )
-}
+  const text = await response.text();
+
+  console.log("text:", text);
+};
 
 window.onload = function() {
    const button = document.querySelector("button");
