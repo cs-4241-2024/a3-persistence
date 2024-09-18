@@ -143,3 +143,7 @@ const submit = async function( event ) {
 
   loadTable()
 }
+
+window.onload = function() {
+ loadTable();
+}

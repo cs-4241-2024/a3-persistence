@@ -1,15 +1,19 @@
-async function login() {
+async function login( event ) {
     
+    event.preventDefault()
+
     const   user = document.querySelector( '#username' ),
             pass = document.querySelector( '#password' ),
             json = {username: user.value, password: pass.value},
             body = JSON.stringify( json )
   
     console.log(user.value + " and it's " + pass.value)
+    console.log(body)
   
     const response = await fetch( '/login', {
     method:'POST',
-    body 
+    headers: {'Content-Type': 'application/json'},
+    body
     })
   
     console.log('waiting!!')
@@ -18,5 +22,4 @@ async function login() {
 
     console.log(resp)
 
-    //console.log("Logged in with user " + JSON.parse(resp).username + " and pass " + JSON.parse(resp).password)
   }

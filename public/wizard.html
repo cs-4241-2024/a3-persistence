@@ -22,10 +22,10 @@
       </p>
     </header>
     <main>
-      <form>
+      <form method="POST" action="/submit">
         <h2>Wizard Level:</h2>
         <input type="number" min="1" max="20" id="wizlvl" value=1 aria-label="Wizard Level">
-        <button onclick="submit(event)">Submit</button>
+        <button>Submit</button>
       </form>
       <h2>
         Spell Slots:
@@ -39,8 +39,8 @@
           <th>Unlocked?</th>
         </tr>
       </table>
-      <form>
-        <button class="primary" id="lrest" onclick="lrest(event)">Long Rest</button>
+      <form method="POST" action="/longRest">
+        <button class="primary" id="lrest">Long Rest</button>
       </form>
     </main>
   </body>

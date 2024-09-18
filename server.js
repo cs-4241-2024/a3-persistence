@@ -9,26 +9,27 @@ const express = require('express'),
       { MongoClient, ObjectID } = require("mongodb"),
       app = express()
 
+app.use( express.urlencoded({ extended:true }) ) //allows you to use req.body   bady-parser
 const logger = (req,res,next) => {
         console.log( 'url:', req.url )
         next()
       }
 
-const middleware_post = (req, res, next ) => {
+/*const middleware_post = (req, res, next ) => {
   let dataString = ''
 
   req.on( 'data', function( data ) {
     dataString += data
+
   })
 
   req.on( 'end', function() {
     req.data = dataString
-    if (dataString != '') {
-      req.json = JSON.parse(dataString)
-    }
+
+    console.log(dataString + ' is datastring')
     next()
   })
-}
+}*/
 
 const lvl1 = [
   { 'level': "Wizard Level:", 'available': 1},
@@ -399,9 +400,9 @@ let userdata = [
 
 app.use(logger)
 
-app.use( middleware_post )
+app.use( express.static( 'public') )
 
-app.use( express.static(path.join(__dirname, 'public') ))
+//app.use( middleware_post )
 
 const uri = `${process.env.MongoStart}${process.env.USER}:${process.env.PASS}@${process.env.HOST}`
 const client = new MongoClient( uri )
@@ -432,35 +433,30 @@ app.use( (req,res,next) => {
 
 run()
 
-app.use( express.json() )
-
 app.post( '/login', (req, res ) => {
-  user = req.json.username
-  pass = req.json.password
-  console.log(user + " and " + pass)
-  console.log(__dirname)
+  user = req.body.username
+  pass = req.body.password
+  console.log(req.body)
+  console.log("username is ", user)
   res.sendFile(path.join(__dirname, 'public', 'wizard.html'))
-  
-  /*res.writeHead( 200, "OK", {'Content-Type': 'text' })
-  res.end(JSON.stringify({username: user, password: pass}))*/
 })
 
 app.post( '/submit', (req, res ) => {
   console.log(req.data + " with a /submit")
 
-  resetfnc(req.json.payload)
+  resetfnc(req.body.payload)
   res.writeHead( 200, "OK", {'Content-Type': 'text' })
-  res.end(JSON.stringify({lvl: req.json.payload}))
+  res.end(JSON.stringify({lvl: req.body.payload}))
 })
 
 app.post( '/loadTable', (req, res ) => {
 
-  if (req.json.payload > 1) {
-    let datarow = appdata[req.json.payload]
+  if (req.body.payload > 1) {
+    let datarow = appdata[req.body.payload]
     datarow.remaining = datarow.available - datarow.used
     }
     res.writeHead( 200, "OK", {'Content-Type': 'text' })
-    res.end(JSON.stringify(appdata[req.json.payload]))
+    res.end(JSON.stringify(appdata[req.body.payload]))
 })
 
 app.post( '/longRest', (req, res ) => {
@@ -472,24 +468,24 @@ app.post( '/longRest', (req, res ) => {
 })
 
 app.post( '/useSpell', (req, res ) => {
-  let datarow = appdata[req.json.payload]
+  let datarow = appdata[req.body.payload]
       if (datarow.remaining > 0) {
         datarow.used += 1
         datarow.remaining = datarow.available - datarow.used
       }
       res.writeHead( 200, "OK", {'Content-Type': 'text' })
-      res.end(JSON.stringify({lvl: (req.json.payload)}))
+      res.end(JSON.stringify({lvl: (req.body.payload)}))
 })
 
 app.post( '/regainSpell', (req, res ) => {
 
-  let datarow = appdata[req.json.payload]
+  let datarow = appdata[req.body.payload]
   if (datarow.remaining < datarow.available) {
     datarow.used -= 1
     datarow.remaining = datarow.available - datarow.used
   }
   res.writeHead( 200, "OK", {'Content-Type': 'text' })
-  res.end(JSON.stringify({lvl: (req.json.payload)}))
+  res.end(JSON.stringify({lvl: (req.body.payload)}))
 
 })
 
