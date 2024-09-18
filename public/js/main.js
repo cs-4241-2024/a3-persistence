@@ -3,7 +3,7 @@ function openEditor(entry) {
   document.querySelector("#editItem").value = entry.item;
   document.querySelector("#editNotes").value = entry.notes;
   document.querySelector("#editDeadline").value = entry.deadline;
-  document.querySelector("#editId").value = entry.id;
+  document.querySelector("#editId").value = entry._id;
   document.querySelector("#editor").style.display = "block";
 
   document.querySelector("#editForm").onsubmit = async function (event) {
@@ -17,7 +17,7 @@ function openEditor(entry) {
     };
 
     try {
-      const response = await fetch(`/edit/${id}`, {
+      const response = await fetch(`/update/${id}`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(updatedEntry),
@@ -25,7 +25,7 @@ function openEditor(entry) {
       if (response.ok) {
         const data = await response.json();
         console.log("Updated data:", data);
-        displayTab(data);
+        displayTab();
         closeEditor();
       } else {
         console.error("Failed to update entry.");
@@ -43,11 +43,11 @@ function closeEditor() {
 const deleteEntry = async function (id) {
   console.log(`Attempting to delete entry with ID: ${id}`);
   try {
-    const response = await fetch(`/delete/${id}`, { method: "DELETE" });
+    const response = await fetch(`/remove/${id}`, { method: "DELETE" });
     if (response.ok) {
       const data = await response.json();
       console.log("Received data:", data);
-      displayTab(data);
+      displayTab();
     } else {
       console.error("Failed to delete entry.");
     }
@@ -56,9 +56,17 @@ const deleteEntry = async function (id) {
   }
 };
 
-const displayTab = function (dataset) {
+const displayTab = async function () {
+  console.log("displaying table");
   const tabBody = document.querySelector("#body");
   tabBody.innerHTML = "";
+  
+    const response = await fetch("/docs");
+    if (!response.ok) {
+      throw new Error("Failed to fetch documents.");
+    }
+
+    const dataset = await response.json();
 
   for (const entry of dataset) {
     const row = document.createElement("tr");
@@ -86,7 +94,7 @@ const displayTab = function (dataset) {
 
     const deleteButton = document.createElement("button");
     deleteButton.textContent = "Delete";
-    deleteButton.onclick = () => deleteEntry(entry.id);
+    deleteButton.onclick = () => deleteEntry(entry._id);
     row.appendChild(deleteButton);
 
     tabBody.appendChild(row);
@@ -103,10 +111,12 @@ const submit = async function (event) {
     notes: document.querySelector("#notes").value, // Notes (string)
     deadline: document.querySelector("#deadline").value, // Deadline (date)
   };
+  
   const body = JSON.stringify(entry);
+  console.log(entry);
 
   try {
-    const response = await fetch("/submit", {
+    const response = await fetch("/add", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body,
@@ -115,7 +125,7 @@ const submit = async function (event) {
     const data = await response.json();
     if (response.ok) {
       console.log("Received data:", data);
-      displayTab(data);
+      displayTab();
     } else {
       console.error("Failed to submit data.");
     }
@@ -125,6 +135,7 @@ const submit = async function (event) {
 };
 
 window.onload = async function () {
-  const button = document.querySelector("#submit");
-  button.onclick = submit;
+  const form = document.querySelector("#todoForm");
+  form.onsubmit = submit;
+  displayTab();
 };

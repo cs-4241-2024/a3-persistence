@@ -1,16 +1,17 @@
 {
   "name": "cs-4241-a3-pesistance",
-  "version": "1.0",
+  "version": "1.0.0",
   "description": "Assignment 3: Persistance",
   "author": "Ian Poulsen",
   "scripts": {
     "start": "node server.js"
   },
   "dependencies": {
-    "express": "^4.16.4",
-    "mongodb": "4.16"
+    "express": "^4.17.1",
+    "mongodb": "4.16",
+    "mime": "^2.4.4"
   },
   "engines": {
-    "node":"^21.x"
+    "node": "^16.x"
   }
 }
