@@ -55,14 +55,13 @@ const submit = async function (event) {
         return;
     }
 
-    console.log(body);
-
     // Adding the item to the list
     const response = await fetch("/data", {
         method: "POST",
         body: body,
         headers: {
             "Content-Type": "application/json",
+            Authorization: `Bearer ${parseCookies().accessToken}`,
         },
     });
     const text = await response.text();
@@ -195,6 +194,7 @@ const onDelete = async function (i) {
         body,
         headers: {
             "Content-Type": "application/json",
+            Authorization: `Bearer ${parseCookies().accessToken}`,
         },
     });
 
@@ -227,6 +227,7 @@ const editableListener = async function (event) {
         body: JSON.stringify(body),
         headers: {
             "Content-Type": "application/json",
+            Authorization: `Bearer ${parseCookies().accessToken}`,
         },
     });
 

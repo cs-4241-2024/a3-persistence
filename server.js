@@ -110,11 +110,12 @@ app.put("/data", async (req, res) => {
 
 app.post("/data", async (req, res) => {
     const data = req.body;
+    const accessToken = req.headers.authorization.split(" ")[1];
 
     const groceryLists = client.db("a3").collection("grocery-lists");
     await groceryLists.updateOne(
         {
-            username: "harbar20",
+            accessToken: accessToken,
         },
         {
             $push: {
@@ -128,10 +129,11 @@ app.post("/data", async (req, res) => {
 
 app.delete("/data", async (req, res) => {
     const data = req.body;
+    const accessToken = req.headers.authorization.split(" ")[1];
 
     const { index } = data;
 
-    removeGroceryByIndex("harbar20", index);
+    removeGroceryByIndex(accessToken, index);
 
     res.send("Data deleted successfully");
 });
