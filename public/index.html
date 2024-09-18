@@ -9,11 +9,14 @@
   </head>
   <body>
     <form action="/login" method="POST">
-      <label for="username">username</label>
+      <label for="username">Username</label>
       <input type="text" name="user">
-      <label for="password">password</label>
+      <label for="password">Password</label>
       <input type="password" name="pass">
       <input type="submit" value="Log In">
+      <button class="secondary" formaction="/add" method="POST">
+        Create Account
+      </button>
     </form>
   </body>
 </html>
