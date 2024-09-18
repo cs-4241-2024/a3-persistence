@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>CS4241 Assignment 3 Login</title>
+    <meta charset="utf-8">
+    <meta name="description" content="A WebWare @ WPI homework project log-in page">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="color-scheme" content="light dark">
+    <link rel="stylesheet" href="css/pico.min.css">
+    <link rel="canonical" href="https://a3-redo-sagurgol.glitch.me/" />
+  </head>
+  <body>
+    <form action="/login" method="POST">
+      <label for="username">Username</label>
+      <input type="text" name="user">
+      <label for="password">Password</label>
+      <input type="password" name="pass">
+      <input type="submit" value="Log In">
+      <button class="secondary" formaction="/add" method="POST">
+        Create Account
+      </button>
+    </form>
+  </body>
+</html>
