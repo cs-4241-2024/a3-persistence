@@ -42,7 +42,7 @@ async function run() {
     await client.connect();
     // Send a ping to confirm a successful connection
     await client.db("admin").command({ ping: 1 });
-    console.log("Pinged your deployment. You successfully connected to MongoDB!");
+    //console.log("Pinged your deployment. You successfully connected to MongoDB!");
     collection = await client.db("Project_3_Database").collection("My stuff");
     const listener = app.listen(process.env.PORT || 3000)
   } finally {
@@ -77,12 +77,17 @@ app.post('/submit', async (req, res) => {
   //let latestValue;
   //console.log(currUserName);
   //let currName = req.query.name;
-  
+  let latest = 0;
   let result = await collection.find({
     name: currUserName,
   }).toArray();
   result.sort((a, b) => a.timestamp - b.timestamp);
-  let latest = result[result.length - 1].total;
+  //console.log(result.length);
+  if((result.length) != 0)
+  {
+    latest = result[result.length - 1].total;
+  }
+  
 
 
   //console.log(currTotal);
@@ -111,7 +116,7 @@ app.post('/submit', async (req, res) => {
 app.post('/enter', async (req, res) => {
   let currName = req.body.name;
   let found = await collection.find({name: currName,}).toArray()
-  console.log(currName);
+  //console.log(currName);
   if(found == null)
   {
     let newValues = {'name': currName};
@@ -124,7 +129,7 @@ app.post('/enter', async (req, res) => {
 app.post('/kill', async (req, res) => {
   res.writeHead(200, { 'Content-Type': 'application/json' });
 
-  console.log(JSON.stringify(req.body));
+  //console.log(JSON.stringify(req.body));
 
   let currUserName = req.body.name;
   //let latestValue;

@@ -4,8 +4,13 @@
 <head>
   <title>CS4241 Assignment 3</title>
   <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Calculator App and holds your data">
+  <meta name="keywords" content="HTML, CSS, JavaScript">
+  <meta name="author" content="Elijah Rothschild">
   <link rel="stylesheet" href="style.css">
   <script src="script.js"></script>
+  <script src="table.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/js-cookie@3.0.5/dist/js.cookie.min.js"></script>
 </head>
 
@@ -21,11 +26,14 @@
     <button onclick="submit()">Submit</button>
   </div>
   <br />
-  <div class="centered">
+  <div class="rightSide">
     <table id="myTable"></table>
+  </div>
+  <div class="leftSide">
     <p>Don't like your latest result? Press this button to remove the latest entry!</p>
     <button onclick="kill()">Kill!</button>
   </div>
+  
 
 </body>
 

@@ -1,28 +1,16 @@
-let toggle = () => {
-
-  let element = document.getElementById("BESTbutton");
-  let hidden = element.getAttribute("hidden");
-
-  if (hidden) {
-    element.removeAttribute("hidden");
-  } else {
-    element.setAttribute("hidden", "hidden");
-  }
-}
-
 const handleLogIn = function()
 {
   Cookies.set("Username", document.getElementById("Username").value);
-  console.log(Cookies.get("Username"));
+  //console.log(Cookies.get("Username"));
   window.location.href = "/calculate.html";
 }
 
 const updateTable = function () {
   const table = document.getElementById("myTable");
-  table.innerHTML = "<tr> <th> Your new number</th><th>Your wanted calculation</th><th>GRAND TOTAL(Starts at 0) </th></tr>"
+  table.innerHTML = "<tr> <th> Your new number</th><th>Your wanted calculation</th><th>GRAND TOTAL(Start at 0) </th></tr>"
   let total = 0;
   let babyUser = Cookies.get("Username");
-  console.log(babyUser);
+  //console.log(babyUser);
   fetch('/data?' + new URLSearchParams({
     //change this to be current user
     name: Cookies.get("Username"),
@@ -67,19 +55,19 @@ async function submit() {
       body: JSON.stringify(postdata)
     })
       .then(response => response.json())
-      .then(json => console.log(json))
+      //.then(json => console.log(json))
       .then(json => { updateTable(json) });
     //window.location.reload();
   }
   else {
-    alert("Inncorrect calculation identifier. Please retype.")
+    alert("Inncorrect calculation type detected. Please retype.")
   }
 
 };
 
 async function enter() {
   let name = { 'name': document.getElementById("Username").value };
-  console.log(name);
+  //console.log(name);
   fetch('/enter', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
@@ -92,7 +80,7 @@ async function enter() {
 
 
 async function kill() {
-  console.log(Cookies.get("Username"));
+  //console.log(Cookies.get("Username"));
   fetch('/kill', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
@@ -101,16 +89,10 @@ async function kill() {
     })
   })
     .then(response => response.json())
-    .then(json => console.log(json))
+    //.then(json => console.log(json))
     .then(json => { updateTable(json) });
 
 }
 
 
 
-window.onload = function () {
-  document.getElementById("welcome").innerHTML = "Welcome " + Cookies.get("Username");
-  updateTable();
-
-  //.then(json => { updateTable(json) })
-}

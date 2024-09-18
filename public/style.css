@@ -5,6 +5,10 @@ table,
     font-size: 30px;
   }
 
+  h1{
+    font-family: Andale Mono, monospace;
+  }
+
   body {
     background: rgb(118, 209, 91);
     font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
@@ -12,7 +16,18 @@ table,
 
 .centered,
 .centered * {
+    font-family: Andale Mono, monospace;
     text-align: center;
     margin-left: auto; 
     margin-right: auto;
+}
+
+.leftSide,
+.leftSide * {
+    font-family: Andale Mono, monospace;
+}
+
+.rightSide,
+.rightSide * {
+    font-family: Andale Mono, monospace;
 }
