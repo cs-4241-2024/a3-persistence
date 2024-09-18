@@ -118,7 +118,7 @@ document.addEventListener("keyup", (e) => {
 });
 
 // Lap controls
-let lapTimes = [];
+let lapTimes = [1, 2];
 let checkpoint = false;
 
 // Game running function
@@ -171,7 +171,8 @@ const run = async () => {
     // Submit time
     await fetch("/submit", {
       method: "POST",
-      body: JSON.stringify(lapTimes),
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ lapTimes }),
     });
 
     // Update table
@@ -204,9 +205,9 @@ const setupTable = async () => {
       const tableCell = tableRow.insertCell(k);
 
       // Round value
-      data[i][k] = Math.floor(data[i][k] * 10) / 10;
+      data[i].lapTimes[k] = Math.floor(data[i].lapTimes[k] * 10) / 10;
 
-      tableCell.innerHTML = data[i][k];
+      tableCell.innerHTML = data[i].lapTimes[k];
     }
     const buttonCell = tableRow.insertCell(4);
 
@@ -215,7 +216,8 @@ const setupTable = async () => {
     deleteButton.onclick = async () => {
       await fetch("/delete", {
         method: "DELETE",
-        body: i,
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ _id: data[i]._id }),
       });
 
       setupTable();

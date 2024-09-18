@@ -1,13 +1,11 @@
 const express = require("express"),
   app = express();
 
-app.use(express.json());
 app.use(express.static("public"));
-app.use(express.urlencoded({ extended: false }));
+app.use(express.json());
+// app.use(express.urlencoded({ extended: false }));
 
-app.listen(process.env.PORT || 3000);
-
-const { MongoClient, ServerApiVersion } = require("mongodb");
+const { MongoClient, ObjectId, ServerApiVersion } = require("mongodb");
 const uri =
   "mongodb+srv://tester:Ko6JvUDNawYeyBWk@cluster0.t681i.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
 
@@ -38,7 +36,24 @@ async function run() {
     });
 
     app.post("/submit", async (req, res) => {
-      const result = await collection.insertOne(req.body);
+      // Add total time to array
+      req.body.lapTimes.push(
+        req.body.lapTimes[0] + req.body.lapTimes[1] + req.body.lapTimes[2]
+      );
+
+      // Add time to database
+      await collection.insertOne(req.body);
+
+      res.writeHead(200, { "Content-Type": "application/json" });
+      res.end(JSON.stringify({ message: "success" }));
+    });
+
+    app.delete("/delete", async (req, res) => {
+      // Remove time from database
+      const result = await collection.deleteOne({
+        _id: new ObjectId(req.body._id),
+      });
+
       res.json(result);
     });
   } finally {
@@ -48,5 +63,7 @@ async function run() {
 
   collection = await client.db("datatest").collection("test");
 }
+
+app.listen(process.env.PORT || 3000);
 
 run().catch(console.dir);
