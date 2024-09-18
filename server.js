@@ -15,7 +15,7 @@ app.use( express.static(__dirname + '/public') )
 app.use( express.json() )
 
 
-const uri = "mongodb+srv://admin:adminPassword1@cluster0.5idai.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
+
 
 const client = new MongoClient (uri)
 
