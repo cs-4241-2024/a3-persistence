@@ -21,4 +21,4 @@ I used nes.css because it fits with the Arcade theme.
 - **Express Middleware Packages**: I used cookie-session, which essentially stores a cookie with the login credentials used.
 
 ### Design/Evaluation Achievements
-- **Design Achievement 1**: I followed the following tips from the W3C Web Accessibility Initiative...
+- **Custom**: I'm just going to try and be a little cheeky here, I did manage to appropriately use nes.css of all things, and I feel like I ought to ask for 1 or 2 bonus points for working with that style of all things and still getting an acceptible accessibility score due to the limited options for colors (and I'm not making all the buttons white, that's just not appealing to anyone). Just putting that out there.
