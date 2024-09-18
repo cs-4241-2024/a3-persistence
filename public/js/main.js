@@ -1,4 +1,4 @@
-// FRONT-END (CLIENT) JAVASCRIPT HERE
+import Cookies from "js-cookie";
 
 const validateInput = function (json) {
     if (json.name == null || json.name == "") {
@@ -64,7 +64,7 @@ const submit = async function (event) {
 };
 
 document.onreadystatechange = function (e) {
-    if (document.cookie == "") {
+    if (Cookies.get("accessToken") == null) {
         location.href = "/login.html";
         return;
     }
