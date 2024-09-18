@@ -1,40 +1,48 @@
 body {
-  background: rgb(247, 0, 255);
-  color: white;
-  text-align: center;
-  font-family: Arial;
-  display: flex;
-  flex-direction: column;
+	background: rgb(247, 0, 255);
+	color: white;
+	text-align: center;
+	font-family: Arial;
+	display: flex;
+	flex-direction: column;
 }
 
 table {
-  flex-direction: row;
-  margin-top: 20px;
-  border: 6px solid white;
-  margin-left: auto;
-  margin-right: auto;
-  text-align: center;
+	flex-direction: row;
+	margin-top: 20px;
+	border: 6px solid white;
+	margin-left: auto;
+	margin-right: auto;
+	text-align: center;
 }
 
 th,
 td {
-  padding-left: 20px;
-  padding-right: 20px;
+	padding-left: 20px;
+	padding-right: 20px;
 }
 
 h1 {
-  font-family: Protest Guerrilla;
+	font-family: Protest Guerrilla;
 }
 
 .button {
-  border-color: white;
-  color: white;
+	border-color: white;
+	color: white;
 }
 
 #deleteButton {
-  background-color: red;
+	background-color: red;
 }
 
 #submitButton {
-  background-color: green;
+	background-color: green;
+}
+
+#logInForm {
+	padding-bottom: 25px;
+}
+
+#logInButton {
+	background-color: blue;
 }

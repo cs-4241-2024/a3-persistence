@@ -10,32 +10,60 @@ const client = new MongoClient(uri)
 let collection = null
 
 async function run() {
-  await client.connect()
-  collection = await client.db("A3").collection("test");
+	await client.connect()
+	collection = await client.db("A3").collection("test");
 }
 run();
 
 //Get to-do list data
 app.get("/data", async (req, res) => {
-  if (collection !== null) {
-    console.log("got here");//gets here somehow?
-    const docs = await collection.find({}).toArray();
-    // res.json(docs);
-    res.end(JSON.stringify(docs))
-  }
+	if (collection !== null) {
+		// console.log("got here");//gets here somehow?
+		const docs = await collection.find({}).toArray();
+		// res.json(docs);
+		res.end(JSON.stringify(docs))
+	}
 })
 
 //Submit new to-do list item
 app.post('/submit', async (req, res) => {
-  const result = await collection.insertOne(req.body);
-  // res.json(result);
-  res.end(JSON.stringify(result));
+	const result = await collection.insertOne(req.body);
+	// res.json(result);
+	res.end(JSON.stringify(result));
+})
+
+app.post('/logIn', async (req, res) => {
+	const username = req.body.Username;
+	const password = req.body.Password;
+	const searchResults = await collection.find({ Username: username }).toArray();//might need to be a string
+	if (searchResults.length > 0) {
+		console.log("Username exists")
+		//There is a matching username
+		const tempUsername = searchResults[0].Username;
+		const tempPassword = searchResults[0].Password;
+		console.log("tempUsername " + tempUsername);
+		console.log("tempPassword " + tempPassword);
+		console.log(JSON.stringify(searchResults));
+		if (tempPassword == password) {
+			//Password matches
+			res.end(JSON.stringify(searchResults[0]))
+		}
+		else {
+			//Password is wrong
+			res.end(JSON.stringify(searchResults[0]))
+		}
+	}
+	else {
+		//Insert new username and password
+		const result = await collection.insertOne(req.body);
+		res.end(JSON.stringify(result))
+	}
 })
 
 app.post('/delete', async (req, res) => {
-  const result = await collection.deleteOne(req.body);//need to get the data for the last item
-  // res.json(result);
-  res.end(JSON.stringify(result));
+	const result = await collection.deleteOne(req.body);//need to get the data for the last item
+	// res.json(result);
+	res.end(JSON.stringify(result));
 })
 
 app.listen(process.env.PORT || 3000, () => console.log('Server started!'));
