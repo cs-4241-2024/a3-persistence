@@ -30,8 +30,8 @@ const showData = function (data) {
 
 		//Not optimal
 		lastRow = {
-			"Username": element.username,
-			"Password": element.password,
+			"Username": username,
+			"Password": password,
 			"classCode": element.classCode,
 			"className": element.className,
 			"assignment": element.assignment,
