@@ -9,7 +9,7 @@ body {
 
 table {
 	flex-direction: row;
-	margin-top: 20px;
+	margin-top: 24px;
 	border: 6px solid white;
 	margin-left: auto;
 	margin-right: auto;
@@ -18,12 +18,17 @@ table {
 
 th,
 td {
-	padding-left: 20px;
-	padding-right: 20px;
+	padding-left: 24px;
+	padding-right: 24px;
 }
 
 h1 {
 	font-family: Protest Guerrilla;
+}
+
+button,
+input {
+	height: 25px;
 }
 
 .button {
@@ -32,7 +37,7 @@ h1 {
 }
 
 #deleteButton {
-	background-color: red;
+	background-color: rgb(119, 0, 0);
 }
 
 #submitButton {
@@ -40,7 +45,7 @@ h1 {
 }
 
 #logInForm {
-	padding-bottom: 25px;
+	padding-bottom: 24px;
 }
 
 #logInButton {
