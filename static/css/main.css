@@ -1,11 +1,15 @@
+:root {
+  --bs-body-bg: var(--bs-gray-100);
+}
+
 body {
-  background: tan;
+  /*background: tan;*/
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
   height: 100%;
-  font-family: Arial, sans-serif;
+  /*font-family: Arial, sans-serif;*/
 }
 
 form {
@@ -14,7 +18,7 @@ form {
   border-radius: 5px;
   padding: 10px;
   margin: 10px;
-  background: whitesmoke;
+  background: var(--bs-secondary-bg);
 }
 
 form > span {
@@ -29,7 +33,7 @@ input[type=number] {
 }
 
 input:invalid {
-  border: 1px solid red;
+  /*border: 1px solid red;*/
 }
 
 input:read-only {
@@ -40,4 +44,9 @@ input:read-only {
 
 body button {
   margin: 5px;
+}
+
+.buttons {
+  display: flex;
+  justify-content: space-between;
 }

@@ -1,5 +1,7 @@
 // FRONT-END (CLIENT) JAVASCRIPT HERE
 
+let form_template;
+
 async function addEvent(evt) {
     evt.preventDefault()
 
@@ -34,7 +36,7 @@ async function updateEvent(evt) {
     evt.preventDefault();
 
     evt.target.disabled = true;
-    let event_id = evt.target.id.match(/edit-([0-9a-f]+)/)[1];
+    const event_id = evt.target.id.match(/edit-([0-9a-f]+)/)[1];
 
     let event = {
         _id: event_id,
@@ -68,7 +70,25 @@ async function updateEvent(evt) {
 }
 
 async function deleteEvent(evt) {
+    evt.preventDefault();
 
+    const event_id = evt.target.id.match(/del-([0-9a-f]+)/)[1];
+    document.getElementById('forms').removeChild(document.getElementById(`form-${event_id}`));
+
+    await fetch("/deleteEvent",{
+        method: 'DELETE',
+        body: JSON.stringify({_id: event_id}),
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    });
+    document.getElementById('add-event').disabled = false;
+}
+
+function cancelEvent(evt) {
+    evt.preventDefault();
+    document.getElementById('forms').removeChild(document.getElementById('form-new'))
+    document.getElementById('add-event').disabled = false;
 }
 
 function editEvent(evt) {
@@ -148,17 +168,21 @@ function createDurationField(form, label, id, hrs, mins) {
 }
 
 function createForm(evt) {
-    const update = document.createElement("button");
+    // const update = document.createElement("button");
+    // const del = document.createElement("button");
     let date;
     let time;
     let id;
     if (evt === undefined) {
+        const form = document.dupdocument.getElementById("form-template");
         id = 'new'
         evt = {};
         date = undefined;
         time = undefined;
         update.innerText = "Submit";
+        del.innerText = "Cancel";
         update.addEventListener('click', addEvent);
+        del.addEventListener('click', cancelEvent);
         document.getElementById('add-event').disabled = true;
     } else {
         id = evt._id;
@@ -166,9 +190,12 @@ function createForm(evt) {
         date = parsedTime[0];
         time = parsedTime[1].slice(0, 5);
         update.innerText = "Edit";
+        del.innerText = "Delete";
         update.addEventListener('click', editEvent);
+        del.addEventListener('click', deleteEvent);
     }
     update.id = `edit-${id}`;
+    del.id = `del-${id}`;
 
     const form = document.createElement('form');
     form.id = `form-${id}`;
@@ -178,11 +205,18 @@ function createForm(evt) {
     createField(form, "Time: ", `time-${id}`, 'time', time);
     createDurationField(form, "Travel Duration:", id, evt.travel_hrs, evt.travel_mins);
     createField(form, "Departure Time: ", `depart-time-${id}`, 'time', evt.depart_time, {readOnly: true});
-    form.appendChild(update);
+
+    const span = document.createElement('span');
+    span.style.display = "flex";
+    span.style.justifyContent = "space-between";
+    span.appendChild(update);
+    span.appendChild(del);
+    form.appendChild(span);
     document.getElementById('forms').appendChild(form);
 }
 
 async function fetchEvents() {
+    form_template = document.getElementById("form-template");
     const response = await fetch('/getEvents', {
         method: 'GET'
     });

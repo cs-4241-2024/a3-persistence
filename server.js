@@ -3,6 +3,7 @@ require('dotenv').config();
 const express = require('express'),
     port = 3000,
     app = express(),
+    path = require('node:path'),
     mongoose = require('mongoose');
 
 const uri = `mongodb+srv://${process.env.USER}:${process.env.PASSWORD}@${process.env.HOST}/a3-persistence?retryWrites=true&w=majority&appName=a3-persistence`;
@@ -52,7 +53,7 @@ async function run() {
     app.use(express.static('public'));
 
     app.get('/', (req, res) => {
-        res.sendFile("public/index.html");
+        res.sendFile("./index.html", {root: path.join(__dirname, 'views')});
     });
 
     app.get("/getEvents", express.json(), async (req, res) => {
@@ -76,7 +77,7 @@ async function run() {
         let event = req.body;
         console.log(`Update event: ${JSON.stringify(event)}`);
         event = calc_depart(event);
-        let new_event = await Event.replaceOne({_id: event._id}, event).exec();
+        await Event.replaceOne({_id: event._id}, event).exec();
         console.log(JSON.stringify(event));
         res.send(event);
     });
