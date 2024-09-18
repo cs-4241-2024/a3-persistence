@@ -20,9 +20,11 @@ Main.html
 ![alt](https://cdn.glitch.global/5b4b70b8-4855-4a00-958f-77cf0fb0ee1a/fb32b7f7-f9ef-434f-a68c-62739770c6d0.image.png?v=1726695582394)
 ![alt](https://cdn.glitch.global/5b4b70b8-4855-4a00-958f-77cf0fb0ee1a/46d9f648-2bd8-4fba-9f66-45dff7911528.image.png?v=1726695604851)
 ![alt](https://cdn.glitch.global/5b4b70b8-4855-4a00-958f-77cf0fb0ee1a/fad037e2-b29c-45d5-9116-0939233ef879.image.png?v=1726695623016)
- 
+
 ## Technical Achievements
-- **Tech Achievement 1**: 
+
+- **Tech Achievement 1**:
 
 ### Design/Evaluation Achievements
-- **Design Achievement 1**: 
+
+- **Design Achievement 1**:
