@@ -1,5 +1,4 @@
-// FRONT-END (CLIENT) JAVASCRIPT HERE
-
+let lastRow = {};
 const showData = function (data) {
   const dataTable = document.querySelector('#dataTable');
   let innerHTMLString = `
@@ -10,7 +9,9 @@ const showData = function (data) {
     <th>Days Left</th>
     <th>Due Date</th>
   </tr>`;
-  console.log("Data: ", data);
+  // console.log("Data: ", data);
+  // lastRow = data[data.length - 1];
+  // console.log("Last Row" + lastRow);
   data.forEach(element => {
     // const tableRow
     innerHTMLString += `<tr>
@@ -20,24 +21,31 @@ const showData = function (data) {
     <td>${element.daysLeft}</td>
     <td>${element.dueDate}</td>
   </tr>`;
+
+    //Not optimal
+    lastRow = {
+      "classCode": element.classCode,
+      "className": element.className,
+      "assignment": element.assignment,
+      "daysLeft": element.daysLeft,
+      "dueDate": element.date
+    };
+
   });
   dataTable.innerHTML = innerHTMLString;
 }
 
+//Getting data for the table
 const getData = async function (event) {
   const response = await fetch('/data', {
-    method: 'GET'
+    method: 'GET',
+    headers: { "Content-Type": "application/json" },
   });
   const json = await response.json();
   showData(json);
 }
 
-
 const submit = async function (event) {
-  // stop form submission from trying to load
-  // a new .html page for displaying results...
-  // this was the original browser behavior and still
-  // remains to this day
   event.preventDefault();
 
   const classCode = document.querySelector('#Code').value;
@@ -45,18 +53,30 @@ const submit = async function (event) {
   const assignment = document.querySelector('#Assignment').value;
   const daysLeft = document.querySelector('#Days').value;
 
-  const newData = [{
+  let daysToAdd = parseInt(daysLeft);
+  if (isNaN(daysLeft)) {
+    //Is not a number
+    daysToAdd = 0;
+  }
+  if (daysToAdd === null) {
+    daysToAdd = 0;
+  }
+  let date = new Date();
+  date.setDate(date.getDate() + daysToAdd);
+
+  const newData = {
     "classCode": classCode,
     "className": className,
     "assignment": assignment,
-    "daysLeft": daysLeft
-  }];
+    "daysLeft": daysLeft,
+    "dueDate": date
+  };
 
-
-
+  //Sumbitting a new to-do item
   const response = await fetch('/submit', {
     method: 'POST',
-    body: JSON.stringify(newData)
+    body: JSON.stringify(newData),
+    headers: { "Content-Type": "application/json" },
   });
 
   const text = await response.text();
@@ -66,12 +86,23 @@ const submit = async function (event) {
   getData();
 }
 
+// const deleteRow = async function (event) {
+//   const response = await fetch('/data', {
+//     method: 'DELETE',
+//     headers: { "Content-Type": "application/json" },
+//   });
+//   const json = await response.json();
+//   showData(json);
+// }
+
 const deleteRow = async function (event) {
-  const response = await fetch('/data', {
-    method: 'DELETE'
+  const response = await fetch('/delete', {
+    method: 'POST',
+    body: JSON.stringify(lastRow),
+    headers: { "Content-Type": "application/json" },
   });
   const json = await response.json();
-  showData(json);
+  getData(json);
 }
 
 window.onload = function () {
