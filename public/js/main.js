@@ -39,11 +39,12 @@ const deleteRow = async function(id) {
 };
 
 const changeRow = async function(id) {
-  console.log(id);
+  console.log(id)
   var table = document.getElementById("myList");
-  var row = table.row[id+1];
+  var row = table.rows[id+1];
 
   // document.getElementById('popupId').value = item._id;
+  console.log(row.cells[0]);
   document.getElementById('popupToDo').value = row.cells[0];
   document.getElementById('popupType').value = row.cells[1];
   document.getElementById('popupDate').value = row.cells[2];
