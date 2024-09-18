@@ -9,15 +9,17 @@ const cookieParser = require('cookie-parser');
 const passport = require('passport');
 const GitHubStrategy = require('passport-github2').Strategy;
 const session = require('express-session');
+require("dotenv").config();
 
 const app = express();
 const port = 3000;
 const sessionCookieName = 'userSession';
-
+const CONNECT = process.env.DB_URI;
+const KEY = process.env.SECRET;
+const ID = process.env.CLIENT_ID;
 
 // MongoDB connection URI and Database
-const uri = 'mongodb+srv://ubervenx:nbajam123@foodorders.lhc94.mongodb.net/?retryWrites=true&w=majority&appName=FoodOrders';
-const client = new MongoClient(uri);
+const client = new MongoClient(CONNECT);
 const dbName = 'foodordersDB';
 const collectionName = 'orders';
 const usersCollectionName = 'users';
@@ -29,7 +31,7 @@ app.use(express.static("public"));
 app.use(helmet());
 app.use(morgan('tiny'));
 app.use(cookieParser());
-app.use(session({ secret: '42dfd2cb249c5aa8ecba0cd74d3786ab2fedb5c4', resave: false, saveUninitialized: true }));
+app.use(session({ secret: KEY, resave: false, saveUninitialized: true }));
 app.use(passport.initialize());
 app.use(passport.session());
 
@@ -48,8 +50,8 @@ client.connect().then(() => {
 
 // Passport.js GitHub OAuth strategy
 passport.use(new GitHubStrategy({
-      clientID: 'Ov23liKKkkIRlW5gfSGg',
-      clientSecret: '42dfd2cb249c5aa8ecba0cd74d3786ab2fedb5c4',
+      clientID: ID,
+      clientSecret: KEY,
       callbackURL: 'http://localhost:3000/auth/github/callback'
     },
     async (accessToken, refreshToken, profile, done) => {
@@ -103,7 +105,7 @@ app.get('/auth/github/callback', passport.authenticate('github', { failureRedire
 app.get('/orders', passportAuthenticated, async (req, res) => {
   console.log("Hello!")
   try {
-    const userId = req.user.userId; // Get the userId from the session cookie
+    const userId = req.user._id; // Get the userId from the session cookie
     const orders = await ordersCollection.find({ userId: new ObjectId(userId) }).toArray();
     res.json({ orders });
   } catch (error) {
@@ -115,7 +117,7 @@ app.get('/orders', passportAuthenticated, async (req, res) => {
 app.post('/submit', passportAuthenticated, async (req, res) => {
   try {
     const { name, foodName, foodPrice, quantity } = req.body;
-    const userId = req.user.userId; // Get the userId from the session cookie
+    const userId = req.user._id; // Get the userId from the session cookie
 
     const newOrder = {
       userId: new ObjectId(userId), name, foodName, foodPrice, quantity
