@@ -1,6 +1,7 @@
 const express = require('express'),
     { MongoClient, ObjectId } = require('mongodb'),
     cookie = require('cookie-session'),
+    dotenv = require('dotenv').config(),
     app = express()
 
 // const express = require('express'),
@@ -14,8 +15,7 @@ app.use(express.urlencoded({ extended:true }))
 app.use( express.static(__dirname + '/public') )
 app.use( express.json() )
 
-
-
+const uri = `mongodb+srv://${process.env.USER}:${process.env.PASS}@${process.env.HOST}`
 
 const client = new MongoClient (uri)
 
