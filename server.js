@@ -17,7 +17,12 @@ const client = new MongoClient(uri, {
     version: ServerApiVersion.v1,
     strict: true,
     deprecationErrors: true,
-  }
+  },
+  //useNewUrlParser: true,
+  //useUnifiedTechnology: true,
+  //connectionTimeoutMS: 10000,
+  //socketTimeoutMS: 45000,
+
 });
 
 //Run database
@@ -44,7 +49,7 @@ let appdata = [
 ];
 
 
-// Middleware to parse JSON and URL-encoded data
+// Express.js middleware
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
@@ -52,13 +57,14 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cookie({
   name: 'session',
   keys: ['key1', 'key2'],
-  maxAge: 24 * 60 * 60 * 1000 // 24 hours
+  maxAge: 24 * 60 * 60 * 1000, // Expires after 1 day
+  secure: true,
 }));
 
-// Middleware to protect routes and check for login
+// Check login
 function requireLogin(req, res, next) {
   if (!req.session.login) {
-    return res.redirect('/login'); // Redirect to login if not authenticated
+    return res.redirect('/login'); // Redirects to login
   }
   next();
 }
