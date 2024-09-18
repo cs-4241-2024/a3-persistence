@@ -1,0 +1,14 @@
+{
+  "name": "",
+  "version": "",
+  "description": "",
+  "author": "",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "is-empty": "^1.2.0",
+    "mime": "^2.4.4",
+    "validator": "^13.12.0"
+  }
+}
