@@ -6,12 +6,12 @@ const submit = async function (event) {
   const cost = document.getElementById("cost").value;
   const discount = document.getElementById("discount").value;
   const data = { game, genre, cost, discount };
-  const username = document.getElementById("username").value;
-  const password = document.getElementById("password").value;
+  //const username = document.getElementById("username").value;
+  //const password = document.getElementById("password").value;
 
   const postResponse = await fetch("/submit", {
     method: "POST",
-    //headers: { 'Content-Type': 'application/json' },
+    headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(data),
   });
 
@@ -42,7 +42,7 @@ const updateData = async function (newData) {
 const deleteGame = async function (index) {
   const response = await fetch("/data", {
     method: "DELETE",
-    //headers: { 'Content-Type': 'application/json' },
+    headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ index }),
   });
   const newData = await response.json();
