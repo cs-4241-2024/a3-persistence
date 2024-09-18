@@ -64,7 +64,7 @@ const submit = async function (event) {
 };
 
 document.onreadystatechange = function (e) {
-    if (Cookies.get("accessToken") == null) {
+    if (!Cookies.get("accessToken")) {
         location.href = "/login.html";
         return;
     }
