@@ -5,7 +5,6 @@ let password = null;
 const showData = function (data) {
 	//TODO: Make it so null data cannot be displayed (like the log in entry)
 	//TODO: Make it so only the data associated with the user is displayed
-	//TODO: Make it so that entered data has an associated user
 	const dataTable = document.querySelector('#dataTable');
 	let innerHTMLString = `
   <tr>
@@ -13,7 +12,7 @@ const showData = function (data) {
     <th>Class Name</th>
     <th>Assignment</th>
     <th>Days Left</th>
-    <th>Due Date</th>
+    <th>Due Date</th>c
   </tr>`;
 	// console.log("Data: ", data);
 	// lastRow = data[data.length - 1];
@@ -74,6 +73,8 @@ const submit = async function (event) {
 		date.setDate(date.getDate() + daysToAdd);
 
 		const newData = {
+			"Username": username,
+			"Password": password,
 			"classCode": classCode,
 			"className": className,
 			"assignment": assignment,
