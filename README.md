@@ -1,17 +1,15 @@
-## Events
+# Events
 
-http://a3-charlie-roberts.glitch.me
+http://a3-turtlecat02.glitch.me
 
-Include a very brief summary of your project here. Images are encouraged, along with concise, high-level text. Be sure to include:
+I created an application that stores events and automatically calculates the time you need to leave based on the travel duration.
+Some challenges I faced was getting redirection to work properly and getting formatting to work with the Bootstrap library.
+I used the normal login strategy because it was the easiest.
+I used Bootstrap because I have used it a bit before, and I added some modifications to the login page so that it would look nicer and centered.
 
-- the goal of the application
-- challenges you faced in realizing the application
-- what authentication strategy you chose to use and why (choosing one because it seemed the easiest to implement is perfectly acceptable)
-- what CSS framework you used and why
-  - include any modifications to the CSS framework you made via custom CSS you authored
+## Lighthouse Run
+![Screenshot of Lighthouse Run](Screenshot 2024-09-19 115319.png "Lighthouse Run")
 
 ## Technical Achievements
-- **Tech Achievement 1**: I used OAuth authentication via the GitHub strategy
-
-### Design/Evaluation Achievements
-- **Design Achievement 1**: I followed the following tips from the W3C Web Accessibility Initiative...
+- **Tech Achievement 1**: I used Mongoose with MongoDB to add validation to the database
+- **Tech Achievement 2**: A middleware I used was cookie-session to add session data to the client to keep track of who was logged in.
