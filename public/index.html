@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <title>CS4241 Assignment 2</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="css/output.css">
+  <link rel="stylesheet" href="css/main.css">
+
+  <!-- get rid of favicon error -->
+  <link rel="icon" href="data:;base64,iVBORw0KGgo=">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
+</head>
+
+<body class="bg-[#f7e7c2] max-w-[700px] h-auto mx-auto my-0">
+  <header class="bg-[#eea1a6] text-center pb-0.5">
+    <h1 class="text-[50px] m-0">SHAPE MATCH</h1>
+    <p class="m-0">Drag the colorful shapes into the matching holes!</p>
+    <h3 class="text-3xl text-[#0B1D51] m-0">Score: <span id="score"></span></h3>
+    <span class="inline text-[#A30B37] font-[bold] text-xl animate-[slidein_3s_ease-in-out_infinite]" id="error">Try
+      Again</span>
+    <button
+      class="play-btn cursor-pointer text-[#9788F0] mx-0 my-2.5 px-2.5 py-[5px] rounded-[5px] border-2 border-solid border-[#9788F0] hover:transition-transform hover:duration-[0.5s] hover:scale-110">Play
+      Again</button>
+
+    <form class="mb-5" id="form">
+      <input type="text" id="name" placeholder="Enter your name" required>
+    </form>
+
+    <button
+      class="end-btn text-[#A30B37] justify-center mb-[15px] border-[solid] cursor-pointer mx-0 my-2.5 px-2.5 py-[5px] rounded-[5px] hover:transition-transform hover:duration-[0.5s] hover:scale-110">End
+      Game</button>
+  </header>
+
+  <div class="profile m-[15px] rounded-[3px] border-2 border-solid border-[#9788F0]">
+    <div class="profile-info">
+      <h2 id="profile-name"></h2>
+      <h2 id="profile-email"></h2>
+    </div>
+    <img id="profile-pic" src="" alt="profile picture">
+    <button id="auth-btn"></button>
+  </div>
+
+  <div class="drop-section m-[15px] rounded-[3px] border-2 border-solid border-[#9788F0] flex justify-around flex-wrap">
+    <div class="drop square" id="shape1"></div>
+    <div class="drop rectangle" id="shape2"></div>
+    <div class="drop circle" id="shape3"></div>
+    <div class="drop square2" id="shape4"></div>
+    <div class="drop oval2" id="shape5"></div>
+    <div class="drop rectangle2" id="shape6"></div>
+    <div class="drop rectangle3" id="shape7"></div>
+    <div class="drop pill" id="shape8"></div>
+    <div class="drop oval" id="shape9"></div>
+    <div class="drop pill2" id="shape10"></div>
+  </div>
+
+  <div
+    class="drag-section m-[15px] rounded-[3px] border-2 border-solid border-[#9788F0] flex justify-around flex-wrap mb-5">
+    <div class="square" draggable="true"></div>
+    <div class="rectangle" draggable="true"></div>
+    <div class="circle" draggable="true"></div>
+    <div class="square2" draggable="true"></div>
+    <div class="oval2" draggable="true"></div>
+    <div class="rectangle2" draggable="true"></div>
+    <div class="rectangle3" draggable="true"></div>
+    <div class="pill" draggable="true"></div>
+    <div class="oval" draggable="true"></div>
+    <div class="pill2" draggable="true"></div>
+  </div>
+
+  <div class="listscore m-[15px] rounded-[3px] pt-[1%] border-[none]">
+    <div class="text-center border-[none]">
+      <h2 style="color: cadetblue;">Best Score</h2>
+      <button
+        class="cursor-pointer text-[#9788F0] mx-0 my-2.5 px-2.5 py-[5px] rounded-[5px] border-2 border-solid border-[#9788F0] hover:transition-transform hover:duration-[0.5s] hover:scale-110"
+        id="reset rounded-[5px] border-2 border-solid border-[#9788F0]">Reset Scores</button>
+    </div>
+    <ul class="List list-none p-0 border-[none]">
+    </ul>
+  </div>
+</body>
+
+<script src="/js/main.js"></script>
+
+</html>

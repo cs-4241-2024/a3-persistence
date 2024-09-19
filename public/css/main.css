@@ -1,0 +1,277 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html {
+  background: #9788F0;
+  font-family: "Comfortaa", cursive;
+  color: rgb(168, 101, 0);
+}
+
+body {
+  background: #F7E7C2;
+  max-width: 700px;
+  margin: 0 auto;
+  height: auto;
+}
+
+.List {
+  list-style-type: none;
+  /* Optional: remove bullet points from list items */
+  padding: 0;
+  border: none;
+}
+
+.list-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 0;
+  border: none;
+  border-bottom: 1px solid #ccc;
+  /* Optional: add a line between list items */
+}
+
+.entry-text {
+  flex-grow: 1;
+  margin-right: 20px;
+  border: none;
+  /* Add space between text and buttons */
+}
+
+.button-group {
+  display: flex;
+  gap: 10px;
+  border: none;
+  /* Adds space between buttons */
+}
+
+.edit-btn {
+  color: #EEA1A6;
+  border: 1px solid #EEA1A6;
+  padding: 5px 10px;
+  border-radius: 5px;
+}
+
+.delete-btn {
+  color: #A30B37;
+  border: 1px solid #A30B37;
+  padding: 5px 10px;
+  border-radius: 5px;
+}
+
+header {
+  background: #EEA1A6;
+  text-align: center;
+  padding-bottom: 2px;
+}
+
+h1 {
+  font-size: 50px;
+  margin: 0 0;
+}
+
+p {
+  margin: 0;
+}
+
+h3 {
+  font-size: 30px;
+  margin: 0;
+  color: #0B1D51;
+}
+
+button {
+  cursor: pointer;
+  background: none;
+  border: 2px solid #9788F0;
+  color: #9788F0;
+  padding: 5px 10px;
+  border-radius: 5px;
+  margin: 10px 0 10px 0;
+}
+
+button:hover {
+  transform: scale(1.1);
+  transition: transform 0.5s;
+}
+
+form {
+  margin-bottom: 20px;
+}
+
+#error {
+  display: inline;
+  color: #A30B37;
+  font-weight: bold;
+  font-size: 20px;
+  animation: slidein 3s ease-in-out infinite;
+}
+
+@keyframes slidein {
+
+  /* Animation for error message NOT WORKING */
+  0% {
+    transform: scale(1);
+    /* Normal size */
+  }
+
+  50% {
+    transform: scale(1.5);
+    /* Bigger */
+  }
+
+  100% {
+    transform: scale(1);
+    /* Back to normal */
+  }
+}
+
+.end-btn {
+  border: none;
+  border: solid #A30B37;
+  color: #A30B37;
+  justify-content: center;
+  margin-bottom: 15px;
+}
+
+.drop-section,
+.drag-section {
+  display: flex;
+  justify-content: space-around;
+  border: 2px solid #9788F0;
+  flex-wrap: wrap;
+}
+
+.drag-section>div {
+  cursor: pointer;
+  border: none;
+}
+
+.drag-section {
+  margin-bottom: 20px;
+}
+
+
+div {
+  margin: 15px;
+  /* border: 2px solid #9788F0; */
+  border-radius: 3px;
+}
+
+#profile-name {
+  font-size: 30px;
+  color: #0B1D51;
+}
+
+#profile-email {
+  font-size: 20px;
+  color: #0B1D51;
+}
+
+#profile-pic {
+  width: 100px;
+  height: auto;
+  border-radius: 50%;
+}
+
+#auth-btn {
+  border: none;
+  border: solid #A30B37;
+  color: #A30B37;
+  justify-content: flex-end;
+  margin-bottom: 15px;
+}
+
+.profile {
+  width: 300px;
+  display: flex;
+  justify-content: space-between;
+  background-color: #fadcab;
+  flex-wrap: wrap;
+}
+
+.container {
+  text-align: center;
+  border: none;
+}
+
+#reset {
+  border-radius: 5px;
+  border: 2px solid #9788F0;
+}
+
+.listscore {
+  border: none;
+  padding-top: 1%;
+}
+
+.square {
+  width: 50px;
+  height: 50px;
+  background: rgb(247, 100, 100);
+}
+
+.square2 {
+  width: 42px;
+  height: 42px;
+  background: rgb(110, 131, 235);
+}
+
+.rectangle {
+  width: 80px;
+  height: 50px;
+  background: rgb(230, 67, 230);
+}
+
+.circle {
+  width: 50px;
+  height: 50px;
+  border-radius: 100%;
+  background: rgb(245, 183, 68);
+}
+
+.oval {
+  width: 70px;
+  height: 50px;
+  border-radius: 100%;
+  background: rgb(209, 143, 154);
+}
+
+.oval2 {
+  width: 75px;
+  height: 50px;
+  border-radius: 100%;
+  background: rgb(223, 100, 161);
+}
+
+.pill {
+  width: 100px;
+  height: 50px;
+  border-radius: 25px;
+  background: rgb(94, 82, 84);
+}
+
+.pill2 {
+  width: 110px;
+  height: 52px;
+  border-radius: 25px;
+  background: rgb(163, 104, 231);
+}
+
+.rectangle2 {
+  width: 60px;
+  height: 50px;
+  background: rgb(137, 228, 230);
+}
+
+.rectangle3 {
+  width: 50px;
+  height: 60px;
+  background: rgb(146, 209, 146);
+}
+
+.drop {
+  border: 2px solid rgb(183, 156, 237);
+  background: none;
+}
