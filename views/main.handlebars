@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -28,7 +29,7 @@
             action="/form"
             method="POST"
             class="row g-3"
-            aria-label="Add a birthday"
+            aria-label="Add a birthday form"
           >
             <div class="col-md-6">
               <label for="name" class="form-label">Name</label>
@@ -57,7 +58,10 @@
               <button
                 type="submit"
                 class="btn btn-primary w-100"
-              >Submit</button>
+                aria-label="Submit birthday entry"
+              >
+                Submit
+              </button>
             </div>
           </form>
         </div>
@@ -67,15 +71,15 @@
 
       <table
         class="table table-striped table-bordered"
-        aria-label="Birthday entries"
+        aria-label="Table of birthday entries"
       >
         <thead class="table-dark">
           <tr>
-            <th>Name</th>
-            <th>Age</th>
-            <th>Birthday</th>
-            <th>Days Until Next Birthday</th>
-            <th>Actions</th>
+            <th scope="col">Name</th>
+            <th scope="col">Age</th>
+            <th scope="col">Birthday</th>
+            <th scope="col">Days Until Next Birthday</th>
+            <th scope="col">Actions</th>
           </tr>
         </thead>
         <tbody>
@@ -86,6 +90,7 @@
                   action="/edit-name/{{this._id}}"
                   method="POST"
                   class="edit-form"
+                  aria-label="Edit name form"
                 >
                   <div class="input-group">
                     <input
@@ -94,16 +99,23 @@
                       value="{{this.name}}"
                       class="form-control"
                       readonly
+                      aria-label="Name input"
                     />
                     <button
                       type="button"
                       class="btn btn-warning edit-btn"
-                    >Edit</button>
+                      aria-label="Edit name"
+                    >
+                      Edit
+                    </button>
                     <button
                       type="submit"
                       class="btn btn-success save-btn"
                       style="display:none;"
-                    >Save</button>
+                      aria-label="Save name"
+                    >
+                      Save
+                    </button>
                   </div>
                 </form>
               </td>
@@ -113,6 +125,7 @@
                   action="/edit-birthday/{{this._id}}"
                   method="POST"
                   class="edit-birthday-form"
+                  aria-label="Edit birthday form"
                 >
                   <div class="input-group">
                     <input
@@ -121,16 +134,23 @@
                       value="{{this.birthday}}"
                       class="form-control"
                       readonly
+                      aria-label="Birthday input"
                     />
                     <button
                       type="button"
                       class="btn btn-warning edit-birthday-btn"
-                    >Edit</button>
+                      aria-label="Edit birthday"
+                    >
+                      Edit
+                    </button>
                     <button
                       type="submit"
                       class="btn btn-success save-birthday-btn"
                       style="display:none;"
-                    >Save</button>
+                      aria-label="Save birthday"
+                    >
+                      Save
+                    </button>
                   </div>
                 </form>
               </td>
@@ -139,9 +159,16 @@
                 <form
                   action="/delete/{{this._id}}"
                   method="POST"
+                  aria-label="Delete birthday entry form"
                   onsubmit="return confirm('Are you sure you want to delete this entry?');"
                 >
-                  <button type="submit" class="btn btn-danger">Delete</button>
+                  <button
+                    type="submit"
+                    class="btn btn-danger"
+                    aria-label="Delete birthday"
+                  >
+                    Delete
+                  </button>
                 </form>
               </td>
             </tr>
@@ -150,8 +177,15 @@
       </table>
 
       <div class="text-center">
-        <form action="/signout" method="POST">
-          <button id="signout" type="submit" class="btn btn-danger">Sign Out</button>
+        <form action="/signout" method="POST" aria-label="Sign out form">
+          <button
+            id="signout"
+            type="submit"
+            class="btn btn-danger"
+            aria-label="Sign out"
+          >
+            Sign Out
+          </button>
         </form>
       </div>
     </div>
