@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>CS4241 Assignment 3</title>
+    <meta charset="utf-8">
+    <script src="js/main.js"></script>
+    <link rel="stylesheet" href="css/sakura.css">
+    
+    <link rel="icon" href="data:;base64,iVBORw0KGgo=">
+  </head>
+  <header>
+    <h1>Classmates Tracker</h1>
+    <button id = "logout-button" class = "logout-button" >Log Out</button>
+  </header>
+  <body>
+    <main>
+      <h2>How to use</h2>
+      <p class="p-skinny">
+        Use this to keep track of classmates and friends contact information
+        that you meet throughout the years. To add a person enter their
+        name, email, phone number, age seperated by commas and click submit.
+        To delete a classmate, enter the persons full name into the delete
+        bar, then click delete.
+      </p>
+
+      <h2>Add Classmates</h2>
+      <form>
+        <input type="text" id="yourname" placeholder="Name,email,phone,age" required>
+        <button id = "add-button" class = "start-button" type="submit" >Add</button>
+      </form>
+
+      <h2>My Classmates</h2>
+      <table class = "h-table" id = "friend-list"></table>
+
+      <h2>Delete Name</h2>
+      <form>
+        <input class = 'input-d' type="text" id="editname" placeholder="Name" required>
+        <button id = "delete-button" class = "delete-button" type="submit" >Delete</button>
+      </form>
+
+      <h2>Edit List</h2>
+      <form class = 'form-signin'>
+        <input class = 'input-d' type="text" id="name-to-edit" placeholder="Name To Edit" required>
+        <select id="edit-list">
+          <option value="1">Name</option>
+          <option value="2">Email</option>
+          <option value="3">Phone</option>
+          <option value="4">Grade</option>
+        </select>
+        <input class = 'input-d' type="text" id="new-value" placeholder="New Value" required>
+        <button id = "edit-button" class = "signin-button" type="submit" >Edit</button>
+      </form>
+    </main>
+  </body>
+  <footer>
+    <p>Created by Andrew Cash</p>
+    <p>Email: arcash@wpi.edu</p>
+  </footer>
+</html>
