@@ -8,6 +8,7 @@ const useSpell = async function( event ) {
 
   let response = await fetch( '/useSpell', {
   method:'POST',
+  headers: {'Content-Type': 'application/json'},
   body 
   })
 
@@ -26,6 +27,7 @@ const regainSpell = async function( event ) {
 
   let response = await fetch( '/regainSpell', {
   method:'POST',
+  headers: {'Content-Type': 'application/json'},
   body 
   })
 
@@ -136,6 +138,7 @@ const submit = async function( event ) {
 
   const response = await fetch( '/submit', {
     method:'POST',
+    headers: {'Content-Type': 'application/json'},
     body 
   })
 
@@ -148,4 +151,8 @@ const submit = async function( event ) {
 
 window.onload = function() {
  loadTable();
+ const lvlbutton = document.getElementById("lvlb");
+ lvlbutton.onclick = submit;
+ const lrbutton = document.getElementById("lrest");
+ lrbutton.onclick = lrest;
 }

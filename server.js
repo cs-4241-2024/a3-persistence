@@ -444,7 +444,7 @@ app.post( '/login', (req, res ) => {
 })
 
 app.post( '/submit', (req, res ) => {
-  console.log(req.data + " with a /submit")
+  console.log(JSON.stringify(req.body))
 
   resetfnc(req.body.payload)
   res.writeHead( 200, "OK", {'Content-Type': 'text' })
