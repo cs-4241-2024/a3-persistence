@@ -122,10 +122,11 @@ if (typeof window !== 'undefined') {
       const actionCell = row.insertCell(5);
 
       taskCell.textContent = item.task;
-      priorityCell.textContent = item.priority;
       descriptionCell.textContent = item.description;
+      priorityCell.textContent = item.priority;
       createdAtCell.textContent = new Date(item.created_at).toLocaleDateString();
-      dueDateCell.textContent = item.due_date || 'No Due Date';
+      dueDateCell.textContent = item.due_date;
+
 
       taskCell.onclick = () => makeEditable(taskCell, 'task', item._id);
       descriptionCell.onclick = () => makeEditable(descriptionCell, 'description', item._id);
@@ -150,28 +151,50 @@ if (typeof window !== 'undefined') {
 
     input.style.width = '100%';
     input.style.boxSizing = 'border-box';
+    input.style.backgroundColor = 'transparent';
+    input.style.color = 'inherit';
+    input.style.border = '1px solid #ccc';
+    input.style.padding = '4px';
+
 
     input.onblur = async () => {
       const newValue = input.value;
       cell.innerHTML = newValue;
 
-      const updatedItem = { _id: id, [field]: newValue, created_at: new Date().toISOString() };
-      await fetch('/data', {
+      const updatedItem = { _id: id, [field]: newValue };
+      const response = await fetch('/data', {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(updatedItem)
       });
 
-      const response = await fetch('/data');
-      const data = await response.json();
-      updateTable(data);
+      if (response.ok) {
+        const data = await response.json();
+        updateTable(data);
+      } else {
+        console.error('Error updating item:', await response.text());
+      }
     };
 
-    input.onkeypress = (event) => {
+
+    input.addEventListener('keypress', (event) => {
       if (event.key === 'Enter') {
         input.blur();
       }
-    };
+    });
+
+
+    input.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape') {
+        input.value = originalText;
+        input.blur();
+      }
+    });
+
+
+    input.addEventListener('keydown', (event) => {
+      event.stopPropagation();
+    });
   };
 
 

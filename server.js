@@ -48,7 +48,7 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 
-// Passport.js configuration
+
 passport.use(new LocalStrategy(
     async function(username, password, done) {
         try {
@@ -122,18 +122,6 @@ app.get('/data', async (req, res) => {
     }
 });
 
-app.post('/data', async (req, res) => {
-    if (!req.isAuthenticated()) return res.status(401).send('Unauthorized');
-    try {
-        const newItem = req.body;
-        newItem.userId = req.user._id;
-        await todosCollection.insertOne(newItem);
-        const todos = await todosCollection.find({ userId: req.user._id }).toArray();
-        res.json(todos);
-    } catch (error) {
-        res.status(500).send(error);
-    }
-});
 
 app.delete('/data/:id', async (req, res) => {
     if (!req.isAuthenticated()) return res.status(401).send('Unauthorized');
@@ -158,6 +146,46 @@ app.put('/data', async (req, res) => {
         res.status(500).send(error);
     }
 });
+
+const calculateDueDate = (priority) => {
+    const today = new Date();
+    let dueDate;
+
+    switch (priority) {
+        case 'High':
+            dueDate = new Date(today.setDate(today.getDate() + 1));
+            break;
+        case 'Medium':
+            dueDate = new Date(today.setDate(today.getDate() + 3));
+            break;
+        case 'Low':
+            dueDate = new Date(today.setDate(today.getDate() + 7));
+            break;
+        default:
+            dueDate = null;
+    }
+
+    return dueDate ? dueDate.toISOString().split('T')[0] : null;
+};
+
+app.post('/data', async (req, res) => {
+    if (!req.isAuthenticated()) return res.status(401).send('Unauthorized');
+    try {
+        const newItem = req.body;
+        newItem.userId = req.user._id;
+
+
+        newItem.due_date = calculateDueDate(newItem.priority);
+
+        await todosCollection.insertOne(newItem);
+        const todos = await todosCollection.find({ userId: req.user._id }).toArray();
+        res.json(todos);
+    } catch (error) {
+        res.status(500).send(error);
+    }
+});
+
+
 
 app.listen(process.env.PORT || port, () => {
     console.log(`Server is running on port ${process.env.PORT || port}`);
