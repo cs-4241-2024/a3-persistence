@@ -549,22 +549,24 @@ app.post( '/longRest', async (req, res ) => {
   res.end(JSON.stringify({lvl: level}))
 })
 
-app.post( '/useSpell', (req, res ) => {
-  let datarow = appdata[req.body.payload]
+app.post( '/useSpell', async (req, res ) => {
+  let datarow = await userdata.findOne({"_id": tablerows[req.body.payload]})
       if (datarow.remaining > 0) {
-        datarow.used += 1
-        datarow.remaining = datarow.available - datarow.used
+        //increases used then adjusts remaining
+        userdata.updateOne({"_id": tablerows[req.body.payload]}, {$set: {used: (datarow.used + 1)}})
+        userdata.updateOne({"_id": tablerows[req.body.payload]}, {$set: {remaining: (datarow.available - datarow.used)}})
       }
       res.writeHead( 200, "OK", {'Content-Type': 'text' })
       res.end(JSON.stringify({lvl: (req.body.payload)}))
 })
 
-app.post( '/regainSpell', (req, res ) => {
+app.post( '/regainSpell', async (req, res ) => {
 
-  let datarow = appdata[req.body.payload]
+  let datarow = await userdata.findOne({"_id": tablerows[req.body.payload]})
   if (datarow.remaining < datarow.available) {
-    datarow.used -= 1
-    datarow.remaining = datarow.available - datarow.used
+    //decreases used then adjusts remaining
+    userdata.updateOne({"_id": tablerows[req.body.payload]}, {$set: {used: (datarow.used - 1)}})
+    userdata.updateOne({"_id": tablerows[req.body.payload]}, {$set: {remaining: (datarow.available - datarow.used)}})
   }
   res.writeHead( 200, "OK", {'Content-Type': 'text' })
   res.end(JSON.stringify({lvl: (req.body.payload)}))
