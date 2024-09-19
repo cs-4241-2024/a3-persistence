@@ -4,6 +4,8 @@ const { engine } = require("express-handlebars");
 const session = require("express-session");
 const passport = require("passport");
 const GitHubStrategy = require("passport-github2").Strategy;
+const LocalStrategy = require("passport-local").Strategy;
+const flash = require("connect-flash");
 require("dotenv").config();
 
 const app = express();
@@ -32,20 +34,27 @@ app.use(
     secret: ["key1", "key2"],
     resave: false,
     saveUninitialized: false,
-    cookie: { secure: false, maxAge: 24 * 60 * 60 * 1000 }, // 24 hours
+    cookie: { secure: false, maxAge: 24 * 60 * 60 * 1000 },
   })
 );
 
 app.use(passport.initialize());
 app.use(passport.session());
+app.use(flash());
 
 passport.serializeUser((user, done) => {
-  console.log("Serializing user:", user);
-  done(null, user);
+  done(null, user._id);
 });
-passport.deserializeUser((user, done) => {
-  console.log("Deserializing user:", user);
-  done(null, user);
+
+passport.deserializeUser(async (id, done) => {
+  try {
+    const db = client.db(process.env.DB_NAME);
+    const usersCollection = db.collection("users");
+    const user = await usersCollection.findOne({ _id: new ObjectId(id) });
+    done(null, user);
+  } catch (err) {
+    done(err, null);
+  }
 });
 
 passport.use(
@@ -53,14 +62,12 @@ passport.use(
     {
       clientID: process.env.GITHUB_CLIENT_ID,
       clientSecret: process.env.GITHUB_CLIENT_SECRET,
-      callbackURL: "https://a3-mkneuffer.glitch.me/auth/github/callback",
+      callbackURL: process.env.GITHUB_CALLBACK_URL,
     },
     async function (accessToken, refreshToken, profile, done) {
       try {
         const db = client.db(process.env.DB_NAME);
         const usersCollection = db.collection("users");
-
-        console.log("GitHub profile:", JSON.stringify(profile, null, 2));
 
         let user = await usersCollection.findOne({ githubId: profile.id });
 
@@ -73,28 +80,41 @@ passport.use(
           };
 
           const result = await usersCollection.insertOne(newUser);
-          console.log(`New user inserted with ID: ${result.insertedId}`);
-
           user = newUser;
-        } else {
-          console.log(`User found: ${user.username}`);
         }
 
         return done(null, user);
       } catch (err) {
-        console.error("Error in GitHub authentication:", err);
         return done(err);
       }
     }
   )
 );
 
-app.use((req, res, next) => {
-  console.log("Current route:", req.path);
-  console.log("Is authenticated:", req.isAuthenticated());
-  console.log("Session:", req.session);
-  console.log("User:", req.user);
+passport.use(
+  new LocalStrategy(async (username, password, done) => {
+    try {
+      const db = client.db(process.env.DB_NAME);
+      const usersCollection = db.collection("users");
 
+      const user = await usersCollection.findOne({ username: username });
+
+      if (!user) {
+        return done(null, false, { message: "Incorrect username." });
+      }
+
+      if (password !== user.password) {
+        return done(null, false, { message: "Incorrect password." });
+      }
+
+      return done(null, user);
+    } catch (err) {
+      return done(err);
+    }
+  })
+);
+
+app.use((req, res, next) => {
   if (
     req.isAuthenticated() ||
     req.path === "/login" ||
@@ -108,9 +128,17 @@ app.use((req, res, next) => {
 });
 
 app.get("/login", (req, res) => {
-  console.log("Displaying login page");
-  res.render("login");
+  res.render("login", { message: req.flash("error") });
 });
+
+app.post(
+  "/login",
+  passport.authenticate("local", {
+    successRedirect: "/",
+    failureRedirect: "/login",
+    failureFlash: true,
+  })
+);
 
 app.get(
   "/auth/github",
@@ -121,26 +149,80 @@ app.get(
   "/auth/github/callback",
   passport.authenticate("github", { failureRedirect: "/login" }),
   function (req, res) {
-    console.log(
-      "GitHub OAuth successful, setting session and redirecting to main"
-    );
-    console.log("User:", req.user);
-    req.session.user = req.user;
     res.redirect("/");
   }
 );
 
-app.get("/", async (req, res) => {
-  console.log("Accessing main page");
-  console.log("Session:", req.session);
-  console.log("User:", req.user);
+app.post("/edit-birthday/:id", async (req, res) => {
+  const birthdayId = req.params.id;
+  const { birthday } = req.body;
 
+  const birthDate = new Date(birthday);
+  const today = new Date();
+
+  let age = today.getFullYear() - birthDate.getFullYear();
+  if (
+    today.getMonth() < birthDate.getMonth() ||
+    (today.getMonth() === birthDate.getMonth() &&
+      today.getDate() < birthDate.getDate())
+  ) {
+    age--;
+  }
+  const day = birthDate.getDate();
+  const month = birthDate.getMonth() + 1;
+  const year = birthDate.getFullYear();
+
+  const db = client.db(process.env.DB_NAME);
+  const dataCollection = db.collection("data");
+
+  try {
+    await dataCollection.updateOne(
+      { _id: new ObjectId(birthdayId) },
+      {
+        $set: {
+          birthday: birthday,
+          age: age,
+          day: day,
+          month: month,
+          year: year,
+        },
+      }
+    );
+    res.redirect("/");
+  } catch (err) {
+    console.error("Error updating birthday:", err);
+    res.status(500).send("Failed to update birthday.");
+  }
+});
+
+app.post("/edit-name/:id", async (req, res) => {
+  const birthdayId = req.params.id;
+  const { name } = req.body;
+
+  const db = client.db(process.env.DB_NAME);
+  const dataCollection = db.collection("data");
+
+  try {
+    await dataCollection.updateOne(
+      { _id: new ObjectId(birthdayId) },
+      {
+        $set: {
+          name: name,
+        },
+      }
+    );
+    res.redirect("/");
+  } catch (err) {
+    console.error("Error updating name:", err);
+    res.status(500).send("Failed to update name.");
+  }
+});
+
+app.get("/", async (req, res) => {
   if (!req.user) {
-    console.log("No authenticated user, redirecting to login");
     return res.redirect("/login");
   }
 
-  console.log(`User is logged in: ${req.user.username}`);
   const db = client.db(process.env.DB_NAME);
   const dataCollection = db.collection("data");
 
@@ -169,14 +251,10 @@ app.get("/", async (req, res) => {
       nextBirthday.setFullYear(today.getFullYear() + 1);
     }
     const daysUntilNextBirthday = Math.ceil(
-      (nextBirthday - today) / (1000 * 60 * 60 * 24)
+      (nextBirthday - today) / (24 * 60 * 60 * 1000)
     );
 
-    return {
-      ...birthdayEntry,
-      age,
-      daysUntilNextBirthday,
-    };
+    return { ...birthdayEntry, age, daysUntilNextBirthday };
   });
 
   res.render("main", {
