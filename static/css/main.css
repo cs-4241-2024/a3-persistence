@@ -1,0 +1,18 @@
+
+body {
+    background-color: var(--bs-body-bg);
+}
+
+#form {
+    background-color: var(--bs-tertiary-bg);
+}
+
+.form-control:read-only {
+    background-color: transparent;
+    border: solid transparent;
+}
+
+.form-control:read-only + span {
+    background-color: transparent;
+    border: solid transparent;
+}
