@@ -20,8 +20,18 @@ const add = async function(event) {
       Game2B:document.getElementById("game2B"),
       Game3A:document.getElementById("game3A"),
       Game3B:document.getElementById("game3B"),
-    },
-    json = {
+    }
+    if(input.MatchType === null ||
+        input.MatchFormat === null ||
+        input.Match.value === '' ||
+        input.SchoolA.value === '' ||
+        input.SchoolB.value === '' ||
+        input.PlayerA1.value === '' ||
+        input.PlayerB1.value === '') {
+        alert('Please fill out all required fields')
+        return
+    }
+    const json = {
         MatchType: input.MatchType.value,
         MatchFormat: input.MatchFormat.value,
         Match: input.Match.value,
@@ -118,6 +128,8 @@ const generateMatches = async function() {
     });
 
 }
+
+const delete
 
 
 
