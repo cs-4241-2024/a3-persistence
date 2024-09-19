@@ -8,8 +8,16 @@ import { client, removeGroceryByIndex } from "./db.js";
 // App configuration
 const app = express();
 app.use(express.json());
-app.use(express.static("public"));
 app.use(cookieParser());
+app.use((req, res, next) => {
+    if (req.path === "/index.html" || req.path === "/") {
+        if (!req.cookies.accessToken) {
+            return res.redirect("/login.html");
+        }
+    }
+    next();
+});
+app.use(express.static("public"));
 app.use(
     session({ secret: "keyboard cat", resave: false, saveUninitialized: false })
 );
@@ -76,6 +84,7 @@ app.get("/data", async (req, res) => {
 
     const groceryLists = client.db("a3").collection("grocery-lists");
     const list = await groceryLists.findOne({ accessToken: accessToken });
+
     const groceries = list.groceries;
     const result = groceries.map((grocery, index) => {
         return {

@@ -76,13 +76,6 @@ const submit = async function (event) {
     descriptionInput.value = "";
 };
 
-document.onreadystatechange = function (e) {
-    if (!parseCookies().accessToken) {
-        location.href = "/login.html";
-        return;
-    }
-};
-
 window.onload = async function () {
     const button = document.querySelector("#newItemSubmit");
     button.onclick = submit;
@@ -166,8 +159,8 @@ const revalidate = async () => {
         const deleteButton = document.createElement("button");
         deleteButton.textContent = "Delete";
         deleteButton.classList.add("recordButton", "block", "round");
-        deleteButton.onclick = () => onDelete(item.index);
         td.innerHTML = deleteButton.outerHTML;
+        td.onclick = () => onDelete(item.index);
         tr.appendChild(td);
 
         document.querySelector("#list").appendChild(tr);
