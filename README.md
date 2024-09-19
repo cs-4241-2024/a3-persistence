@@ -1,6 +1,9 @@
 ## To-Do Manager
 My project is a To-Do manager which will keep track of all the assignments you have to do. You give it a title a due date and a priority you give to the assignment and it will calculate the urgency you need to give to that assignment. This is based on the due date and the priority given, if the due date is 2 or fewer days from the current date it will add +5 to the urgency if it's 7 or fewer days from the current date it will add +2 and the rest will just give +1 urgency. If it's a high priority add 5 if it's medium add 3 and low will add 1 to the total urgency of that task. For this assignment, I used the CSS framework of Pure and was able to complete all required tasks. 
 
+https://a3-gabriel-curet-irizarry.onrender.com/
+
+
 ## Credentials
 - **Username**: Test
 - **Password**: password
