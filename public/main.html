@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>CS4241 Assignment 3 - Event Management</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="Manage your events with this simple event management system. Add, edit, and delete events."
+    />
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/sakura.css/css/sakura.css"
+      type="text/css"
+    />
+    <link rel="stylesheet" href="css/main.css" />
+    <script src="js/main.js" defer></script>
+  </head>
+  <body>
+    <header>
+      <h1>Event Tracker</h1>
+    </header>
+
+    <main>
+      <section aria-labelledby="event-form-section">
+        <h2 id="event-form-section">Create New Event</h2>
+        <form id="event-form">
+          <label for="name">Event Name:</label>
+          <input
+            type="text"
+            id="name"
+            name="name"
+            required
+            aria-required="true"
+            aria-label="Event Name"
+          /><br />
+
+          <label for="date">Date:</label>
+          <input
+            type="date"
+            id="date"
+            name="date"
+            required
+            aria-required="true"
+            aria-label="Event Date"
+          /><br />
+
+          <label for="sold">Tickets Sold:</label>
+          <input
+            type="number"
+            id="sold"
+            name="sold"
+            required
+            aria-required="true"
+            aria-label="Tickets Sold"
+          /><br />
+
+          <label for="capacity">Capacity:</label>
+          <input
+            type="number"
+            id="capacity"
+            name="capacity"
+            required
+            aria-required="true"
+            aria-label="Event Capacity"
+          /><br />
+
+          <button
+            type="submit"
+            class="button"
+            id="submit"
+            aria-label="Submit Event"
+          >
+            Submit
+          </button>
+          <button
+            type="button"
+            class="button"
+            id="edit"
+            aria-label="Edit Event"
+          >
+            Edit
+          </button>
+          <button
+            type="button"
+            class="button"
+            id="delete"
+            aria-label="Delete Event"
+          >
+            Delete
+          </button>
+        </form>
+      </section>
+
+      <section aria-labelledby="event-list-section">
+        <h2 id="event-list-section">Event List</h2>
+        <table id="event-list" aria-label="List of Events">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Date</th>
+              <th>Tickets Sold</th>
+              <th>Capacity</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </section>
+    </main>
+
+    <footer>
+      <p>&copy; 2024 Event Management System</p>
+    </footer>
+  </body>
+</html>
