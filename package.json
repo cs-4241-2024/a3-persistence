@@ -1,0 +1,19 @@
+{
+  "name": "MongoDB-json",
+  "description": "WPI CS 4241 A3",
+  "author": "April Bollinger",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "mime": "^4.0.4",
+    "express": "^4.21.0",
+    "mongodb": "^6.9.0",
+    "bootstrap": "^5.3.3",
+    "cookie-session": "^2.1.0",
+    "express-handlebars": "^8.0.1"
+  },
+  "engines": {
+    "node": "16.x"
+  }
+}

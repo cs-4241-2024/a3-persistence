@@ -1,0 +1,10 @@
+.roboto-mono {
+  font-family: "Roboto Mono", monospace;
+  font-optical-sizing: auto;
+  font-weight: 2em;
+  font-style: normal;
+}
+#footer-text {
+  font-size: 12px;
+  margin: 0;
+}
