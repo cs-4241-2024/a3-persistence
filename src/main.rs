@@ -1,52 +1,14 @@
-#! allow(non_snake_case)]
+#![allow(non_snake_case)]
 
 use dioxus::prelude::*;
-use dioxus_logger::tracing::{info, Level};
+use dioxus_logger::tracing;
 
-#[derive(Clone, Routable, Debug, PartialEq)]
-enum Route {
-    #[route("/")]
-    Home {},
-    #[route("/blog/:id")]
-    Blog { id: i32 },
-}
+mod views;
+use views::app::App;
+mod routes;
 
 fn main() {
-    // Init logger
-    dioxus_logger::init(Level::INFO).expect("failed to init logger");
-    info!("starting app");
+    dioxus_logger::init(tracing::Level::INFO).expect("failed to init logger");
+    tracing::info!("starting app");
     launch(App);
-}
-
-fn App() -> Element {
-    rsx! {
-        Router::<Route> {}
-    }
-}
-
-#[component]
-fn Blog(id: i32) -> Element {
-    rsx! {
-        Link { to: Route::Home {}, "Go to counter" }
-        "Blog post {id}"
-    }
-}
-
-#[component]
-fn Home() -> Element {
-    let mut count = use_signal(|| 0);
-
-    rsx! {
-        Link {
-            to: Route::Blog {
-                id: count()
-            },
-            "Go to blog"
-        }
-        div {
-            h1 { "High-Five counter: {count}" }
-            button { class: "btn btn-primary", onclick: move |_| count += 1, "Up high!" }
-            button { class: "btn btn-secondary", onclick: move |_| count -= 1, "Down low!" }
-        }
-    }
 }

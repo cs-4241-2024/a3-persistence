@@ -5,7 +5,7 @@ name = "cs4241-assignment3"
 
 # Dioxus App Default Platform
 # web, desktop, fullstack
-default_platform = "web"
+default_platform = "fullstack"
 
 # `build` & `serve` dist path
 out_dir = "dist"
