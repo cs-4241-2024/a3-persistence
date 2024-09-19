@@ -65,7 +65,7 @@ const addMatch = function(data) {
     const matchContainer = document.getElementById('matches-container'); // Assuming you have a container to append the matches
 
     const matchHTML = `
-    <div id="Example-Match" class="fixed-grid">
+    <div class="fixed-grid">
       <div class="grid">
         <div class="cell match-info is-col-span-3 is-inline is-size-5">
           <p class="is-inline is-size-4">${data.SchoolA} -</p>
@@ -107,7 +107,7 @@ const addMatch = function(data) {
           <h3 class="column is-size-3">${data.Game2B}</h3>
           <h3 class="column is-size-3">${data.Game3B}</h3>
         </div>
-        <button class="cell is-1-one-fifth button is-danger">Delete</button>
+        <button id="${data._id}" name="delete" class="cell is-1-one-fifth button is-danger">Delete</button>
       </div>
     </div>
   `;
@@ -115,21 +115,42 @@ const addMatch = function(data) {
     matchContainer.insertAdjacentHTML('beforeend', matchHTML);
 };
 
-const generateMatches = async function() {
-    const matchContainer = document.getElementById('matches-container'); // Assuming you have a container to append the matches
-    matchContainer.innerHTML = '';
-    const response = await fetch( '/docs', {
-        method:'GET',
+const deleteMatch = async function(event) {
+    event.preventDefault();
+
+    const matchId = event.target.id; // Get the id from the button's id attribute
+    const body = JSON.stringify({ _id: matchId });
+
+    const response = await fetch('/remove', {
+        method: 'DELETE',
         headers: { 'Content-Type': 'application/json' },
-    })
-    let jsonData = await response.json();
-    jsonData.forEach(match => {
-        addMatch(match)
+        body
     });
 
-}
+    const result = await response.json();
+    console.log(result);
 
-const delete
+    // Refresh the matches list
+    await generateMatches();
+};
+
+const generateMatches = async function() {
+    const matchContainer = document.getElementById('matches-container');
+    matchContainer.innerHTML = '';
+    const response = await fetch('/docs', {
+        method: 'GET',
+        headers: { 'Content-Type': 'application/json' },
+    });
+    const jsonData = await response.json();
+    jsonData.forEach(match => {
+        addMatch(match);
+    });
+
+    // Add event listeners to delete buttons
+    document.querySelectorAll('button[name="delete"]').forEach(button => {
+        button.addEventListener('click', deleteMatch);
+    });
+};
 
 
 

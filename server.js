@@ -107,7 +107,7 @@ app.post( '/add', async (req,res) => {
 })
 
 // assumes req.body takes form { _id:5d91fb30f3f81b282d7be0dd } etc.
-app.post( '/remove', async (req,res) => {
+app.delete( '/remove', async (req,res) => {
   const result = await collection.deleteOne({
     _id:new ObjectId( req.body._id )
   })
