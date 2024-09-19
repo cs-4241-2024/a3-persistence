@@ -3,7 +3,7 @@ Assignment 3 - Persistence: Two-tier Web Application with Database, Express serv
 
 ## Tea Log
 
-your glitch (or alternative server) link e.g. http://a3-charlie-roberts.glitch.me
+Glitch: https://a3-laurapellowski.glitch.me/
 
 Summary:
   My website is designed to be a personal tea log. You can put in the type of tea, when you had it, and your rating, and the server will add a note based on the rating. If all three fields are left blank under the "Add to Log" section, then a blank row will NOT be added. Therefore, if you refresh the page, it should display the data as it was before you refreshed the page. For the Edit Log Entry part, you can choose to edit any of the 3 fields (type, day, rating). If you choose not to update a certain field, just leave that textbox empty. 
