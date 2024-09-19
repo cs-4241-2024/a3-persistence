@@ -15,22 +15,19 @@ recorded weight (for a baseline). With this setup you can speed
 up your workouts by easily finding how to setup the machine and
 around what weight to use.
 
-- TODO challenges you faced in realizing the application
-- TODO authentication strategy
+- __Challenges__: I faced a massive problem trying to make this webapp in Dioxus (Rust) and eventually scrapped it for Templ (Go)
+- __Authentication__: session cookies + SQL DB storage
 - __CSS Framework__: DaisyUI (Tailwind)
 
 ## Technical Achievements
-- **Tech Achievement 1**: I used OAuth authentication via the GitHub strategy
-
-## Design/Evaluation Achievements
-- **Design Achievement 1**: I followed the following tips from the W3C Web Accessibility Initiative...
-
+- Password hashing and salting
+- Self hosted via Tailscale Funnel
+- Authentication middleware, preventing unauthenticated users from accessing the service
 
 ## Development
 
- 1. Run Tailwind and Dioxus serve processes (simultaneously):
+ 1. Run Tailwind and Go serve processes (simultaneously):
 ```bash
-npx tailwindcss -i ./input.css -o ./assets/tailwind.css --watch
-dx serve --platform fullstack
+npx tailwindcss -i ./assets/input.css -o ./assets/output.css --watch
 ```
  2. Navigate to [http://localhost:8080](http://localhost:8080)
