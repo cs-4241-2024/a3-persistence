@@ -3,40 +3,82 @@
   <head>
     <title>CS4241 Assignment 3</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Author: Justin Smith, an employee form for a fictitious company 'XYZ'">
     <meta charset="utf-8">
     <script src="js/main.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
     <link rel="stylesheet" href="css/main.css">
     <link rel="icon" href="data:;base64,iVBORw0KGgo=">
   </head>
-  <body>
-    <header>
-      Company XYZ Employee Form
-    </header>
-    <p>
-      Fill out ALL of the form below before submitting data.
-    </p>
-    <form id="employeeForm">
-      <input type="text" id="employeeid" placeholder="your employee ID" required>
-      <input type="text" id="yourname" placeholder="your name here" required>
-      <input type="text" id="salary" placeholder="your yearly salary" required>
-      <input type="text" id="regdate" placeholder="ID registration year" required>
-      <button type="submit" id="submit">Submit</button>
-    </form>
+  <body class="has-background-success-dark has-text-white">
+    <section class="section">
+      <div class="container">
+        <header class="has-text-white has-background-danger p-4 mb-5">
+          <h1 class="title is-size-3">Company XYZ Employee Form Database</h1>
+        </header>
+        <div class = "container" id="instructions">
+          <p class="is-size-8">
+            Please enter nine digits for the ID.
+          </p>
+          <p class="is-size-8">
+            Be sure to put a first and last name for the employee field.
+          </p>
+        </div>
+        <form id="employeeForm" class="box has-background-success-dark has-text-white">
+          <div class="field">
+            <label class="label">Employee ID</label>
+            <div class="control">
+              <input class="input" type="text" id="employeeid" placeholder="Your employee ID" required>
+            </div>
+          </div>
 
-    <table id="employeeTable">
-      <thead>
-        <tr>
-          <th>ID</th>
-          <th>Name</th>
-          <th>Salary</th>
-          <th>Registration Year</th>
-          <th>Expiration Year</th>
-        </tr>
-      </thead>
-      <tbody>
-        <!-- Rows added from server -->
-      </tbody>
-    </table>
-    <footer>CS4241 Assignment 3</footer>
+          <div class="field">
+            <label class="label">Name</label>
+            <div class="control">
+              <input class="input" type="text" id="yourname" placeholder="Your name here" required>
+            </div>
+          </div>
+
+          <div class="field">
+            <label class="label">Salary</label>
+            <div class="control">
+              <input class="input" type="text" id="salary" placeholder="Your yearly salary" required>
+            </div>
+          </div>
+
+          <div class="field">
+            <label class="label">ID Registration Year</label>
+            <div class="control">
+              <input class="input" type="text" id="regdate" placeholder="ID registration year" required>
+            </div>
+          </div>
+
+          <div class="control">
+            <button class="button is-danger" type="submit" id="submit">Submit</button>
+          </div>
+        </form>
+
+        <table class="table is-bordered is-fullwidth has-background-success-dark">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Name</th>
+              <th>Salary</th>
+              <th>ID Registration Year</th>
+              <th>ID Expiration Year</th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- Rows added from server -->
+          </tbody>
+        </table>
+
+        <footer class="footer has-background-success-dark has-text-white">
+          <div class="content has-text-centered">
+            <strong>CS4241 Assignment 3</strong>
+          </div>
+        </footer>
+      </div>
+    </section>
   </body>
 </html>
