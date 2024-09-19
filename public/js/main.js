@@ -90,13 +90,13 @@ const loadTable = async function() {
 
     if (i === 1 || i === 0) {
       for (let key in tabledata) {
-        // add data to the table based on keyArray
+        // add data to the table based on key
         let th = tr.appendChild(document.createElement("th"))
         th.appendChild(document.createTextNode(tabledata[key]))
       }
     } else {
       for (let key in tabledata) {
-        // add data to the table based on keyArray
+        // add data to the table based on key
         let td = tr.appendChild(document.createElement("td"))
         td.appendChild(document.createTextNode(tabledata[key]))
       }

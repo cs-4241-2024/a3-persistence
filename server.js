@@ -34,7 +34,7 @@ const logger = (req,res,next) => {
 }*/
 
 const lvl1 = [
-  { 'level': "Wizard Level:", 'available': 1},
+  { 'level': "Wizard Level:", 'available': 1, 'used': "", 'remaining': ""},
   { 'level': "Level", 'available': "Total", 'used': "Used", 'remaining': "Remaining"},
   { 'level': 1, 'available': 2, 'used': 0, 'remaining': 2},
   { 'level': 2, 'available': 0, 'used': 0, 'remaining': 0},
@@ -48,7 +48,7 @@ const lvl1 = [
 ]
 
 const lvl2 = [
-  { 'level': "Wizard Level:", 'available': 2},
+  { 'level': "Wizard Level:", 'available': 2, 'used': "", 'remaining': ""},
   { 'level': "Level", 'available': "Total", 'used': "Used", 'remaining': "Remaining"},
   { 'level': 1, 'available': 3, 'used': 0, 'remaining': 3},
   { 'level': 2, 'available': 0, 'used': 0, 'remaining': 0},
@@ -62,7 +62,7 @@ const lvl2 = [
 ]
 
 const lvl3 = [
-  { 'level': "Wizard Level:", 'available': 3},
+  { 'level': "Wizard Level:", 'available': 3, 'used': "", 'remaining': ""},
   { 'level': "Level", 'available': "Total", 'used': "Used", 'remaining': "Remaining"},
   { 'level': 1, 'available': 4, 'used': 0, 'remaining': 3},
   { 'level': 2, 'available': 2, 'used': 0, 'remaining': 0},
@@ -76,7 +76,7 @@ const lvl3 = [
 ]
 
 const lvl4 = [
-  { 'level': "Wizard Level:", 'available': 4},
+  { 'level': "Wizard Level:", 'available': 4, 'used': "", 'remaining': ""},
   { 'level': "Level", 'available': "Total", 'used': "Used", 'remaining': "Remaining"},
   { 'level': 1, 'available': 4, 'used': 0, 'remaining': 3},
   { 'level': 2, 'available': 3, 'used': 0, 'remaining': 0},
@@ -90,7 +90,7 @@ const lvl4 = [
 ]
 
 const lvl5 = [
-  { 'level': "Wizard Level:", 'available': 5},
+  { 'level': "Wizard Level:", 'available': 5, 'used': "", 'remaining': ""},
   { 'level': "Level", 'available': "Total", 'used': "Used", 'remaining': "Remaining"},
   { 'level': 1, 'available': 4, 'used': 0, 'remaining': 3},
   { 'level': 2, 'available': 3, 'used': 0, 'remaining': 0},
@@ -104,7 +104,7 @@ const lvl5 = [
 ]
 
 const lvl6 = [
-  { 'level': "Wizard Level:", 'available': 6},
+  { 'level': "Wizard Level:", 'available': 6, 'used': "", 'remaining': ""},
   { 'level': "Level", 'available': "Total", 'used': "Used", 'remaining': "Remaining"},
   { 'level': 1, 'available': 4, 'used': 0, 'remaining': 3},
   { 'level': 2, 'available': 3, 'used': 0, 'remaining': 0},
@@ -118,7 +118,7 @@ const lvl6 = [
 ]
 
 const lvl7 = [
-  { 'level': "Wizard Level:", 'available': 7},
+  { 'level': "Wizard Level:", 'available': 7, 'used': "", 'remaining': ""},
   { 'level': "Level", 'available': "Total", 'used': "Used", 'remaining': "Remaining"},
   { 'level': 1, 'available': 4, 'used': 0, 'remaining': 3},
   { 'level': 2, 'available': 3, 'used': 0, 'remaining': 0},
@@ -132,7 +132,7 @@ const lvl7 = [
 ]
 
 const lvl8 = [
-  { 'level': "Wizard Level:", 'available': 8},
+  { 'level': "Wizard Level:", 'available': 8, 'used': "", 'remaining': ""},
   { 'level': "Level", 'available': "Total", 'used': "Used", 'remaining': "Remaining"},
   { 'level': 1, 'available': 4, 'used': 0, 'remaining': 3},
   { 'level': 2, 'available': 3, 'used': 0, 'remaining': 0},
@@ -146,7 +146,7 @@ const lvl8 = [
 ]
 
 const lvl9 = [
-  { 'level': "Wizard Level:", 'available': 9},
+  { 'level': "Wizard Level:", 'available': 9, 'used': "", 'remaining': ""},
   { 'level': "Level", 'available': "Total", 'used': "Used", 'remaining': "Remaining"},
   { 'level': 1, 'available': 4, 'used': 0, 'remaining': 3},
   { 'level': 2, 'available': 3, 'used': 0, 'remaining': 0},
@@ -160,7 +160,7 @@ const lvl9 = [
 ]
 
 const lvl10 = [
-  { 'level': "Wizard Level:", 'available': 10},
+  { 'level': "Wizard Level:", 'available': 10, 'used': "", 'remaining': ""},
   { 'level': "Level", 'available': "Total", 'used': "Used", 'remaining': "Remaining"},
   { 'level': 1, 'available': 4, 'used': 0, 'remaining': 3},
   { 'level': 2, 'available': 3, 'used': 0, 'remaining': 0},
@@ -174,7 +174,7 @@ const lvl10 = [
 ]
 
 const lvl11 = [
-  { 'level': "Wizard Level:", 'available': 11},
+  { 'level': "Wizard Level:", 'available': 11, 'used': "", 'remaining': ""},
   { 'level': "Level", 'available': "Total", 'used': "Used", 'remaining': "Remaining"},
   { 'level': 1, 'available': 4, 'used': 0, 'remaining': 3},
   { 'level': 2, 'available': 3, 'used': 0, 'remaining': 0},
@@ -188,7 +188,7 @@ const lvl11 = [
 ]
 
 const lvl12 = [
-  { 'level': "Wizard Level:", 'available': 12},
+  { 'level': "Wizard Level:", 'available': 12, 'used': "", 'remaining': ""},
   { 'level': "Level", 'available': "Total", 'used': "Used", 'remaining': "Remaining"},
   { 'level': 1, 'available': 4, 'used': 0, 'remaining': 3},
   { 'level': 2, 'available': 3, 'used': 0, 'remaining': 0},
@@ -202,7 +202,7 @@ const lvl12 = [
 ]
 
 const lvl13 = [
-  { 'level': "Wizard Level:", 'available': 13},
+  { 'level': "Wizard Level:", 'available': 13, 'used': "", 'remaining': ""},
   { 'level': "Level", 'available': "Total", 'used': "Used", 'remaining': "Remaining"},
   { 'level': 1, 'available': 4, 'used': 0, 'remaining': 3},
   { 'level': 2, 'available': 3, 'used': 0, 'remaining': 0},
@@ -216,7 +216,7 @@ const lvl13 = [
 ]
 
 const lvl14 = [
-  { 'level': "Wizard Level:", 'available': 14},
+  { 'level': "Wizard Level:", 'available': 14, 'used': "", 'remaining': ""},
   { 'level': "Level", 'available': "Total", 'used': "Used", 'remaining': "Remaining"},
   { 'level': 1, 'available': 4, 'used': 0, 'remaining': 3},
   { 'level': 2, 'available': 3, 'used': 0, 'remaining': 0},
@@ -230,7 +230,7 @@ const lvl14 = [
 ]
 
 const lvl15 = [
-  { 'level': "Wizard Level:", 'available': 15},
+  { 'level': "Wizard Level:", 'available': 15, 'used': "", 'remaining': ""},
   { 'level': "Level", 'available': "Total", 'used': "Used", 'remaining': "Remaining"},
   { 'level': 1, 'available': 4, 'used': 0, 'remaining': 3},
   { 'level': 2, 'available': 3, 'used': 0, 'remaining': 0},
@@ -244,7 +244,7 @@ const lvl15 = [
 ]
 
 const lvl16 = [
-  { 'level': "Wizard Level:", 'available': 16},
+  { 'level': "Wizard Level:", 'available': 16, 'used': "", 'remaining': ""},
   { 'level': "Level", 'available': "Total", 'used': "Used", 'remaining': "Remaining"},
   { 'level': 1, 'available': 4, 'used': 0, 'remaining': 3},
   { 'level': 2, 'available': 3, 'used': 0, 'remaining': 0},
@@ -258,7 +258,7 @@ const lvl16 = [
 ]
 
 const lvl17 = [
-  { 'level': "Wizard Level:", 'available': 17},
+  { 'level': "Wizard Level:", 'available': 17, 'used': "", 'remaining': ""},
   { 'level': "Level", 'available': "Total", 'used': "Used", 'remaining': "Remaining"},
   { 'level': 1, 'available': 4, 'used': 0, 'remaining': 3},
   { 'level': 2, 'available': 3, 'used': 0, 'remaining': 0},
@@ -272,7 +272,7 @@ const lvl17 = [
 ]
 
 const lvl18 = [
-  { 'level': "Wizard Level:", 'available': 18},
+  { 'level': "Wizard Level:", 'available': 18, 'used': "", 'remaining': ""},
   { 'level': "Level", 'available': "Total", 'used': "Used", 'remaining': "Remaining"},
   { 'level': 1, 'available': 4, 'used': 0, 'remaining': 3},
   { 'level': 2, 'available': 3, 'used': 0, 'remaining': 0},
@@ -286,7 +286,7 @@ const lvl18 = [
 ]
 
 const lvl19 = [
-  { 'level': "Wizard Level:", 'available': 19},
+  { 'level': "Wizard Level:", 'available': 19, 'used': "", 'remaining': ""},
   { 'level': "Level", 'available': "Total", 'used': "Used", 'remaining': "Remaining"},
   { 'level': 1, 'available': 4, 'used': 0, 'remaining': 3},
   { 'level': 2, 'available': 3, 'used': 0, 'remaining': 0},
@@ -300,7 +300,7 @@ const lvl19 = [
 ]
 
 const lvl20 = [
-  { 'level': "Wizard Level:", 'available': 20},
+  { 'level': "Wizard Level:", 'available': 20, 'used': "", 'remaining': ""},
   { 'level': "Level", 'available': "Total", 'used': "Used", 'remaining': "Remaining"},
   { 'level': 1, 'available': 4, 'used': 0, 'remaining': 3},
   { 'level': 2, 'available': 3, 'used': 0, 'remaining': 0},
@@ -383,7 +383,7 @@ const resetfnc = function(level) {
 }
 
 let appdata = [
-  { 'level': "Wizard Level:", 'available': 1},
+  { 'level': "Wizard Level:", 'available': 1, 'used': "", 'remaining': ""},
   { 'level': "Level", 'available': "Total", 'used': "Used", 'remaining': "Remaining"},
   { 'level': 1, 'available': 2, 'used': 0, 'remaining': 2},
   { 'level': 2, 'available': 0, 'used': 0, 'remaining': 0},
@@ -413,12 +413,13 @@ let collection = null
 
 async function run() {
   await client.connect()
-  collection = await client.db("UserData").collection("SpellSlotTracker")
+  userdata = await client.db("SpellSlotTracker").collection("UserData")
+  logins = await client.db("SpellSlotTracker").collection("Logins")
 
   // route to get all docs
   app.get("/docs", async (req, res) => {
-    if (collection !== null) {
-      const docs = await collection.find({}).toArray()
+    if (userdata !== null && logins !== null) {
+      const docs = await userdata.find({}).toArray()
       res.json( docs )
     }
   })
@@ -426,7 +427,7 @@ async function run() {
 
 app.use( (req,res,next) => {
   //checks for connection to database
-  if( collection !== null ) {
+  if( userdata !== null && logins !== null ) {
     next()
   }else{
     res.status( 503 ).send()
@@ -435,12 +436,44 @@ app.use( (req,res,next) => {
 
 run()
 
-app.post( '/login', (req, res ) => {
+app.post( '/login', async (req, res ) => {
   user = req.body.username
   pass = req.body.password
   console.log(req.body)
-  console.log("username is ", user)
-  res.sendFile(path.join(__dirname, 'public', 'wizard.html'))
+
+  const rightuser = await logins.findOne({"username": user})
+  const rightlogin = await logins.findOne({"username": user, "password": pass})
+
+  if (rightuser) {
+    if (rightlogin) {
+      //log in
+      console.log(req.body, " logging in!")
+      res.sendFile(path.join(__dirname, 'public', 'wizard.html'))
+    } else {
+      //tell them they got password wrong
+      console.log(req.body, " wrong password!")
+    }
+  } else {
+    //TODO creates account, need to add notification
+    let newlogin = (req.body)
+    //adds the ids of each data row to the login so they can be found
+    newlogin.zero = (await userdata.insertOne(appdata[0])).insertedId
+    newlogin.one = (await userdata.insertOne(appdata[1])).insertedId
+    newlogin.two = (await userdata.insertOne(appdata[2])).insertedId
+    newlogin.three = (await userdata.insertOne(appdata[3])).insertedId
+    newlogin.four = (await userdata.insertOne(appdata[4])).insertedId
+    newlogin.five = (await userdata.insertOne(appdata[5])).insertedId
+    newlogin.six = (await userdata.insertOne(appdata[6])).insertedId
+    newlogin.seven = (await userdata.insertOne(appdata[7])).insertedId
+    newlogin.eight = (await userdata.insertOne(appdata[8])).insertedId
+    newlogin.nine = (await userdata.insertOne(appdata[9])).insertedId
+    newlogin.ten = (await userdata.insertOne(appdata[10])).insertedId
+    
+    logins.insertOne(newlogin)
+    res.sendFile(path.join(__dirname, 'public', 'wizard.html'))
+  }
+
+  
 })
 
 app.post( '/submit', (req, res ) => {
@@ -457,7 +490,11 @@ app.post( '/loadTable', (req, res ) => {
     datarow.remaining = datarow.available - datarow.used
   }
   res.writeHead( 200, "OK", {'Content-Type': 'text' })
-  res.end(JSON.stringify(appdata[req.body.payload]))
+  let sending = [appdata[req.body.payload].level, 
+                appdata[req.body.payload].available, 
+                appdata[req.body.payload].used, 
+                appdata[req.body.payload].remaining]
+  res.end(JSON.stringify(sending))
 })
 
 app.post( '/longRest', (req, res ) => {
