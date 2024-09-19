@@ -58,7 +58,6 @@ app.use(cookie({
   name: 'session',
   keys: ['key1', 'key2'],
   maxAge: 24 * 60 * 60 * 1000, // Expires after 1 day
-  secure: true,
 }));
 
 // Check login
