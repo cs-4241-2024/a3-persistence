@@ -4,14 +4,15 @@ const express = require('express'),
     port = 3000,
     app = express(),
     path = require('node:path'),
-    mongoose = require('mongoose');
+    mongoose = require('mongoose'),
+    cookie = require('cookie-session');
 
 const uri = `mongodb+srv://${process.env.USER}:${process.env.PASSWORD}@${process.env.HOST}/a3-persistence?retryWrites=true&w=majority&appName=a3-persistence`;
 const clientOptions = {serverApi: {version: '1', strict: true, deprecationErrors: true}};
 
 const userSchema = new mongoose.Schema({
-    username: String,
-    password: String
+    username: {type: String, unique: true, required: true},
+    password: {type: String, required: true}
 }, {versionKey: false});
 const User = mongoose.model("User", userSchema);
 
@@ -50,42 +51,82 @@ async function run() {
     await mongoose.connection.db.admin().command({ping: 1});
     console.log("Pinged your deployment. You successfully connected to MongoDB!");
 
-    app.use(express.static('public'));
+    app.use(cookie({
+        secret: process.env.SESSION_SECRET
+    }));
+
+    app.use(express.static(path.join(__dirname, '/static')));
+
+    app.post('/login', express.json(), async (req, res) => {
+        console.log(req.body);
+        let user = await User.findOne({'username': req.body.username});
+        if(user === null) {
+            user = await new User(req.body).save();
+            req.session.new = true;
+            req.session.user = user._id;
+            console.log("Adding user");
+            res.set('Content-Type', 'text/plain');
+            res.send("new");
+        } else if (user.password === req.body.password) {
+            req.session.user = user._id;
+            res.redirect(303,'/');
+        } else {
+            res.sendStatus(403);
+        }
+    });
+
+    app.post('/logout', (req, res) => {
+        console.log("Logging out")
+        console.log(`Logging out ${req.session.user}`);
+        req.session = null;
+    });
+
+    app.use((req, res, next) => {
+        if (req.session.isPopulated) {
+            console.log('User is logged in.');
+            next();
+        } else {
+            console.log("Sending login page.")
+            res.sendFile('/login.html', {root: path.join(__dirname, 'public')});
+        }
+    });
 
     app.get('/', (req, res) => {
-        res.sendFile("./index.html", {root: path.join(__dirname, 'views')});
+        res.sendFile("/index.html", {root: path.join(__dirname, 'public')});
     });
 
     app.get("/getEvents", express.json(), async (req, res) => {
         console.log("Sending events");
-        const user = await User.find({"username": "bcspe"}, "_id");
-        const events = await Event.find({user: user}).exec();
+        const events = await Event.find({user: req.session.user}).exec();
         console.log(events);
-        res.send(events);
+        res.json(events);
     });
 
     app.post("/addEvent", express.json(), async (req, res) => {
         let event = req.body;
         console.log(`Add event: ${JSON.stringify(event)}`);
         event = calc_depart(event);
+        event.user = req.session.user;
         let new_event = await new Event(event).save();
         console.log(JSON.stringify(new_event));
-        res.send(new_event);
+        res.json(new_event);
     });
 
     app.put("/updateEvent", express.json(), async (req, res) => {
         let event = req.body;
         console.log(`Update event: ${JSON.stringify(event)}`);
         event = calc_depart(event);
+        event.user = req.session.user;
         await Event.replaceOne({_id: event._id}, event).exec();
         console.log(JSON.stringify(event));
-        res.send(event);
+        res.json(event);
     });
 
     app.delete("/deleteEvent", express.json(), async (req, res) => {
         let event = req.body;
         console.log(`Delete event: ${JSON.stringify(event)}`);
         await Event.deleteOne({_id: event._id}).exec();
+        res.end();
     });
 
     app.listen(process.env.PORT || port);

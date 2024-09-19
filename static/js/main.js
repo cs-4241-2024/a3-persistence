@@ -3,14 +3,19 @@
 let form_template;
 
 async function addEvent(evt) {
-    evt.preventDefault()
+    evt.preventDefault();
+
+    const date = document.getElementById('date-new').value;
+    if (date === '') {
+        alert('Please enter valid date');
+        return;
+    }
 
     let event = {
         name: document.getElementById('name-new').value,
-        time: document.getElementById('date-new').value + "T" + document.getElementById(`time-new`).value + ":00.000Z",
+        time: date + "T" + document.getElementById(`time-new`).value + ":00.000Z",
         travel_hrs: document.getElementById('hours-new').value,
-        travel_mins: document.getElementById('minutes-new').value,
-        user: "66e8631aab3beb056305b80e"
+        travel_mins: document.getElementById('minutes-new').value
     }
 
     const response = await fetch('/addEvent', {
@@ -43,8 +48,7 @@ async function updateEvent(evt) {
         name: document.getElementById(`name-${event_id}`).value,
         time: document.getElementById(`date-${event_id}`).value + "T" + document.getElementById(`time-${event_id}`).value + ":00.000Z",
         travel_hrs: document.getElementById(`hours-${event_id}`).value,
-        travel_mins: document.getElementById(`minutes-${event_id}`).value,
-        user: "66e8631aab3beb056305b80e"
+        travel_mins: document.getElementById(`minutes-${event_id}`).value
     }
 
     const response = await fetch('/updateEvent', {
@@ -99,57 +103,33 @@ function editEvent(evt) {
     document.getElementById(`time-${event_id}`).readOnly = false;
     document.getElementById(`hours-${event_id}`).readOnly = false;
     document.getElementById(`minutes-${event_id}`).readOnly = false;
-    document.getElementById(`depart-time-${event_id}`).value = null;
     evt.target.innerText = "Update";
     evt.target.removeEventListener('click', editEvent);
     evt.target.addEventListener('click', updateEvent);
 }
 
-function createField(form, label, id, type, value, opt) {
-    const span = document.createElement('span');
-    const lbl = document.createElement('label');
-    lbl.for = id;
-    lbl.innerText = label;
-    span.appendChild(lbl);
-    const input = document.createElement('input');
-    input.id = id;
-    input.type = type;
-    input.required = true;
+function updateField(form, field, id, value) {
+    const input = form.getElementById(field);
+    const label = form.getElementById(`${field}-label`);
+    label.for += id;
+    label.id += id;
+    input.id += id;
     if (value === undefined) {
         input.readOnly = false;
     } else {
         input.readOnly = true;
         input.value = value;
     }
-    if (opt !== undefined) {
-        if (opt.placeholder !== undefined)
-            input.placeholder = opt.placeholder;
-        if (opt.readOnly !== undefined) {
-            input.readOnly = opt.readOnly;
-        }
-    }
-    span.appendChild(input);
-    form.appendChild(span);
 }
 
-function createDurationField(form, label, id, hrs, mins) {
-    const span = document.createElement('span');
-    const lbl = document.createElement('label');
-    lbl.innerText = label;
-    span.appendChild(lbl);
-    const hours = document.createElement('input');
-    hours.id = `hours-${id}`;
-    hours.type = 'number';
-    hours.step = "1";
-    hours.min = "0";
-    const minutes = document.createElement('input');
-    minutes.id = `minutes-${id}`;
-    minutes.type = 'number';
-    minutes.max = "59";
-    minutes.step = "1";
-    minutes.min = "0";
-    hours.required = true;
-    minutes.required = true;
+function updateDurationField(frag, id, hrs, mins) {
+    const label = frag.getElementById('duration-label');
+    label.for += id;
+    label.id += id;
+    const hours = frag.getElementById('hours');
+    hours.id += id;
+    const minutes = frag.getElementById('minutes');
+    minutes.id += id;
     if (hrs === undefined) {
         hours.readOnly = false;
         minutes.readOnly = false;
@@ -159,23 +139,18 @@ function createDurationField(form, label, id, hrs, mins) {
         hours.value = hrs;
         minutes.value = mins;
     }
-    lbl.appendChild(hours);
-    lbl.insertAdjacentText('beforeend', "hours");
-    lbl.appendChild(minutes);
-    lbl.insertAdjacentText('beforeend', "minutes");
-    span.appendChild(lbl);
-    form.appendChild(span);
 }
 
 function createForm(evt) {
-    // const update = document.createElement("button");
-    // const del = document.createElement("button");
+    let frag = document.getElementById("form-template").content.cloneNode(true);
+    const form = frag.getElementById('form');
+    const update = frag.getElementById("edit");
+    const del = frag.getElementById("del");
     let date;
     let time;
     let id;
     if (evt === undefined) {
-        const form = document.dupdocument.getElementById("form-template");
-        id = 'new'
+        id = '-new'
         evt = {};
         date = undefined;
         time = undefined;
@@ -185,7 +160,7 @@ function createForm(evt) {
         del.addEventListener('click', cancelEvent);
         document.getElementById('add-event').disabled = true;
     } else {
-        id = evt._id;
+        id = "-" + evt._id;
         const parsedTime = evt.time.split("T")
         date = parsedTime[0];
         time = parsedTime[1].slice(0, 5);
@@ -194,25 +169,17 @@ function createForm(evt) {
         update.addEventListener('click', editEvent);
         del.addEventListener('click', deleteEvent);
     }
-    update.id = `edit-${id}`;
-    del.id = `del-${id}`;
+    form.id = `form${id}`;
+    update.id += id;
+    del.id += id;
 
-    const form = document.createElement('form');
-    form.id = `form-${id}`;
+    updateField(frag,'name', id, evt.name);
+    updateField(frag,'date', id, date);
+    updateField(frag,'time', id, time);
+    updateDurationField(frag, id, evt.travel_hrs, evt.travel_mins);
+    updateField(frag, 'depart-time', id, evt.depart_time);
 
-    createField(form, "Name: ", `name-${id}`, 'text', evt.name, {placeholder: "Event Name"});
-    createField(form, "Date: ", `date-${id}`, 'date', date);
-    createField(form, "Time: ", `time-${id}`, 'time', time);
-    createDurationField(form, "Travel Duration:", id, evt.travel_hrs, evt.travel_mins);
-    createField(form, "Departure Time: ", `depart-time-${id}`, 'time', evt.depart_time, {readOnly: true});
-
-    const span = document.createElement('span');
-    span.style.display = "flex";
-    span.style.justifyContent = "space-between";
-    span.appendChild(update);
-    span.appendChild(del);
-    form.appendChild(span);
-    document.getElementById('forms').appendChild(form);
+    document.getElementById('forms').appendChild(frag);
 }
 
 async function fetchEvents() {
@@ -230,9 +197,20 @@ async function fetchEvents() {
     }
 }
 
-window.addEventListener('load', fetchEvents);
-window.addEventListener('load', () => {
-    document.getElementById('add-event').addEventListener('click', () => {
+window.addEventListener('DOMContentLoaded', async () => {
+    await fetchEvents();
+    document.getElementById('add-event').addEventListener('click', (evt) => {
+        evt.preventDefault();
         createForm();
     });
-})
+    document.getElementById('logout').addEventListener('click', async (evt) => {
+        evt.preventDefault();
+        await fetch('/logout', {
+            method: 'POST'
+        });
+        window.location.href = '/';
+    });
+    if (document.cookie.includes('new')) {
+        alert("Account created");
+    }
+});
