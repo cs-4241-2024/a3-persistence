@@ -17,6 +17,7 @@ const sessionCookieName = 'userSession';
 const CONNECT = process.env.DB_URI;
 const KEY = process.env.SECRET;
 const ID = process.env.CLIENT_ID;
+const CALLBACK = process.env.CALLBACK;
 
 // MongoDB connection URI and Database
 const client = new MongoClient(CONNECT);
@@ -52,7 +53,7 @@ client.connect().then(() => {
 passport.use(new GitHubStrategy({
       clientID: ID,
       clientSecret: KEY,
-      callbackURL: 'http://localhost:3000/auth/github/callback'
+      callbackURL: CALLBACK
     },
     async (accessToken, refreshToken, profile, done) => {
       try {
@@ -221,16 +222,6 @@ app.post('/login', async (req, res) => {
     res.status(500).json({ message: 'Error logging in', error });
   }
 });
-
-// Middleware to authenticate user using cookies
-function authenticateUser(req, res, next) {
-  const sessionCookie = req.cookies[sessionCookieName];
-
-  if (!sessionCookie) return res.status(401).json({ message: 'Access denied. Please login.' });
-
-  req.user = sessionCookie; // Add userId to req.user
-  next();
-}
 
 //Updated Middleware to authenticate users via cookies or GitHub
 function passportAuthenticated(req, res, next) {
