@@ -94,18 +94,18 @@ Write a paragraph of at least 125 words *for each of four principles* (four para
 Sample Readme (delete the above when you're ready to submit, and modify the below so with your links and descriptions)
 ---
 
-## Your Web Application Title
+## Score Tracker
 
 your glitch (or alternative server) link e.g. http://a3-charlie-roberts.glitch.me
 
 Include a very brief summary of your project here. Images are encouraged, along with concise, high-level text. Be sure to include:
+My project is a website that allows you to track your scores from playing tetris. 
+I faced a lot of issues with sorting out my model client-side and on the database side.
+I chose to implement my own authentication, which checks if the username exists and compares the password. I figured it would be easier than setting up an existing one. 
+I used tailwindcss, and loaded my custom fonts on it. I then added tailwind styling into my html file.
 
-- the goal of the application
-- challenges you faced in realizing the application
-- what authentication strategy you chose to use and why (choosing one because it seemed the easiest to implement is perfectly acceptable)
-- what CSS framework you used and why
-  - include any modifications to the CSS framework you made via custom CSS you authored
-
+Note: My Lighthouse was a bit off at times, but there were instances of it reaching 100. My performance is AROUND 90, but I think it might be a bit slow at times due to the use of two different fonts.
+![img.png](img.png)
 ## Technical Achievements
 - **Tech Achievement 1**: I used OAuth authentication via the GitHub strategy
 
