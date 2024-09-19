@@ -1,6 +1,6 @@
 ## Book Manager
 Eleanor Foley
-glitch link e.g. https://glitch.com/edit/#!/a3-rosy122333?path=README.md%3A1%3A0
+glitch link e.g. https://glitch.com/edit/#!/a3-eleanorfoley
 ===
 
 Description
