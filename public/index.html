@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>A2 rcwright03</title>
+    <meta charset="utf-8">
+    <script src="js/main.js"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    
+    <!-- get rid of favicon error -->
+    <link rel="icon" href="data:;base64,iVBORw0KGgo=">
+  </head>
+  <body>
+    <div class="Headers">
+      <h1>
+        Inflation* Over Time
+      </h1>
+      <header>
+        Enter the name of a product, its year of release, and how much it cost when it was released,
+        and the program will tell you approximately how much it should cost today after inflation.
+      </header>
+    </div>
+    <div class="row">
+      <div class="col">
+        <div class="form-group">
+          <form class="Form" method="post">
+            <ul>
+              <label for="product">Product:</label>
+              <input type="text" id="product">
+            </ul>
+            <ul>
+              <label for="releaseYear">Year of release:</label>
+              <input type="number" id="releaseYear">
+            </ul>
+            <ul>
+              <label for="releaseCost">Cost at release:</label>
+              <input type="number" id="releaseCost">
+            </ul>
+            <ul>
+              <button id="submitButton">Submit</button>
+            </ul>
+          </form>
+        </div>
+      </div>
+      <div class="col">
+        <table id="productsTable" class="Table">
+          <thead>
+            <tr>
+              <th>Product</th>
+              <th>Year of Release</th>
+              <th>Price at Release</th>
+              <th>Projected Price Today</th>
+            </tr>
+          </thead>
+        <tbody>
+          <!-- Products will be entered here -->
+        </tbody>
+      </table>
+      </div>
+    </div>
+    <div class="form-group">
+      <form id="editProductForm" class="Form" method="post">
+        <ul>
+          <label for="productForEditing">Product:</label>
+          <input type="text" id="productForEditing">
+        </ul>
+        <ul>
+          <label for="releaseYearForEditing">Year of release:</label>
+          <input type="number" id="releaseYearForEditing">
+        </ul>
+        <ul>
+          <label for="releaseCostForEditing">Cost at release:</label>
+          <input type="number" id="releaseCostForEditing">
+        </ul>
+        <ul>
+          <button id="editButton">Edit Product</button>
+        </ul>
+      </form>
+    </div>
+    <div class="form-group">
+      <form id="deleteForm" class="Form" method="post">
+        <ul>
+          <label for="product">Product:</label>
+          <input type="text" id="productName">
+        </ul>
+        <ul>
+          <button id="deleteButton">Remove Product</button>
+        </ul>
+      </form>
+    </div>
+    <div class="Footer">
+      <footer>
+        *I don't actually know how to calculate inflation so I'm just using 3.28% as the
+        inflation rate, which is the long term average inflation rate in the US
+      </footer>
+    </div>
+  </body>
+</html>
