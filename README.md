@@ -1,6 +1,7 @@
 # Liam's Epic Lift Logger (LELL)
 
-[Hosted Link](https://)
+[Hosted Link](https://cs.tempel-alpha.ts.net)
+ - User: `test`, Pass: `test`
 
 After tracking over 300 workouts on the app Strong, I have found myself
 a little dissatisfied. Its quite a hassle to setup all my different
@@ -29,6 +30,7 @@ around what weight to use.
  1. Run Tailwind and Go serve processes (simultaneously):
 ```bash
 npx tailwindcss -i ./assets/input.css -o ./assets/output.css --watch
-cd src && go run .
+cd src
+templ generate && go run .
 ```
  2. Navigate to [http://localhost:8080](http://localhost:8080)
