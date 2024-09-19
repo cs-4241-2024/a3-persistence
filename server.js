@@ -1,92 +1,81 @@
-const http = require( 'http' ),
-      fs   = require( 'fs' ),
-      // IMPORTANT: you must run `npm install` in the directory for this assignment
-      // to install the mime library if you're testing this on your local machine.
-      // However, Glitch will install it automatically by looking in your package.json
-      // file.
-      mime = require( 'mime' ),
-      dir  = 'public/',
-      port = 3000
+const express = require("express");
+const { MongoClient, ServerApiVersion, ObjectId } = require("mongodb");
 
-const taskList = []
+const app = express();
+const uri = `mongodb+srv://${process.env.secret_name}:${process.env.secret_pass}@cluster0.bbhpq.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0`;
 
-const server = http.createServer( function( request,response ) {
-  if( request.method === 'GET' ) {
-    handleGet( request, response )    
-  }else if( request.method === 'POST' ){
-    handlePost( request, response ) 
-  }
-  else if(request.method === 'DELETE'){
-    handleDelete(request, response)
-  }
-})
-const handleDelete = function(request, response){
-  const index = parseInt(request.url.split("/")[2]);
-  console.log(taskList)
-  taskList.splice(index,1);
-  console.log(taskList)
-  response.writeHead(200, { "Content-Type": "application/json" });
+const session = require("express-session");
+
+
+
+
+const client = new MongoClient(uri, {
+  serverApi: {
+    version: ServerApiVersion.v1,
+    strict: true,
+    deprecationErrors: true,
+  },
+});
+
+
+app.use(session({
+  secret:'abcdefghijklmnopqrstuvwxyz',
+  saveUninitialized: false,
+  resave: false
+}));
+
+
+app.use(express.static("public"));
+app.use(express.json());
+
+
+let collection;
+
+
+async function run() {
+  await client.connect();
+  collection = await client.db("a3_data").collection("task");
 }
 
-const handleGet = function( request, response ) {
-  const filename = dir + request.url.slice( 1 ) 
-  if( request.url === '/' ) {
-    sendFile( response, 'public/index.html' )
+run();
+
+
+app.get("/getTask", async (req, res) => {
+  try {
+    const tasks = await collection.find().toArray();
+    res.status(200).json(tasks);
+  } catch (error) {
+    res.status(500).json("Failed");
   }
-  else if (request.url === '/getTask'){
-    response.writeHead(200, "OK", {'Content-Type': 'application/json'})
-    response.end(JSON.stringify(taskList))
+});
+
+app.post("/submit", (req, res) => {
+  console.log("Submit")
+  const { name, task, priority } = req.body;
+  const date = new Date().toLocaleDateString();
+
+  const newTask = { name, task, priority, date };
+
+  try {
+    const push = collection.insertOne(newTask);
+    res
+      .status(201)
+      .json({ message: "Task added successfully", taskId: push.insertedId });
+  } catch (error) {
+    res.status(500).json("Failed");
   }
-  else{
-    sendFile( response, filename )
+});
+
+app.delete("/deleteTask/:id", async (req, res) => {
+  const taskId = req.params.id;
+  console.log(taskId);
+  const del = await collection.deleteOne({ _id: new ObjectId(taskId) });
+
+  if (del.deletedCount === 1) {
+    const update = collection.find().toArray();
   }
-}
+});
 
-const handlePost = function( request, response ) {
-  let dataString = ''
 
-  request.on( 'data', function( data ) {
-      dataString += data 
-  })
 
-  request.on( 'end', function() {
-    const data = JSON.parse(dataString);
-    
-    const newTask={
-      name: data.name,
-      task: data.task,
-      priority: data.priority,
-      date: data.date,
-    };
-    
-    taskList.push(newTask)
-    
-    response.writeHead( 200, "OK", {'Content-Type': 'text/plain' })
-    response.end('test')
-  })
-}
- 
-
-const sendFile = function( response, filename ) {
-   const type = mime.getType( filename ) 
-
-   fs.readFile( filename, function( err, content ) {
-
-     // if the error = null, then we've loaded the file successfully
-     if( err === null ) {
-
-       // status code: https://httpstatuses.com
-       response.writeHeader( 200, { 'Content-Type': type })
-       response.end( content )
-
-     }else{
-
-       // file not found, error code 404
-       response.writeHeader( 404 )
-       response.end( '404 Error: File Not Found' )
-
-     }
-   })
-}
-
-server.listen( process.env.PORT || port )
+app.listen(3000);
