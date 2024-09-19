@@ -1,61 +1,65 @@
-* {
-  font-size: 100%;
-  font-family: "Courier New", sans-serif;
-  justify-content: center;
+.error {
+  color: red;
 }
 
-body {
-  display: flex;
-  background: grey;
-  color: white;
-  flex-direction: column;
-  flex-wrap: wrap;
+.login {
+  border-color: #0E4D00;
+  background: #0E4D00;
+  color: var(--text);
+  margin: 5px;
+  margin-left: 0px;
 }
 
-p {
-  margin: 4px;
+.make-new {
+  border-color: #6B3200;
+  background: #6B3200;
+  color: var(--text);
+  margin: 5px;
+  margin-right: 0px;
 }
 
-div {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding-left: 5px;
-  padding-right: 5px;
+.submit {
+  border-color: #0E4D00;
+  background: #0E4D00;
+  color: var(--text);
+  margin-top: -50px;
+  grid-column: span 2;
 }
 
-button {
-  border-color: red;
-  background: red;
-  margin: 5px; 
-  color: black;
+.button-holder {
+  background: var(--bg);
 }
 
-#submit {
-  border-color: green;
-  background: green;
-  margin: 0px;
+.remove {
+  border-color: #850F15;
+  background: #850F15;
+  color: var(--text);
+  margin: 5px;
 }
 
 .content-holder {
-  border: 1px solid black;
   padding: 5px;
-  margin-bottom: 64px;
+  grid-template-columns: 1fr;
+  align-items: center;
+  justify-content: center;
 }
 
-th, td {
-  border: 1px solid black;
-  background: white;
-  color: black;
-  padding: 2px 4px;
-}
-
-form {
+.label {
   display: flex;
-  align-items: flex-end;
-  flex-wrap: wrap;  
+  align-items: center;
+  justify-content: center;
+}
+
+.login-option-holder {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+
+.input-holder {
+  display: grid;
+  grid-template-columns: 1fr;
 }
 
 table {
-  border-collapse: collapse;
+  width: 100%
 }

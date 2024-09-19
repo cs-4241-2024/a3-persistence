@@ -9,6 +9,10 @@
   "dependencies": {
     "express": "^4.21.0",
     "mime": "^2.4.4",
-    "mongodb": "^6.9.0"
+    "mongodb": "^6.9.0",
+    "simpledotcss": "^2.3.2"
+  },
+  "engines": {
+    "node": "16.x"
   }
 }
