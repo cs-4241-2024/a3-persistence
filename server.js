@@ -122,6 +122,36 @@ app.get('/getActivities', ensureAuthenticated, async (req, res) => {
     }
 });
 
+// Route to update an activity (User-specific)
+app.post('/updateActivity', ensureAuthenticated, async (req, res) => {
+    const { activityId, activityType, details } = req.body;
+    const username = req.session.username;  // Get the logged-in user's username
+
+    try {
+        const updatedActivity = await Activity.findOneAndUpdate(
+            { _id: activityId, username },
+            { activityType, details },
+            { new: true }  // Return the updated document
+        );
+        res.json({ message: 'Activity updated successfully!', activity: updatedActivity });
+    } catch (error) {
+        res.status(500).json({ message: 'Error updating activity', error });
+    }
+});
+
+// Route to delete an activity (User-specific)
+app.post('/deleteActivity', ensureAuthenticated, async (req, res) => {
+    const { activityId } = req.body;
+    const username = req.session.username;  // Get the logged-in user's username
+
+    try {
+        await Activity.findOneAndDelete({ _id: activityId, username });
+        res.json({ message: 'Activity deleted successfully!' });
+    } catch (error) {
+        res.status(500).json({ message: 'Error deleting activity', error });
+    }
+});
+
 
 // Start the server
 app.listen(PORT, () => {
