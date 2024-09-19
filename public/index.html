@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>CS4241 Assignment 3</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="This website allows the user to create a wishlist of games.">
+    <script src="js/main.js"></script>
+    <link rel="stylesheet" href="https://cdn.simplecss.org/simple.min.css">
+    <link rel="icon" href="data:;base64,iVBORw0KGgo=" />
+  </head>
+  <body>
+    <h1>Game Wishlist</h1>
+    <form>
+      <label>Username:<input type='text' name='username' id="username"></label>
+      <label>Password:<input type='password' name='password' id="password"></label>
+      <button class="button" id="login">Login</button>
+      <button class="button" id="logout" onclick="location.href='index.html'">Logout</button>
+    </form>
+    <p>
+      Ever needed to keep track of games you've been meaning to play? Just enter
+      the title of a game, the genre, its cost (no $), and any discount it has
+      (no %, 0-100).
+    </p>
+    <form>
+      <input type="text" id="game" placeholder="Enter game title" required />
+      <input type="text" id="genre" placeholder="Enter genre" required />
+      <input type="text" id="cost" placeholder="Enter cost" required />
+      <input type="text" id="discount" placeholder="Enter discount" required />
+      <button class="button" id="submit">Submit</button>
+    </form>
+    <table id="data">
+      <thead>
+        <tr>
+          <th>Game Title</th>
+          <th>Genre</th>
+          <th>Cost</th>
+          <th>Discount</th>
+          <th>Discounted Cost</th>
+        </tr>
+      </thead>
+      <tbody id="bodyData"></tbody>
+    </table>
+  </body>
+</html>
