@@ -1,61 +1,222 @@
-// FRONT-END (CLIENT) JAVASCRIPT HERE
 let clicks = 0;
 let gameStarted = false;
+window.onload = function () {
+ showLogin();
+ document.getElementById('register-form').onsubmit = async function (event) {
+   event.preventDefault();
+   const username = document.getElementById('username').value.trim();
+      const password = document.getElementById('password').value.trim();
+   if (!username || !password) {
+       alert('Please enter username and password.');
+     return;
+   }
+   try {
+     const response = await fetch('/register', {
+       method: 'POST',
+         headers: { 'Content-Type': 'application/json' },
+       body: JSON.stringify({ username, password }),
+       credentials: 'include',
+     });
+     const result = await response.json();
+     if (response.ok) {
+       alert(result.message);
+       showLogin();
+     } else {
+       alert(result.error);
+     }
+   } catch (error) {
+     console.error('Error during registration:', error);
+     alert('An error occurred during registration.');
+   }
+ };
 
-const submit = async function (event) {
-  // stop form submission from trying to load
-  // a new .html page for displaying results...
-  // this was the original browser behavior and still
-  // remains to this day
-  event.preventDefault();
-  if (clicks > 0) {
-    const input =document.querySelector('#yourname');
-    const json = { yourname: input.value, clicks: clicks };
-    const body=JSON.stringify(json);
-    const response = await fetch('/submit', {
-      method: 'POST', body, headers: { 'Content-Type': 'application/json' },
-    });
-    const text = await response.json();
-    console.log('text:', text);
-    fetchHighScores();
-  } else {
-    alert('Click the button!!!');
-  }
+
+ document.getElementById('login-form').onsubmit = async function (event) {
+   event.preventDefault();
+   const username = document.getElementById('login-username').value.trim();
+   const password = document.getElementById('login-password').value.trim();
+   if (!username || !password) {
+     alert('Please enter both username and password.');
+     return;
+   }
+   try {
+     const response = await fetch('/login', {
+       method: 'POST',
+       headers: { 'Content-Type': 'application/json' },
+       body: JSON.stringify({ username, password }),
+       credentials: 'include',
+     });
+     const result = await response.json();
+     if (response.ok) {
+       showDashboard(result.username);
+     } else {
+       console.error('Login failed:', result.error);
+       alert(result.error);
+     }
+   } catch (error) {
+     console.error('Error during login:', error);
+     alert('An error occurred during login.');
+   }
+ };
+
+
+   document.getElementById('logout-button').onclick = async function () {
+   try {
+       const response = await fetch('/logout', {
+          method: 'POST',
+       credentials: 'include',
+     });
+     const result = await response.json();
+     if (response.ok) {
+       alert(result.message);
+       showLogin();
+     } else {
+       alert('Logout failed');
+     }
+   } catch (error) {
+     console.error('Error during logout:', error);
+     alert('An error occurred during logout.');
+   }
+ };
+
+
+ document.getElementById('start-game').onclick = function () {
+   clicks = 0;
+   gameStarted = true;
+   document.getElementById('click-button').disabled = false;
+   document.getElementById('click-count').textContent = clicks;
+   setTimeout(function () {
+     gameStarted = false;
+     document.getElementById('click-button').disabled = true;
+     alert('Game is Over!');
+     submitScore();
+   }, 5000);
+ };
+ document.getElementById('click-button').onclick = function () {
+   if (gameStarted) {
+     clicks++;
+     document.getElementById('click-count').textContent = clicks;
+   }
+ };
 };
-const fetchHighScores = async function () {
-  const response = await fetch('/highscores');
-  const highScores = await response.json();
-  console.log('High scores:',highScores);  
-  const highScoresList =document.querySelector('#high-scores-list');
-  highScoresList.innerHTML= ''; 
-  highScores.forEach((score) => {
-    const li=document.createElement('li');
-    li.textContent = `Player: ${score.player}, Clicks: ${score.clicks}, Date: ${score.date}`;
-    highScoresList.appendChild(li);
-  });
-};
-window.onload =function () {
-  fetchHighScores(); 
-  const form =document.querySelector('#name-form');
-  form.onsubmit= submit;
-  const clickButton =document.querySelector('#click-button');
-  clickButton.onclick =function () {
-    if (gameStarted) {
-      clicks++;
-      document.querySelector('#click-count').textContent =clicks;
-    }
-  };
-  const startGameButton = document.querySelector('#start-game');
-  startGameButton.onclick= function () {
-    clicks =0;
-    gameStarted =true;
-    document.querySelector('#click-count').textContent= clicks;
-    document.querySelector('#click-button').disabled =false;
-    setTimeout(function () {
-      gameStarted=false;
-      document.querySelector('#click-button').disabled = true;
-      alert('Game is Over!');
-      submit(new Event('submit'));  
-    }, 5000); 
-  };
-};
+
+async function submitScore() {
+ try {
+   const response = await fetch('/submit', {
+     method: 'POST',
+     headers: { 'Content-Type': 'application/json' },
+     body: JSON.stringify({ clicks }),
+     credentials: 'include',
+   });
+   const result = await response.json();
+   if (response.ok) {
+     fetchHighScores();
+   } else {
+     alert(result.error);
+   }
+ } catch (error) {
+   console.error('Error submitting score:', error);
+   alert('An error occurred while submitting your score.');
+ }
+}
+async function fetchHighScores() {
+ try {
+   const response = await fetch('/highscores', {
+     credentials: 'include',
+   });
+   const scores = await response.json();
+   if (response.ok) {
+     const list = document.getElementById('high-scores-list');
+     list.innerHTML = '';
+     scores.forEach((score) => {
+       const item = document.createElement('li');
+       item.className = 'list-group-item d-flex justify-content-between align-items-center';
+       item.innerHTML = `
+         Clicks: ${score.clicks}, Date: ${score.date}
+         <span>
+           <button class="btn btn-sm btn-primary edit-button">Edit</button>
+           <button class="btn btn-sm btn-danger delete-button">Delete</button>
+         </span>
+       `;
+       item.querySelector('.edit-button').onclick = () => editScore(score);
+       item.querySelector('.delete-button').onclick = () => deleteScore(score._id);
+       list.appendChild(item);
+     });
+   } else {
+     alert(scores.error);
+   }
+ } catch (error) {
+   console.error('Error fetching high scores:', error);
+   alert('An error occurred while fetching high scores.');
+ }
+}
+function editScore(score) {
+ const newClicks = prompt('Enter new clicks value:', score.clicks);
+ if (newClicks !== null) {
+   updateScore(score._id, parseInt(newClicks, 10));
+ }
+}
+async function updateScore(id, clicks) {
+ if (isNaN(clicks) || clicks < 0) {
+      alert('Please enter a valid number of clicks.');
+   return;
+ }
+ try {
+   const response = await fetch(`/scores/${id}`, {
+     method: 'PUT',
+     headers: { 'Content-Type': 'application/json' },
+     body: JSON.stringify({ clicks }),
+     credentials: 'include',
+   });
+   const result = await response.json();
+      if (response.ok) {
+     fetchHighScores();
+   } else {
+     alert(result.error);
+   }
+ } catch (error) {
+   console.error('Error updating score:', error);
+      alert('An error occurred while updating the score.');
+ }
+}
+async function deleteScore(id) {
+ if (!confirm('Are you sure you want to delete this score?')) {
+   return;
+ }
+ try {
+   const response = await fetch(`/scores/${id}`, {
+        method: 'DELETE',
+     credentials: 'include',
+   });
+   const result = await response.json();
+   if (response.ok) {
+     fetchHighScores();
+   } else {
+     alert(result.error);
+   }
+ } catch (error) {
+   console.error('Error deleting score:', error);
+      alert('An error occurred while deleting the score.');
+ }
+}
+function showLogin() {
+ document.getElementById('register-section').style.display= 'none';
+ document.getElementById('login-section').style.display ='block';
+ document.getElementById('dashboard-section').style.display = 'none';
+ document.getElementById('login-form').reset();
+}
+function showRegister() {
+  document.getElementById('register-section').style.display= 'block';
+ document.getElementById('login-section').style.display = 'none';
+  document.getElementById('dashboard-section').style.display ='none';
+ document.getElementById('register-form').reset();
+}
+function showDashboard(username) {
+ document.getElementById('register-section').style.display = 'none';
+ document.getElementById('login-section').style.display = 'none';
+ document.getElementById('dashboard-section').style.display = 'block';
+   document.getElementById('user-name').textContent = username;
+ document.getElementById('click-count').textContent = '0';
+ document.getElementById('click-button').disabled = true;
+ fetchHighScores();
+}
