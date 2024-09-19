@@ -3,7 +3,7 @@ const express = require("express"),
   { MongoClient, ObjectId } = require("mongodb");
 const path = require('path');
 const session = require('express-session');
-const MemoryStore = require('memorystore')(session);
+const MongoDBStore = require('connect-mongodb-session')(session);
 const { auth } = require('express-openid-connect');
 const config = {
   authRequired: false,
@@ -18,17 +18,23 @@ app = express()
 const dir = 'public/';
 const port = 3000;
 app.use(express.json());
+const store = new MongoDBStore({
+  uri: `mongodb+srv://${process.env.USERNAME}:${process.env.PASS}@${process.env.HOST}`, // Replace with your MongoDB URI from the environment variables
+  collection: 'sessions'
+});
+
+store.on('error', function (error) {
+  console.log('Session store error:', error);
+});
 app.use(
   session({
-    store: new MemoryStore({
-      checkPeriod: 86400000 // Prune expired entries every 24h
-    }),
-    secret: process.env.SECRET,
+    secret: process.env.SECRET, // Ensure this is a strong secret from the environment variables
     resave: false,
-    saveUninitialized: true,
+    saveUninitialized: false,
+    store: store, // Use MongoDB for session storage
     cookie: {
-      secure: process.env.NODE_ENV === 'production', // Set secure cookies in production
-      maxAge: 86400000 // 1 day
+      secure: process.env.NODE_ENV === 'production', // Secure cookie only in production (HTTPS)
+      maxAge: 24 * 60 * 60 * 1000 // 1 day expiration
     }
   })
 );
