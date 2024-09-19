@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple Todo App</title>
+     <!-- Bootstrap CSS -->
+     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h1>Simple Todo App</h1>
+
+    <form id="todo-form">
+        <input type="text" id="task" placeholder="Enter a task" required>
+        <input type="number" id="priority" min="1" max="5" placeholder="Priority (1-5)" required>
+        <label for="deadline">Deadline:</label>
+        <input type="date" id="deadline" required>
+        <button type="submit">Add Task</button>
+    </form>
+
+    <h2>Todo List</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Task</th>
+                <th>Priority</th>
+                <th>Deadline</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody id="todo-table-body">
+            <!-- Tasks will be dynamically inserted here -->
+        </tbody>
+    </table>
+
+    <script src="script.js"></script>
+</body>
+</html>
