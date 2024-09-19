@@ -3,6 +3,7 @@ const express = require("express"),
   { MongoClient, ObjectId } = require("mongodb");
 const path = require('path');
 const session = require('express-session');
+const MemoryStore = require('memorystore')(session);
 const { auth } = require('express-openid-connect');
 const config = {
   authRequired: false,
@@ -17,15 +18,20 @@ app = express()
 const dir = 'public/';
 const port = 3000;
 app.use(express.json());
-app.use(session({
-  secret: process.env.SECRET,  // The Auth0 secret or another secret string
-  resave: false,
-  saveUninitialized: true,
-  cookie: {
-    secure: process.env.NODE_ENV === 'production',  // Set secure cookie only in production
-    maxAge: 24 * 60 * 60 * 1000  // 1 day
-  }
-}));
+app.use(
+  session({
+    store: new MemoryStore({
+      checkPeriod: 86400000 // Prune expired entries every 24h
+    }),
+    secret: process.env.SECRET,
+    resave: false,
+    saveUninitialized: true,
+    cookie: {
+      secure: process.env.NODE_ENV === 'production', // Set secure cookies in production
+      maxAge: 86400000 // 1 day
+    }
+  })
+);
 app.use(express.static(path.join(__dirname, '../public')));
 app.use(auth(config));
 
