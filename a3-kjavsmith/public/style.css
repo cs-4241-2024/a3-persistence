@@ -1,0 +1,102 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 20px;
+    background-color: black; /* Set background color to black */
+   /* color: orange; /* Default text color for the entire page */
+}
+
+h1, h2 {
+    color: orange; /* Keep headings orange */
+}
+
+form {
+    margin-bottom: 20px;
+}
+
+input[type="text"], input[type="number"], input[type="date"] {
+    padding: 10px;
+    margin-right: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: black; /* Set input background to black */
+    color: orange; /* Set input text color to orange */
+}
+
+button {
+    padding: 10px 20px;
+    background-color: #28a745;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #218838;
+}
+
+/* Task Table Styles */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+th{
+    padding: 10px;
+    text-align: left;
+    border: 1px solid #ccc;
+    background-color: black; /* Keep table background black */
+    color: orange; /* Default text color for non-task elements */
+}
+
+td {
+    padding: 10px;
+    text-align: left;
+    border: 1px solid #ccc;
+   /* background-color: black; /* Keep table background black */
+    /*    color: orange; /* Default text color for non-task elements */
+}
+
+/* Fade-in effect */
+.fade-in {
+    opacity: 0;
+    transition: opacity 1s ease-in-out;
+}
+
+.fade-in.show {
+    opacity: 1;
+}
+
+/* Priority-based colors for rows */
+/* These will override the default orange text color */
+.priority-1 {
+    background-color: white; /* White background */
+    color: black; /* Black text */
+}
+
+.priority-2 {
+    background-color: purple; /* Purple background */
+    color: white; /* White text */
+}
+
+.priority-3 {
+    background-color: pink; /* Pink background */
+    color: black; /* Black text */
+}
+
+.priority-4 {
+    background-color: blue; /* Blue background */
+    color: white; /* White text */
+}
+
+.priority-5 {
+    background-color: red; /* Red background */
+    color: white; /* White text */
+}
+
+/* Bold text for tasks due in a week or less */
+.deadline-soon {
+    font-weight: bold;
+}
