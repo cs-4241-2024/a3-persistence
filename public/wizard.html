@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>D&D 5e Wizard Spell Slot Tracker</title>
+    <meta charset="utf-8">
+    <script src="js/main.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=.5">
+    <meta name="color-scheme" content="light dark">
+    <link rel="stylesheet" href="css/pico.min.css" />
+    <!-- get rid of favicon error -->
+    <link rel="icon" href="data:;base64,iVBORw0KGgo=">
+    
+  </head>
+  <body class="container">
+    <header>
+      <h1>
+        D&D 5e Wizard Spell Slot Usage
+      </h1>
+      <p>
+        Hi there! Enter your Wizard's level (1-20) to generate the amount of spell slots you have and what levels they are. 
+        Then, use the buttons below to keep track of how many you've used. A long rest will restore all used spell slots.
+      </p>
+    </header>
+    <main>
+      <form>
+        <h2>Wizard Level:</h2>
+        <input type="number" min="1" max="20" id="wizlvl" value=1 aria-label="Wizard Level">
+        <button id="lvlb">Submit</button>
+      </form>
+      <h2>
+        Spell Slots:
+      </h2>
+      <table id="table">
+        <tr onload="loadTable()">
+          <th>Level</th>
+          <th>Total</th>
+          <th>Used</th>
+          <th>Remaining</th>
+          <th>Unlocked?</th>
+        </tr>
+      </table>
+      <form>
+        <button class="primary" id="lrest" onclick="lrest(event)">Long Rest</button>
+      </form>
+    </main>
+  </body>
+</html>
