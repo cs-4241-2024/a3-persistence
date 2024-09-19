@@ -1,0 +1,61 @@
+body {
+  background: rgb(35, 5, 59);
+  color: white;
+  font-family: 'Roboto', sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh; 
+}
+
+.pure-form fieldset {
+  border: none;
+  padding: 0;
+}
+
+.pure-form label {
+  display: block; 
+  margin-bottom: 0.5em; 
+}
+
+.pure-form input, 
+.pure-form select {
+  display: block; 
+  margin-bottom: 1em; 
+  width: auto; 
+}
+
+#loginSection a, #loginSection button {
+  margin: 0.8em 0;
+}
+
+table {
+  width: 100%; 
+  border-collapse: collapse;
+  margin-top: 0; 
+}
+
+th, td {
+  padding: 10px;
+  border: 1px solid white;
+}
+
+input, select {
+  margin-bottom: 10px;
+  padding: 5px;
+  font-size: 14px;
+}
+
+button, .pure-button {
+  background-color: #1f8dd6;
+  color: white;
+  border: none;
+  padding: 0.5em 2em;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 13px;
+}
+
+button:hover, .pure-button:hover {
+  background-color: grey;
+}
