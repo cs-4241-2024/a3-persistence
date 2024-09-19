@@ -3,9 +3,30 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="A simple and user-friendly to-do list application to manage your tasks efficiently. Register, log in, and start organizing your tasks today!">
   <title>To-Do List Application</title>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css">
   <script src="js/main.js" defer></script>
+  <style>
+    button:focus,
+    input:focus,
+    select:focus {
+      outline: 2px solid #4A90E2;
+      outline-offset: 2px;
+    }
+    input.editing {
+      opacity: 0.7;
+    }
+
+    a {
+      text-decoration: underline;
+    }
+    a:hover,
+    a:focus {
+      text-decoration: underline;
+      color: #1DA1F2;
+    }
+  </style>
 </head>
 <body class="bg-indigo-600 text-white font-sans flex items-center justify-center min-h-screen">
 <div class="text-center">
@@ -32,9 +53,8 @@
       <p class="mt-4">Already have an account? <a href="#" class="text-blue-300 hover:underline" onclick="toggleForms()">Login here</a></p>
     </div>
   </div>
+
   <div id="todoContainer" class="hidden flex flex-col items-center">
-
-
     <div class="form-container bg-gray-800 rounded-lg p-8 mb-6 w-full max-w-2xl shadow-lg">
       <h2 class="text-2xl font-semibold mb-4 text-center">Create a Task</h2>
       <form id="dataForm" class="flex flex-col gap-4" aria-label="Create Task">
@@ -49,6 +69,7 @@
         <button type="submit" class="p-2 bg-blue-600 hover:bg-blue-500 rounded shadow">Add Task</button>
       </form>
     </div>
+
     <h2 class="text-3xl font-semibold my-6 text-center">Task List</h2>
     <table id="resultsTable" class="w-full border-collapse mx-auto mb-8 max-w-2xl">
       <thead>
@@ -62,6 +83,7 @@
       </tr>
       </thead>
       <tbody>
+
       </tbody>
     </table>
 
