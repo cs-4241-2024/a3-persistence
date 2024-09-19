@@ -13,7 +13,12 @@ https://a3-jeffcli-fcc7491c5e77.herokuapp.com/#
 add a little more detail about what it does.
 
 ## Technical Achievements
-- **Tech Achievement 1**: I used OAuth authentication via the GitHub strategy
+- **100% on Lighthouse**: <img width="1509" alt="Screenshot 2024-09-19 at 4 05 14 AM" src="https://github.com/user-attachments/assets/edeb0dca-f364-4fa6-98aa-307cf241a5ea">
+
+<img width="1512" alt="Screenshot 2024-09-19 at 4 05 47 AM" src="https://github.com/user-attachments/assets/bcb5d3b8-4591-400c-89a0-f5e5401a1dc6">
+
+
+- **Deployed on Heroku**: 
 
 ### Design/Evaluation Achievements
 - **Description of CRAP principles**: 
