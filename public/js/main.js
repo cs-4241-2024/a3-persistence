@@ -225,9 +225,12 @@ const setupTable = async () => {
     buttonCell.appendChild(deleteButton);
 
     const shuffleButton = document.createElement("button");
-    shuffleButton.innerHTML = "Shuffle";
+    shuffleButton.innerHTML = "Edit";
     shuffleButton.onclick = async () => {
-      await fetch("/shuffle", {
+      // Create popup with close and update buttons
+      // Update table if update
+
+      await fetch("/update", {
         method: "POST",
         body: i,
       });

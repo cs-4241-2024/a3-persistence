@@ -38,10 +38,43 @@ button {
   margin: 0px 10px;
 }
 
+.popup {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  align-content: center;
+  justify-content: center;
+  text-align: center;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+form {
+  background-color: #eaeaea;
+  border-radius: 0.5rem;
+  padding: 1rem 2rem;
+  width: fit-content;
+  margin: auto;
+}
+
+li {
+  list-style: none;
+}
+
+ol {
+  padding: 0;
+  justify-content: center;
+}
+
+label {
+  padding-right: 10px;
+}
+
 p,
 button,
 h1,
 th,
-td {
+td,
+label,
+input {
   font-family: "Roboto";
 }
