@@ -221,7 +221,6 @@
         console.log('Success:', data);
         const scores = data.scores;
 
-
         scores.forEach((entry, index) => {
           $(".List").append(`
             <li class="flex justify-between items-center px-0 py-2.5 border-b-[#ccc] border-[none] border-b border-solid">
@@ -229,8 +228,8 @@
                 [Game ${index}] : ${entry.name} - ${entry.score} points in ${entry.time} seconds
               </div>
               <div class="flex gap-2.5 border-[none]">
-                <button class="text-[#EEA1A6] border px-2.5 py-[5px] rounded-[5px] border-solid border-[#EEA1A6]" data-id="${entry._id}">&#9998</button>
-                <button class="text-[#A30B37] border px-2.5 py-[5px] rounded-[5px] border-solid border-[#A30B37]" data-id="${entry._id}">&#128465</button>
+                <button class="edit-btn"  data-id="${entry._id}">&#9998</button>
+                <button class="delete-btn" data-id="${entry._id}">&#128465</button>
               </div>
             </li>
           `);

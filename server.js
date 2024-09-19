@@ -3,7 +3,7 @@ const express = require("express"),
   { MongoClient, ObjectId } = require("mongodb");
 const path = require('path');
 const session = require('express-session');
-`mongodb+srv://${process.env.USERNAME}:${process.env.PASS}@${process.env.HOST}`
+const MongoDBStore = require('connect-mongodb-session')(session);
 const { auth } = require('express-openid-connect');
 const config = {
   authRequired: false,
