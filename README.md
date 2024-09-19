@@ -2,8 +2,6 @@
 
 Glitch link: a3-thomas-oleary.glitch.me
 
-Include a very brief summary of your project here. Images are encouraged, along with concise, high-level text. Be sure to include:
-
 - Be capable of displaying the spell slot usage of a Dungeons and Dragons 5th Edition Wizard, showing unique and consistent data for each user
 - My A2 project was a little extra with the automatic table making. It was a bit of a pain to carry everything over into express and then into MongoDB. It also led to some odd parts of my project, like how I stored each row of the table per user in separate objects.
 - I used a username and password authentication strategy because it seemed easiest and is the most commonplace.
