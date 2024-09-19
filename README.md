@@ -1,4 +1,5 @@
 
+https://a3-ron1tk.glitch.me/
 
 I have developed a clicking game that saves your scores. Users can also edit and delete scores as well. A challenge I faced was setting up the connection to my databse. I realized I had a small typo after lots of debugging was able to fix it. I used local-authentication with passport-local. I used boostrap because it is easy to use. 
 
