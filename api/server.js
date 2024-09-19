@@ -16,7 +16,7 @@ app = express()
 const dir = 'public/';
 const port = 3000;
 app.use(express.json());
-app.use(express.static(dir));
+app.use(express.static(path.join(__dirname, '../public')));
 app.use(auth(config));
 
 const uri = `mongodb+srv://${process.env.USERNAME}:${process.env.PASS}@${process.env.HOST}`
