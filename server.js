@@ -528,14 +528,10 @@ app.post( '/loadTable', async (req, res ) => {
     userdata.updateOne({"_id": tablerows[req.body.payload]}, {$set: {remaining: (avail-use)}})
   }
   let datarow = await userdata.findOne({"_id": tablerows[req.body.payload]})
-  console.log(datarow)
   let avail = datarow.available
   let use = datarow.used
   let lvl = datarow.level
   let remainin = datarow.remaining
-
-  console.log(tablerows[req.body.payload])
-  console.log(datarow)
   res.writeHead( 200, "OK", {'Content-Type': 'text' })
   let sending = [lvl, 
                 avail, 
@@ -544,8 +540,9 @@ app.post( '/loadTable', async (req, res ) => {
   res.end(JSON.stringify(sending))
 })
 
-app.post( '/longRest', (req, res ) => {
-  let level = appdata[0].available
+app.post( '/longRest', async (req, res ) => {
+  let firstrow = await userdata.findOne({"_id": tablerows[0]})
+  let level = firstrow.available
   
   resetfnc(level)
   res.writeHead( 200, "OK", {'Content-Type': 'text' })
