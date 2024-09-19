@@ -1,0 +1,126 @@
+
+body {
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f4f1e9;
+  color: #333;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+form {
+  background-color: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  padding: 30px;
+  max-width: 400px;
+  width: 100%;
+  margin: 0 auto;
+  text-align: center;
+  display: grid;
+  gap: 20px; /* Adds space between form elements */
+}
+
+h1 {
+  color: #7b3f00;
+  font-family: "Playfair Display", serif;
+  font-size: 2em;
+  margin-bottom: 20px;
+}
+
+h3 {
+  color: #b85c38;
+  font-family: "Playfair Display", serif;
+}
+
+label {
+  font-weight: bold;
+  color: #555;
+  font-size: 1rem;
+  display: block;
+  margin-bottom: 5px;
+}
+
+input[type="text"],
+input[type="number"],
+select {
+  width: 100%; /* Adjust to fit the container */
+  padding: 10px;
+  margin: 0; /* Remove default margin */
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  font-size: 1rem;
+}
+
+select {
+  background-color: #f9f9f9;
+  font-size: 1rem;
+}
+
+.submit-btn {
+  background-color: #b85c38;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 10px;
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.submit-btn:hover {
+  background-color: #7b3f00;
+}
+
+/* Styling the cumulative total price */
+#totalPriceField {
+  margin-top: 15px;
+  display: flex;
+  justify-content: center;
+}
+
+#totalPriceField h3 {
+  font-size: 1.2rem;
+  color: #7b3f00;
+  font-weight: bold;
+}
+
+/* Styling for ordered items */
+ul#orderedItemsList {
+  list-style-type: none;
+  padding-left: 0;
+  margin-top: 20px;
+  font-size: 1rem;
+  color: #333;
+  display: grid;
+  gap: 10px; /* Space between list items */
+}
+
+ul#orderedItemsList li {
+  padding: 8px;
+  background-color: #f9f3ec;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  text-align: left;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+ul#orderedItemsList button {
+  background-color: #7b3f00;
+  color: #fff;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 5px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+ul#orderedItemsList button:hover {
+  background-color: #b85c38;
+}
