@@ -4,7 +4,9 @@ My project is a To-Do manager which will keep track of all the assignments you h
 ##Credentials
 - **Username**: Test
 - **Password**: password
+
 OR
+
 - Use GitHub login.
 
 ## Technical Achievements
