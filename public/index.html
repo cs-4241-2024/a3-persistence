@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>CS4241 Assignment 3</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="Your Grocery List" />
+    <script src="js/main.js" type="module"></script>
+    <link rel="stylesheet" href="css/main.css" />
+    <link
+        rel="stylesheet"
+        href="https://unpkg.com/blocks.css/dist/blocks.min.css"
+    />
+</head>
+
+<body>
+    <h1 class="block">Your Grocery List</h1>
+    <h2>Edit the table by double clicking on a section.</h3>
+    <div class="mainDiv">
+        <div class="listDiv">
+            <table id="list" class="block"></table>
+            <h3 class="grandTotal">Grand Total: $<span id="total"></span></h2>
+        </div>
+        <form class="formDiv">
+            <div class="formItem">
+                <input class="block" type="text" id="itemName" placeholder="item name" required></input>
+                <input class="block" type="number" id="itemPrice" step="0.25" placeholder="price" required></input>
+                <input class="block" type="number" id="itemQuantity" placeholder="#" required></input>
+            </div>
+            <textarea class="block" id="itemDescription" placeholder="item description"></textarea>
+            <button id="newItemSubmit" class="block accent round">Add Item</button>
+        </form>
+    </div>
+</body>
+
+</html>

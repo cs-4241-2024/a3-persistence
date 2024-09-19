@@ -1,0 +1,107 @@
+body {
+    font-family: "Segoe UI", sans-serif;
+    text-align: center;
+}
+
+h1 {
+    text-align: center;
+}
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+th,
+td {
+    border: 1px solid white;
+    padding: 0.5rem;
+}
+
+td:hover {
+    cursor: text;
+}
+
+button {
+    background: white;
+    border: 1px solid black;
+    color: black;
+    padding: 0.5rem;
+}
+
+input {
+    border: 1px solid white;
+    padding: 0.5rem;
+}
+
+textarea {
+    width: 25rem;
+    height: 5rem;
+    justify-self: center;
+}
+
+.mainDiv {
+    display: flex;
+    flex-direction: row;
+}
+
+.listDiv {
+    width: 50%;
+}
+
+.formDiv {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    width: 50%;
+}
+
+#list {
+    margin: auto;
+}
+
+.record {
+    margin: 0.5rem;
+    padding: 0.5rem;
+}
+
+.name {
+    width: 20rem;
+}
+
+.price {
+    width: 3rem;
+}
+
+.quantity {
+    width: 2rem;
+}
+
+.total {
+    width: 3rem;
+}
+
+.recordButton {
+    background: lightgrey;
+    border: 1px solid black;
+    color: black;
+    padding: 0.5rem;
+}
+
+.formItem {
+    display: flex;
+    flex-direction: row;
+}
+
+#itemName {
+    width: 18rem;
+}
+
+#itemPrice {
+    width: 5rem;
+}
+
+#itemQuantity {
+    width: 3rem;
+}

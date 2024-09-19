@@ -1,0 +1,21 @@
+{
+    "name": "a2-harbar20",
+    "version": "",
+    "description": "",
+    "author": "harbar20",
+    "scripts": {
+        "build": "npm install",
+        "start": "node server.js"
+    },
+    "dependencies": {
+        "cookie-parser": "^1.4.6",
+        "express": "^4.20.0",
+        "express-session": "^1.18.0",
+        "js-cookie": "^3.0.5",
+        "mime": "^2.4.4",
+        "mongodb": "^6.8.1",
+        "passport": "^0.7.0",
+        "passport-github2": "^0.1.12"
+    },
+    "type": "module"
+}
