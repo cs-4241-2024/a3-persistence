@@ -1,0 +1,14 @@
+{
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.21.0",
+    "cookie-session": "^2.1.0",
+    "mongodb": "^6.9.0",
+    "dotenv": "^16.4.5"
+  },
+  "engines": {
+    "node": "16.x"
+  }
+}
