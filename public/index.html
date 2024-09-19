@@ -3,7 +3,7 @@
   <head>
     <title>Taskly - Login</title>
     <meta charset="utf-8" />
-    <script src="js/main.js"></script>
+    <script src="js/login.js"></script>
     <!-- Keep this one -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -11,93 +11,52 @@
       href="https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100..900;1,100..900&family=Roboto+Slab:wght@100..900&display=swap"
       rel="stylesheet"
     />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
+    />
     <link rel="stylesheet" href="css/main.css" />
     <link rel="icon" href="data:;base64,iVBORw0KGgo=" />
   </head>
   <body>
-    <h1 id="registerText">Register</h1>
-    <form id="registerForm" class="form-group">
-      <label for="reg-username">Username:</label>
-      <input type="text" id="reg-username" name="username" required />
-      <label for="reg-password">Password:</label>
-      <input type="password" id="reg-password" name="password" required />
-      <button type="submit">Register</button>
-    </form>
-
     <h1 id="loginText">Login</h1>
     <form id="loginForm" class="form-group">
       <label for="login-username">Username:</label>
       <input type="text" id="login-username" name="username" required />
       <label for="login-password">Password:</label>
-      <input type="password" id="login-password" name="password" required />
+      <div class="password-container">
+        <input type="password" id="login-password" name="password" required />
+        <span class="toggle-password" toggle="#login-password">
+          <i class="fa fa-eye"></i>
+        </span>
+      </div>
       <button type="submit">Login</button>
     </form>
 
-    <!-- Hidden div for task management, shown after login -->
-    <div id="taskSection" style="display: none">
-      <button id="logoutBtn">Logout</button>
-      <h1>Welcome To Taskly!</h1>
-      <h2>Manage Your Tasks</h2>
-      <form id="taskForm">
-        <label for="task">Task:</label>
-        <input type="text" id="task" name="task" required />
-        <label for="description">Description:</label>
-        <textarea
-          id="description"
-          name="description"
-          rows="4"
-          cols="50"
-          required
-        ></textarea>
-        <label for="date">Due Date:</label>
-        <input type="date" id="date" name="date" required />
-        <label for="priority">Priority:</label>
-        <select id="priority" name="priority">
-          <option value="urgent">Urgent</option>
-          <option value="high">High</option>
-          <option value="medium">Medium</option>
-          <option value="low">Low</option>
-        </select>
-        <button type="submit">Submit Task</button>
+    <!-- Google Login Button -->
+    <a href="/auth/google" id="google-login-btn" class="google-btn">
+      <i class="fab fa-google"></i> Sign in with Google
+    </a>
+
+    <p id="registerPrompt">Don't have an account?</p>
+    <div class="regButtonDiv">
+      <button id="showRegister">Register</button>
+    </div>
+
+    <div id="registerSection" style="display: none">
+      <h1 id="registerText">Register</h1>
+      <form id="registerForm" class="form-group">
+        <label for="reg-username">Username:</label>
+        <input type="text" id="reg-username" name="username" required />
+        <label for="reg-password">Password:</label>
+        <div class="password-container">
+          <input type="password" id="reg-password" name="password" required />
+          <span class="toggle-password" toggle="#reg-password">
+            <i class="fa fa-eye"></i>
+          </span>
+        </div>
+        <button type="submit">Register</button>
       </form>
-      <div class="container">
-        <div class="table-container">
-          <h2>In Progress</h2>
-          <table id="inProgressTable">
-            <thead>
-              <tr>
-                <th>Task</th>
-                <th>Description</th>
-                <th>Creation Date</th>
-                <th>Due Date</th>
-                <th>Days Left</th>
-                <th>Priority</th>
-                <th>Status</th>
-                <th>Actions</th>
-              </tr>
-            </thead>
-            <tbody></tbody>
-          </table>
-        </div>
-        <div class="table-container">
-          <h2>Completed</h2>
-          <table id="completedTable">
-            <thead>
-              <tr>
-                <th>Task</th>
-                <th>Description</th>
-                <th>Creation Date</th>
-                <th>Due Date</th>
-                <th>Days Left</th>
-                <th>Priority</th>
-                <th>Status</th>
-                <th>Actions</th>
-              </tr>
-            </thead>
-            <tbody></tbody>
-          </table>
-        </div>
-      </div>
     </div>
   </body>
 </html>

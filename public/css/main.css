@@ -45,6 +45,76 @@ h2 {
   cursor: pointer;
 }
 
+/* Default state for the register form (hidden) */
+#registerSection {
+  transform: translateX(100%);
+  opacity: 0;
+  transition: transform 0.5s ease-in-out, opacity 0.5s ease-in-out;
+}
+
+/* Slide-in effect when the class is added */
+#registerSection.slide-in {
+  transform: translateX(0);
+  opacity: 1;
+}
+
+/* Hide the task section until login is successful */
+#taskSection {
+  display: none;
+}
+
+#registerPrompt {
+  color: #000000;
+  cursor: pointer;
+  display: block;
+  text-align: center;
+}
+
+.password-container {
+  position: relative;
+  width: 100%;
+}
+
+.password-container input[type="password"],
+.password-container input[type="text"] {
+  width: 100%;
+  padding-right: 40px; /* Make space for the eye icon */
+}
+
+.toggle-password {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-90%);
+  cursor: pointer;
+  color: #888;
+}
+
+.toggle-password:hover {
+  color: #333;
+}
+
+.google-btn {
+  background-color: #4285f4;
+  color: white;
+  padding: 10px 20px;
+  text-align: center;
+  display: inline-block;
+  font-size: 16px;
+  border-radius: 5px;
+  margin-top: 10px;
+  text-decoration: none;
+}
+
+.google-btn i {
+  margin-right: 8px;
+}
+
+div.regButtonDiv {
+  display: flex;
+  justify-content: center;
+}
+
 div.main {
   display: flex;
   /* grid-template-columns: 1fr 1fr; */

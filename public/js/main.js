@@ -1,6 +1,4 @@
 document.addEventListener("DOMContentLoaded", () => {
-  const registerForm = document.querySelector("#registerForm");
-  const loginForm = document.querySelector("#loginForm");
   const taskForm = document.querySelector("#taskForm");
   const taskSection = document.getElementById("taskSection");
   const inProgressTable = document.querySelector("#inProgressTable tbody");
@@ -10,60 +8,25 @@ document.addEventListener("DOMContentLoaded", () => {
   let tasks = [];
   let editingTaskId = null;
 
-  // Handle registration
-  registerForm.addEventListener("submit", (e) => {
-    e.preventDefault();
-    const username = document.getElementById("reg-username").value;
-    const password = document.getElementById("reg-password").value;
+  // Ensure the task section is shown when the home page loads
+  taskSection.style.display = "block";
 
-    fetch("/register", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ username, password }),
-    })
-      .then((response) =>
-        response
-          .json()
-          .then((data) => ({ status: response.status, body: data }))
-      )
-      .then(({ status, body }) => {
-        if (status === 201) {
-          alert(body.message);
-          registerForm.reset();
-        } else {
-          alert(body.message);
-        }
-      })
-      .catch((error) => console.error("Error:", error));
-  });
+  // Check if logout button exists
+  if (logoutBtn) {
+    logoutBtn.addEventListener("click", (e) => {
+      e.preventDefault();
+      // Clear any session data or cookies here if necessary
+      fetch("/logout") // Call the logout route
+        .then(() => {
+          // Refresh the page after logging out
+          window.location.href = "/"; // Redirect to login page
+        })
+        .catch((error) => console.error("Error logging out:", error));
+    });
+  }
 
-  // Handle login
-  loginForm.addEventListener("submit", (e) => {
-    e.preventDefault();
-    const username = document.getElementById("login-username").value;
-    const password = document.getElementById("login-password").value;
-
-    fetch("/login", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ username, password }),
-    })
-      .then((response) =>
-        response
-          .json()
-          .then((data) => ({ status: response.status, body: data }))
-      )
-      .then(({ status, body }) => {
-        if (status === 200) {
-          alert(body.message);
-          showTaskSection();
-          loadTasks();
-        } else {
-          alert(body.message);
-        }
-      })
-      .catch((error) => console.error("Error:", error));
-  });
+  // Load tasks for the logged-in user
+  loadTasks();
 
   // Load tasks for the logged-in user
   function loadTasks() {
@@ -210,20 +173,23 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   // Show the task management section after login
-  function showTaskSection() {
-    loginForm.style.display = "none";
-    registerForm.style.display = "none";
-    loginText.style.display = "none";
-    registerText.style.display = "none";
-    taskSection.style.display = "block";
-  }
+  // function showTaskSection() {
+  //   registerSection.style.display = "none";
+  //   registerPrompt.style.display = "none";
+  //   showRegister.style.display = "none";
+  //   loginForm.style.display = "none";
+  //   registerForm.style.display = "none";
+  //   loginText.style.display = "none";
+  //   registerText.style.display = "none";
+  //   taskSection.style.display = "block";
+  // }
 
   // Logout
   logoutBtn.addEventListener("click", () => {
     fetch("/logout")
       .then(() => {
         alert("Logged out successfully");
-        location.reload();
+        window.location.href = "/"; // Redirect to login
       })
       .catch((error) => console.error("Error:", error));
   });
