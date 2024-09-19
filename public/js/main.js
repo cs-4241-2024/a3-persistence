@@ -8,6 +8,12 @@ document.addEventListener("DOMContentLoaded", () => {
   let tasks = [];
   let editingTaskId = null;
 
+  var elems = document.querySelectorAll(".datepicker");
+  var instances = M.Datepicker.init(elems, {});
+
+  var selectElems = document.querySelectorAll("select");
+  var selectInstances = M.FormSelect.init(selectElems, {});
+
   // Ensure the task section is shown when the home page loads
   taskSection.style.display = "block";
 

@@ -1,254 +1,219 @@
-/* CSS Templates:
+/* General Styles */
 
-https://horizon-ui.com
-https://github.com/themeselection/sneat-bootstrap-html-admin-template-free
-https://bootstraptaste.com/nice-admin-bootstrap-admin-html-template/
-
-
- */
+#title {
+  font-size: 5rem;
+  font-weight: 700;
+  color: #2c3e50;
+  text-align: center;
+}
 
 body {
-  font-family: "Noto Sans", serif;
-  background-color: #f4f4f4;
-  margin: 20px;
-  color: #252525;
-}
-
-h1 {
-  font-family: "Roboto Slab", serif;
-  color: #040404;
-  text-align: center;
-  margin-bottom: 30px;
-  font-size: 50px;
-  padding-left: 20px;
-}
-
-h2.title {
-  padding: 20px 0px 0px 20px;
-}
-
-h2 {
-  color: #000000;
-  text-align: center;
-  margin-top: 40px;
-}
-
-#logoutBtn {
-  display: block;
-  margin-left: auto;
-  background-color: #dc3545;
-  color: white;
-  padding: 10px;
-  border: none;
-  border-radius: 4px;
-  font-size: 16px;
-  cursor: pointer;
-}
-
-/* Default state for the register form (hidden) */
-#registerSection {
-  transform: translateX(100%);
-  opacity: 0;
-  transition: transform 0.5s ease-in-out, opacity 0.5s ease-in-out;
-}
-
-/* Slide-in effect when the class is added */
-#registerSection.slide-in {
-  transform: translateX(0);
-  opacity: 1;
-}
-
-/* Hide the task section until login is successful */
-#taskSection {
-  display: none;
-}
-
-#registerPrompt {
-  color: #000000;
-  cursor: pointer;
-  display: block;
-  text-align: center;
-}
-
-.password-container {
-  position: relative;
-  width: 100%;
-}
-
-.password-container input[type="password"],
-.password-container input[type="text"] {
-  width: 100%;
-  padding-right: 40px; /* Make space for the eye icon */
-}
-
-.toggle-password {
-  position: absolute;
-  right: 10px;
-  top: 50%;
-  transform: translateY(-90%);
-  cursor: pointer;
-  color: #888;
-}
-
-.toggle-password:hover {
+  font-family: "Noto Sans", sans-serif;
+  background-color: #f5f7fa; /* Light modern background */
   color: #333;
-}
-
-.google-btn {
-  background-color: #4285f4;
-  color: white;
-  padding: 10px 20px;
-  text-align: center;
-  display: inline-block;
-  font-size: 16px;
-  border-radius: 5px;
-  margin-top: 10px;
-  text-decoration: none;
-}
-
-.google-btn i {
-  margin-right: 8px;
-}
-
-div.regButtonDiv {
+  /* padding: 20px; */
   display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  height: auto; /* Full viewport height for vertical centering */
+  margin: 0;
+  padding: 30px 0px;
+}
+
+#loginForm {
+  width: 600px;
+  max-width: 100%;
   justify-content: center;
 }
 
-div.main {
+#registerForm {
+  background-color: rgba(255, 255, 255, 0);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0);
+  padding: 10px 0px;
+}
+
+#loginSection #registerSection {
   display: flex;
-  /* grid-template-columns: 1fr 1fr; */
-  grid-gap: 20px;
-}
-
-/* Form Styling */
-form {
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  max-width: 600px;
   background-color: white;
-  padding: 20px;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  max-width: 500px;
-  margin: 20px auto 20px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-  max-height: min-content;
+  padding: 40px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* Soft shadow for modern look */
 }
 
-form label {
+#taskSection {
+  /* background-color: violet; */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 1200px;
+  height: 100%;
+}
+
+#taskForm {
   display: block;
-  margin-bottom: 10px;
-  font-weight: bold;
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 500px;
 }
 
-form input,
-form textarea,
-form select {
+.responsive-table {
+  padding-bottom: 30px;
   width: 100%;
-  padding: 8px;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Header Styling */
+h1,
+h2 {
+  font-family: "Roboto Slab", serif;
+  text-align: center;
+  color: #2c3e50;
+}
+
+h1 {
+  font-size: 2.5rem;
+  /* margin-bottom: 40px; */
+  font-weight: 700;
+}
+
+h2 {
+  font-size: 2rem;
+  margin-top: 40px;
   margin-bottom: 20px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  box-sizing: border-box;
 }
 
-form button {
-  width: 100%;
-  background-color: #252525;
+#logoutDiv {
+  /* padding-top: 30px; */
+  display: flex;
+  justify-content: right;
+}
+
+#logoutBtn {
+  background-color: #e74c3c;
   color: white;
-  padding: 10px;
   border: none;
-  border-radius: 4px;
-  font-size: 16px;
+  border-radius: 6px;
   cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s ease;
 }
 
-form button:hover {
-  background-color: #000000;
+#logoutBtn:hover {
+  background-color: #c0392b; /* Darker red on hover */
 }
 
-/* Table Styling */
-
-/* General Layout */
-.container {
-  display: grid;
-  grid-template-columns: 1fr; /* Default to one column */
-  grid-gap: 20px;
-  max-width: 1200px;
-  margin: 0 auto;
-  /* padding: 20px; */
-}
-
-/* Table Styling Inside the Grid */
-.table-container {
-  display: grid;
-  grid-template-rows: auto;
+/* Form Styles */
+form {
+  width: 100%;
   background-color: white;
-  border-radius: 8px;
-  padding: 20px;
+  padding: 40px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* Soft shadow for modern look */
+  margin-bottom: 20px;
+}
+
+.input-field input[type="text"],
+.input-field input[type="password"],
+.input-field input[type="date"],
+.materialize-textarea {
+  border-bottom: 2px solid #2c3e50 !important;
+  font-size: 1.1rem;
+}
+
+select {
   border: 1px solid #ccc;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  border-radius: 4px;
+  padding: 10px;
 }
 
-h2.completed-heading {
-  color: #000000;
+.btn {
+  background-color: #1abc9c; /* Vibrant modern teal */
+  border-radius: 8px;
+  padding: 0px 20px;
+  font-size: 16px;
+  transition: background-color 0.3s ease;
+  width: 100%; /* Full width buttons */
 }
 
-/* Completed Table Header - Green */
-#completedTable thead {
-  background-color: #000000; /* Green background for Completed table */
-  color: white;
+.btn:hover {
+  background-color: #16a085;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15); /* Add shadow on hover */
 }
 
-h2.inProgress-heading {
-  color: #000000;
+/* Increase the size of the task tables */
+.table-container {
+  margin-top: 30px;
+  border-radius: 12px;
+  background-color: white;
+  padding: 20px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  width: 100%; /* Full width */
+  max-width: 1200px; /* Increase maximum width */
 }
 
-/* In-Progress Table Header - Blue */
-#inProgressTable thead {
-  background-color: #000000; /* Blue background for In-Progress table */
-  color: white;
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  width: 100%;
 }
 
 table {
   width: 100%;
-  /* margin: 0 auto 20px; */
   border-collapse: collapse;
-  background-color: #f9f9f9;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-  table-layout: fixed;
+  margin-bottom: 20px;
 }
 
-thead {
-  background-color: #000000;
+table th,
+table td {
+  padding: 15px;
+  text-align: left;
+  vertical-align: middle;
+}
+
+table.striped th {
+  background-color: #2980b9;
   color: white;
 }
 
-thead,
-tbody tr {
-  display: table;
-  width: 100%;
-  table-layout: fixed;
+table.striped tbody tr:nth-child(odd) {
+  background-color: #f9f9f9;
+}
+
+table.striped tbody tr:nth-child(even) {
+  background-color: #ffffff;
 }
 
 th,
 td {
-  padding: 12px 15px;
-  border: 1px solid #ccc;
+  padding: 15px;
   text-align: left;
+  vertical-align: middle;
+  border-bottom: 1px solid #ddd;
+  white-space: nowrap;
   word-wrap: break-word;
   white-space: normal;
   overflow: hidden;
 }
 
 td {
-  font-size: 0.9em;
-  /* max-width: 150px; */
+  font-size: 0.9rem;
+  color: #333;
 }
 
-/* Set specific width for the "Actions" column */
-th:last-child,
-td:last-child {
-  width: 250px;
+td:last-child,
+th:last-child {
   text-align: center;
+  width: 300px; /* Make the action column wider */
 }
 
 th:nth-child(2),
@@ -256,138 +221,163 @@ td:nth-child(2) {
   width: 180px;
 }
 
-/* tbody tr:nth-child(even) {
-  background-color: #f9f9f9;
-} */
-
-/* Scrollbar Styling */
-tbody::-webkit-scrollbar {
-  width: 8px;
+table {
+  border-radius: 8px;
+  overflow: hidden; /* Modern table with rounded corners */
 }
 
-tbody::-webkit-scrollbar-track {
-  background: #f1f1f1;
-}
-
-tbody::-webkit-scrollbar-thumb {
-  background-color: #888;
-  border-radius: 10px;
-}
-
-tbody::-webkit-scrollbar-thumb:hover {
-  background-color: #555;
-}
-
-/* Pastel Red Row for Urgent Tasks */
-.pastel-red {
-  background-color: #f69090;
-}
-
-/* Button Styling Inside the Table */
-
+/* Button Styles in Table */
 button {
-  padding: 6px 12px;
-  margin: 0 2px;
-  border: none;
-  border-radius: 4px;
+  margin: 5px;
+  font-size: 0.9rem;
+  padding: 8px 15px;
+  border-radius: 6px;
   cursor: pointer;
-}
-
-button.edit-btn {
-  background-color: #ffc107;
+  transition: background-color 0.3s ease;
   color: white;
+  border: none;
 }
 
-button.edit-btn:hover {
-  background-color: #e0a800;
-}
-
-button.delete-btn {
-  background-color: #dc3545;
-  color: white;
-}
-
-button.delete-btn:hover {
-  background-color: #c82333;
-}
-
+/* Complete Button (Leave as is) */
 button.complete-btn {
-  background-color: #28a745;
-  color: white;
+  background-color: #1abc9c; /* Green */
 }
 
 button.complete-btn:hover {
-  background-color: #218838;
+  background-color: #16a085; /* Darker Green on hover */
 }
 
+/* Delete Button (Red) */
+button.delete-btn {
+  background-color: #e74c3c; /* Red */
+}
+
+button.delete-btn:hover {
+  background-color: #c0392b; /* Darker Red on hover */
+}
+
+/* In-Progress Button (Blue) */
 button.in-progress-btn {
-  background-color: #107af5;
-  color: white;
+  background-color: #3498db; /* Blue */
 }
 
 button.in-progress-btn:hover {
-  background-color: #0069d9;
+  background-color: #2980b9; /* Darker Blue on hover */
 }
 
+/* Edit Button (Yellow) */
+button.edit-btn {
+  background-color: #f1c40f; /* Yellow */
+}
+
+button.edit-btn:hover {
+  background-color: #f39c12; /* Darker Yellow on hover */
+}
+
+#inProgressTable {
+  /* display: block;
+  margin-left: auto;
+  margin-right: auto; */
+  table-layout: fixed;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+}
+
+#completedTable {
+  /* display: block;
+  margin-left: auto;
+  margin-right: auto; */
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Google Button Styling */
+.google-btn {
+  background-color: #4285f4;
+  color: white;
+  padding: 12px 20px;
+  font-size: 16px;
+  border-radius: 8px;
+  display: inline-block;
+  transition: background-color 0.3s ease;
+  width: 100%; /* Full width */
+  text-align: center;
+  margin-bottom: 20px; /* Space below Google button */
+}
+
+.google-btn i {
+  margin-right: 8px;
+}
+
+.google-btn:hover {
+  background-color: #3367d6;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Registration Section */
+.regButtonDiv {
+  width: 100%;
+  text-align: center;
+  margin-top: 20px;
+}
+
+.regButtonDiv button {
+  width: auto;
+  /* padding: 10px 20px; */
+}
+
+#registerSection {
+  display: none;
+  padding: 20px;
+}
+
+#registerSection.slide-in {
+  display: block;
+  transition: all 0.5s ease-in-out;
+}
+
+/* Responsive Layout */
 @media (max-width: 768px) {
-  table,
+  #loginSection {
+    max-width: 90%;
+    padding: 30px;
+  }
+
+  form label {
+    font-size: 1rem;
+  }
+
+  form input,
+  form button,
+  .google-btn {
+    font-size: 1rem;
+  }
+
+  #taskSection {
+    max-width: 80%;
+    padding: 20px;
+  }
+}
+
+@media (max-width: 480px) {
   form {
-    width: 100%;
+    padding: 20px;
   }
-}
 
-/* Media Query for Smaller Screens */
-@media screen and (max-width: 1200px) {
-  table {
-    width: 100%;
+  form label {
     font-size: 0.9rem;
   }
 
-  th,
-  td {
-    padding: 8px;
-  }
-
-  th:last-child,
-  td:last-child {
-    width: 6rem;
-  }
-
-  th:nth-child(2),
-  td:nth-child(2) {
-    width: 6rem;
-  }
-
-  button {
-    padding: 6px 12px;
-    font-size: 0.9em;
-  }
-}
-
-/* Media Query for Extra Small Screens (Mobile) */
-@media screen and (max-width: 480px) {
-  table {
-    width: 100%;
+  form input,
+  form button,
+  .google-btn {
     font-size: 0.9rem;
   }
 
-  th,
-  td {
-    padding: 5px;
-  }
-
-  th:last-child,
-  td:last-child {
-    width: 5rem;
-  }
-
-  th:nth-child(2),
-  td:nth-child(2) {
-    width: 5rem;
-  }
-
-  button {
-    padding: 4px 8px;
-    font-size: 0.9em;
+  #taskSection {
+    width: 80%;
+    padding: 20px;
   }
 }

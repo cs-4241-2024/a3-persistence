@@ -7,27 +7,27 @@ document.addEventListener("DOMContentLoaded", () => {
   const showRegisterBtn = document.getElementById("showRegister");
 
   // Toggle password visibility
-  document.querySelectorAll(".toggle-password").forEach((toggle) => {
-    toggle.addEventListener("click", () => {
-      const input = document.querySelector(toggle.getAttribute("toggle"));
-      if (input.type === "password") {
-        input.type = "text";
-        toggle.querySelector("i").classList.remove("fa-eye");
-        toggle.querySelector("i").classList.add("fa-eye-slash");
-      } else {
-        input.type = "password";
-        toggle.querySelector("i").classList.remove("fa-eye-slash");
-        toggle.querySelector("i").classList.add("fa-eye");
-      }
-    });
-  });
-
-  //   // Handle registration form sliding in
-  //   showRegisterBtn.addEventListener("click", (e) => {
-  //     e.preventDefault();
-  //     registerSection.style.display = "block"; // Show register form
-  //     registerSection.classList.add("slide-in"); // Trigger sliding animation
+  // document.querySelectorAll(".toggle-password").forEach((toggle) => {
+  //   toggle.addEventListener("click", () => {
+  //     const input = document.querySelector(toggle.getAttribute("toggle"));
+  //     if (input.type === "password") {
+  //       input.type = "text";
+  //       toggle.querySelector("i").classList.remove("fa-eye");
+  //       toggle.querySelector("i").classList.add("fa-eye-slash");
+  //     } else {
+  //       input.type = "password";
+  //       toggle.querySelector("i").classList.remove("fa-eye-slash");
+  //       toggle.querySelector("i").classList.add("fa-eye");
+  //     }
   //   });
+  // });
+
+  // Handle registration form sliding in
+  showRegisterBtn.addEventListener("click", (e) => {
+    e.preventDefault();
+    registerSection.style.display = "block"; // Show register form
+    registerSection.classList.add("slide-in"); // Trigger sliding animation
+  });
 
   // Handle login
   loginForm.addEventListener("submit", (e) => {
