@@ -2,7 +2,7 @@
   "name": "TODO",
   "version": "1.0.0",
   "engines": {
-    "node": "16.14"
+    "node": "16.20.1"
   },
   "description": "A simple task manager app",
   "author": "Gabriel",
