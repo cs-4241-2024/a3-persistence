@@ -11,6 +11,7 @@ I did change the red button to have black text in order to meet the Lighthous cr
 
 ## Technical Achievements
 - **Tech Achievement 1**: I used OAuth authentication via the GitHub strategy
+- **Tech Achievement 2**: I got 100% on the lighthouse tests. See below for pictures.
 
 ### Design/Evaluation Achievements
 - **Design Achievement 1**: I followed the following tips from the W3C Web Accessibility Initiative:
@@ -22,3 +23,6 @@ I did change the red button to have black text in order to meet the Lighthous cr
 - Associate a label with every form control. All inputs have a label tied to their ID, for screen readers. Some of these labels are hidden.
 - Identify page language. All pages have a lang=en attribute.
 - Reflect the reading order in the code order. Even when viewed with no CSS, the elements are layed out logically.
+
+![100% Lighthouse score on login page](Lighthouse-login.png "Login Score")
+![100% Lighthouse score on todo page](lighthouse-todo.png "Todo Score")
