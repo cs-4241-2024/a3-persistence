@@ -39,6 +39,14 @@ app.use(
     }
   })
 );
+
+app.use((req, res, next) => {
+  res.set('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate');
+  res.set('Pragma', 'no-cache');
+  res.set('Expires', '0');
+  next();
+});
+
 app.use(auth(config));
 
 const uri = `mongodb+srv://${process.env.USERNAME}:${process.env.PASS}@${process.env.HOST}`
@@ -100,8 +108,14 @@ app.get('/login', (req, res) => {
 });
 
 app.get('/logout', (req, res) => {
-  res.oidc.logout({
-    returnTo: '/'  // Redirect users to the home page after logout
+  req.session.destroy((err) => {
+    if (err) {
+      console.error('Failed to destroy session during logout:', err);
+    }
+
+    res.oidc.logout({
+      returnTo: '/login',  // Redirect users to the home page after logout
+    });
   });
 });
 
