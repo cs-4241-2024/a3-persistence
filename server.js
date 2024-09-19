@@ -27,13 +27,13 @@ app.use( cookie({
     keys: ['key6', 'key1']
 }))
 
-app.use( (req,res,next) => {
-    if( collection !== null ) {
-      next()
-    }else{
-      res.status( 503 ).send()
-    }
-})
+// app.use( (req,res,next) => {
+//     if( collection !== null ) {
+//       next()
+//     }else{
+//       res.status( 503 ).send()
+//     }
+// })
 
 app.post( '/login', async (req,res)=> {
     console.log( req.body )
@@ -52,12 +52,12 @@ app.post( '/login', async (req,res)=> {
         //res.json( result )
         // define a variable that we can check in other middleware
         // the session object is added to our requests by the cookie-session middleware
-        req.session.login = true
+        //req.session.login = true
         res.redirect( 'newAccount.html' )
     } else {
         if (req.body.password == target.password) {
             collection = await client.db("teaLog").collection(req.body.username) //change to individual user table
-            req.session.login = true
+            //req.session.login = true
             res.redirect( 'welcomeBack.html' )
         } else {
             // password incorrect, redirect back to login page
@@ -68,13 +68,13 @@ app.post( '/login', async (req,res)=> {
     }
 })
 
-// add some middleware that always sends unautheniticated users to the login page
-app.use( function( req,res,next) {
-    if( req.session.login === true )
-        next()
-    else
-        res.sendFile( __dirname + '/public/index.html' )
-})
+// // add some middleware that always sends unautheniticated users to the login page
+// app.use( function( req,res,next) {
+//     if( req.session.login === true )
+//         next()
+//     else
+//         res.sendFile( __dirname + '/public/index.html' )
+// })
   
 
 
