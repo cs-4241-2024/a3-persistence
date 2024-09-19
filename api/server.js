@@ -2,6 +2,7 @@ require('dotenv').config();
 const express = require("express"),
   { MongoClient, ObjectId } = require("mongodb");
 const path = require('path');
+const session = require('express-session');
 const { auth } = require('express-openid-connect');
 const config = {
   authRequired: false,
@@ -16,6 +17,15 @@ app = express()
 const dir = 'public/';
 const port = 3000;
 app.use(express.json());
+app.use(session({
+  secret: process.env.AUTH0_SECRET,  // The Auth0 secret or another secret string
+  resave: false,
+  saveUninitialized: true,
+  cookie: {
+    secure: process.env.NODE_ENV === 'production',  // Set secure cookie only in production
+    maxAge: 24 * 60 * 60 * 1000  // 1 day
+  }
+}));
 app.use(express.static(path.join(__dirname, '../public')));
 app.use(auth(config));
 
