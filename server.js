@@ -42,6 +42,10 @@ app.get('/', (req, res) => {
 });
 
 // route to get all docs
+app.get('/test', (req, res) => {
+  res.send('Test route is working');
+});
+
 app.get("/docs", async (req, res) => {
   try {
     if (collection !== null) {
