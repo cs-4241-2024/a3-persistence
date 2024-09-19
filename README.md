@@ -13,7 +13,7 @@ https://a3-jeffcli-fcc7491c5e77.herokuapp.com/#
 ## Technical Achievements
 - **100% on Lighthouse**: <img width="1509" alt="Screenshot 2024-09-19 at 4 05 14 AM" src="https://github.com/user-attachments/assets/edeb0dca-f364-4fa6-98aa-307cf241a5ea">
 
-- **Deployed on Heroku**: Instead of Glitch, I used Heroku to deploy my application for this assignment. I found this much better to use as I didn't have to constantly redeploy whenever I made a change as it does that automatically. I also tried using Vercel briefly, but that didn't end up working out too well with my application (LocalStrategy).
+- **Deployed on Heroku**: Instead of Glitch, I used Heroku to deploy my application for this assignment. I found this much better to use as I didn't have to constantly redeploy whenever I made a change as it does that automatically. I also tried using Vercel briefly, but that didn't end up working out too well with my application due to my usage of LocalStrategy for authentication.
 
 ### Design/Evaluation Achievements
 - **Description of CRAP principles**: 
