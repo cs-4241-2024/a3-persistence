@@ -1,10 +1,7 @@
 Assignment 3 - 
 Brittany Ficarra
 
-Sample Readme (delete the above when you're ready to submit, and modify the below so with your links and descriptions)
----
-
-## Your Web Application Title
+## Homework List
 
 Website Link: https://a3-brittany-ficarra.up.railway.app/
 
