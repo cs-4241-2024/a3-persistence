@@ -6,7 +6,7 @@ This is all I have. I got overwhelmed with all I have going on right now. Betwee
 
 Include a very brief summary of your project here. Images are encouraged, along with concise, high-level text. Be sure to include:
 
-The goal of the applciation is too log in with a saved user to a website with a mongodb connection and working cookies. There is also some middlewear implementation for failed logins. The user is "arayah" and the password is "Shadow2416". I have a style.css sheet but could not figure out why it was not being applied.
+The goal of the applciation is too log in with a saved user to a website with a mongodb connection and working cookies. There is also some middlewear implementation for failed logins. The user is "arayah" and the password is "Shadow2416". When you are logged in you will see my second form from A2. You can interact with it, but after htting "Add" it will break the site.
 
 
 ## Technical Achievements
