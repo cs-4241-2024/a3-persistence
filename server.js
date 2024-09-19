@@ -13,7 +13,7 @@ const cookie  = require( 'cookie-session' ),
 hbs     = require( 'express-handlebars' ).engine
 
 
-const uri = `mongodb+srv://${process.env.MYUSER}:${process.env.PASS}@${process.env.HOST}`
+const uri = "mongodb+srv://user123:hello@assignment3.pfeno.mongodb.net/"
 const client = new MongoClient( uri )
 const db = client.db("database")
 let userCollection = null
