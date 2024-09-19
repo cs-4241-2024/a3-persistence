@@ -162,5 +162,5 @@ Here are the middlewares I have used for this application:
 - **CRAP Principles**: I added a PDF detailing the CRAP principles and its usage for both Login.html and Index.html.
 
 ### Websites
-- **Glitch**: 
-- **Vercel**:
+- **Glitch**: https://standing-tarry-lunge.glitch.me
+- **Vercel**: a3-nexus-18.vercel.app (put this in your browser, the deployment doesn't work with the login)
