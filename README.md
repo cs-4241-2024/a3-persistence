@@ -1,4 +1,4 @@
-## Mood Tracker Application - Joseph Thesmar 
+## Mood Tracker Application - Joseph Thesmar (https://a3-thesmar-joseph.onrender.com/)
 
 # Project Summary:
 
@@ -39,7 +39,7 @@ Framework: Bootstrap was selected for its ease of use and extensive components. 
 
 **OAuth Authentication (10 points):** Not implemented. Basic username/password authentication is used instead.
 
-**Hosting on Netlify (5 points):** Deployed the application on Netlify for hosting. Netlify was chosen for its straightforward deployment process and ease of integration with GitHub.
+**Hosting on Render (5 points):** Deployed the application on Render for hosting. Render was chosen for its straightforward deployment process and ease of integration with GitHub.
 
 **List up to five Express middleware packages (5 points):** 
 

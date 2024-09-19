@@ -6,7 +6,7 @@ const helmet = require('helmet');
 const { MongoClient, ObjectId, ServerApiVersion } = require('mongodb');
 const path = require('path'); // For handling file paths
 const app = express();
-const port = 3000;
+const PORT = process.env.PORT || 3000;
 
 // Mongo DB connection URI
 const uri = "mongodb+srv://thesmarjoseph:pX8VxpzVLRjWsdAs@cluster-a3.fef6u.mongodb.net/?retryWrites=true&w=majority&appName=cluster-a3";
@@ -169,6 +169,6 @@ const calculateMoodScore = (mood) => {
 };
 
 // start server
-app.listen(process.env.PORT || port, () => {
-  console.log(`Server is running on port ${port}`);
+app.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}`);
 });
