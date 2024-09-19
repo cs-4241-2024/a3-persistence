@@ -18,7 +18,7 @@ const dir = 'public/';
 const port = 3000;
 app.use(express.json());
 app.use(session({
-  secret: process.env.AUTH0_SECRET,  // The Auth0 secret or another secret string
+  secret: process.env.SECRET,  // The Auth0 secret or another secret string
   resave: false,
   saveUninitialized: true,
   cookie: {
