@@ -64,7 +64,6 @@ const submit = async function (event) {
             Authorization: `Bearer ${parseCookies().accessToken}`,
         },
     });
-    const text = await response.text();
 
     // Revalidating data
     await revalidate();
