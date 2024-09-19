@@ -1,6 +1,6 @@
 Inflation* Over Time
 
--------your glitch (or alternative server) link e.g. http://a3-charlie-roberts.glitch.me
+https://a3-ryan-wright.glitch.me/
 
 The goal of this application is to be a very simple prototype for
 a cost projection application. If I had worked on it longer, I
