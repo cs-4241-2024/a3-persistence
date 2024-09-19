@@ -12,5 +12,8 @@
     "express": "^4.21.0",
     "mime": "^2.6.0",
     "mongodb": "^6.9.0"
+  },
+  "devDependencies": {
+    "tailwindcss": "^3.4.12"
   }
 }

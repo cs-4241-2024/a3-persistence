@@ -107,5 +107,5 @@ window.onload = function() {
   const saveTable = document.getElementById("saveTable");
   saveTable.onclick = submit;
   const add = document.getElementById("addRow");
-  add.onclick = addRow;
+  addRow()
 }

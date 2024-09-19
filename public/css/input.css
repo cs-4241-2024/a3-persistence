@@ -1,0 +1,39 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.roboto-regular {
+  @apply  font-normal;
+}
+
+body {
+  @apply text-black bg-neutral-200 text-[16px]; 
+}
+
+table {
+  @apply border-collapse w-[80%] max-w-[800px] m-auto bg-white;
+}
+
+th {
+  @apply bg-neutral-100 font-bold text-left p-4;
+}
+
+button {
+  @apply p-4 bg-[lightcoral] text-black;
+}
+
+button:hover {
+  @apply bg-[coral];
+}
+
+#saveTable {
+  @apply bg-[lightgreen] text-black;
+}
+
+#addRow {
+  @apply bg-[lightblue] text-black;
+}
+
+.buttons {
+  @apply flex justify-center;
+}
