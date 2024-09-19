@@ -3,6 +3,7 @@ const express = require("express"),
   { MongoClient, ObjectId } = require("mongodb");
 const path = require('path');
 const session = require('express-session');
+`mongodb+srv://${process.env.USERNAME}:${process.env.PASS}@${process.env.HOST}`
 const { auth } = require('express-openid-connect');
 const config = {
   authRequired: false,
@@ -18,12 +19,24 @@ const dir = 'public/';
 const port = 3000;
 app.use(express.json());
 app.use(express.static(dir));
+const store = new MongoDBStore({
+  uri: `mongodb+srv://${process.env.USERNAME}:${process.env.PASS}@${process.env.HOST}`, // Replace with your MongoDB URI from the environment variables
+  collection: 'sessions'
+});
+
+store.on('error', function (error) {
+  console.log('Session store error:', error);
+});
 app.use(
   session({
-    secret: process.env.SECRET, // Use your Auth0 secret here
+    secret: process.env.SECRET, // Ensure this is a strong secret from the environment variables
     resave: false,
-    saveUninitialized: true,
-    cookie: { secure: false } // For local testing, set secure to false
+    saveUninitialized: false,
+    store: store, // Use MongoDB for session storage
+    cookie: {
+      secure: process.env.NODE_ENV === 'production', // Secure cookie only in production (HTTPS)
+      maxAge: 24 * 60 * 60 * 1000 // 1 day expiration
+    }
   })
 );
 app.use(auth(config));
