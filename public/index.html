@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>CS4241 Assignment 2</title>
+    <meta charset="utf-8">
+    <script src="js/main.js"></script>
+    <link rel="stylesheet" href="css/main.css">
+     <link rel="icon" href="data:;base64,iVBORw0KGgo=">
+  </head>
+  <body>
+    <form id="taskCreation">
+      <label for="Name" >Name: </label>
+      <input type="text" id="yourname" placeholder="your name here">
+      <label for="Task">Task: </label>
+      <input type="text" id="task" placeholder="taskName">
+      <label for="priority">Priority: </label>
+      <input type="number" id="priority" placeholder="1-10" min="1" max="10">
+      <button id="submit">submit</button>
+    </form>
+    <h1>All Task</h1>
+    <table id="taskList">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Task</th>
+                <th>Priority</th>
+                <th>Date</th>
+                <th>Delete</th>
+            </tr>
+        </thead>
+        <tbody id="taskBody"></tbody>
+    </table>
+  </body>
+</html>
