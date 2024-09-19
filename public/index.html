@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>CS4241 Assignment 3</title>
+    <meta charset="utf-8">
+    <meta name=description content="A book tracker that lets you add, modify and delete books that are not started, in progress or finished to track your progress towards a goal.">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="js/main.js"></script>
+    <link rel="stylesheet" href="css/pico-css/pico.pink.min.css">
+    <link rel="stylesheet" href="css/main.css">
+    
+    <!-- get rid of favicon error -->
+    <link rel="icon" href="data:;base64,iVBORw0KGgo=">
+  </head>
+  <body class="container">
+    <!-- Title and Progress -->
+    <header>
+      <div class="header-row">
+          <h1 style="margin: auto 0">
+            Book Tracker
+          </h1>
+          <div class="goal-tracker">
+            <progress id="status-bar" value="0" max="12" class="status-bar"> </progress>
+            <div>
+              <div style="text-align: right;">
+                <strong><span id="books-read">0</span> / <span>12</span> books </strong> read this year
+              </div>
+              <div style="text-align: right;">
+                <strong><span id="pages-read">0</span> pages</strong> read this year
+              </div>
+            </div>
+          </div>
+          
+        </div>
+      
+    </header>
+
+    <!-- Book table -->
+    <main>
+      <table id="book-table">
+        <tr>
+          <th id="head-title">Title</th>
+          <th id="head-author">Author</th>
+          <th id="head-pages">Pages</th>
+          <th id="head-started">Started</th>
+          <th id="head-finished">Finished</th>
+          <th id="head-average">Average Pages/Day</th>
+          <th id="head-status">Status</th>
+          <th id="head-delete"></th>
+        </tr>
+        <tbody>
+          <!-- <tr>
+            <td>Book 1</td>
+            <td>Author 1</td>
+            <td>100</td>
+            <td>08/04/2024</td>
+            <td>09/06/2024</td>
+            <td>Read</td>
+            <td>
+              <a class="delete-img-wrapper" onclick="deleteBook(this)">
+                <img src="images/delete.svg" alt="Delete Book">
+              </a>
+            </td>
+          </tr> -->
+        </tbody>
+      </table>
+      <button id="add-book">Add Book</button> <!-- Open new book dialog-->
+      <a role="button" href="/logout" class="outline secondary">Logout</a>
+    </main>
+
+    <!-- Pop-up to add new book -->
+    <dialog id="book-form-dialog">
+      <article>
+        <header>
+          <h3>
+            <strong>Add New Book</strong>
+          </h3>
+        </header>
+      <form id="new-book-form">
+
+        <fieldset>
+
+          <label>Title
+            <input type="text" id="title" name="title" required>
+          </label>
+          <div class="grid">
+          <label>Author
+            <input type="text" id="author" name="author" required>
+          </label>
+          <label>Pages
+            <input type="number" id="pages" name="pages" required>
+          </label>
+        </div>
+          <div class="grid">
+            <label>Started
+              <input type="date" id="started" name="started">
+            </label>
+            <label>Finished
+              <input type="date" id="finished" name="finished">
+            </label>
+          </div>
+          <div class="form-row">
+            <label for="status">Status</label>
+            <select id="status" name="status" required>
+              <option value="read" selected>Read</option>
+              <option value="reading">Reading</option>
+              <option value="not-read">Not Read</option>
+            </select>
+          </div>
+          <div class="grid">
+            <button onclick="closeBookForm()" id="cancel-button" class="secondary">Cancel</button>
+            <input type="submit" value="Add Book" class="submit-button">
+          </div>
+          
+        </fieldset>
+      </form>
+    </article>
+
+      
+    </dialog>
+    <!-- <form>
+      <input type="text" id="yourname" value="your name here">
+      <button>submit</button>
+    </form> -->
+  </body>
+</html>
