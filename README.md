@@ -1,6 +1,6 @@
 ## Book Tracker - Carter Moore
 
-Vercel Deployment: https://a3-carter-moore.vercel.app/
+Vercel Deployment: https://a3-carter-moore.glitch.me/
 
 My project allows you to track books that you've read, are reading or are going to read. Books that you have read count towards the set reading goal and changing the status of books will autofill start/end date information if you don't specify any.
 
