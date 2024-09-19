@@ -3,9 +3,6 @@
   "version": "1.0.0",
   "description": "Assignment 3 - Persistence: Two-tier Web Application with Database, Express server, and CSS template ===",
   "main": "server.js",
-  "scripts": {
-    "start": "node server.js"
-  },
   "author": "Joseph Thesmar",
   "license": "ISC",
   "dependencies": {
@@ -16,5 +13,8 @@
     "helmet": "^7.1.0",
     "mongodb": "^6.9.0",
     "morgan": "^1.10.0"
+  },
+  "scripts": {
+    "start": "node server.js"
   }
 }
