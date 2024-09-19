@@ -6,10 +6,10 @@ dotenv.config();
 passport.use(new strategy({
     clientID: process.env.CLIENT_ID,
     clientSecret: process.env.CLIENT_SECRET,
-    callbackURL: "http://localhost:3000/auth/github/callback"
+    callbackURL: "https://a3-carter-moore.vercel.app/auth/github/callback"
     },
     function(accessToken, refreshToken, profile, done) {
-        
+
      return done(null, profile);
     }
 ))
