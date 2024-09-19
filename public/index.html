@@ -1,68 +1,16 @@
 <!doctype html>
-<html lang="en">
+<html lang='en'>
   <head>
-    <title>CS4241 Assignment 2</title>
-    <meta charset="utf-8">
-    <script src="js/main.js"></script>
     <link rel="stylesheet" href="css/main.css">
-    
-    <!-- get rid of favicon error -->
-    <link rel="icon" href="data:;base64,iVBORw0KGgo=">
   </head>
   <body>
-    <div class="formSection">
-    <h1>To Do List</h1>
-    <form class="vertical-form">
-      <label for="ToDo">Item To Do::</label>
-      <input type="text" id="ToDo" value="to do item">
-      <label for="type">Type of Work:</label>
-      <select name="type" id="type">
-        <option value="school">School</option>
-        <option value="work">Work</option>
-        <option value="personal">Personal</option>
-      </select>
-      <label for="date">Due Date:</label>
-      <input type="date" id="date" value="due date">
-      <!-- <input type="text" id="priority" value="priority number 1-10"> -->
-      <button id="submitButton" type="submit">Submit</button>
+    <h1>Login</h1>
+    <form action='/login' method='POST' class="vertical-form">
+      <label for="user">username:</label>
+      <input type='text' id="user" name='username'>
+      <label for="password">password:</label>
+      <input type='password' id="password" name='password'>
+      <input type='submit'>
     </form>
-  </div>
-  <div class="tableSection">
-    <h2>Your List:</h2>
-    <table id="myList">
-      <tr>
-        <th>Item</th>
-        <th>Type of Work</th>
-        <th>Date</th>
-        <th>Priority</th>
-        <th>Delete</th>
-        <th>Change</th>
-      </tr>
-
-    </table>
-  </div>
-  
-  <div class="overlay" id="popupOverlay"></div>
-  <div class="popup" id="popup">
-    <h2>Edit To-Do Item</h2>
-    <form id="popupForm">
-      <input type="hidden" id="popupId">
-      <label for="popupToDo">Item To Do:</label>
-      <input type="text" id="popupToDo">
-      <label for="popupType">Type of Work:</label>
-      <select id="popupType">
-        <option value="school">School</option>
-        <option value="work">Work</option>
-        <option value="personal">Personal</option>
-      </select>
-      <label for="popupDate">Due Date:</label>
-      <input type="date" id="popupDate">
-      <label for="popupPriority">Priority:</label>
-      <input type="text" id="popupPriority" readonly>
-      <button type="button" id="saveButton">Save</button>
-      <button type="button" id="closeButton">Close</button>
-    </form>
-  </div>
-
   </body>
 </html>
