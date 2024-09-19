@@ -1,0 +1,14 @@
+[package]
+name = "cs4241-assignment3"
+version = "0.1.0"
+authors = ["LiamSnow <mail@liamsnow.com>"]
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+
+dioxus = { version = "0.5", features = ["web", "router"] }
+
+# Debug
+dioxus-logger = "0.5.1"
