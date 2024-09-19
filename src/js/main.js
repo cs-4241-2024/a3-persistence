@@ -16,7 +16,7 @@ const submit = async function( event ) {
         json = { name: creds.shortname, date: dateinput.value, points: pointinput.value},
         body = JSON.stringify(json)
 
-    const response = await fetch( 'http://localhost:3000/score/add', {
+    const response = await fetch( '/score/add', {
       headers: {"Content-Type": "application/json" },
       method:'POST',
       body: body
@@ -33,7 +33,7 @@ const getAll = async function (){
   const json = { shortname: creds.shortname},
       body = JSON.stringify(json)
 
-  const response = await fetch( 'http://localhost:3000/score/getall',{
+  const response = await fetch( '/score/getall',{
     headers: {"Content-Type": "application/json" },
     method:'POST',
     body: body
@@ -87,7 +87,7 @@ const registerAccount = async function( event ){
       password = document.querySelector("#password"),
       json = { shortname: shortname.value, username: username.value, password : password.value},
       body = JSON.stringify(json)
-  const response = await fetch( 'http://localhost:3000/user/register', {
+  const response = await fetch( '/user/register', {
     headers: {"Content-Type": "application/json" },
     method:'POST',
     body: body
@@ -104,7 +104,7 @@ const logindata = async function( event ){
       password = document.querySelector("#password"),
       json = { username: username.value, password : password.value},
       body = JSON.stringify(json)
-  const response = await fetch( 'http://localhost:3000/user/login', {
+  const response = await fetch( '/user/login', {
     headers: {"Content-Type": "application/json" },
     method:'POST',
     body: body
@@ -128,7 +128,7 @@ const login = function (){
 }
 const deleteTable = async function (ind){
   if (scores.length !== 0) {
-    const response = await fetch('http://localhost:3000/score/delete/' + scores[ind]._id, {
+    const response = await fetch('/score/delete/' + scores[ind]._id, {
       headers: {"Content-Type": "application/json"},
       method: 'DELETE',
     })
@@ -145,7 +145,7 @@ const editScore = async function( ind){
   const json = {data : data},
       body = JSON.stringify(json)
 
-  const response = await fetch('http://localhost:3000/score/update/', {
+  const response = await fetch('/score/update/', {
     headers: {"Content-Type": "application/json"},
     method: 'POST',
     body: body

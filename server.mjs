@@ -15,13 +15,27 @@ import userrouter from "./app/routes/userapi.mjs";
 const dir  = 'src/',
       port = 3000,
       app = express()
+
+const logger = (req,res,next) => {
+    console.log( 'url:', req.url )
+    next()
+}
+app.use( express.static(dir) )
+
+app.get("/", (req, res) =>{
+    res.sendFile( __dirname + '/public/index.html' )
+})
+app.use(logger)
+
 app.use(cors());
 app.use(express.json());
 app.use("/user", userrouter)
 app.use("/score", scorerouter)
-app.listen(port, () => {
-    console.log(`listening on port ${port}`)
-})
+
+
+
+
+app.listen( process.env.PORT || 3000 )
 
 
 
