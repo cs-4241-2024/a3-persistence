@@ -1,13 +1,10 @@
-body {
-  background: black;
-  color:white;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-}
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
-#submit {
-  margin-inline: 33%;
-  margin-top: 1rem;
+th, td {
+    border: 2px;
+    border-style: solid;
+    width: 10rem;
+    text-align: start;
 }
