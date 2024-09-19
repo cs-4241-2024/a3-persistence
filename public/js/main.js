@@ -167,8 +167,8 @@ const alterRow = async function(event) {
     headers: { 'Content-Type': 'application/json' },
     body
   })
-  const jsonData = await response.json()
-
+  const jsonData = await response.json();
+  console.log(jsonData)
   let table = document.getElementById('table')
   table.innerHTML = ''
   // How to fetch from response instead
@@ -181,16 +181,6 @@ window.onload = async function() {
 
   const alterButton = document.getElementById("alter");
   alterButton.onclick = alterRow;
-
-  const input = document.querySelector( '#yourname' ),
-      json = { name: input.value, clickCount: clicks },
-      body = JSON.stringify( json )
-  const response = await fetch( '/getData', {
-    method:'GET'
-  })
-
-  const jsonData = await response.json()
-
-    await generateMatches()
+  await generateMatches()
 
 }

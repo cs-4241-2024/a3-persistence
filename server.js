@@ -131,7 +131,7 @@ app.put('/alterRow', async (req, res) => {
 
   const json = req.body
   console.log(json)
-  let index = Number(json.index)
+  // let index = Number(json.index)
 
   // const targetObject = appdata.find( (row, i) => i === index )
 
