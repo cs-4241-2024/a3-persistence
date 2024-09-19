@@ -29,5 +29,6 @@ around what weight to use.
  1. Run Tailwind and Go serve processes (simultaneously):
 ```bash
 npx tailwindcss -i ./assets/input.css -o ./assets/output.css --watch
+cd src && go run .
 ```
  2. Navigate to [http://localhost:8080](http://localhost:8080)
