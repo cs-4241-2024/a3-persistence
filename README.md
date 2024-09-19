@@ -1,6 +1,6 @@
 ## Book Manager
 Eleanor Foley
-your glitch (or alternative server) link e.g. http://a3-charlie-roberts.glitch.me
+glitch link e.g. https://glitch.com/edit/#!/a3-rosy122333?path=README.md%3A1%3A0
 ===
 
 Description
