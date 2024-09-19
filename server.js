@@ -5,6 +5,17 @@ const express = require("express"),
       { MongoClient, ObjectId } = require("mongodb"),
       app = express()
 
+const uri = `mongodb+srv://${process.env.USER}:${process.env.PASS}@${process.env.HOST}`
+const client = new MongoClient( uri )
+
+let collection = null;
+
+async function run() {
+await client.connect()
+    collection = await client.db("teaLog").collection("users") //start on the users table
+}
+run()
+
 app.use( express.urlencoded({ extended:true }) )
 app.use(express.static("public") )
 app.use(express.json() )
@@ -13,7 +24,7 @@ app.use(express.json() )
 // changed
 app.use( cookie({
     name: 'session',
-    keys: ['key1', 'key2']
+    keys: ['key6', 'key1']
 }))
 
 app.use( (req,res,next) => {
@@ -25,14 +36,9 @@ app.use( (req,res,next) => {
 })
 
 app.post( '/login', async (req,res)=> {
-    // express.urlencoded will put your key value pairs 
-    // into an object, where the key is the name of each
-    // form field and the value is whatever the user entered
     console.log( req.body )
 
-    // below is *just a simple authentication example* 
-    // for A3, you should check username / password combos in your database
-
+    collection = await client.db("teaLog").collection("users") //start back the users table
     //try to find username in database
     const target = await collection.findOne( {username: req.body.username} )
 
@@ -40,16 +46,19 @@ app.post( '/login', async (req,res)=> {
     if (target === null) {
         //FIXMEwindow.alert("username not found in database. creating new user now...")
         console.log(("username not found in database. creating new user now..."))
+        //document.getElementById("messge").innerHTML = "username not found in database. creating new user now..."
         const result = await collection.insertOne( req.body )
-        res.json( result )
+        collection = await client.db("teaLog").collection(req.body.username) 
+        //res.json( result )
         // define a variable that we can check in other middleware
         // the session object is added to our requests by the cookie-session middleware
         req.session.login = true
-        res.redirect( 'home.html' )
+        res.redirect( 'newAccount.html' )
     } else {
         if (req.body.password == target.password) {
+            collection = await client.db("teaLog").collection(req.body.username) //change to individual user table
             req.session.login = true
-            res.redirect( 'home.html' )
+            res.redirect( 'welcomeBack.html' )
         } else {
             // password incorrect, redirect back to login page
             //window.alert("password incorrect. please try again") FIXME
@@ -57,7 +66,6 @@ app.post( '/login', async (req,res)=> {
             res.sendFile( __dirname + '/public/index.html' )
         }
     }
-
 })
 
 // add some middleware that always sends unautheniticated users to the login page
@@ -69,17 +77,6 @@ app.use( function( req,res,next) {
 })
   
 
-
-const uri = `mongodb+srv://${process.env.USER}:${process.env.PASS}@${process.env.HOST}`
-const client = new MongoClient( uri )
-
-let collection = null
-
-async function run() {
-  await client.connect()
-  collection = await client.db("datatest").collection("test")
-}
-run()
 
 // route to get all docs
 app.get("/docs", async (req, res) => {
@@ -96,21 +93,32 @@ app.post( '/submit', async (req,res) => {
 
 app.post( '/remove', async (req,res) => {
     const target = await collection.findOne( req.body )
-    const result = await collection.deleteOne({
-        _id:new ObjectId( target._id ) 
-    })
-    
-    res.json( result )
+    if (target !== null) {
+        const result = await collection.deleteOne({
+            _id:new ObjectId( target._id ) 
+        })
+        
+        res.json( result )
+    } else {
+        console.log("item to remove not in database")
+    }
+
 })
 
 app.post( '/update', async (req,res) => {
     const target = await collection.findOne({ day: req.body.day, type: req.body.type} )
-    const result = await collection.updateOne(
-      { _id: new ObjectId( target._id ) },
-      { $set: req.body.updates }
-    )
-  
-    res.json( result )
+    console.log(target)
+    if (target !== null) {
+        const result = await collection.updateOne(
+            { _id: new ObjectId( target._id ) },
+            { $set: req.body.updates }
+          )
+        
+          res.json( result )
+    } else {
+        console.log("item to edit not in database")
+    }
+
 })
 
 

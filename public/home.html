@@ -1,111 +1,114 @@
 <!doctype html>
-<html lang="en">
-  <head>
-    <title>CS4241 Assignment 3</title>
-    <meta charset="utf-8">
-    <script src="main.js"></script>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.2/css/bulma.min.css">
-
-    <!-- for the google font
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet"> -->
+<html lang="en" class="has-background-link-light">
+<head>
+  <title>CS4241 Assignment 3</title>
+  <meta charset="utf-8">
+  <script src="main.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.2/css/bulma.min.css">
+  
+  <!-- for the google font
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet"> -->
+  
+  <!-- get rid of favicon error -->
+  <link rel="icon" href="data:;base64,iVBORw0KGgo=">
+</head>
+<body class="mx-6">
+  <a href="index.html"><button class="button is-link is-light mt-1">back</button></a>
+  <h1 class="title is-1 has-text-centered">Tea Log</h1>
+  <p class="subtitle">Welcome! Here you can keep track of the cups of tea you have dranken. Just enter the type (ex. Black, Green, Earl Grey), the date 
+    (ex. Sunday, 9/8/24), and your rating (0-10). The server then generates a meaning based on the rating. Identify the row you want to delete by its date 
+    and type fields. Identify the row you want to edit by its date and type fields, then choose what you want to edit</p>
+  
+  <div class="is-flex is-justify-content-space-evenly">
+    <div class="is-flex is-flex-direction-column">
+      <form>
+        <div>
+          <h2 class="title is-4" id="addToLog">Add To Log:</h2>
+        </div>
+        <div>
+          <label for="day">Date:</label>
+          <input class="input" type="text" id="day"/>
+        </div>
+        <div>
+          <label for="type">Type:</label>
+          <input class="input" type="text" id="type"/>
+        </div>
+        <div>
+          <label for="rating">Rating:</label>
+          <input class="input" type="text" id="rating"/>
+        </div>
+        <div class="is-flex is-justify-content-flex-end"> 
+          <button class="button is-dark mt-1" id="submit">submit / show results</button>  
+        </div>
+      </form>
+    </div>
     
-    <!-- get rid of favicon error -->
-    <link rel="icon" href="data:;base64,iVBORw0KGgo=">
-  </head>
-  <body class="mx-6">
-      <h1 class="title is-1">Laura's Tea Log</h1>
-      <p class="subtitle">Welcome! Here you can keep track of the cups of tea you have dranken. Just enter the type (ex. Black, Green, Earl Grey), the date (ex. Sunday, 9/8/24), and your rating (0-10). The server then generates a meaning based on the rating.</p>
-      
-      <div class="flex-container">
-        <div class="submit-flex-container">
-          <form>
-            <div>
-              <h2 class="title is-4" id="addToLog">Add To Log:</h2>
-            </div>
-            <div>
-              <label for="day">Date:</label>
-              <input class="input" type="text" id="day"/>
-            </div>
-            <div>
-                <label for="type">Type:</label>
-                <input class="input" type="text" id="type"/>
-            </div>
-            <div>
-              <label for="rating">Rating:</label>
-              <input class="input" type="text" id="rating"/>
-            </div>
-            <div> 
-              <button class="button" id="submit">submit / show results</button>  
-            </div>
-          </form>
+    <br>
+    
+    <div class="is-flex is-flex-direction-column">
+      <form>
+        <div>
+          <h2 class="title is-4" id="deleteFromLog">Delete from Log:</h2>
         </div>
-
-        <br>
-
-        <div class="delete-flex-container">
-          <form>
-            <div>
-              <h2 class="title is-4" id="deleteFromLog">Delete from Log:</h2>
-              <p class="subtitle is-6">Identify the row you want to delete by its date and type fields</p>
-            </div>
-            <div> 
-              <label for="deleteByDate">Date:</label>
-              <input class="input" type="text" id="deleteByDate">
-            </div>
-            <div> 
-                <label for="deleteByType">Type:</label>
-                <input class="input" type="text" id="deleteByType">
-              </div>
-            <div>
-              <button class="button" id="delete">delete</button>
-            </div>
-          </form>
+        <div> 
+          <label for="deleteByDate">Date:</label>
+          <input class="input" type="text" id="deleteByDate">
         </div>
-
-        <br>
-
-        <div class="edit-flex-container"> 
-          <form>
-            <div>
-              <h2 class="title is-4" id="editLogEntry">Edit Log Entry:</h2>
-              <p class="subtitle is-6">Identify the row you want to edit by its date and type fields, then choose what you want to edit</p>
-            </div>
-                <label for="editByDate">Date:</label>
-                <input class="input" type="text" id="editByDate">
-            </div>
-            <div> 
-              <label for="editByType">Type:</label>
-              <input class="input" type="text" id="editByType">
-            </div>
-            <div>
-                <label for="dayEdit">Updated Day:</label>
-                <input class="input" type="text" id="dayEdit" >
-            </div>
-            <div>
-              <label for="typeEdit">Updated Type:</label>
-              <input class="input" type="text" id="typeEdit" >
-            </div>
-            <div>
-              <label for="ratingEdit">Updated Rating:</label>
-              <input class="input" type="text" id="ratingEdit" >
-            </div>
-            <div>
-              <button class="button" id="update">update</button>
-            </div>
-          </form>
+        <div> 
+          <label for="deleteByType">Type:</label>
+          <input class="input" type="text" id="deleteByType">
         </div>
-      </div>
-      <br>
-      <table class="table" id="table">
-        <tr>
-          <!-- on load, these display -->
-          <th>Date Consumed</th>
-          <th>Tea Type</th>
-          <th>Rating</th>
-          <th>Meaning</th>
-        </tr>
-      </table>
-  </body>
+        <div class="is-flex is-justify-content-flex-end">
+          <button class="button is-dark mt-1" id="delete">delete</button>
+        </div>
+      </form>
+    </div>
+    
+    <br>
+    
+    <div class="is-flex is-flex-direction-column"> 
+      <form>
+        <div>
+          <h2 class="title is-4" id="editLogEntry">Edit Log Entry:</h2>
+        </div>
+        <div>
+          <label for="editByDate">Date:</label>
+          <input class="input" type="text" id="editByDate">
+        </div>
+        <div> 
+          <label for="editByType">Type:</label>
+          <input class="input" type="text" id="editByType">
+        </div>
+        <div>
+          <label for="dayEdit">Updated Day:</label>
+          <input class="input" type="text" id="dayEdit" >
+        </div>
+        <div>
+          <label for="typeEdit">Updated Type:</label>
+          <input class="input" type="text" id="typeEdit" >
+        </div>
+        <div>
+          <label for="ratingEdit">Updated Rating:</label>
+          <input class="input" type="text" id="ratingEdit" >
+        </div>
+        <div class="is-flex is-justify-content-flex-end">
+          <button class="button is-dark mt-1" id="update">update</button>
+        </div>
+    </form>
+  </div>
+</div>
+<br>
+
+<table class="table is-fullwidth is-bordered" id="table">
+  <tr>
+    <!-- on load, these display -->
+    <th>Date Consumed</th>
+    <th>Tea Type</th>
+    <th>Rating</th>
+    <th>Meaning</th>
+  </tr>
+</table>
+</body>
 </html>

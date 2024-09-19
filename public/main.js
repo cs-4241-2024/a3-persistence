@@ -29,13 +29,14 @@ const submit = async function( event ) {
           inputDay = document.querySelector( '#day' ),
           inputRating = document.querySelector( '#rating' ),
           meaning = deriveField(inputRating.value)
-          json = { type: inputType.value,
-                   day: inputDay.value,
+          json = { day: inputDay.value,
+                   type: inputType.value,
                    rating: inputRating.value,
                    meaning: meaning },
           body = JSON.stringify( json )
     //only add to database if at least one of the text fields isn't blank
     //in other words, if all the fields are left blank, don't put a blank entry in the database
+    console.log("body")
     if (inputType.value !== "" || inputDay.value !== "" || inputRating.value !== "") {
         fetch( '/submit', {
             method:  'POST',
@@ -51,7 +52,9 @@ const submit = async function( event ) {
 const deriveField = function(rating) {
     //logic for determining meaning from the rating
     let meaning = 'default'
-    if (rating < -10) {
+    if(!Number.isInteger(parseInt(rating))) {
+      meaning = 'rating does not compute (not a number)'
+    } else if (rating < -10) {
       meaning = 'EGGTTOMMESWFTCEP'
     } else if (rating <= 2) {
       meaning = 'BAD, do not drink again'
@@ -64,7 +67,7 @@ const deriveField = function(rating) {
     } else if (rating == 10) {
       meaning = 'my favorite!!'
     } else {
-      meaning = 'rating does not compute'
+      meaning = 'rating does not compute (too high)'
     }
     return meaning;
 }
@@ -165,42 +168,3 @@ const showTable = function(data) {
             table.appendChild(tr)
         })
 }
-  
-  
-// const deleteRow = async function( event ) {
-//     event.preventDefault()
-  
-//     const inputRow = document.querySelector( '#row' ),
-//           json = { row: inputRow.value },
-//           body = JSON.stringify( json )
-  
-//     const response = await fetch( '/delete', {
-//       method:'DELETE',
-//       body 
-//     })
-  
-//     const data = await response.json()
-//     showTable(data)
-// }
-  
-// const update = async function( event ) {
-//     event.preventDefault()
-  
-//     const inputRow = document.querySelector( '#rowEdit' ),
-//           inputType = document.querySelector( '#typeEdit' ),
-//           inputDay = document.querySelector( '#dayEdit' ),
-//           inputRating = document.querySelector( '#ratingEdit' ),
-//           json = { row: inputRow.value,
-//                    type: inputType.value,
-//                    day: inputDay.value,
-//                    rating: inputRating.value },
-//           body = JSON.stringify( json )
-  
-//     const response = await fetch( '/patch', {
-//       method:'PATCH',
-//       body 
-//     })
-  
-//     const data = await response.json()
-//     showTable(data)
-// }
