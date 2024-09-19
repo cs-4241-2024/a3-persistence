@@ -1,11 +1,14 @@
-const {mongoose} = require('mongoose');
+// Require Mongoose
+const mongoose = require("mongoose");
 
-const {Schema} = mongoose;
+// Define a schema
+const Schema = mongoose.Schema;
+
 
 const userSchema = new Schema({
-    name: String,
-    username: String,
-    password: String,
+    "shortname": String,
+    "username": String,
+    "password": String,
 });
 const User = mongoose.model('User', userSchema)
 
