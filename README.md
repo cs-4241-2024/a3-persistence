@@ -13,7 +13,7 @@ Project Summary
 
 ## Technical Achievements
 - **Tech Achievement 2**: I hosted my website on Railway. The downside to Railway over Glitch is it is a lot less intuitive of how to set it up although it does seem to have more features and could probably host larger projacts than Glitch.
-- - **Tech Achievement 3**: I got 100% in all categoried on Google Lighthouse. See lighthouse.png for an image of the results.
+- **Tech Achievement 3**: I got 100% in all categoried on Google Lighthouse. See lighthouse.png for an image of the results.
 
 ### Design/Evaluation Achievements
 - I did not do any design achievements due to my workload and time constraints.
