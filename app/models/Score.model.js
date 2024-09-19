@@ -7,7 +7,7 @@ const Schema = mongoose.Schema;
 
 const scoreSchema = new Schema({
     "name": String,
-    "date": Date,
+    "date": String,
     "points": String,
     "rank": Number
 });
