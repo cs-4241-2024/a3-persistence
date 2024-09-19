@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>CS4241 Assignment 2</title>
+    <meta name="viewport" charset="utf-8" content="width=device-width, initial-scale=1.0">
+    <script src="js/main.js"></script>
+    <link rel="stylesheet" href="./output.css">
+    
+    <!-- get rid of favicon error -->
+    <link rel="icon" href="data:;base64,iVBORw0KGgo=">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Honk&family=Press+Start+2P&display=swap" rel="stylesheet">
+
+  </head>
+  <body>
+  <div class="text-center">
+    <a href="https://tetris.com/play-tetris" target="_blank" rel="noopener noreferrer" id="play-tetris" class="font-gaming"> Go play tetris, come back and share your score</a>
+  </div>
+  <form class="text-white font-gaming flex flex-row justify-center pt-4 pb-4" onsubmit="return false">
+    <input class="text-black text-center bg-white border-blue-950 border-2" id="shortname" value="display name">
+    <input class="text-black text-center bg-white border-blue-950 border-2" id="username" value="username">
+    <input class="text-black text-center bg-white border-blue-950 border-2" id="password" value="password">
+    <button class="bg-blue-800 border-blue-950 border-2 text-center" id="login">login</button>
+    <button class="bg-blue-800 border-blue-950 border-2 text-center" id="register">register</button>
+  </form>
+
+  <form  class="flex flex-row justify-center font-gaming pt-4 pb-8" onsubmit="return false">
+      <input type="date" id="thedate" value="the date" class="text-black text-center bg-white border-blue-950 border-2">
+      <input type="number" id="points" value="points" class="text-black text-center bg-white border-blue-950 border-2">
+      <button id="submitbutton" class="bg-blue-800 border-blue-950 border-2">submit</button>
+    </form>
+    <div id = "column">
+      <table id="leader" class="font-gaming">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Date</th>
+            <th>Points</th>
+            <th>Rank</th>
+        </thead>
+        <tbody id = "leaderdata">
+        </tbody>
+      </table>
+    </div>
+  </body>
+</html>
