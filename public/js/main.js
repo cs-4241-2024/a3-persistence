@@ -1,5 +1,127 @@
 // FRONT-END (CLIENT) JAVASCRIPT HERE
 
+
+const add = async function(event) {
+    event.preventDefault();
+
+    const input = {
+      MatchType:document.querySelector('input[name="match-type"]:checked'),
+      MatchFormat:document.querySelector('input[name="match-format"]:checked'),
+      Match:document.getElementById('match'),
+      SchoolA:document.getElementById("schoolA"),
+      SchoolB:document.getElementById("schoolB"),
+      PlayerA1:document.getElementById("playerA1"),
+      PlayerB1:document.getElementById("playerB1"),
+      PlayerA2:document.getElementById("playerA2"),
+      PlayerB2:document.getElementById("playerB2"),
+      Game1A:document.getElementById("game1A"),
+      Game1B:document.getElementById("game1B"),
+      Game2A:document.getElementById("game2A"),
+      Game2B:document.getElementById("game2B"),
+      Game3A:document.getElementById("game3A"),
+      Game3B:document.getElementById("game3B"),
+    },
+    json = {
+        MatchType: input.MatchType.value,
+        MatchFormat: input.MatchFormat.value,
+        Match: input.Match.value,
+        SchoolA: input.SchoolA.value,
+        SchoolB: input.SchoolB.value,
+        PlayerA1: input.PlayerA1.value,
+        PlayerB1: input.PlayerB1.value,
+        PlayerA2: input.PlayerA2.value,
+        PlayerB2: input.PlayerB2.value,
+        Game1A: input.Game1A.value,
+        Game1B: input.Game1B.value,
+        Game2A: input.Game2A.value,
+        Game2B: input.Game2B.value,
+        Game3A: input.Game3A.value,
+        Game3B: input.Game3B.value,
+    },
+    body = JSON.stringify( json )
+    console.log(body)
+
+    const response = await fetch( '/add', {
+      method:'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body
+    })
+    const data = await response.json()
+    console.log(data)
+    await generateMatches()
+}
+
+const addMatch = function(data) {
+    const matchContainer = document.getElementById('matches-container'); // Assuming you have a container to append the matches
+
+    const matchHTML = `
+    <div id="Example-Match" class="fixed-grid">
+      <div class="grid">
+        <div class="cell match-info is-col-span-3 is-inline is-size-5">
+          <p class="is-inline is-size-4">${data.SchoolA} -</p>
+          <p class="is-inline is-size-4">${data.SchoolB} -</p>
+          <p class="is-inline is-size-4"> ${data.Match}</p>
+        </div>
+
+        <div class="cell is-col-start-1">
+          <div>
+            <p class="is-inline-block">${data.SchoolA}</p>
+            <p class="is-inline-block">✔</p>
+          </div>
+          <div>
+            <p class="is-inline">${data.PlayerA1}</p>
+            <p class="is-inline"> / </p>
+            <p class="is-inline-block">${data.PlayerA2}</p>
+          </div>
+        </div>
+        <div class="cell columns is-gapless is-flex ">
+          <p class="column is-size-3">${data.Game1A}</p>
+          <p class="column is-size-3">${data.Game2A}</p>
+          <p class="column is-size-3">${data.Game3A}</p>
+        </div>
+        <button class="cell is-1-one-fifth button is-warning">Edit</button>
+
+        <div class="cell is-col-start-1">
+          <div>
+            <p class="is-inline-block">${data.SchoolB}</p>
+            <p class="is-inline-block">✔</p>
+          </div>
+          <div>
+            <p class="is-inline">${data.PlayerB1}</p>
+            <p class="is-inline"> / </p>
+            <p class="is-inline-block">${data.PlayerB2}</p>
+          </div>
+        </div>
+        <div class="cell columns is-gapless is-flex is-justify-content-space-between">
+          <h3 class="column is-size-3">${data.Game1B}</h3>
+          <h3 class="column is-size-3">${data.Game2B}</h3>
+          <h3 class="column is-size-3">${data.Game3B}</h3>
+        </div>
+        <button class="cell is-1-one-fifth button is-danger">Delete</button>
+      </div>
+    </div>
+  `;
+
+    matchContainer.insertAdjacentHTML('beforeend', matchHTML);
+};
+
+const generateMatches = async function() {
+    const matchContainer = document.getElementById('matches-container'); // Assuming you have a container to append the matches
+    matchContainer.innerHTML = '';
+    const response = await fetch( '/docs', {
+        method:'GET',
+        headers: { 'Content-Type': 'application/json' },
+    })
+    let jsonData = await response.json();
+    jsonData.forEach(match => {
+        addMatch(match)
+    });
+
+}
+
+
+
+
 // Global Variable Score
 let clicks = 0;
 // let table = document.createElement('table')
@@ -112,6 +234,9 @@ const createNewRow = function (index, name, clicks, score, tableElement) {
 }
 
 window.onload = async function() {
+  const addButton = document.getElementById("add");
+  addButton.onclick = add;
+
    const button = document.getElementById("submit");
   button.onclick = submit;
 
@@ -133,5 +258,7 @@ window.onload = async function() {
 
   const jsonData = await response.json()
   generateTable(jsonData)
+
+    await generateMatches()
 
 }

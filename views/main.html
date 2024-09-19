@@ -1,173 +1,196 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <title>CS4241 Assignment 2</title>
-    <meta charset="utf-8">
-    <script src="js/main.js"></script>
-    <link rel="stylesheet" href="css/main.css">
-<!--    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.2/css/bulma.min.css">-->
+<head>
+  <title>CS4241 Assignment 3</title>
+  <meta charset="utf-8">
+  <script src="js/main.js"></script>
+  <link rel="stylesheet" href="css/main.css">
+  <!--    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.2/css/bulma.min.css">-->
 
-    <!-- get rid of favicon error -->
-    <link rel="icon" href="data:;base64,iVBORw0KGgo=">
+  <!-- get rid of favicon error -->
+  <link rel="icon" href="data:;base64,iVBORw0KGgo=">
 
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
-  </head>
-  <body class="vt323-regular">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
+</head>
+<body class="is-family-monospace">
 
-    <h1>Submit your Match!</h1>
-    <h2>Match Formatting</h2>
-    <form>
-      <div class="flex-horizontal">
-        <div class="flex-vertical">
-          <label for="match-type">Match Type:</label>
-          <div class="flex-horizontal">
-          <input type="radio" id="round-robin" name="match-type" value="round-robin">
+<h1 class="title is-family-primary is-size-1">Submit your Match!</h1>
+<div>
+  <form>
+    <h2 class="is-size-4 is-flex is-justify-content-start is-align-items-start has-text-weight-semibold">Match Formatting:</h2>
+    <div class="is-flex is-flex-direction-row is-justify-content-space-between ">
+      <!-- Match Type -->
+      <div class="is-flex is-flex-direction-column">
+        <label class="pb-1" for="match-type">Match Type:</label>
+        <div class="flex-horizontal">
+          <input type="radio" id="round-robin" name="match-type" value="round-robin" required>
           <label for="round-robin">Round Robin</label>
         </div>
-          <div class="flex-horizontal">
-          <input type="radio" id="elimination" name="match-type" value="elimination">
-        <label for="elimination">Elimination</label>
+        <div class="is-flex is-flex-direction-row">
+          <input type="radio" id="elimination" name="match-type" value="elimination" required>
+          <label for="elimination">Elimination</label>
         </div>
-        </div>
-
-        <div class="flex-vertical">
-          <label for="match-format">Match Format:</label>
-          <span class="flex-horizontal">
-
-      <input type="radio" id="singles" name="match-format" value="singles">
-      <label for="singles">Singles</label>
-      </span>
-          <span class="flex-horizontal">
-      <input type="radio" id="doubles" name="match-format" value="doubles">
-      <label for="doubles">Doubles</label>
-      </span>
-        </div>
-
-        <div class="field">
-          <label class="label" for="match">Match:</label>
-          <div class="select">
-            <select  id="match" name="match">
-              <option value="">Choose Match Type</option>
-              <option value="Singles 1">Singles 1</option>
-              <option value="Singles 2">Singles 2</option>
-              <option value="Singles 3">Singles 3</option>
-              <option value="Singles 4">Singles 4</option>
-              <option value="Doubles 1">Doubles 1</option>
-              <option value="Doubles 2">Doubles 2</option>
-              <option value="Doubles 3">Doubles 3</option>
-            </select>
-          </div>
-
-        </div>
-
-
       </div>
 
-      <datalist id="schools">
-        <option value="SAN">Sandburg</option>
-        <option value="AND">Andrew</option>
-        <option value="NT">New Trier</option>
-        <option value="DGN">Downers Grove North</option>
-        <option value="FR">Fremd</option>
-        <option value="HER">Hersey</option>
-        <option value="HS">Hinsdale South</option>
-        <option value="LT">Lockport</option>
-        <option value="NN">Naperville North</option>
-        <option value="DF">Deerfield</option>
-        <option value="WY">Whitney Young</option>
-        <option value="YK">York</option>
-      </datalist>
-    <div class="scores">
-      <h3>Scores:</h3>
+      <!-- Match Format -->
+      <div class="is-flex is-flex-direction-column">
+        <label class="pb-1" for="match-format">Match Format:</label>
+        <div class="is-flex is-flex-direction-row">
+          <input type="radio" id="singles" name="match-format" value="singles" required>
+          <label for="singles">Singles</label>
+        </div>
+        <div class="is-flex is-flex-direction-row">
+          <input type="radio" id="doubles" name="match-format" value="doubles" required>
+          <label for="doubles">Doubles</label>
+        </div>
+      </div>
+
+      <!-- Match Selection -->
+      <div class="is-flex is-justify-content-start is-flex-direction-column">
+        <label class="pb-1" match">Match:</label>
+        <div class="select">
+          <select id="match" name="match" required>
+            <option value="">Choose Match Type</option>
+            <option value="Singles 1">Singles 1</option>
+            <option value="Singles 2">Singles 2</option>
+            <option value="Singles 3">Singles 3</option>
+            <option value="Singles 4">Singles 4</option>
+            <option value="Doubles 1">Doubles 1</option>
+            <option value="Doubles 2">Doubles 2</option>
+            <option value="Doubles 3">Doubles 3</option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <datalist id="schools">
+      <option value="SAN">Sandburg</option>
+      <option value="AND">Andrew</option>
+      <option value="NT">New Trier</option>
+      <option value="DGN">Downers Grove North</option>
+      <option value="FR">Fremd</option>
+      <option value="HER">Hersey</option>
+      <option value="HS">Hinsdale South</option>
+      <option value="LT">Lockport</option>
+      <option value="NN">Naperville North</option>
+      <option value="DF">Deerfield</option>
+      <option value="WY">Whitney Young</option>
+      <option value="YK">York</option>
+    </datalist>
+    <!-- Schools and Players -->
+    <div class="pt-3">
+
       <table>
         <tr>
-          <th>Schools</th>
-
-          <th class="school-a">
+          <td><h3 class="has-text-weight-semibold is-size-4 is-flex is-justify-content-start">Scores:</h3></td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td class="p-2">Schools</td>
+          <td class="school-a">
             <input class="input" list="schools" id="schoolA" name="schoolA" placeholder="Select School" required>
-          </th>
-          <th class="school-b">
+          </td>
+          <td class="school-b">
             <input class="input" list="schools" id="schoolB" name="schoolB" placeholder="Select School" required>
-          </th>
+          </td>
+        </tr>
+        <!-- Players -->
+        <tr>
+          <td class="p-2">PLAYER 1</td>
+          <td><input class="input" type="text" id="playerA1" name="playerA1" placeholder="NT1" required></td>
+          <td><input class="input" type="text" id="playerB1" name="playerB1" placeholder="AND2" required></td>
         </tr>
         <tr>
-          <td>PLAYER 1</td>
-          <td><input class="input" type="text" id="playerA1" name="playerA1" placeholder="NT1"></td>
-          <td><input class="input" type="text" id="playerB1" name="playerB1" placeholder="AND2"></td>
+          <td class="p-2">PLAYER 2</td>
+          <td><input class="input" type="text" id="playerA2" name="playerA2" placeholder="NT2" required></td>
+          <td><input class="input" type="text" id="playerB2" name="playerB2" placeholder="AND4" required></td>
+        </tr>
+        <!-- Games -->
+        <tr>
+          <td class="p-2">GAME 1</td>
+          <td><input id="game1A" class="input" type="number" name="game1A" min="0" value="0" required></td>
+          <td><input id="game1B" class="input" type="number" name="game1B" min="0" value="0" required></td>
         </tr>
         <tr>
-          <td>PLAYER 2</td>
-          <td><input class="input" type="text" id="playerA2" name="playerA2" placeholder="NT2"></td>
-          <td><input class="input" type="text" id="playerB2" name="playerB2" placeholder="AND4"></td>
+          <td class="p-2">GAME 2</td>
+          <td><input id="game2A" class="input" type="number" name="game2A" min="0" value="0" required></td>
+          <td><input id="game2B" class="input" type="number" name="game2B" min="0" value="0" required></td>
         </tr>
         <tr>
-          <td>GAME 1</td>
-          <td><input class="input" type="number" name="game1A" min="0" value="0"></td>
-          <td><input class="input" type="number" name="game1B" min="0" value="0"></td>
-        </tr>
-        <tr>
-          <td>GAME 2</td>
-          <td><input class="input" type="number" name="game2A" min="0" value="0"></td>
-          <td><input class="input" type="number" name="game2B" min="0" value="0"></td>
-        </tr>
-        <tr>
-          <td>GAME 3</td>
-          <td><input class="input" type="number" name="game3A" min="0" value="0"></td>
-          <td><input class="input" type="number" name="game3B" min="0" value="0"></td>
+          <td class="p-2">GAME 3</td>
+          <td><input id="game3A" class="input" type="number" name="game3A" min="0" value="0" required></td>
+          <td><input id="game3B" class="input" type="number" name="game3B" min="0" value="0" required></td>
         </tr>
       </table>
     </div>
 
-    <div class="submit-clear">
-      <button class="button is-link" type="submit">Submit</button>
-      <button class="button is-link is-light" type="button">Clear</button>
+    <!-- Submit and Clear Buttons -->
+    <div class="mt-2 submit-clear flex-horizontal is-justify-content-end is-align-items-end">
+      <input type="submit" id="add" class="button is-link" value="Submit">
+      <button type="reset" class="ml-2 button is-link is-light">Clear</button>
     </div>
-    </form>
+  </form>
+  <div id="matches-container">
+    <div id="Example-Match" class="fixed-grid">
+      <div class="grid">
+        <div class="cell match-info is-col-span-3 is-inline is-size-5">
+          <p class="is-inline is-size-4">School A -</p>
+          <p class="is-inline is-size-4">School B -</p>
+          <p class="is-inline is-size-4"> Singles 2</p>
+        </div>
 
-    <div class="container">
 
-        <div class="match-box fixed-grid has-3-cols">
-          <div class="grid">
-            <div class="cell match-info is-col-span-2">02:30 Men's Singles Group Play Stage - Group D</div>
-
-
-            <div class="cell is-col-start-1 match-details flex-horizontal">
-              <div class="country">
-                <img src="https://flagcdn.com/w20/jp.png" class="flag" alt="Japan">
-                <span class="winner">JPN NISHIMOTO Kenta</span>
-                <span class="checkmark">✔</span>
-              </div>
-
-            </div>
-            <div class="cell columns  is-gapless is-flex">
-              <h3>2</h3>
-              <h3>21</h3>
-              <h3>21</h3>
-            </div>
-            <button class="cell button is-warning">Edit</button>
-
-            <div class="cell is-col-start-1 match-details flex-horizontal">
-              <div class="country">
-                <img src="https://flagcdn.com/w20/kz.png" class="flag" alt="Kazakhstan">
-                <span>KAZ Dmitriy PANARIN</span>
-              </div>
-
-            </div>
-            <div class="cell columns is-gapless is-flex">
-              <h3>2</h3>
-              <h3>21</h3>
-              <h3>21</h3>
-            </div>
-            <button class="cell button is-danger">Delete</button>
+        <div class="cell is-col-start-1">
+          <div>
+            <p class="is-inline-block">School A</p>
+            <p class="is-inline-block">✔</p>
+          </div>
+          <div>
+            <p class="is-inline">Player 1</p>
+            <p class="is-inline"> / </p>
+            <p class="is-inline-block">Player 2</p>
           </div>
 
+        </div>
+        <div class="cell columns is-gapless is-flex ">
+          <p class="column is-size-3">21</p>
+          <p class="column is-size-3">2</p>
+          <p class="column is-size-3">21</p>
+        </div>
+        <button class="cell is-1-one-fifth button is-warning">Edit</button>
+
+        <div class="cell is-col-start-1">
+          <div>
+            <p class="is-inline-block">School B</p>
+            <p class="is-inline-block">✔</p>
+          </div>
+          <div>
+            <p class="is-inline">Player 1</p>
+            <p class="is-inline"> / </p>
+            <p class="is-inline-block">Player 2</p>
+          </div>
+
+        </div>
+        <div class="cell columns is-gapless is-flex is-justify-content-space-between">
+          <h3 class="column is-size-3">2</h3>
+          <h3 class="column is-size-3">21</h3>
+          <h3 class="column is-size-3">21</h3>
+        </div>
+        <button class="cell is-1-one-fifth button is-danger">Delete</button>
       </div>
-
     </div>
+  </div>
+  </div>
+
+
+
+
+
+<!--WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW-->
 
 
 
@@ -176,44 +199,39 @@
 
 
 
+<div id="container-score">
+  <h3 id="clickCounter">0</h3>
+  <button id="scoreButton" class="vt323-regular">Click Me</button>
+</div>
+<form class="flex-vertical">
+  <label for="yourname"> Name:</label>
+  <input type="text" id="yourname" placeholder="your name here">
+  <button id="submit">submit</button>
+</form>
 
 
+<div class="flex-horizontal">
+  <div class="flex-vertical">
+    <h2>High Scores:</h2>
+    <table id="table"></table>
+  </div>
+  <form class="flex-vertical">
+    <h2>Delete Data:</h2>
+    <label for="index">Target data's Index:</label>
+    <input type="number" id="index" placeholder="0">
+    <button id="delete">delete</button>
+  </form>
+  <form class="flex-vertical">
+    <h2> Alter Data:</h2>
+    <label for="indexOfChange">Target data's Index:</label>
+    <input type="number" id="indexOfChange" placeholder="0">
+    <label for="nameChange">New Name:</label>
+    <input type="text" id="nameChange" placeholder="John">
+    <label for="scoreChange">New Times Clicked:</label>
+    <input type="number" id="scoreChange" placeholder="2">
+    <button id="alter">alter data</button>
+  </form>
 
-
-
-  <div id="container-score">
-      <h3 id="clickCounter">0</h3>
-      <button id="scoreButton" class="vt323-regular">Click Me</button>
-    </div>
-    <form class="flex-vertical">
-      <label for="yourname"> Name:</label>
-      <input type="text" id="yourname" placeholder="your name here">
-      <button id="submit">submit</button>
-    </form>
-
-
-    <div class="flex-horizontal">
-      <div class="flex-vertical">
-        <h2>High Scores:</h2>
-        <table id="table"></table>
-      </div>
-      <form class="flex-vertical">
-        <h2>Delete Data:</h2>
-        <label for="index">Target data's Index:</label>
-        <input type="number" id="index" placeholder="0">
-        <button id="delete">delete</button>
-      </form>
-      <form class="flex-vertical">
-        <h2> Alter Data:</h2>
-        <label for="indexOfChange">Target data's Index:</label>
-        <input type="number" id="indexOfChange" placeholder="0">
-        <label for="nameChange">New Name:</label>
-        <input type="text" id="nameChange" placeholder="John">
-        <label for="scoreChange">New Times Clicked:</label>
-        <input type="number" id="scoreChange" placeholder="2">
-        <button id="alter">alter data</button>
-      </form>
-
-    </div>
-  </body>
+</div>
+</body>
 </html>
