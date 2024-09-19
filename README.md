@@ -1,29 +1,16 @@
-## Your Web Application Title
+## To-Do List
 
-This app is a simple to-do list that has been heavily stylized with CSS and flexbox. It utilizes DOM in the JS file to manipulate HTML attributes and communicate with the server.
-It users to add tasks with a priority level, view the tasks in a grid format with derived fields like creation date and deadline (exactly a week later).
-There are two buttons, one to add a task and another to clear all the tasks.
+As of right now, I've been debugging for the past two days, most SAs and TAs can't help or figure out the issue.
+I coded most of this before the issue started to occur so I didn't get to add to and modify the CSS or the Google Lighthouse testing
+I'm using the default port 3000 but in the logs I am getting this:
 
-## Technical Achievements
+    events.js:174
 
-- My website is a single-page with a form submission feature that submits and displays the server data. It also shows derived fields of each submission for the user.
+    throw er; // Unhandled 'error' event
 
-### Design/Evaluation Achievements
+    Error: listen EADDRINUSE: address already in use :::3000
 
-- I did the think-aloud protocol with Cody Rueda. We met in person to go over our code. Here are the results:
-
-Provide the last name of each student you conduct the evaluation with.
-
-- Cody Rueda
-
-What problems did the user have with your design?
-
-- The user did not have many problems with my design. The only thing I noticed was that in clearing the tasks, Cody had assumed that it only deleted one task, not all of them.
-
-What comments did they make that surprised you?
-
-- Cody spoke about the CSS of my design, said it was very dark which I understand. He said he enjoyed the grid format which I was excited about because I had to do some research to figure that out.
-
-What would you change about the interface based on their feedback?
-
-- I would make the background color a bit lighter and contrast the color of the square submissions against it more to make it more readable. I would also try to implement a button that deletes just one task.
+To try and solve it, going through possible solutions like my node.js and mongodb not being on supported versions but I attempted to fix that.
+It looks like it is connecting to mongodb but there's a port problem that I can't seem to identify.
+I'm really not sure why it is doing this at this point, I have no instances of Glitch running at the same time and can't seem to find any way to make this run properly.
+So here's my code attempt, hopefully I can gain some credit for my server code and login logic.
