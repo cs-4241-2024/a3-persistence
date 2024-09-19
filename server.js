@@ -265,7 +265,7 @@ app.post( '/newAccount', async (req,res)=> {
         const docs = await userCollection.find({}).toArray()
         let add = 1;
         for (i=0;i<docs.length;i++) {
-            if (req.body.unsername===docs[i].username) {
+            if (req.body.username===docs[i].username) {
                 add = 0;
             }
         }

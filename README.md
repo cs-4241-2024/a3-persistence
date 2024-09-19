@@ -1,68 +1,23 @@
-Assignment 3 - Persistence: Two-tier Web Application with Database, Express server, and CSS template
+## Book Manager
+Eleanor Foley
+your glitch (or alternative server) link e.g. http://a3-charlie-roberts.glitch.me
 ===
 
-Due: September 19th, by 11:59 AM.
-
-This assignnment continues where we left off, extending it to use the most popular Node.js server framework (express), 
-a database (mongodb), and a CSS application framework / template of your choice (Boostrap, Material Design, Semantic UI, Pure etc.)
-
-Baseline Requirements
+Description
 ---
 
-Your application is required to implement the following functionalities:
+- the goal of the application is for users to add books on their book manager
+- challenges you faced in realizing the application. I thought for logging in I had to access "database access" on mangodb and did a lot of googling and wasted a day then went to office hours the next day and realized I could just make a table containing users passwords and usernames. That was unclear on the github how to go about accessing/storing users and passwords.
+- what authentication strategy you chose to use and why (choosing one because it seemed the easiest to implement is perfectly acceptable). I just had logging in with a username and password
+- what CSS framework you used and why. I used bulma since it said it was realitively easy and simple
+  - include any modifications to the CSS framework you made via custom CSS you authored. None
+- the five Express middleware packages you used and a short (one sentence) summary of what each one does. If you use a custom function for *one* (and one alone) middleware please 
+add a little more detail about what it does.. This was optional so I didn't do it.
 
-- a `Server`, created using Express (no alternatives will be accepted for this assignment)
-- a `Results` functionality which shows all data associated with a logged in user (except passwords)
-- a `Form/Entry` functionality which allows users to add, modify, and delete data items (must be all three!) associated with their user name / account. 
-- Persistent data storage in between server sessions using [mongodb](https://www.mongodb.com/cloud/atlas) (you *must* use mongodb for this assignment). You can use either the [official mongodb node.js library](https://www.npmjs.com/package/mongodb) or use the [Mongoose library](https://www.npmjs.com/package/mongoose), which enables you to define formal schemas for your database. Please be aware that the course staff cannot provide in-depth support for use of Mongoose.  
-- Use of a [CSS framework or template](https://github.com/troxler/awesome-css-frameworks). 
-This should do the bulk of your styling/CSS for you and be appropriate to your application. 
-For example, don't use [NES.css](https://nostalgic-css.github.io/NES.css/) (which is awesome!) unless you're creating a game or some type of retro 80s site.
 
-Your application is required to demonstrate the use of the following concepts:  
-
-HTML:  
-- HTML input tags and form fields of various flavors (`<textarea>`, `<input>`, checkboxes, radio buttons etc.)
-- HTML that can display all data *for a particular authenticated user*. Note that this is different from the last assignnment, which required the display of all data in memory on the server.
-
-Note that it might make sense to have two pages for this assignment, one that handles login / authentication, and one that contains the rest of your application.
-For example, when visiting the home page for the assignment, users could be presented with a login form. After submitting the login form, if the login is 
-successful, they are taken to the main application. If they fail, they are sent back to the login to try again. For this assignment, it is acceptable to simply create 
-new user accounts upon login if none exist, however, you must alert your users to this fact.  
-
-CSS:  
-- CSS styling should primarily be provided by your chosen template/framework. 
-Oftentimes a great deal of care has been put into designing CSS templates; 
-don't override their stylesheets unless you are extremely confident in your graphic design capabilities. 
-The idea is to use CSS templates that give you a professional looking design aesthetic without requiring you to be a graphic designer yourself.
-
-JavaScript:  
-- At minimum, a small amount of front-end JavaScript to get / fetch data from the server. 
-See the [previous assignment](https://github.com/cs-4241-23/shortstack) for reference.
-
-Node.js:  
-- A server using Express and a persistent database (mongodb).
-
-General:  
-- Your site should achieve at least 90% on the `Performance`, `Best Practices`, `Accessibility`, and `SEO` tests 
-using Google [Lighthouse](https://developers.google.com/web/tools/lighthouse) (don't worry about the PWA test, and don't worry about scores for mobile devices).
-Test early and often so that fixing problems doesn't lead to suffering at the end of the assignment. 
-
-Deliverables
----
-
-Do the following to complete this assignment:
-
-1. Implement your project with the above requirements. I'd begin by converting your A2 assignment. First, change the server to use express. Then, modify the server to use mongodb instead of storing data locally. Last but not least, implement user accounts and login. User accounts and login is often the hardest part of this assignment, so budget your time accordingly.
-2. If you developed your project locally, deploy your project to Glitch (unless completing the alternative server technical acheivement described below), and fill in the appropriate fields in your package.json file.
-3. Test your project to make sure that when someone goes to your main page on Glitch (or an alternative server), it displays correctly.
-4. Ensure that your project has the proper naming scheme `a3-yourfirstname-yourlastname` so we can find it.
-5. Fork this repository and modify the README to the specifications below.
-6. Create and submit a Pull Request to the original repo. Name the pull request using the following template: `a3-firstname-lastname`.
 
 Acheivements
 ---
-
 Below are suggested technical and design achievements. You can use these to help boost your grade up to an A and customize the 
 assignment to your personal interests, for a maximum twenty additional points and a maximum grade of a 100%. 
 These are recommended acheivements, but feel free to create/implement your own... just make sure you thoroughly describe what you did in your README, 
@@ -79,10 +34,32 @@ Please contact the course staff if you have any questions about this. THIS IS TH
 
 *Design/UX*
 - (10 points) Make your site accessible using the [resources and hints available from the W3C](https://www.w3.org/WAI/), Implement/follow twelve tips from their [tips for writing](https://www.w3.org/WAI/tips/writing/), [tips for designing](https://www.w3.org/WAI/tips/designing/), and [tips for development](https://www.w3.org/WAI/tips/developing/). *Note that all twelve must require active work on your part*. 
-For example, even though your page will most likely not have a captcha, you don't get this as one of your twelve tips to follow because you're effectively 
-getting it "for free" without having to actively change anything about your site. 
-Contact the course staff if you have any questions about what qualifies and doesn't qualify in this regard. 
-List each tip that you followed and describe what you did to follow it in your site.
+
+1. Associate a label with every form control
+2. Help users avoid and correct mistakes
+- For any numbers input required I made it have little arrows for up or down
+3. Don’t use color alone to convey information
+- I have some words bolded and buttons with color
+4. Ensure that interactive elements are easy to identify
+- all buttons are colorful
+5. Provide informative, unique page titles
+- Main Page, Log In Page, Create User Page
+6. Use headings to convey meaning and structure
+- I have subheadings in locations 
+7. Provide clear instructions
+- I have instructions for the limits of certain forms
+8. Keep content clear and concise
+- text is rather minimal and only there for helping the user
+9. Provide sufficient contrast between foreground and background
+- the background is either black or white (dark mode starts in the evening), there is a clear contrast with the colors
+10. Ensure that form elements include clearly associated labels
+11. Provide easily identifiable feedback
+- when creating an account you will be told if you have successfully created an account or not
+12. Use headings and spacing to group related content
+- pretty self explanitory on my main page, they are grouped and have a heading
+
+
+
 - (5 points) Describe how your site uses the CRAP principles in the Non-Designer's Design Book readings. 
 Which element received the most emphasis (contrast) on each page? 
 How did you use proximity to organize the visual information on your page? 
@@ -90,25 +67,9 @@ What design elements (colors, fonts, layouts, etc.) did you use repeatedly throu
 How did you use alignment to organize information and/or increase contrast for particular elements. 
 Write a paragraph of at least 125 words *for each of four principles* (four paragraphs, 500 words in total). 
 
-Sample Readme (delete the above when you're ready to submit, and modify the below so with your links and descriptions)
----
+The titles and buttons on the page receive the most emphasis, making them key focal points. The titles are intentionally large, ensuring they stand out to users, while the buttons are all designed in a consistent blue, which contrasts with the surrounding text. This color choice helps direct attention to the interactive elements. Additionally, the input fields on the main page feature a different shade of blue, clearly indicating where users can enter information. To further enhance readability, certain words are bolded, highlighting essential information that users should not overlook. Lastly, the implementation of a dark mode offers a more comfortable viewing experience during the evening, allowing users to switch according to their lighting needs, ultimately improving usability at all times of day.
+Proximity is a fundamental design principle used to organize data across all pages of the site. Each section is encapsulated within its own container, visually differentiating the various functionalities. This method allows users to easily identify the purpose of each area, whether it’s for adding, deleting, or modifying data. For account-related actions, such as creating an account or logging in, dedicated containers clearly display relevant fields like username and password input. This organization not only aids in navigation but also simplifies the user experience, as individuals can quickly find the information they need. By grouping related content together, users can complete tasks more efficiently, minimizing confusion and enhancing overall satisfaction with the site.
+To build the site’s design, I utilized the Bulma template and carefully selected colors that complemented the overall aesthetic. All buttons share the same color palette, providing a cohesive look and feel throughout the interface. Input fields on the main page are also consistently colored, reinforcing the visual identity. Initially, I encountered challenges while integrating Bulma, as I was transitioning from previous assignment files where I manually inputted CSS elements. This adjustment required a bit of time to familiarize myself with Bulma's predefined styles. However, the framework’s range of options allowed me to pick and choose specific styles and colors that aligned with my vision, ultimately leading to a more polished and cohesive design.
+Alignment plays a crucial role in establishing a clear hierarchy and guiding the viewer’s eye through the information presented on the site. By consistently positioning elements, I created a structured layout that enhances the overall readability of the content. This sense of order allows users to navigate the site effortlessly, as their attention is directed to the most important information first. Strategic alignment of headings, buttons, and other key elements not only improves aesthetics but also ensures that users can quickly digest the information. This thoughtful approach to design enhances user experience, making it easier for visitors to interact with the site and accomplish their goals, whether they are looking for information or performing specific actions.
 
-## Your Web Application Title
 
-your glitch (or alternative server) link e.g. http://a3-charlie-roberts.glitch.me
-
-Include a very brief summary of your project here. Images are encouraged, along with concise, high-level text. Be sure to include:
-
-- the goal of the application
-- challenges you faced in realizing the application
-- what authentication strategy you chose to use and why (choosing one because it seemed the easiest to implement is perfectly acceptable)
-- what CSS framework you used and why
-  - include any modifications to the CSS framework you made via custom CSS you authored
-- the five Express middleware packages you used and a short (one sentence) summary of what each one does. If you use a custom function for *one* (and one alone) middleware please 
-add a little more detail about what it does.
-
-## Technical Achievements
-- **Tech Achievement 1**: I used OAuth authentication via the GitHub strategy
-
-### Design/Evaluation Achievements
-- **Design Achievement 1**: I followed the following tips from the W3C Web Accessibility Initiative...
