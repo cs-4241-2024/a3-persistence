@@ -1,5 +1,8 @@
 const { error } = require('console');
 const express = require('express');
+const morgan = require('morgan');
+const cors = require('cors');
+const helmet = require('helmet');
 const { MongoClient, ObjectId, ServerApiVersion } = require('mongodb');
 const path = require('path'); // For handling file paths
 const app = express();
@@ -43,8 +46,14 @@ async function connectToMongo() {
 }
 
 // middleware to handle JSON requests
-app.use(express.json());
 app.use(express.static('public')); // Serve static files from the 'public' directory
+
+// Middleware setup
+app.use(helmet()); // Security headers
+app.use(cors()); // Enable CORS
+app.use(morgan('tiny')); // Logging
+app.use(express.json()); // Parse JSON bodies
+app.use(express.urlencoded({ extended: true })); // Parse URL-encoded bodies
 
 connectToMongo();
 
