@@ -1,0 +1,65 @@
+.error {
+  color: red;
+}
+
+.login {
+  border-color: #0E4D00;
+  background: #0E4D00;
+  color: var(--text);
+  margin: 5px;
+  margin-left: 0px;
+}
+
+.make-new {
+  border-color: #6B3200;
+  background: #6B3200;
+  color: var(--text);
+  margin: 5px;
+  margin-right: 0px;
+}
+
+.submit {
+  border-color: #0E4D00;
+  background: #0E4D00;
+  color: var(--text);
+  margin-top: -50px;
+  grid-column: span 2;
+}
+
+.button-holder {
+  background: var(--bg);
+}
+
+.remove {
+  border-color: #850F15;
+  background: #850F15;
+  color: var(--text);
+  margin: 5px;
+}
+
+.content-holder {
+  padding: 5px;
+  grid-template-columns: 1fr;
+  align-items: center;
+  justify-content: center;
+}
+
+.label {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.login-option-holder {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+
+.input-holder {
+  display: grid;
+  grid-template-columns: 1fr;
+}
+
+table {
+  width: 100%
+}
