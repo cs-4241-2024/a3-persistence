@@ -5,6 +5,8 @@ your glitch (or alternative server) link e.g. http://a3-charlie-roberts.glitch.m
 
 Description
 ---
+To run you must type node server.js in the terminal
+Then do localhost in a browser tab
 
 - the goal of the application is for users to add books on their book manager
 - challenges you faced in realizing the application. I thought for logging in I had to access "database access" on mangodb and did a lot of googling and wasted a day then went to office hours the next day and realized I could just make a table containing users passwords and usernames. That was unclear on the github how to go about accessing/storing users and passwords.
