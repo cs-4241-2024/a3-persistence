@@ -45,7 +45,6 @@ document.addEventListener("DOMContentLoaded", () => {
   
   form.addEventListener("submit", (event) => {
     event.preventDefault();
-    console.log("a")
     
     const name = document.getElementById("yourname").value;
     const task = document.getElementById("task").value;
@@ -59,7 +58,6 @@ document.addEventListener("DOMContentLoaded", () => {
       body: JSON.stringify({ name, task, priority}),
     })
     .then((response) => response.text())
-    .then(data => console.log(data))
     .then(() => {
       fetchTasks(); 
       form.reset();
