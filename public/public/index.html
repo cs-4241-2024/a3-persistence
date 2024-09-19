@@ -1,0 +1,289 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>CS4241 Assignment 2</title>
+    <meta charset="utf-8">
+    <script src="js/main.js"></script>
+    <link rel="stylesheet" href="css/main.css">
+    
+    <!-- get rid of favicon error -->
+    <link rel="icon" href="data:;base64,iVBORw0KGgo=">
+  </head>
+
+
+  <body>
+    <div> 
+      <h2>✰ Skyler's Sushi Bar ✰</h2> 
+      <p>Welcome! Due to popular demand, we've opened an online ordering system for our delicious sushi. Each order of any dish includes 6 rolls!</p>
+
+      <div class="table-container">
+        <table>
+            <tr>
+                <th>
+                    <div class="image-container">
+                        <img src="https://tatyanaseverydayfood.com/wp-content/uploads/2014/04/Spicy-Salmon-Sushi-Roll.jpg" alt="Image 1">
+                        <p><strong>Spicy Salmon Rolls</strong><br>$13.99</p>
+                        <form class="add-to-cart-form">
+                          <input type="hidden" name="product-name" value="Spicy Salmon Rolls">
+                          <input type="hidden" name="product-price" value="13.99">
+                          <div class="quantity-container">
+                          <label for="quantity">Quantity:</label>
+                          <input type="number" id="quantity" name="quantity" value="1" min="1" max = "9">
+                          </div>
+                          <button type="submit">Add to Cart</button>
+                      </form>
+                    </div>
+                </th>
+                <th>
+                    <div class="image-container">
+                        <img src="https://cdn.shopify.com/s/files/1/0068/0394/7579/files/25605723_s_600x600.jpg?v=1673508602" alt="Image 2">
+                        <p><strong>Salmon Ikura Rolls</strong><br>$16.99</p>
+                                                <form class="add-to-cart-form">
+                          <input type="hidden" name="product-name" value="Salmon Ikura Rolls">
+                          <input type="hidden" name="product-price" value="16.99">
+                          <div class="quantity-container">
+                          <label for="quantity">Quantity:</label>
+                          <input type="number" id="quantity" name="quantity" value="1" min="1" max = "9" max = "9">
+                          </div>
+                          <button type="submit">Add to Cart</button>
+                      </form>
+                    </div>
+                </th>
+                <th>
+                    <div class="image-container">
+                        <img src="https://thegastronomygal.wordpress.com/wp-content/uploads/2023/02/handroll.jpg" alt="Image 3">
+                        <p><strong>Ahi Tuna Hand Rolls</strong><br>$17.99</p>
+                                                <form class="add-to-cart-form">
+                          <input type="hidden" name="product-name" value="Ahi Tuna Hand Rolls">
+                          <input type="hidden" name="product-price" value="17.99">
+                          <div class="quantity-container">
+                          <label for="quantity">Quantity:</label>
+                          <input type="number" id="quantity" name="quantity" value="1" min="1" max = "9">
+                          </div>
+                          <button type="submit">Add to Cart</button>
+                      </form>
+                    </div>
+                </th>
+            </tr>
+            <tr>
+                <th>
+                    <div class="image-container">
+                        <img src="https://cdn3.didevelop.com/public/cdn/533_fc1191e5230cd1a8be5f07cf5d089840.jpg" alt="Image 4">
+                        <p><strong>Grilled Eel Rolls</strong><br>$15.99</p>
+                                                <form class="add-to-cart-form">
+                          <input type="hidden" name="product-name" value="Grilled Eel Rolls">
+                          <input type="hidden" name="product-price" value="15.99">
+                          <div class="quantity-container">
+                          <label for="quantity">Quantity:</label>
+                          <input type="number" id="quantity" name="quantity" value="1" min="1" max = "9">
+                          </div>
+                          <button type="submit">Add to Cart</button>
+                      </form>
+                    </div>
+                </th>
+                <th>
+                    <div class="image-container">
+                        <img src="https://www.196flavors.com/wp-content/uploads/2023/10/Tamago-sushi-FP.jpg" alt="Image 5">
+                        <p><strong>Tamago Rolls</strong><br>$11.99</p>
+                                                <form class="add-to-cart-form">
+                          <input type="hidden" name="product-name" value="Tamago Rolls">
+                          <input type="hidden" name="product-price" value="11.99">
+                          <div class="quantity-container">
+                          <label for="quantity">Quantity:</label>
+                          <input type="number" id="quantity" name="quantity" value="1" min="1" max = "9">
+                          </div>
+                          <button type="submit">Add to Cart</button>
+                      </form>
+                    </div>
+                </th>
+                <th>
+                    <div class="image-container">
+                        <img src="https://popmenucloud.com/cdn-cgi/image/width%3D1200%2Cheight%3D1200%2Cfit%3Dscale-down%2Cformat%3Dauto%2Cquality%3D60/mtsfibyw/33416353-a582-4f13-972d-b7a71256056c.jpg" alt="Image 6">
+                        <p><strong>Spider Rolls</strong><br>$18.99</p>
+                                                <form class="add-to-cart-form">
+                          <input type="hidden" name="product-name" value="Spider Rolls">
+                          <input type="hidden" name="product-price" value="18.99">
+                          <div class="quantity-container">
+                          <label for="quantity">Quantity:</label>
+                          <input type="number" id="quantity" name="quantity" value="1" min="1" max = "9">
+                          </div>
+                          <button type="submit">Add to Cart</button>
+                      </form>
+                    </div>
+                </th>
+            </tr>
+            <tr>
+                <th>
+                    <div class="image-container">
+                        <img src="https://cookingwithdog.com/wp-content/uploads/2021/12/yellowtail-sushi-roll-00.jpg" alt="Image 7">
+                        <p><strong>Spicy Yellowtail Rolls</strong><br>$16.99</p>
+                                                <form class="add-to-cart-form">
+                          <input type="hidden" name="product-name" value="Spicy Yellowtail Rolls">
+                          <input type="hidden" name="product-price" value="16.99">
+                          <div class="quantity-container">
+                          <label for="quantity">Quantity:</label>
+                          <input type="number" id="quantity" name="quantity" value="1" min="1" max = "9">
+                          </div>
+                          <button type="submit">Add to Cart</button>
+                      </form>
+                    </div>
+                </th>
+                <th>
+                    <div class="image-container">
+                        <img src="https://thepastorchef.wordpress.com/wp-content/uploads/2020/07/tempura.jpg?w=1024" alt="Image 8">
+                        <p><strong>Shrimp Tempura Rolls</strong><br>$14.99</p>
+                                                <form class="add-to-cart-form">
+                          <input type="hidden" name="product-name" value="Shrimp Tempura Rolls">
+                          <input type="hidden" name="product-price" value="14.99">
+                          <div class="quantity-container">
+                          <label for="quantity">Quantity:</label>
+                          <input type="number" id="quantity" name="quantity" value="1" min="1" max = "9">
+                          </div>
+                          <button type="submit">Add to Cart</button>
+                      </form>
+                    </div>
+                </th>
+                <th>
+                  <div class="image-container">
+                      <img src="https://konagrill.com/konagrilXSDF/wp-content/uploads/2020/01/image3.jpg" alt="Image 9">
+                      <p><strong>Smoked Salmon Rolls</strong><br>$17.99</p>
+                                              <form class="add-to-cart-form">
+                          <input type="hidden" name="product-name" value="Smoked Salmon Rolls">
+                          <input type="hidden" name="product-price" value="17.99">
+                          <div class="quantity-container">
+                          <label for="quantity">Quantity:</label>
+                          <input type="number" id="quantity" name="quantity" value="1" min="1" max = "9">
+                          </div>
+                          <button type="submit">Add to Cart</button>
+                      </form>
+                  </div>
+              </th>
+            </tr>
+        </table>
+    </div>
+
+    <!-- <div class="cart">
+      <h2>Shopping Cart</h2>
+      <ul id="cart-items"></ul>
+      <p id="cart-total">Total: $0.00</p>
+  </div> -->
+
+
+  <div class="contact-form">
+    <h2>Contact Information</h2>
+    <form id="contactForm">
+        <div class="form-group">
+            <label for="name">Full Name:</label>
+            <input type="text" id="name" name="name" required>
+        </div>
+        <div class="form-group">
+            <label for="phone">Phone Number:</label>
+            <input type="tel" id="phone" name="phone" required pattern="[0-9]{10}">
+        </div>
+        <div class="form-group">
+            <label for="address">Delivery Address:</label>
+            <textarea id="address" name="address" required></textarea>
+        </div>
+
+        <div class="form-group">
+          <div class="cart">
+            <h2>Shopping Cart</h2>
+            <ul id="cart-items"></ul>
+            <p id="cart-total">Total: $0.00</p>
+        </div>
+      
+      </div>
+      
+        <div class="form-group">
+            <label for="instructions">Special Instructions:</label>
+            <textarea id="instructions" name="instructions"></textarea>
+        </div>
+        <button type="submit">Submit Order</button>
+    </form>
+</div>
+
+<div class="confirm-form" style="display:none;">
+  <h2>Confirm Your Order</h2>
+  <form id="confirmForm">
+      <div class="form-group-1">
+          <label for="confirm-name">Full Name:</label>
+          <input type="text" id="confirm-name" name="confirm-name" readonly>
+      </div>
+      <div class="form-group-1">
+          <label for="confirm-phone">Phone Number:</label>
+          <input type="tel" id="confirm-phone" name="confirm-phone" readonly>
+      </div>
+      <div class="form-group-1">
+          <label for="confirm-address">Delivery Address:</label>
+          <textarea id="confirm-address" name="confirm-address" readonly></textarea>
+      </div>
+      <div class="form-group-1">
+          <label for="confirm-instructions">Special Instructions:</label>
+          <textarea id="confirm-instructions" name="confirm-instructions" readonly></textarea>
+      </div>
+
+      <div class="form-group">
+        <label for="confirm-instructions">Card Information</label>
+        <textarea id="card-info" name="card-info" required></textarea>
+    </div>
+
+    <div class="form-group">
+        <label for="confirm-food">Price of Order:</label>
+        <div id="confirm-food" style="font-size: 18px; font-weight: normal;">$0.00</div>
+    </div>
+
+    <div class="form-group">
+        <label for="confirm-tax">Tax:</label>
+        <div id="confirm-tax" style="font-size: 18px; font-weight: normal;">$0.00</div>
+    </div>
+
+    <div class="form-group">
+        <label for="confirm-delivery">Delivery Fee:</label>
+        <div id="confirm-delivery" style="font-size: 18px; font-weight: normal;">$5.00</div>
+    </div>
+
+    <div class="form-group">
+        <label for="confirm-price">Total Price:</label>
+        <div id="confirm-price" style="font-size: 24px; font-weight: bold;">$0.00</div>
+    </div>
+
+
+
+      <button type="submit">Confirm and Place Order</button>
+  </form>
+</div>
+
+  <div class="table-container">
+
+    <table id="orders-table">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Address</th>
+            <th>Order No.</th>
+            <th>Order Cost</th>
+            <th>Cash Total</th>
+            <th>Item Total</th>
+        </tr>
+    </thead>
+    <tbody>
+        
+    </tbody>
+    </table>
+
+  </div>
+
+
+<!-- 
+    <div class="form-container">
+
+    <form>
+      <input type="text" id="yourname" value="your name here">
+      <button>submit</button>
+    </form>
+
+    </div> -->
+
+
+  </body>
+</html>
