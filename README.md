@@ -1,6 +1,6 @@
 ## Grocery List
 
-https://cs-4241-a3-production.up.railway.app/
+https://a3-harshith-iyer.up.railway.app
 
 ## Description
 
