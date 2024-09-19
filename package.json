@@ -1,0 +1,14 @@
+{
+  "name": "ToDoList",
+  "version": "1.0.0",
+  "description": "Simple to-do list app",
+  "author": "Sophia Kalavantis",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.21.0",
+    "express-session": "^1.18.0",
+    "mongodb": "^3.7.4"
+  }
+}
