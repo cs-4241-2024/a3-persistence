@@ -11,6 +11,24 @@ app.use(express.static('views'))
 app.use(express.static('public'))
 app.use(express.json())
 
+// --------------------MONGO DB------------------------
+
+const uri = `mongodb+srv://${process.env.USER}:${process.env.PASS}@${process.env.HOST}`
+const client = new MongoClient( uri )
+
+let collection = null
+let loginData = null
+
+async function run() {
+  await client.connect()
+  collection = await client.db("assignment3").collection("matches")
+  loginData = await client.db("assignment3").collection("login-info")
+
+
+}
+
+run()
+
 // -------------------COOKIES-----------------------
 
 // use express.urlencoded to get data sent by defaut form actions
@@ -23,15 +41,24 @@ app.use( cookie({
   name: 'session',
   keys: ['key1', 'key2']
 }))
-app.post( '/login', (req,res)=> {
+app.post( '/login', async (req,res)=> {
   // express.urlencoded will put your key value pairs
   // into an object, where the key is the name of each
   // form field and the value is whatever the user entered
   console.log( req.body )
+  let username = req.body.user
+  let password = req.body.pass
+
+
 
   // below is *just a simple authentication example*
   // for A3, you should check username / password combos in your database
-  if( req.body.password === 'test' ) {
+  let loginDoc = await loginData.findOne({user: username, pass: password})
+// Find the user with the matching username
+
+  // If a user is found, check if the password matches
+  if(loginDoc!=null &&loginDoc.user === username && loginDoc.pass === password) {
+
     // define a variable that we can check in other middleware
     // the session object is added to our requests by the cookie-session middleware
     req.session.login = true
@@ -40,8 +67,10 @@ app.post( '/login', (req,res)=> {
     // use redirect to avoid authentication problems when refreshing
     // the page or using the back button, for details see:
     // https://stackoverflow.com/questions/10827242/understanding-the-post-redirect-get-pattern
-    res.redirect( 'main.html' )
-  }else{
+    res.status(200).send("Login and Password correct")
+  } else {
+    console.log("not found")
+    res.status(400).send("Either Login or Password are incorrect")
     // password incorrect, redirect back to login page
     res.sendFile( __dirname + '/views/index.html' )
   }
@@ -55,21 +84,15 @@ app.use( function( req,res,next) {
     res.sendFile( __dirname + '/public/main.html' )
 })
 
-// --------------------MONGO DB------------------------
+app.use('/newLogin', async (req, res) => {
+  console.log( req.body )
 
-const uri = `mongodb+srv://${process.env.USER}:${process.env.PASS}@${process.env.HOST}`
-const client = new MongoClient( uri )
+  const result = await loginData.insertOne( req.body )
+  res.json( result )
 
-let collection = null
-
-async function run() {
-  await client.connect()
-  collection = await client.db("datatest").collection("test")
+})
 
 
-}
-
-run()
 // route to get all docs
 app.get("/docs", async (req, res) => {
   if (collection !== null) {

@@ -5,15 +5,17 @@
         <meta charset="utf-8">
         <link rel="icon" href="data:;base64,iVBORw0KGgo=">
 
+        <script src="js/index.js"></script>
+
         <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1">
         <link rel="stylesheet" href="css/main.css">
     </head>
     <body class="is-fullheight" style="height: 100svh">
         <div class="flex-vertical container">
-            <form class="is-fullheight" action='/login' method='POST'>
+            <form class="is-fullheight" >
                 <div class="field">
                     <p class="control has-icons-left has-icons-right">
-                        <input class="input" type="text" name="username" placeholder="Username" />
+                        <input id="username" class="input" type="text" name="username" placeholder="Username" />
                         <span class="icon is-small is-left">
               <i class="fas fa-envelope"></i>
             </span>
@@ -24,13 +26,14 @@
                 </div>
                 <div class="field">
                     <p class="control has-icons-left">
-                        <input class="input" type="password" name="password"placeholder="Password" />
+                        <input class="input" id="password" type="password" name="password"placeholder="Password" />
                         <span class="icon is-small is-left">
               <i class="fas fa-lock"></i>
             </span>
                     </p>
                 </div>
-                <button class="button" type="submit">Submit</button>
+                <button id="login" class="button" type="submit">Login</button>
+                <button id="newLogin" class="button is-dark">Create New Login</button>
             </form>
         </div>
 
