@@ -88,36 +88,6 @@ button:active {
   cursor: pointer;
 }
 
-#scoreButton {
-  padding: 10px;
-  font-size: 30px;
-  background-color: darkblue;
-  color: white;
-  border-radius: 5px;
-}
-
-#alter {
-  background-color: darkorange;
-}
-
-#delete {
-  background-color: darkred;
-}
-
-#submit {
-  background-color: darkgreen;
-}
-
-#instructions {
-  width: 350px;
-}
-
-.vt323-regular {
-  font-family: "VT323", monospace;
-  font-weight: 400;
-  font-style: normal;
-}
-
 
 .flex-vertical {
   display: flex;
