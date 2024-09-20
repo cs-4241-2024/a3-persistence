@@ -88,7 +88,7 @@ const addMatch = function(data) {
         <div class="cell columns is-gapless is-flex ">
           <p class="column is-size-3">${data.Game1A}</p>
           <p class="column is-size-3">${data.Game2A}</p>
-          ${data.Game3A === '0' ? '' : '<h3 class="column is-size-3">' + data.Game3A+'</h3>'}
+          ${data.Game3A === '0' && data.Game3B === '0' ? '' : '<h3 class="column is-size-3">' + data.Game3A+'</h3>'}
         </div>
         <button id="${data._id}" name="edit" class="cell is-1-one-fifth button is-warning">Edit</button>
 
@@ -107,7 +107,7 @@ const addMatch = function(data) {
         <div class="cell columns is-gapless is-flex is-justify-content-space-between">
           <h3 class="column is-size-3">${data.Game1B}</h3>
           <h3 class="column is-size-3">${data.Game2B}</h3>
-          ${data.Game3B === '0' ? '' : '<h3 class="column is-size-3">' + data.Game3B+'</h3>'}
+          ${data.Game3A === '0' && data.Game3B === '0' ? '' : '<h3 class="column is-size-3">' + data.Game3B+'</h3>'}
         </div>
         <button id="${data._id}" name="delete" class="cell is-1-one-fifth button is-danger">Delete</button>
       </div>
@@ -139,7 +139,7 @@ const deleteMatch = async function(event) {
 const generateMatches = async function() {
     const matchContainer = document.getElementById('matches-container');
     matchContainer.innerHTML = '';
-    const response = await fetch('/docs', {
+    const response = await fetch('/userMatches', {
         method: 'GET',
         headers: { 'Content-Type': 'application/json' },
     });
@@ -326,6 +326,17 @@ window.onload = async function() {
     document.querySelector('.cancel-modal').addEventListener('click', () => {
         document.getElementById('editModal').style.display = 'none';
     });
+
+    document.getElementById('logoutButton').addEventListener('click', async () => {
+  const response = await fetch('/logout', {
+    method: 'GET',
+  });
+  if (response.ok) {
+    window.location.href = '/'; // Redirect to the root URL
+  } else {
+    console.error('Logout failed');
+  }
+});
 
     window.onclick = function(event) {
         if (event.target === document.getElementById('editModal')) {

@@ -61,6 +61,7 @@ app.post( '/login', async (req,res)=> {
 
     // define a variable that we can check in other middleware
     // the session object is added to our requests by the cookie-session middleware
+    req.session.user = loginDoc.user
     req.session.login = true
 
     // since login was successful, send the user to the main content
@@ -92,6 +93,21 @@ app.use('/newLogin', async (req, res) => {
 
 })
 
+app.get('/logout', (req, res) => {
+  req.session = null; // Clear the session
+  res.redirect('/'); // Redirect to the root URL
+});
+
+app.get('/userMatches', async (req, res) => {
+  if (!req.session.login) {
+    return res.status(401).send('Unauthorized');
+  }
+
+  const user = req.session.user;
+  const matches = await collection.find({ owner: user}).toArray();
+  res.json(matches);
+});
+
 
 // route to get all docs
 app.get("/docs", async (req, res) => {
@@ -118,6 +134,7 @@ app.post( '/add', async (req,res) => {
 
   // Add the winner to the match data
   matchData.winner = winner;
+  matchData.owner = req.session.user;
   console.log(matchData)
   const result = await collection.insertOne( matchData )
   res.json( result )
