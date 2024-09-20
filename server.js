@@ -48,6 +48,29 @@ async function run() {
       res.end(JSON.stringify({ message: "success" }));
     });
 
+    app.post(
+      "/update",
+      express.urlencoded({ extended: true }),
+      async (req, res) => {
+        // Create laptimes array
+        const lapTimes = [
+          req.body.lap1,
+          req.body.lap2,
+          req.body.lap3,
+          Number(req.body.lap1) + Number(req.body.lap2) + Number(req.body.lap3),
+        ];
+
+        // Add time to database
+        await collection.updateOne(
+          { _id: new ObjectId(req.body._id) },
+          { $set: { lapTimes: lapTimes } }
+        );
+
+        // Return user to game page
+        res.redirect("/");
+      }
+    );
+
     app.delete("/delete", async (req, res) => {
       // Remove time from database
       const result = await collection.deleteOne({

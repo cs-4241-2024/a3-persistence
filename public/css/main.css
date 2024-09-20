@@ -33,12 +33,13 @@ th {
   color: white;
 }
 
-button {
+button,
+.button {
   border-radius: 20px;
   margin: 0px 10px;
 }
 
-.popup {
+#popup {
   position: fixed;
   width: 100%;
   height: 100%;
@@ -46,6 +47,7 @@ button {
   justify-content: center;
   text-align: center;
   background-color: rgba(0, 0, 0, 0.5);
+  display: none;
 }
 
 form {

@@ -46,19 +46,34 @@
       </p>
       <button id="reset">Reset Game</button>
     </div>
-    <div class="popup">
-      <form>
+    <div id="popup">
+      <form action="/update" method="POST">
         <h1>Edit Time</h1>
         <ol>
-          <li><label>Lap 1: </label><input id="lap1input" /></li>
+          <li>
+            <label for="lap1input">Lap 1: </label
+            ><input id="lap1input" type="text" name="lap1" />
+          </li>
           <br />
-          <li><label>Lap 2: </label><input id="lap2input" /></li>
+          <li>
+            <label for="lap2input">Lap 2: </label
+            ><input id="lap2input" type="text" name="lap2" />
+          </li>
           <br />
-          <li><label>Lap 3: </label><input id="lap3input" /></li>
-          <br />
+          <li>
+            <label for="lap3input">Lap 3: </label
+            ><input id="lap3input" type="text" name="lap3" />
+          </li>
         </ol>
-        <button id="saveButton">Save</button>
-        <button id="cancelButton">Cancel</button>
+        <input type="text" name="_id" id="idHolder" style="display: none" />
+        <input class="button" type="submit" />
+        <button
+          type="button"
+          value="Cancel"
+          onclick="document.getElementById('popup').style.display = 'none';"
+        >
+          Cancel
+        </button>
       </form>
     </div>
     <script src="js/main.js"></script>

@@ -224,20 +224,18 @@ const setupTable = async () => {
     };
     buttonCell.appendChild(deleteButton);
 
-    const shuffleButton = document.createElement("button");
-    shuffleButton.innerHTML = "Edit";
-    shuffleButton.onclick = async () => {
-      // Create popup with close and update buttons
-      // Update table if update
+    const editButton = document.createElement("button");
+    editButton.innerHTML = "Edit";
+    editButton.onclick = async () => {
+      document.getElementById("popup").style.display = "inline";
 
-      await fetch("/update", {
-        method: "POST",
-        body: i,
-      });
+      document.getElementById("lap1input").value = data[i].lapTimes[0];
+      document.getElementById("lap2input").value = data[i].lapTimes[1];
+      document.getElementById("lap3input").value = data[i].lapTimes[2];
 
-      setupTable();
+      document.getElementById("idHolder").value = data[i]._id;
     };
-    buttonCell.appendChild(shuffleButton);
+    buttonCell.appendChild(editButton);
   }
 };
 
