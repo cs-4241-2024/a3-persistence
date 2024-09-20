@@ -1,55 +1,60 @@
 <!DOCTYPE html>
 <html lang="en" class="roboto-mono-basic">
   <head>
-    <title>CS4241 Assignment 3</title>
-    <meta charset="utf-8" />
-    <script src="js/main.js"></script>
-    <link rel="stylesheet" href="css/main.css" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,100..700;1,100..700&display=swap"
-      rel="stylesheet"
+    <title>To Do List</title>
+    <meta
+      charset="utf-8"
+      name="viewport"
+      content="width=device-width, initial-scale=1/"
     />
+    <script src="js/main.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/mvp.css" />
     <!-- get rid of favicon error -->
     <link rel="icon" href="data:;base64,iVBORw0KGgo=" />
   </head>
   <body>
-      <button type="logout" id="logout">Logout</button>
+    <button type="logout" id="logout">Logout</button>
     <p></p>
-    <h1 class="space">Create Your Own To-Do List!</h1>
-    <p></p>
-    <form id="todoForm">
-      <input type="text" id="item" value="Add an item to do!" />
-      <input type="text" id="notes" value="Notes" />
-      <input type="date" id="deadline" value="Deadline" />
-      <p></p>
-      <button type="submit" id="submit">submit</button>
-    </form>
-    <table class="tab">
-      <h2>To-do:</h2>
-      <tr>
-        <th>Item</th>
-        <th>Notes</th>
-        <th>Deadline</th>
-        <th>Priority</th>
-      </tr>
-      <tbody id="body"></tbody>
-    </table>
+    <main>
+      <header>
+        <h1>Welcome to the Shared To-Do List!</h1>
+        <p></p>
+      </header>
+      <section>
+        <form id="todoForm">
+          <input type="text" id="item" placeholder="Add an item to do!" />
+          <input type="text" id="notes" placeholder="Notes" />
+          <input type="date" id="deadline" placeholder="Deadline" />
+          <p></p>
+          <button type="submit" id="submit">submit</button>
+        </form>
 
-    <div id="editor" style="display: none">
-      <h2>Edit Entry</h2>
-      <form id="editForm">
-        <label for="editItem">Item:</label>
-        <input type="text" id="editItem" name="item" required /><br />
-        <label for="editNotes">Notes:</label>
-        <input type="text" id="editNotes" name="notes" required /><br />
-        <label for="editDeadline">Deadline:</label>
-        <input type="date" id="editDeadline" name="deadline" required /><br />
-        <input type="hidden" id="editId" />
-        <button type="submit">Save Changes</button>
-        <button type="button" onclick="closeEditor()">Cancel</button>
-      </form>
-    </div>
+        <table class="tab">
+          <thead>
+            <tr>
+              <th>Item</th>
+              <th>Notes</th>
+              <th>Deadline</th>
+              <th>Priority</th>
+            </tr>
+          </thead>
+          <tbody id="body"></tbody>
+        </table>
+      </section>
+      <div id="editor" style="display: none">
+        <h2>Edit Entry</h2>
+        <form id="editForm">
+          <label for="editItem">Item:</label>
+          <input type="text" id="editItem" name="item" required /><br />
+          <label for="editNotes">Notes:</label>
+          <input type="text" id="editNotes" name="notes" required /><br />
+          <label for="editDeadline">Deadline:</label>
+          <input type="date" id="editDeadline" name="deadline" required /><br />
+          <input type="hidden" id="editId" />
+          <button type="submit">Save Changes</button>
+          <button type="button" onclick="closeEditor()">Cancel</button>
+        </form>
+      </div>
+    </main>
   </body>
 </html>

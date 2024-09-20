@@ -36,7 +36,7 @@ app.post("/register", async (req, res) => {
 
       const result = await authnDB.insertOne({
         username: username,
-        password: hashedPassword
+        password: hashedPassword,
       });
 
       res.status(201).send("User registered successfully.");
@@ -45,7 +45,7 @@ app.post("/register", async (req, res) => {
       res.status(500).send("Registration error.");
     }
   }
-  
+
   registerUser();
 });
 
@@ -57,7 +57,7 @@ app.post("/login", async (req, res) => {
       const authnDB = await client.db("A3").collection("users");
       const user = await authnDB.findOne({ username: username });
 
-      if (user && (password === user.password)) {
+      if (user && password === user.password) {
         req.session.login = true;
         res.redirect("/main.html");
       } else {
@@ -97,13 +97,13 @@ async function run() {
 }
 run();
 
-  // route to get all docs
-  app.get("/docs", async (req, res) => {
-    if (collection !== null) {
-      const docs = await collection.find({}).toArray();
-      res.json(docs);
-    }
-  });
+// route to get all docs
+app.get("/docs", async (req, res) => {
+  if (collection !== null) {
+    const docs = await collection.find({}).toArray();
+    res.json(docs);
+  }
+});
 
 app.use((req, res, next) => {
   if (collection !== null) {
