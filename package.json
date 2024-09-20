@@ -4,10 +4,14 @@
     "description": "A simple spacebar game for CS4241 Assignment 2",
     "author": "Ben Tyler",
     "scripts": {
-      "start": "node server.js"
+        "start": "node server.js"
     },
     "dependencies": {
-      "express": "^4.19.2",
-      "mime": "^4.0.4"
+        "bcryptjs": "^2.4.3",
+        "express": "^4.17.1",
+        "express-session": "^1.17.2",
+        "mime": "^2.4.4",
+        "mongodb": "^6.9.0",
+        "nes.css": "^2.3.0"
     }
-  }
+}
