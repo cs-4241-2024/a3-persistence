@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>CS4241 Assignment 2</title>
+    <meta charset="utf-8">
+    <script src="js/main.js"></script>
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    
+    <!-- get rid of favicon error -->
+    <link rel="icon" href="data:;base64,iVBORw0KGgo=">
+  </head>
+
+  <body>
+    <div class="heroBack">
+      <div class="hero"> 
+
+        <div class="intro">
+          <h1>Anime Tracker</h1>
+          <p id="desc">Keep track of what anime you're watching and the progress you've made with this small web app! This
+            page was created with the help of the Jikan API, a RESTful API that grabs data from <a href="https://myanimelist.net/">myanimelist.net</a>.
+          </p>
+        </div>
+
+        <div class="formHero">
+          <form>
+            <!-- Text Input: Enter Name-->
+            <h4>Enter Your Username:</h4>
+            <input type="text" id="yourName" name="username" value="your name here">
+            
+            <!-- Text Input: Enter the Show Title-->
+            <h4>Enter the Anime Title:</h4>
+            <input type="text" id="showTitle" name="showName" value="title of show here">
+            
+            <!-- Number Input: Enter number of last completed episode-->
+            <h4>Enter Number of Last Watched Episode:</h4>
+            <input type="number" id="lastWatched" name="lastViewed" value="0">
+
+            <button class="submitButton">Submit</button>
+          </form>
+        </div>
+      </div>
+    </div>
+
+      <div class="card-container" id="cardContainer">
+        <!-- data shows up here -->
+      </div>
+
+    
+  </body>
+
+</html>
