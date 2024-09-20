@@ -7,7 +7,7 @@ const path = require('path');
 
 // Initialize express
 const app = express();
-// const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3000;
 
 // Middleware to serve static files (CSS, JS)
 app.use(express.static(path.join(__dirname, 'public'), { index: false })); // Serve static files without auto-indexing
@@ -18,9 +18,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 // MongoDB connection string
-// const mongoURI = 'mongodb+srv://zli29:1225931003l@cluster0.sa8ge.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0';
-// mongoose.connect(mongoURI)
-const mongoURI = process.env.MONGO_URI;
+const mongoURI = 'mongodb+srv://zli29:1225931003l@cluster0.sa8ge.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0';
 mongoose.connect(mongoURI)
     .then(() => console.log('MongoDB connected'))
     .catch(err => console.log('MongoDB connection error: ', err));
@@ -42,16 +40,11 @@ const activitySchema = new mongoose.Schema({
 
 const Activity = mongoose.model('Activity', activitySchema);
 
-const callbackURL = process.env.NODE_ENV === 'production'
-    ? 'https://sea-lion-app-dv9ma.ondigitalocean.app/auth/github/callback'
-    : 'http://localhost:3000/auth/github/callback';
-
 // GitHub OAuth Setup
 passport.use(new GitHubStrategy({
         clientID: 'Ov23li6bj5dJbJlZ9Nef',
         clientSecret: 'af2592ff2df91e57c49055058699eb03a207370c',
-        callbackURL: callbackURL
-        // callbackURL: 'http://localhost:3000/auth/github/callback'
+        callbackURL: 'http://localhost:3000/auth/github/callback'
     },
     async function (accessToken, refreshToken, profile, done) {
         let user = await User.findOne({ githubId: profile.id });
@@ -161,7 +154,6 @@ app.post('/deleteActivity', ensureAuthenticated, async (req, res) => {
 
 
 // Start the server
-const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
-    console.log(`Server running on port ${PORT}`);
+    console.log(`Server running on http://localhost:${PORT}`);
 });
