@@ -1,12 +1,32 @@
-const http = require( 'http' ),
-      express = require("express"),
+require('dotenv').config();
+const express = require("express"),
       fs   = require( 'fs' ),
       mime = require( 'mime' ),
       bodyParser = require('body-parser'), 
+      {MongoClient} = require('mongodb'),
       dir  = 'public/',
       port = 3000;
 
+
+//express setup
 const app = express();
+
+//mongodb setup
+const connection = process.env.MONGO_URI;
+const client = new MongoClient(connection);
+let collection;
+
+//connect to mongodb
+async function connectToMongo() {
+  try {
+    await client.connect();
+    const database = client.db('anime-tracker');
+    collection = database.collection('anime-cards');
+    console.log('Connected to MongoDB Atlas');
+  } catch (error) {
+    console.error('Error connecting to MongoDB', error);
+  }
+}
 
 //temp data
 const appdata = [
@@ -67,6 +87,8 @@ function getDate() {
   return `${month}/${day}/${year}`;
 }
 
-app.listen(port, () => {
-  console.log(`Anime tracker listening on port ${port}`);
-})
+connectToMongo().then(() => {
+  app.listen(port, () => {
+    console.log(`Anime tracker listening on port ${port}`);
+  });
+});
