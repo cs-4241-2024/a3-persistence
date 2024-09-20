@@ -19,6 +19,8 @@ around what weight to use.
 - __Challenges__: I faced a massive problem trying to make this webapp in Dioxus (Rust) and eventually scrapped it for Templ (Go)
 - __Authentication__: session cookies + SQL DB storage
 - __CSS Framework__: DaisyUI (Tailwind)
+- __Client Side__: HTMX
+- __Server Side__: Golang + Templ (NOTE: Allowed by professor)
 
 ## Technical Achievements
 - Password hashing and salting
