@@ -102,7 +102,24 @@ app.get("/docs", async (req, res) => {
 })
 
 app.post( '/add', async (req,res) => {
-  const result = await collection.insertOne( req.body )
+  const matchData = req.body;
+
+  // Logic to determine the winner
+  let winner;
+  if (matchData.Game1B > matchData.Game1A && matchData.Game2B > matchData.Game2A) {
+    winner = matchData.SchoolB;
+  } else if (matchData.Game1A > matchData.Game1B && matchData.Game2A > matchData.Game2B) {
+    winner = matchData.SchoolA;
+  } else if (matchData.Game3A > matchData.Game3B) {
+    winner = matchData.SchoolA;
+  } else{
+    winner = matchData.SchoolB;
+  }
+
+  // Add the winner to the match data
+  matchData.winner = winner;
+  console.log(matchData)
+  const result = await collection.insertOne( matchData )
   res.json( result )
 })
 
@@ -115,43 +132,45 @@ app.delete( '/remove', async (req,res) => {
   res.json( result )
 })
 
+app.get('/getMatch', async (req, res) => {
+    const matchId = req.query.id;
+    if (!matchId) {
+        return res.status(400).json({ error: 'Match ID is required' });
+    }
+
+    const match = await collection.findOne({ _id: new ObjectId(matchId) });
+    if (!match) {
+        return res.status(404).json({ error: 'Match not found' });
+    }
+
+    res.json(match);
+});
+
 app.post( '/update', async (req,res) => {
+  const matchData = req.body;
+  const matchId = req.query.id;
+  // Logic to determine the winner
+  let winner;
+  if (matchData.Game1B > matchData.Game1A && matchData.Game2B > matchData.Game2A) {
+    winner = matchData.SchoolB;
+  } else if (matchData.Game1A > matchData.Game1B && matchData.Game2A > matchData.Game2B) {
+    winner = matchData.SchoolA;
+  } else if (matchData.Game3A > matchData.Game3B) {
+    winner = matchData.SchoolA;
+  } else{
+    winner = matchData.SchoolB;
+  }
+
+  // Add the winner to the match data
+  matchData.winner = winner;
+
   const result = await collection.updateOne(
-      { _id: new ObjectId( req.body._id ) },
-      { $set: req.body }
+      { _id: new ObjectId( matchId ) },
+      { $set: matchData }
   )
 
   res.json( result )
 })
 
-
-
-
-app.put('/alterRow', async (req, res) => {
-
-  const json = req.body
-  console.log(json)
-  // let index = Number(json.index)
-
-  // const targetObject = appdata.find( (row, i) => i === index )
-
-  // targetObject.name = json.name
-  // targetObject.clickCount = json.clickCount
-  // targetObject.points = json.clickCount*100
-
-  const result = await collection.updateOne(
-      { _id: new ObjectId( req.body._id ) },
-      { $set:{ name:req.body.name } }
-  )
-
-  res.json( result )
-
-  // add a 'json' field to our request object
-  // this field will be available in any additional
-  // routes or middleware.
-
-  res.writeHead( 200, "OK", {'Content-Type': 'text/plain' })
-  // res.end(JSON.stringify(appdata))
-})
 
 app.listen( process.env.PORT || 3000 )

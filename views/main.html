@@ -27,11 +27,11 @@
       <div class="is-flex is-flex-direction-column">
         <label class="pb-1" for="match-type">Match Type:</label>
         <div class="flex-horizontal">
-          <input type="radio" id="round-robin" name="match-type" value="round-robin" required>
+          <input type="radio" id="round-robin" name="match-type" value="Round Robin" required>
           <label for="round-robin">Round Robin</label>
         </div>
         <div class="is-flex is-flex-direction-row">
-          <input type="radio" id="elimination" name="match-type" value="elimination" required>
+          <input type="radio" id="elimination" name="match-type" value="Elimination" required>
           <label for="elimination">Elimination</label>
         </div>
       </div>
@@ -135,59 +135,131 @@
     </div>
   </form>
   <div id="matches-container">
-    <div id="Example-Match" class="fixed-grid">
-      <div class="grid">
-        <div class="cell match-info is-col-span-3 is-inline is-size-5">
-          <p class="is-inline is-size-4">School A -</p>
-          <p class="is-inline is-size-4">School B -</p>
-          <p class="is-inline is-size-4"> Singles 2</p>
-        </div>
+
+  </div>
 
 
-        <div class="cell is-col-start-1">
-          <div>
-            <p class="is-inline-block">School A</p>
-            <p class="is-inline-block">✔</p>
+<!-- Modal Structure -->
+<div id="editModal" class="modal">
+  <div class="modal-background"></div>
+  <div class="modal-content">
+    <form>
+      <h2 class="is-size-4 is-flex is-justify-content-start is-align-items-start has-text-weight-semibold">Match Formatting:</h2>
+      <div class="is-flex is-flex-direction-row is-justify-content-space-between ">
+        <!-- Match Type -->
+        <div class="is-flex is-flex-direction-column">
+          <label class="pb-1" for="match-typeChange">Match Type:</label>
+          <div class="flex-horizontal">
+            <input type="radio" id="round-robinChange" name="match-typeChange" value="round-robin" required>
+            <label for="round-robin">Round Robin</label>
           </div>
-          <div>
-            <p class="is-inline">Player 1</p>
-            <p class="is-inline"> / </p>
-            <p class="is-inline-block">Player 2</p>
+          <div class="is-flex is-flex-direction-row">
+            <input type="radio" id="eliminationChange" name="match-typeChange" value="elimination" required>
+            <label for="elimination">Elimination</label>
           </div>
-
         </div>
-        <div class="cell columns is-gapless is-flex ">
-          <p class="column is-size-3">21</p>
-          <p class="column is-size-3">2</p>
-          <p class="column is-size-3">21</p>
-        </div>
-        <button class="cell is-1-one-fifth button is-warning">Edit</button>
 
-        <div class="cell is-col-start-1">
-          <div>
-            <p class="is-inline-block">School B</p>
-            <p class="is-inline-block">✔</p>
+        <!-- Match Format -->
+        <div class="is-flex is-flex-direction-column">
+          <label class="pb-1" for="match-formatChange">Match Format:</label>
+          <div class="is-flex is-flex-direction-row">
+            <input type="radio" id="singlesChange" name="match-formatChange" value="singles" required>
+            <label for="singles">Singles</label>
           </div>
-          <div>
-            <p class="is-inline">Player 1</p>
-            <p class="is-inline"> / </p>
-            <p class="is-inline-block">Player 2</p>
+          <div class="is-flex is-flex-direction-row">
+            <input type="radio" id="doublesChange" name="match-formatChange" value="doubles" required>
+            <label for="doubles">Doubles</label>
           </div>
+        </div>
 
+        <!-- Match Selection -->
+        <div class="is-flex is-justify-content-start is-flex-direction-column">
+          <label class="pb-1" match">Match:</label>
+          <div class="select">
+            <select id="matchChange" name="match" required>
+              <option value="">Choose Match Type</option>
+              <option value="Singles 1">Singles 1</option>
+              <option value="Singles 2">Singles 2</option>
+              <option value="Singles 3">Singles 3</option>
+              <option value="Singles 4">Singles 4</option>
+              <option value="Doubles 1">Doubles 1</option>
+              <option value="Doubles 2">Doubles 2</option>
+              <option value="Doubles 3">Doubles 3</option>
+            </select>
+          </div>
         </div>
-        <div class="cell columns is-gapless is-flex is-justify-content-space-between">
-          <h3 class="column is-size-3">2</h3>
-          <h3 class="column is-size-3">21</h3>
-          <h3 class="column is-size-3">21</h3>
-        </div>
-        <button class="cell is-1-one-fifth button is-danger">Delete</button>
       </div>
-    </div>
+      <datalist id="schools">
+        <option value="SAN">Sandburg</option>
+        <option value="AND">Andrew</option>
+        <option value="NT">New Trier</option>
+        <option value="DGN">Downers Grove North</option>
+        <option value="FR">Fremd</option>
+        <option value="HER">Hersey</option>
+        <option value="HS">Hinsdale South</option>
+        <option value="LT">Lockport</option>
+        <option value="NN">Naperville North</option>
+        <option value="DF">Deerfield</option>
+        <option value="WY">Whitney Young</option>
+        <option value="YK">York</option>
+      </datalist>
+      <!-- Schools and Players -->
+      <div class="pt-3">
+
+        <table>
+          <tr>
+            <td><h3 class="has-text-weight-semibold is-size-4 is-flex is-justify-content-start">Scores:</h3></td>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td class="p-2">Schools</td>
+            <td class="school-a">
+              <input class="input" list="schools" id="schoolAChange" name="schoolA" placeholder="Select School" required>
+            </td>
+            <td class="school-b">
+              <input class="input" list="schools" id="schoolBChange" name="schoolB" placeholder="Select School" required>
+            </td>
+          </tr>
+          <!-- Players -->
+          <tr>
+            <td class="p-2">PLAYER 1</td>
+            <td><input class="input" type="text" id="playerA1Change" name="playerA1" placeholder="NT1" required></td>
+            <td><input class="input" type="text" id="playerB1Change" name="playerB1" placeholder="AND2" required></td>
+          </tr>
+          <tr>
+            <td class="p-2">PLAYER 2</td>
+            <td><input class="input" type="text" id="playerA2Change" name="playerA2" placeholder="NT2" ></td>
+            <td><input class="input" type="text" id="playerB2Change" name="playerB2" placeholder="AND4" ></td>
+          </tr>
+          <!-- Games -->
+          <tr>
+            <td class="p-2">GAME 1</td>
+            <td><input id="game1AChange" class="input" type="number" name="game1A" min="0" value="0" required></td>
+            <td><input id="game1BChange" class="input" type="number" name="game1B" min="0" value="0" required></td>
+          </tr>
+          <tr>
+            <td class="p-2">GAME 2</td>
+            <td><input id="game2AChange" class="input" type="number" name="game2A" min="0" value="0" required></td>
+            <td><input id="game2BChange" class="input" type="number" name="game2B" min="0" value="0" required></td>
+          </tr>
+          <tr>
+            <td class="p-2">GAME 3</td>
+            <td><input id="game3AChange" class="input" type="number" name="game3A" min="0" value="0" required></td>
+            <td><input id="game3BChange" class="input" type="number" name="game3B" min="0" value="0" required></td>
+          </tr>
+        </table>
+      </div>
+
+      <!-- Submit and Clear Buttons -->
+      <div class="mt-2 submit-clear flex-horizontal is-justify-content-end is-align-items-end">
+        <input type="submit" name="changeButton" class="changeButton button is-link" value="Change">
+        <button class="ml-2 button is-link is-light cancel-modal">Cancel</button>
+      </div>
+    </form>
   </div>
-  </div>
-
-
-
+  <button class="modal-close is-large" aria-label="close"></button>
+</div>
 
 
 <!--WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW-->
@@ -197,41 +269,5 @@
 
 
 
-
-
-<div id="container-score">
-  <h3 id="clickCounter">0</h3>
-  <button id="scoreButton" class="vt323-regular">Click Me</button>
-</div>
-<form class="flex-vertical">
-  <label for="yourname"> Name:</label>
-  <input type="text" id="yourname" placeholder="your name here">
-  <button id="submit">submit</button>
-</form>
-
-
-<div class="flex-horizontal">
-  <div class="flex-vertical">
-    <h2>High Scores:</h2>
-    <table id="table"></table>
-  </div>
-  <form class="flex-vertical">
-    <h2>Delete Data:</h2>
-    <label for="index">Target data's Index:</label>
-    <input type="number" id="index" placeholder="0">
-    <button id="delete">delete</button>
-  </form>
-  <form class="flex-vertical">
-    <h2> Alter Data:</h2>
-    <label for="indexOfChange">Target data's Index:</label>
-    <input type="number" id="indexOfChange" placeholder="0">
-    <label for="nameChange">New Name:</label>
-    <input type="text" id="nameChange" placeholder="John">
-    <label for="scoreChange">New Times Clicked:</label>
-    <input type="number" id="scoreChange" placeholder="2">
-    <button id="alter">alter data</button>
-  </form>
-
-</div>
 </body>
 </html>
