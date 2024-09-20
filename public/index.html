@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+  <head>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Mingzat&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <title>To-do List</title>
+    <meta charset="utf-8">
+    <script src="js/main.js"></script>
+    <link rel="stylesheet" href="css/main.css">
+    
+  </head>
+  <body>
+    <h1 id="header">Make your own To-do List!</h1>
+    
+    <!-- To-do List Form -->
+    <form id="addEvent">
+      <div class="form-container">
+        <div class="form-row">
+          <label class="form-label">Task: </label>
+          <input type="text" id="task" class="form-input" value="" required>
+        </div>
+
+        <div class="form-row">
+          <label class="form-label">Priority: </label>
+          <select id="priority" class="form-input">
+            <option value="Low">Low</option>
+            <option value="Medium">Medium</option>
+            <option value="High">High</option>
+          </select>
+        </div>
+
+        <div class="form-row">
+          <label class="form-label">Creation Date: </label>
+          <input type="date" id="creationDate" class="form-input" required>
+        </div>
+
+        <div class="form-row">
+          <label class="form-label">Deadline: </label>
+          <input type="date" id="dueDay" class="form-input" required>
+          <input type="time" id="dueTime" class="form-input" required>
+        </div>
+
+        <div class="form-row">
+          <button id="submitButton" class="btn">Submit</button>
+        </div>
+      </div>
+    </form>
+  
+    <!-- Section where the submitted to-do item will be displayed -->
+    <div id="submittedTodo"></div>
+  </body>
+</html>
