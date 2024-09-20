@@ -1,7 +1,7 @@
 {
   "name": "button-game",
   "version": "1.0",
-  "description": "CS 4241 Assignment 2",
+  "description": "CS 4241 Assignment 3",
   "author": "Jeremy Kurtz",
   "engines": {
     "node": "16.x"
@@ -13,7 +13,6 @@
     "cookie-session": "^2.1.0",
     "dotenv": "^16.4.5",
     "express": "^4.16.4",
-    "mime": "^2.4.4",
     "mongodb": "^6.9.0"
   }
 }
