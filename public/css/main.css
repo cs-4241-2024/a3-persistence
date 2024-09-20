@@ -1,0 +1,26 @@
+@import url('https://fonts.googleapis.com/css2?family=Protest+Guerrilla&display=swap');
+body {
+ font-family: 'Protest Guerilla', sans-serif;
+ background: #ffffff;
+ color: #343a40;
+}
+h1 {
+ font-size: 2.5em;
+ margin-top: 20px;
+ text-align: center;
+}
+.container {
+ max-width: 600px;
+ margin: auto;
+ padding: 20px;
+}
+#click-count {
+ font-weight: bold;
+}
+button {
+ margin-right: 5px;
+}
+
+.list-group-item {
+ margin-bottom: 5px;
+}
