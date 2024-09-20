@@ -2,7 +2,7 @@ Zihan Li
 
 
 ## Activity Tracker
-https://sea-lion-app-dv9ma.ondigitalocean.app/
+https://a3-yunynl-1.onrender.com/
 
 
 - Goal of the application: allow users to track their activities or tasks, each user can log in using Github OAuth.
@@ -13,12 +13,11 @@ https://sea-lion-app-dv9ma.ondigitalocean.app/
 ## Technical Achievements
 - **Tech Achievement 1**: I used OAuth authentication via the GitHub strategy
 - **Tech Achievement 2**: Achieving 100% on Lighthouse Tests
-- **Tech Achievement 3**: What’s Better about DigitalOcean Compared to Glitch:
-  Full control: With DigitalOcean, you have full root access to your server, meaning you can install anything and customize the environment to your needs.
-  Scalability and flexibility: You can upgrade your Droplet easily, install multiple applications, or host multiple websites on the same server.
-  No app sleeping: Your app will not go to sleep, unlike the free plans on Heroku and Glitch.
-  Downsides of DigitalOcean Compared to Glitch:
-  Requires server management: You are responsible for maintaining and securing the server. This includes tasks like updating the OS, configuring firewalls, and installing software.
+- **Tech Achievement 3**: What’s Better about Render Compared to Glitch:
+  Managed infrastructure: With Render, you don’t need to worry about server management, operating system updates, or security patches. Render automatically manages these for you, providing a platform-as-a-service (PaaS) environment.
+  Scalability and flexibility: Render allows you to scale your applications easily. You can deploy multiple applications or services and scale vertically by upgrading your instance size.
+  No app sleeping: Unlike Glitch (and Heroku’s free plan), apps on Render do not sleep when they are not in use, meaning your application will always be live and responsive.
+  Seamless deployments: Render offers an easy, Git-based deployment process. You can automatically deploy from GitHub or GitLab, which simplifies CI/CD workflows.
 - **Tech Achievement 4**: I used several Express.js middleware packages to enhance the functionality of the project:
 1.passport.js: For OAuth authentication with GitHub.
 2.express-session: For managing user sessions.
