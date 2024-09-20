@@ -22,6 +22,26 @@ document.addEventListener("DOMContentLoaded", () => {
   //   });
   // });
 
+  const darkModeToggle = document.getElementById("darkModeToggle");
+  const body = document.body;
+
+  // Check localStorage to set initial mode if previously set
+  if (localStorage.getItem("darkMode") === "enabled") {
+    body.classList.add("dark-mode");
+    darkModeToggle.checked = true;
+  }
+
+  // Toggle dark mode on switch click
+  darkModeToggle.addEventListener("change", function () {
+    if (darkModeToggle.checked) {
+      body.classList.add("dark-mode");
+      localStorage.setItem("darkMode", "enabled"); // Save preference
+    } else {
+      body.classList.remove("dark-mode");
+      localStorage.setItem("darkMode", "disabled"); // Save preference
+    }
+  });
+
   // Handle registration form sliding in
   showRegisterBtn.addEventListener("click", (e) => {
     e.preventDefault();
