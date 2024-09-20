@@ -7,7 +7,7 @@ const path = require('path');
 
 // Initialize express
 const app = express();
-const PORT = process.env.PORT || 3000;
+// const PORT = process.env.PORT || 3000;
 
 // Middleware to serve static files (CSS, JS)
 app.use(express.static(path.join(__dirname, 'public'), { index: false })); // Serve static files without auto-indexing
@@ -18,7 +18,9 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 // MongoDB connection string
-const mongoURI = 'mongodb+srv://zli29:1225931003l@cluster0.sa8ge.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0';
+// const mongoURI = 'mongodb+srv://zli29:1225931003l@cluster0.sa8ge.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0';
+// mongoose.connect(mongoURI)
+const mongoURI = process.env.MONGO_URI;
 mongoose.connect(mongoURI)
     .then(() => console.log('MongoDB connected'))
     .catch(err => console.log('MongoDB connection error: ', err));
@@ -159,6 +161,7 @@ app.post('/deleteActivity', ensureAuthenticated, async (req, res) => {
 
 
 // Start the server
+const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
-    console.log(`Server running on http://localhost:${PORT}`);
+    console.log(`Server running on port ${PORT}`);
 });
