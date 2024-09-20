@@ -40,16 +40,13 @@ const activitySchema = new mongoose.Schema({
 
 const Activity = mongoose.model('Activity', activitySchema);
 
-const callbackURL = process.env.NODE_ENV === 'production'
-    ? `https://a3-yunynl-1.onrender.com/auth/github/callback`
-    : 'http://localhost:3000/auth/github/callback';
 
 // GitHub OAuth Setup
 passport.use(new GitHubStrategy({
         clientID: 'Ov23li6bj5dJbJlZ9Nef',
         clientSecret: 'af2592ff2df91e57c49055058699eb03a207370c',
-        // callbackURL: 'http://localhost:3000/auth/github/callback'
-        callbackURL: callbackURL
+        callbackURL: 'https://a3-yunynl-1.onrender.com/auth/github/callback'
+
     },
     async function (accessToken, refreshToken, profile, done) {
         let user = await User.findOne({ githubId: profile.id });
