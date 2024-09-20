@@ -11,12 +11,16 @@ const submit = async function( event ) {
   input2 = document.querySelector( '#description'),
   input3 = document.querySelector( '#cost'), input4 = document.querySelector('#tax'),
         json = { item: input.value, description: input2.value, cost: input3.value, tax: input4.value, total: 0, tag: isEdit },
-        body = JSON.stringify( json )
+        body = JSON.stringify( json );
  //console.log(input)
-  const response = await fetch( '/data', {
-    method:'add',
-    body
-  })
+ //console.log(body, "client side");
+ console.log(json, "client side");
+  const response = await fetch( '/add', {
+    method:'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(json)
+  });
+
   let data = await response.json();
   updateTable(data);
   input.value = '';
@@ -48,7 +52,7 @@ const submit = async function( event ) {
 async function deleteItem(evt) {
   let tag = evt.target.id;
   const response = await fetch('/data', {
-    method: 'remove',
+    method: 'DELETE',
     body: JSON.stringify({tag}),
   });
   let data = await response.json();
@@ -138,7 +142,7 @@ async function saveItem(evt) {
         body = JSON.stringify( json )
  //console.log(input)
   const response = await fetch( '/data', {
-    method:'update',
+    method:'PUT',
     body
   })
   let data = await response.json();

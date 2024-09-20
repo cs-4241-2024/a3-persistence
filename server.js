@@ -12,33 +12,52 @@ cookie  = require( 'cookie-session' ),
         keys: ['key1', 'key2']
       }))
 
+      app.use(express.static("public") )
+app.use(express.json() )
+const path = require('path')
+
+const uri = `mongodb+srv://${process.env.USER}:${process.env.PASS}@${process.env.HOST}`
+//mongodb+srv://jscaproni:<db_password>@cluster0.1aefo.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0
+const client = new MongoClient( uri )
+
+let collection = null
+let userDatabase = null
+
+async function run() {
+  await client.connect()
+  collection = await client.db("datatest").collection("test")
+  userDatabase = await client.db("users").collection("userInfo")
+  console.log("Connected to MongoDB");
+  // route to get all docs
+  //const docs = await collection.find({}).toArray()
+  //console.log(docs)
+}
+
+run()
+
       app.get('/', (req, res) => {
         res.sendFile(__dirname + '/public/index.html');
       });
+      
+      
+      app.post('/login', async (req, res) => {
+          console.log(req.body);
+      
+          let currName = req.body.username;
+          let currPass = req.body.password;
+          let found = await userDatabase.find({ name: currName, password: currPass }).toArray();
+      
+          if (found.length === 0) {
+              await client.db("users").collection("userInfo").insertOne({ name: currName, password: currPass });
+          }
+      
+          res.sendFile(path.join(__dirname, 'public', 'main.html'));
+      
+          // Uncomment if needed
+          // await client.db("datatest").collection("test").insertOne({ name: "works" });
+      });
 
-      app.post( '/login', async (req,res) => {
-        // express.urlencoded will put your key value pairs 
-        // into an object, where the key is the name of each
-        // form field and the value is whatever the user entered
-        console.log( req.body )
-        
-        // below is *just a simple authentication example* 
-        // for A3, you should check username / password combos in your database
-        if( req.body.password === 'test'  && req.body.username === 'admin' ){ 
-          // define a variable that we can check in other middleware
-          // the session object is added to our requests by the cookie-session middleware
-          req.session.login = true
-          res.redirect('/main.html');
-          
-          // since login was successful, send the user to the main content
-          // use redirect to avoid authentication problems when refreshing
-          // the page or using the back button, for details see:
-          // https://stackoverflow.com/questions/10827242/understanding-the-post-redirect-get-pattern 
-        }else{
-          // password incorrect, redirect back to login page
-          res.sendFile( __dirname + '/public/index.html' )
-        }
-      })
+      
 
       app.use( function( req,res,next) {
         if( req.session.login === true )
@@ -48,26 +67,7 @@ cookie  = require( 'cookie-session' ),
       })
       
 
-app.use(express.static("public") )
-app.use(express.json() )
-const path = require('path')
 
-const uri = `mongodb+srv://${process.env.USER}:${process.env.PASS}@${process.env.HOST}`
-//mongodb+srv://jscaproni:<db_password>@cluster0.1aefo.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0
-const client = new MongoClient( uri )
-
-let collection = null
-
-async function run() {
-  await client.connect()
-  collection = await client.db("datatest").collection("test")
-  console.log("Connected to MongoDB");
-  // route to get all docs
-  //const docs = await collection.find({}).toArray()
-  //console.log(docs)
-}
-
-run()
 
 /*app.get("/", (req, res) => {
   res.send("Welcome to the home page!");
@@ -96,8 +96,23 @@ app.use( (req,res,next) => {
   })
 
   app.post( '/add', async (req,res) => {
-    const result = await collection.insertOne( req.body )
-    res.json( result )
+    console.log(req.body, "added successfully console log");
+    currentItem = req.body.item;
+    currentDescription = req.body.description;
+    currentCost = parseFloat(req.body.cost);
+    currentTax = parseFloat(req.body.tax);
+    currentTag = req.body.tag;
+    calcTotal = currentCost * (1 + currentTax);
+    const result = await client.db("datatest").collection("test").insertOne({item: currentItem, description: currentDescription, cost: currentCost, tax: currentTax, total: calcTotal, tag: currentTag});
+    res.json({
+      item: currentItem,
+      description: currentDescription,
+      cost: currentCost,
+      tax: currentTax,
+      total: calcTotal,
+      tag: currentTag
+    });
+    
   })
 
   app.post( '/remove', async (req,res) => {
