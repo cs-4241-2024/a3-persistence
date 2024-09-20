@@ -1,8 +1,4 @@
 
-
-Sample Readme (delete the above when you're ready to submit, and modify the below so with your links and descriptions)
----
-
 ## Clicker Website 2.0 (With Login functionality
 
 https://d52199b4-b1d4-4d06-ac2c-e492a9bd9c78-00-2cg1ciq4j7yzp.janeway.replit.dev
@@ -17,15 +13,13 @@ https://d52199b4-b1d4-4d06-ac2c-e492a9bd9c78-00-2cg1ciq4j7yzp.janeway.replit.dev
 The goal of the application is to just be a fun game for users to test their click speed and compare scores on a leaderboard. It also allows users to register and log in to track their scores and compete with others.
 
 ### Challenges Faced
-- **MongoDB Connection:** Connecting to MongoDB from an external service required setting up proper permissions and configuring environment variables in Replit.
-- **Session Management:** Handling user authentication securely and managing session cookies required careful use of middleware.
-- **Leaderboard Display:** Sorting and displaying the leaderboard dynamically while ensuring that only the logged-in user could delete their own scores was a challenge.
+- **Leaderboard Display:** Sorting and displaying the leaderboard dynamically while ensuring that only the logged-in user could delete their own scores was a challenge. I got the log in functionality working pretty early but integrating that with my score system and making it so only users can delete their scores was difficult. I ended up deleting the ability for users to add their own scores because i couldnt get it to work. 
 
 ### Authentication Strategy
-I chose to use **session-based authentication** with `express-session`. This strategy was selected because it was straightforward to implement and fit well with the needs of the project. The session data was stored server-side, ensuring security for user logins.
+I chose to use **session-based authentication** with `express-session`. because it was the easiest to implement
 
 ### CSS Framework
-I used **NES.css** for the retro video game aesthetic. NES.css provides a pixelated, 8-bit look, which was perfect for the game’s theme. I customized the framework using additional custom CSS to:
+I used **NES.css** for the retro video game aesthetic and it was listed in the a3 read me. I customized the framework using additional custom CSS to:
 - Center game elements on the page.
 - Modify the leaderboard table with background colors and borders.
 - Add pulsating animation to the click counter for visual feedback during the game.
