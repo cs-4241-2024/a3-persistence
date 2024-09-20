@@ -4,9 +4,10 @@
     <title>CS4241 Assignment 2</title>
     <meta charset="utf-8">
     <script src="js/main.js"></script>
-    <link rel="stylesheet" href="css/main.css">
-    
-    <!-- get rid of favicon error -->
+    <link href="https://cdn.jsdelivr.net/npm/beercss@3.7.8/dist/cdn/beer.min.css" rel="stylesheet" />
+    <script type="module" src="https://cdn.jsdelivr.net/npm/beercss@3.7.8/dist/cdn/beer.min.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/material-dynamic-colors@1.1.2/dist/cdn/material-dynamic-colors.min.js"></script>
+
     <link rel="icon" href="data:;base64,iVBORw0KGgo=">
   </head>
 
@@ -22,7 +23,7 @@
         </tr>
       </thead>
       <tbody>
-        <!-- Tasks will be dynamically inserted here -->
+        <!-- Dynamically inserted -->
       </tbody>
     </table>
 
@@ -38,5 +39,7 @@
       <input type="text" id="deleteTask" placeholder="Task Description to Delete" required>
       <button type="submit">Delete Task</button>
     </form>
+
+    <button id="logoutButton">Logout</button>
   </body>
 </html>

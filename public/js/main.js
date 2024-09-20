@@ -1,27 +1,46 @@
-// FRONT-END (CLIENT) JAVASCRIPT HERE
+const logOut = async function () {
+  const logoutButton = document.getElementById('logoutButton');
+  if (logoutButton) {
+    logoutButton.onclick = async function () {
+      const response = await fetch('/logout', {
+        method: 'GET'
+      });
+      if (response.ok) {
+        //Redirect to login page if logout is succesful
+        window.location.href = '/login.html'; 
+      }
+    };
+  }
+};
 
 const updateTable = async function () {
   const response = await fetch('/submit', {
     method: 'POST',
-    body: JSON.stringify({ action: 'get' }),
-    headers: { 'Content-Type': 'application/json' }
+    body: JSON.stringify({action: 'get'}),
+    headers: {'Content-Type': 'application/json'}
   })
 
-  const data = await response.json()
 
-  const tableBody = document.querySelector('#tasksTable tbody')
-  tableBody.innerHTML = '' // Clear the table
+  if (response.status === 401) {
+    window.location.href = '/login.html';
+  } 
+  else {
+    const data = await response.json()
 
-  data.forEach(task => {
-    const newRow = document.createElement('tr');
-    newRow.innerHTML = `
-      <td>${task.task}</td>
-      <td>${task.priority}</td>
-      <td>${task.created_at}</td>
-      <td>${task.deadline}</td>
-    `;
-    tableBody.appendChild(newRow);
-  });
+    const tableBody = document.querySelector('#tasksTable tbody')
+    tableBody.innerHTML = '' //Clear the table
+
+    data.forEach(task => {
+      const newRow = document.createElement('tr');
+      newRow.innerHTML = `
+        <td>${task.task}</td>
+        <td>${task.priority}</td>
+        <td>${task.created_at}</td>
+        <td>${task.deadline}</td>
+      `;
+      tableBody.appendChild(newRow);
+    });
+  }
 };
 
 const addTask = async function (event) {
@@ -39,7 +58,7 @@ const addTask = async function (event) {
   const response = await fetch('/submit', {
     method: 'POST',
     body: JSON.stringify(data),
-    headers: { 'Content-Type': 'application/json' }
+    headers: {'Content-Type': 'application/json'}
   });
 
   await updateTable();
@@ -58,7 +77,7 @@ const deleteTask = async function (event) {
   const response = await fetch('/submit', {
     method: 'POST',
     body: JSON.stringify(data),
-    headers: { 'Content-Type': 'application/json' }
+    headers: {'Content-Type': 'application/json'}
   });
 
   await updateTable();
@@ -66,6 +85,7 @@ const deleteTask = async function (event) {
 
 window.onload = function () {
   updateTable();
+  logOut();
 
   const addTaskForm = document.querySelector('#addTaskForm');
   addTaskForm.onsubmit = addTask;
