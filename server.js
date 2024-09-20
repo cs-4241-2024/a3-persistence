@@ -96,12 +96,7 @@ app.get('/logout', (req, res, next) => {
     req.logout(function(err) {
         if (err) { return next(err); }
         req.session.destroy();
-
-        // Redirect to the correct login page based on the environment
-        const redirectURL = process.env.NODE_ENV === 'production'
-            ? `https://${process.env.DOMAIN}/`
-            : 'http://localhost:3000/';
-        res.redirect(redirectURL);
+        res.redirect('/');  // Redirect to the login page after logging out
     });
 });
 
