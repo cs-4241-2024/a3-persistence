@@ -1,81 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <title>Highscore Racer</title>
-    <meta charset="utf-8" />
-    <link rel="stylesheet" href="css/main.css" />
-
-    <!-- get rid of favicon error -->
-    <link rel="icon" href="data:;base64,iVBORw0KGgo=" />
-  </head>
   <body>
-    <canvas id="canvas">
-      <img
-        id="racetrack"
-        alt="Racetrack clipart"
-        src="./assets/racetrack.png"
-      />
-      <img id="racecar" alt="Racecar clipart" src="./assets/racecar.png" />
-    </canvas>
-    <div class="score-page">
-      <h1>Highscore Racer</h1>
-      <table id="highscores">
-        <tr>
-          <th>Lap 1</th>
-          <th>Lap 2</th>
-          <th>Lap 3</th>
-          <th>Total</th>
-          <th>Options</th>
-        </tr>
-      </table>
-      <p>
-        To start, use the arrow keys or WASD. Race the car around the track
-        three times and a score will be submitted automatically.
-      </p>
-      <p>
-        There is a checkpoint at the bottom of the track that must be reached
-        every lap. Try to avoid the grass, it slows you down!
-      </p>
-      <p>
-        Press the reset button at any time to start over, or start a new game
-        after you complete a race.
-      </p>
-      <p>
-        Use the Delete button to delete a score from the table (and server). Use
-        the shuffle button to shuffle lap times (for fun!).
-      </p>
-      <button id="reset">Reset Game</button>
-    </div>
-    <div id="popup">
-      <form action="/update" method="POST">
-        <h1>Edit Time</h1>
-        <ol>
-          <li>
-            <label for="lap1input">Lap 1: </label
-            ><input id="lap1input" type="text" name="lap1" />
-          </li>
-          <br />
-          <li>
-            <label for="lap2input">Lap 2: </label
-            ><input id="lap2input" type="text" name="lap2" />
-          </li>
-          <br />
-          <li>
-            <label for="lap3input">Lap 3: </label
-            ><input id="lap3input" type="text" name="lap3" />
-          </li>
-        </ol>
-        <input type="text" name="_id" id="idHolder" style="display: none" />
-        <input class="button" type="submit" />
-        <button
-          type="button"
-          value="Cancel"
-          onclick="document.getElementById('popup').style.display = 'none';"
-        >
-          Cancel
-        </button>
-      </form>
-    </div>
-    <script src="js/main.js"></script>
+    <form action="/login" method="POST">
+      <input type="text" name="username" />
+      <input type="password" name="password" />
+      <input type="submit" />
+    </form>
   </body>
 </html>
