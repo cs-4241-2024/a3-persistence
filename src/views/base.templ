@@ -1,0 +1,59 @@
+package views
+
+templ Base(contents templ.Component, hasUsername bool, username string) {
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>LELL</title>
+  <script src="https://unpkg.com/htmx.org@1.9.11"></script>
+  <link href="/assets/output.css" rel="stylesheet" />
+</head>
+
+<body class="antialiased text-slate-500 dark:text-slate-400 bg-white dark:bg-slate-900">
+  <div class="absolute z-20 top-0 inset-x-0 flex justify-center overflow-hidden pointer-events-none">
+    <div class="w-[108rem] flex-none flex justify-end">
+      <picture>
+        <source srcset="https://tailwindcss.com/_next/static/media/docs@30.8b9a76a2.avif" type="image/avif" /><img
+          src="https://tailwindcss.com/_next/static/media/docs@tinypng.d9e4dcdc.png" alt=""
+          class="w-[71.75rem] flex-none max-w-none dark:hidden" decoding="async" />
+      </picture>
+      <picture>
+        <source srcset="https://tailwindcss.com/_next/static/media/docs-dark@30.1a9f8cbf.avif" type="image/avif" /><img
+          src="https://tailwindcss.com/_next/static/media/docs-dark@tinypng.1bbe175e.png" alt=""
+          class="w-[90rem] flex-none max-w-none hidden dark:block" decoding="async" />
+      </picture>
+    </div>
+  </div>
+  <div
+    class="shadow-xl sticky top-0 z-40 w-full backdrop-blur flex-none transition-colors duration-500 lg:z-50 lg:border-b lg:border-slate-900/10 dark:border-slate-50/[0.06] bg-white/95 supports-backdrop-blur:bg-white/60 dark:bg-transparent">
+    <div class="py-4 border-b border-slate-900/10 lg:px-8 lg:border-0 dark:border-slate-300/10 px-4">
+      <div class="flex items-center w-full" if hasUsername { style="justify-content: space-between" } else {
+        style="justify-content: center" }>
+        if hasUsername {
+        <div class="text-lg font-bold">
+          { username }
+        </div>
+        }
+        <h1 class="text-4xl font-extrabold">Liam's Epic Lift Logger</h1>
+        if hasUsername {
+        <div>
+          <form action="/logout" method="POST">
+            <button class="btn" type="submit">
+              Logout
+            </button>
+          </form>
+        </div>
+        }
+      </div>
+    </div>
+  </div>
+  <div>
+    @contents
+  </div>
+</body>
+
+</html>
+}

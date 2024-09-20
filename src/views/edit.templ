@@ -1,0 +1,92 @@
+package views
+
+import (
+	"github.com/liamsnow/cs4241-assignment3/models"
+	"strconv"
+	"fmt"
+)
+
+templ Edit(exercise *models.Exercise) {
+	<div class="flex justify-center py-12">
+		<div class="mt-6 font-bold card w-96 mt-20 mb-20 shadow-xl">
+			<form class="card-body" method="POST">
+				<h2 class="mt-10 text-center text-4xl font-bold leading-9 tracking-tight">
+					Edit Exercise
+				</h2>
+				<a class="mt-3 link text-center" href="../">← Back</a>
+				<div class="items-center mt-2 space-y-3">
+					<label class="form-control">
+						<div class="label">
+							<span class="label-text">Name</span>
+						</div>
+						<input
+							name="name"
+							class="input input-bordered w-full max-w-xs"
+							id="name"
+							type="text"
+							placeholder="Bench Press (Barbell)"
+							value={ exercise.Name }
+						/>
+					</label>
+					<label class="form-control">
+						<div class="label">
+							<span class="label-text">Rating</span>
+							@RatingStars(exercise.Rating)
+						</div>
+					</label>
+					<label class="form-control">
+						<div class="label">
+							<span class="label-text">Form Notes</span>
+						</div>
+						<textarea
+							name="form-notes"
+							class="textarea textarea-bordered h-24"
+							placeholder="3 second negative"
+						>{ exercise.FormNotes }</textarea>
+					</label>
+					<label class="form-control">
+						<div class="label">
+							<span class="label-text">Setup Notes</span>
+						</div>
+						<textarea
+							name="setup-notes"
+							class="textarea textarea-bordered h-24"
+							placeholder="seat pin 4, foot pin 5"
+						>{ exercise.SetupNotes }</textarea>
+					</label>
+					<label class="form-control">
+						<div class="label">
+							<span class="label-text">Last Weight (lbs)</span>
+						</div>
+						<input
+							name="last-weight"
+							class="input input-bordered w-full max-w-xs"
+							id="weight"
+							type="number"
+							placeholder="315"
+							value={ fmt.Sprintf("%d", exercise.LastWeight) }
+						/>
+					</label>
+				</div>
+				<div class="card-actions justify-between mt-4">
+					<button value="delete" name="button" class="btn btn-outline btn-error">Delete</button>
+					<button value="save" name="button" class="btn btn-outline btn-success">Save</button>
+				</div>
+			</form>
+		</div>
+	</div>
+}
+
+templ RatingStars(rating uint8) {
+	<div class="rating">
+		for i := 1; i <= 5; i++ {
+			<input
+				type="radio"
+				name="rating-1"
+				value={ strconv.Itoa(i) }
+				class="mask mask-star"
+				checked?={ i == int(rating) }
+			/>
+		}
+	</div>
+}
