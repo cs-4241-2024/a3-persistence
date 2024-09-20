@@ -8,6 +8,7 @@ glitch: https://glitch.com/~a3-Rileyyu1
 - Add a Task: Fill in the task name, select a due date, choose a priority level, and click the "Add Task" button to add a new task to the list. Modify a Task: Enter the existing task name you wish to modify, then provide the new details (task name, due date, priority), and click the "Modify Task" button. View Tasks: All tasks are displayed in a table format under "Current Tasks," showing the task name, due date, priority, days remaining, and options to edit or delete tasks.
 - If the user enters a pre-existing account, the site will record what has been entered, and if it is a non-existing account it will automatically register.
 **Achievements**:
+-deployed by using render, is much easy then using glitch 
 - five Express middleware packages:
 express-session: Used to manage user sessions, allowing persistent login across multiple requests without requiring a password each time.
 cors: Enables Cross-Origin Resource Sharing (CORS), which allows the server to respond to requests from different origins, crucial for web applications that interact with APIs or other domains.
