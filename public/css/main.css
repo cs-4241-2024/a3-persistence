@@ -1,0 +1,76 @@
+body {
+  font-family: 'Arial', sans-serif;
+  background-color: rgb(237, 235, 189);
+  margin: 20;
+  padding: 10;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100vh;
+}
+
+/* Heading */
+h1 {
+  color: #444;
+  margin-bottom: 20px;
+}
+
+/* Task table styling */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  border: 1;
+  margin-bottom: 20px;
+}
+
+thead th {
+  background-color: rgb(70, 65, 45);
+  color: white;
+  padding: 10px;
+}
+
+tbody tr {
+  background-color: #f9f9f9;
+  border-bottom: 1px solid #ddd;
+}
+
+tbody tr:nth-child(even) {
+  background-color: #f1f1f1;
+}
+
+tbody td {
+  padding: 10px;
+  text-align: center;
+}
+
+/* Form input styling */
+form input[type="text"],
+form input[type="number"] {
+  padding: 10px;
+  width: 100%;
+  margin: 10px 0;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  box-sizing: border-box;
+}
+
+button {
+  background-color: rgb(70, 65, 45);
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  width: 100%;
+  margin-top: 10px;
+}
+
+button:hover {
+  background-color: rgb(39, 37, 26);
+}
+
+/* Form headings */
+h2 {
+  margin-top: 30px;
+  color: #555;
+}
