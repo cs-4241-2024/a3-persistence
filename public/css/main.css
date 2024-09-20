@@ -1,104 +1,117 @@
+
 body {
-    background: black;
-    color: white;
-    font-family: "Roboto", sans-serif;
-    text-align: center;
-    margin: 0;
-    padding: 0;
+  background-color: black;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  margin: 0;
+  padding: 0;
+  text-align: center;
+}
+
+
+.game-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 40px; 
+  box-shadow: 0px 0px 15px 2px rgba(255, 255, 255, 0.2);
+  padding: 20px;
+  border-radius: 10px;
+  background-color: #1a1a1a; 
+}
+
+
+#leaderboard-table {
+  width: 80%;
+  margin: 20px auto;
+  border-collapse: collapse;
+  text-align: center;
+  background-color: #333; 
+  color: white; 
+}
+
+
+table {
+  margin: 0 auto; 
+  width: 60%;
+  border-spacing: 0;
+  background-color: #333; 
+  color: white;
+}
+
+th, td {
+  padding: 10px;
+  border: 1px solid white; 
+}
+
+thead {
+  background-color: #444; 
+}
+
+#counter, #timer, #message {
+  margin: 20px 0;
+}
+
+#startGameButton, #playAgain, #logoutButton {
+  margin-top: 20px;
+  display: block;
+  width: fit-content;
+  align-self: center;
+}
+
+
+#playAgain {
+  font-size: 20px;
+  padding: 20px 40px; 
+}
+
+
+#leaderboard-table {
+  margin-top: 60px; 
+}
+
+
+input {
+  margin: 5px auto;
+  display: block;
+}
+
+
+.pulsate {
+  animation: pulse 0.5s ease-in-out;
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
   }
-  
-  #counter {
-    font-size: 36px;
-    font-weight: bold;
-    margin: 20px 0;
+  50% {
+    transform: scale(1.2);
   }
-  
-  .pulsate {
-    animation: pulse 0.5s ease-in-out;
+  100% {
+    transform: scale(1);
   }
-  
-  @keyframes pulse {
-    0% {
-      transform: scale(1);
-    }
-    50% {
-      transform: scale(1.2);
-    }
-    100% {
-      transform: scale(1);
-    }
-  }
-  
-  #timer.red {
-    color: red;
-  }
-  
-  #startGameButton,
-  #playAgain {
-    background-color: #00ff00;
-    color: black;
-    border: none;
-    padding: 15px 30px;
-    font-size: 18px;
-    cursor: pointer;
-    margin: 20px auto;
-    width: 200px;
-    text-align: center;
-    border-radius: 5px;
-    display: block;
-  }
-  
-  #startGameButton:hover,
-  #playAgain:hover {
-    background-color: #009900;
-  }
-  
-  table {
-    width: 80%;
-    margin: 20px auto;
-    border-collapse: collapse;
-    color: white;
-  }
-  
-  th,
-  td {
-    border: 1px solid #00ff00;
-    padding: 10px;
-    text-align: center;
-  }
-  
-  thead {
-    background-color: #009900;
-  }
-  
-  tbody tr:nth-child(even) {
-    background-color: #333;
-  }
-  
-  #addEntryForm {
-    margin: 20px 0;
-  }
-  
-  input {
-    padding: 5px;
-    margin: 5px;
-    border: 1px solid #00ff00;
-    background: black;
-    color: white;
-    border-radius: 3px;
-  }
-  
-  button[type="submit"] {
-    background-color: #00ff00;
-    border: none;
-    padding: 10px 20px;
-    color: black;
-    font-size: 16px;
-    cursor: pointer;
-    margin-top: 10px;
-    border-radius: 5px;
-  }
-  
-  button[type="submit"]:hover {
-    background-color: #009900;
-  }
+}
+
+/* Simple enhancements */
+button {
+  border-radius: 5px;
+  box-shadow: 0 5px 15px rgba(255, 255, 255, 0.2);
+}
+
+table {
+  border-radius: 10px; 
+}
+
+input, button {
+  box-shadow: 0 3px 10px rgba(255, 255, 255, 0.15); 
+}
+
+
+#timer.red {
+  color: red;
+}
