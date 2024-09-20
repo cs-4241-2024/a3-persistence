@@ -1,12 +1,17 @@
 {
   "name": "Anime-Tracker",
-  "version": "0.1.0",
-  "description": "Keep track of what anime you're watching and the progress you've made with this small web app! This page was created with the help of the Jikan API, a RESTful API that grabs data from myanimelist.net.",
+  "version": "1.0.0",
+  "description": "Anime Tracker Website",
   "author": "Ananya Jayamoorthy",
   "scripts": {
-    "start": "node server.js"
+    "start": "nodemon server.js"
   },
   "dependencies": {
+    "body-parser": "^1.20.3",
+    "express": "^4.21.0",
     "mime": "^2.4.4"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.7"
   }
 }

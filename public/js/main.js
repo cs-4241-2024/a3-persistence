@@ -21,16 +21,20 @@ const submit = async function( event ) {
 
   const response = await fetch( '/submit', {
     method:'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
     body 
   });
 
-  const data = await response.json()
-
-  data.forEach( d => console.log(d) );
-
-  fetchAppData();
+  if (response.ok) {
+    const data = await response.json();
+    console.log(data);
+    fetchAppData();
+  } else {
+    console.error('Failed to submit data');
+  }
 }
-
 
 const displayCards = function(data) {
 
@@ -66,7 +70,7 @@ const displayCards = function(data) {
     deleteButton.addEventListener('click', deleteCard);
 
     cardContainer.appendChild(card); 
-  })
+  });
 
 }
 
@@ -78,18 +82,29 @@ const deleteCard = async function(event) {
 
   const response = await fetch('/submit', {
     method: 'DELETE',
+    headers: {
+      'Content-Type': 'application/json',
+    },
     body: JSON.stringify({ username, showTitle })
   });
 
-  const data = await response.json();
-  fetchAppData();
+  if (response.ok) {
+    const data = await response.json();
+    fetchAppData();
+  } else {
+    console.error('Failed to delete data');
+  }
 }
 
 const fetchAppData = async function() {
   const response = await fetch('/appdata');
-  const data = await response.json();
-  displayCards(data);
-  console.log(data);
+
+  if (response.ok) {
+    const data = await response.json();
+    displayCards(data);
+  } else {
+    console.error('Failed to fetch app data');
+  }
 }
 
 window.onload = function() {

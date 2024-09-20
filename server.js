@@ -1,90 +1,62 @@
 const http = require( 'http' ),
+      express = require("express"),
       fs   = require( 'fs' ),
-      // IMPORTANT: you must run `npm install` in the directory for this assignment
-      // to install the mime library if you're testing this on your local machine.
-      // However, Glitch will install it automatically by looking in your package.json
-      // file.
       mime = require( 'mime' ),
+      bodyParser = require('body-parser'), 
       dir  = 'public/',
-      port = 3000
+      port = 3000;
 
+const app = express();
+
+//temp data
 const appdata = [
   { 'username': 'Ananya', 'show title': "Jujutsu Kaisen", 'last ep watched': 12, 'date logged': '9/9/2024' },
 ]
 
-const server = http.createServer( function( request,response ) {
-  if( request.method === 'GET' ) {
-    handleGet( request, response )    
-  }else if( request.method === 'POST' ){
-    handlePost( request, response ) 
-  } else if( request.method === 'DELETE') {
-    handleDelete(request, response);
-  }
-})
+app.use(bodyParser.json());           //middleware handles JSON request bodies
+app.use(express.static('public'));    //serves files from the 'public' directory
 
-const handleGet = function( request, response ) {
-  const filename = dir + request.url.slice( 1 ) 
 
-  if( request.url === '/' ) {
-    sendFile( response, 'public/index.html' )
-  } else if (request.url === '/appdata') {
-    response.writeHead(200, { 'Content-Type': 'application/json' });
-    response.end(JSON.stringify(appdata));
-  } else {
-    sendFile( response, filename )
-  } 
-} 
+//route to serve the main page
+app.get("/", (req, res) => {
+  res.sendFile(__dirname + '/public/index.html');
+});
 
-const handlePost = function( request, response ) {
-  let dataString = ''
+//route to return appdata
+app.get("/appdata", (req, res) => {
+  res.status(200).json(appdata);
+});
 
-  request.on( 'data', function( data ) {
-      dataString += data 
-  })
+app.post("/submit", (req, res) => {
+  const formData = req.body;
 
-  request.on( 'end', function() {
-    const formData = JSON.parse(dataString);
+  const newEntry = {
+    'username': formData.username,
+    'show title': formData.showName,
+    'last ep watched': Number(formData.lastViewed),
+    'date logged': getDate()
+  };
 
-    const newEntry = {
-      'username': formData.username,
-      'show title': formData.showName,
-      'last ep watched': Number(formData.lastViewed),
-      'date logged': getDate()
-    };
+  appdata.push(newEntry);
+  console.log(appdata);
 
-    appdata.push(newEntry);
+  res.status(200).json(appdata);
+});
 
-    console.log(appdata);
+app.delete("/submit", (req, res) => {
+  const {username, showTitle} = req.body;
 
-    response.writeHead( 200, "OK", {'Content-Type': 'text/plain' })
-    response.end(JSON.stringify( appdata ));
-  })
-}
+  const newAppData = appdata.filter(entry => 
+    !(entry.username === username && entry['show title'] === showTitle)
+  );
 
-const handleDelete = function(request, response) {
-  let dataString = '';
+  appdata.length = 0;
+  appdata.push(...newAppData);
 
-  request.on('data', function(data) {
-    dataString += data;
-  });
+  res.status(200).json(appdata);
+});
 
-  request.on('end', function() {
-    const formData = JSON.parse(dataString);
-    const { username, showTitle } = formData;
-
-    //filter out the entry that matches the username and show title
-    const newAppData = appdata.filter(entry =>
-      !(entry.username === username && entry['show title'] === showTitle)
-    );
-
-    appdata.length = 0; //clears the old data
-    appdata.push(...newAppData); 
-
-    response.writeHead(200, "OK", {'Content-Type': 'application/json'});
-    response.end(JSON.stringify(appdata));
-  });
-}
-
+//helper function --> gets current date
 function getDate() {
   const date = new Date();
 
@@ -95,26 +67,6 @@ function getDate() {
   return `${month}/${day}/${year}`;
 }
 
-const sendFile = function( response, filename ) {
-   const type = mime.getType( filename ) 
-
-   fs.readFile( filename, function( err, content ) {
-
-     // if the error = null, then we've loaded the file successfully
-     if( err === null ) {
-
-       // status code: https://httpstatuses.com
-       response.writeHeader( 200, { 'Content-Type': type })
-       response.end( content )
-
-     } else{
-
-       // file not found, error code 404
-       response.writeHeader( 404 )
-       response.end( '404 Error: File Not Found' )
-
-     }
-   })
-}
-
-server.listen( process.env.PORT || port )
+app.listen(port, () => {
+  console.log(`Anime tracker listening on port ${port}`);
+})
