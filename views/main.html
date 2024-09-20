@@ -6,7 +6,7 @@
   <script src="js/main.js"></script>
   <link rel="stylesheet" href="css/main.css">
   <!--    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.2/css/bulma.min.css">-->
-
+  <meta name="description" content="Submit Badminton Matches into Featherfest">
   <!-- get rid of favicon error -->
   <link rel="icon" href="data:;base64,iVBORw0KGgo=">
 
@@ -26,7 +26,7 @@
     <div class="is-flex is-flex-direction-row is-justify-content-space-between ">
       <!-- Match Type -->
       <div class="is-flex is-flex-direction-column">
-        <label class="pb-1" for="match-type">Match Type:</label>
+        <h3>Match Type:</h3>
         <div class="flex-horizontal">
           <input type="radio" id="round-robin" name="match-type" value="Round Robin" required>
           <label for="round-robin">Round Robin</label>
@@ -39,7 +39,7 @@
 
       <!-- Match Format -->
       <div class="is-flex is-flex-direction-column">
-        <label class="pb-1" for="match-format">Match Format:</label>
+        <h3 class="pb-1">Match Format:</h3>
         <div class="is-flex is-flex-direction-row">
           <input type="radio" id="singles" name="match-format" value="singles" required>
           <label for="singles">Singles</label>
@@ -52,7 +52,7 @@
 
       <!-- Match Selection -->
       <div class="is-flex is-justify-content-start is-flex-direction-column">
-        <label class="pb-1" match">Match:</label>
+        <label class="pb-1">Match:</label>
         <div class="select">
           <select id="match" name="match" required>
             <option value="">Choose Match Type</option>
@@ -93,38 +93,38 @@
         <tr>
           <td class="p-2">Schools</td>
           <td class="school-a">
-            <input class="input" list="schools" id="schoolA" name="schoolA" placeholder="Select School" required>
+            <input aria-label="Input for School A" class="input" list="schools" id="schoolA" name="schoolA" placeholder="Select School" required>
           </td>
           <td class="school-b">
-            <input class="input" list="schools" id="schoolB" name="schoolB" placeholder="Select School" required>
+            <input aria-label="Input for School B" class="input" list="schools" id="schoolB" name="schoolB" placeholder="Select School" required>
           </td>
         </tr>
         <!-- Players -->
         <tr>
           <td class="p-2">PLAYER 1</td>
-          <td><input class="input" type="text" id="playerA1" name="playerA1" placeholder="NT1" required></td>
-          <td><input class="input" type="text" id="playerB1" name="playerB1" placeholder="AND2" required></td>
+          <td><input aria-label="Player 1 for School A" class="input" type="text" id="playerA1" name="playerA1" placeholder="NT1" required></td>
+          <td><input aria-label="Player 1 for School B" class="input" type="text" id="playerB1" name="playerB1" placeholder="AND2" required></td>
         </tr>
         <tr>
           <td class="p-2">PLAYER 2</td>
-          <td><input class="input" type="text" id="playerA2" name="playerA2" placeholder="NT2" ></td>
-          <td><input class="input" type="text" id="playerB2" name="playerB2" placeholder="AND4" ></td>
+          <td><input aria-label="Player 2 for School A" class="input" type="text" id="playerA2" name="playerA2" placeholder="NT2" ></td>
+          <td><input aria-label="Player 2 for School B" class="input" type="text" id="playerB2" name="playerB2" placeholder="AND4" ></td>
         </tr>
         <!-- Games -->
         <tr>
           <td class="p-2">GAME 1</td>
-          <td><input id="game1A" class="input" type="number" name="game1A" min="0" value="0" required></td>
-          <td><input id="game1B" class="input" type="number" name="game1B" min="0" value="0" required></td>
+          <td><input aria-label="Game 1 Score for School A" id="game1A" class="input" type="number" name="game1A" min="0" value="0" required></td>
+          <td><input aria-label="Game 1 Score for School B"  id="game1B" class="input" type="number" name="game1B" min="0" value="0" required></td>
         </tr>
         <tr>
           <td class="p-2">GAME 2</td>
-          <td><input id="game2A" class="input" type="number" name="game2A" min="0" value="0" required></td>
-          <td><input id="game2B" class="input" type="number" name="game2B" min="0" value="0" required></td>
+          <td><input aria-label="Game 2 Score for School A" id="game2A" class="input" type="number" name="game2A" min="0" value="0" required></td>
+          <td><input aria-label="Game 2 Score for School B"  id="game2B" class="input" type="number" name="game2B" min="0" value="0" required></td>
         </tr>
         <tr>
           <td class="p-2">GAME 3</td>
-          <td><input id="game3A" class="input" type="number" name="game3A" min="0" value="0" required></td>
-          <td><input id="game3B" class="input" type="number" name="game3B" min="0" value="0" required></td>
+          <td><input aria-label="Game 3 Score for School A"  id="game3A" class="input" type="number" name="game3A" min="0" value="0" required></td>
+          <td><input aria-label="Game 3 Score for School B"  id="game3B" class="input" type="number" name="game3B" min="0" value="0" required></td>
         </tr>
       </table>
     </div>
@@ -175,7 +175,7 @@
 
         <!-- Match Selection -->
         <div class="is-flex is-justify-content-start is-flex-direction-column">
-          <label class="pb-1" match">Match:</label>
+          <h4 class="pb-1">Match:</h4>
           <div class="select">
             <select id="matchChange" name="match" required>
               <option value="">Choose Match Type</option>
@@ -190,20 +190,6 @@
           </div>
         </div>
       </div>
-      <datalist id="schools">
-        <option value="SAN">Sandburg</option>
-        <option value="AND">Andrew</option>
-        <option value="NT">New Trier</option>
-        <option value="DGN">Downers Grove North</option>
-        <option value="FR">Fremd</option>
-        <option value="HER">Hersey</option>
-        <option value="HS">Hinsdale South</option>
-        <option value="LT">Lockport</option>
-        <option value="NN">Naperville North</option>
-        <option value="DF">Deerfield</option>
-        <option value="WY">Whitney Young</option>
-        <option value="YK">York</option>
-      </datalist>
       <!-- Schools and Players -->
       <div class="pt-3">
 
