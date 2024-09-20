@@ -41,7 +41,7 @@ const activitySchema = new mongoose.Schema({
 const Activity = mongoose.model('Activity', activitySchema);
 
 const callbackURL = process.env.NODE_ENV === 'production'
-    ? `https://${process.env.DOMAIN}/auth/github/callback`
+    ? `https://a3-yunynl-1.onrender.com/auth/github/callback`
     : 'http://localhost:3000/auth/github/callback';
 
 // GitHub OAuth Setup
