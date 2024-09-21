@@ -109,8 +109,7 @@ function refreshTodoList(taskObj) {
   let table = todoListDiv.querySelector("table");
   if (!table) {
     table = document.createElement("table");
-    table.setAttribute('border', '1');
-    table.setAttribute('width', '100%');
+    table.classList.add("centered-table"); 
 
     // Create the table header
     let tr = table.insertRow(-1);
