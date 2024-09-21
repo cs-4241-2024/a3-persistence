@@ -1,0 +1,28 @@
+{
+  "name": "Thei_Riley",
+  "version": "0.0.1",
+  "description": ".",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "body-parser": "^2.0.1",
+    "express": "^4.21.0",
+    "lowdb": "^7.0.1",
+    "mongodb": "^6.9.0"
+  },
+  "engines": {
+    "node": "16.x"
+  },
+  "repository": {
+    "url": "https://glitch.com/edit/#!/hello-express"
+  },
+  "license": "MIT",
+  "keywords": [
+    "node",
+    "glitch",
+    "express",
+    "mongodb"
+  ]
+}
