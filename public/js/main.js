@@ -46,22 +46,6 @@ const submit = async function(event) {
   catch (error) {
     console.error("Error:", error);
   }
-
-  //const tr = document.querySelector('tr') 
-  //tr.innerHTML = ""
-  
-  // data.map(item => item.name)
-  //     .forEach(item => {
-  //       const td = document.createElement("td")
-  //       td.innerText = item
-  //       tr.appendChild(td)
-  //       console.log(item)
-  //     })
-      
-  // const element = document.createElement('p');
-  // element.innerHTML = data.obj
-  // document.body.appendChild(element)
-  // console.log( 'data:', data )
 };
 
 const displayRows = function(dataset) { // adds entries to the table, along with edit/delete button

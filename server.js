@@ -1,35 +1,19 @@
-const express = require ("express"),
-      app = express(); 
+const express = require ("express");
+const app = express();
+const port = 3000;
 
-const http = require( 'http' ),
-      fs   = require( 'fs' ),
-      // IMPORTANT: you must run `npm install` in the directory for this assignment
-      // to install the mime library if you're testing this on your local machine.
-      // However, Glitch will install it automatically by looking in your package.json
-      // file.
-      mime = require( 'mime' ),
-      dir  = 'public/',
-      port = 3000;
+app.use(express.static('public'))
+app.use(express.json());
 
-let appdata = [ // name price quantity total
-  //{"name": "apple", "price": "1.00", "quantity": "5", "total": "5.00", "id":"0"}
-  
-]
+app.use(express.urlencoded({extended: true})); // gets data sent by defaut form actions
 
-const server = http.createServer(function(request, response) { // basic server
-  if(request.method === 'GET') { // receiving data from client
-    handleGet(request, response)    
-  }
-  else if( request.method === 'POST') { // sending data back to client
-    handlePost(request, response) 
-  }
-  else if (request.method === "PUT") { // case for editing data
-    handlePut(request, response);
-  }
-  else if (request.method === "DELETE") { // case for deleting data
-    handleDelete(request, response);
-  } 
-})
+// app.use applies whatever function in the parenthesis to every request
+
+app.listen( process.env.PORT || port );
+
+let appdata = [] // name price quantity total
+//{"name": "apple", "price": "1.00", "quantity": "5", "total": "5.00", "id":"0"}
+
 
 function validateForm(x) { // severside function for handling invalid (blank) data
   //var x = document.forms["myForm"]["fname"].value;
@@ -37,103 +21,70 @@ function validateForm(x) { // severside function for handling invalid (blank) da
       alert("Name must be filled out");
       return false;
   }
+  else {
+    return true;
+  }
 }
 
-const handleGet = function(request, response) { // function for handling GET request
-  const filename = dir + request.url.slice(1) 
+// get login page
+// app.get("/", (req, res) => {
+//   res.sendFile("login.html", { root: "public" });
+// });
 
-  if(request.url === "/") {
-    sendFile( response, "public/index.html")
-  }
-  else if (request.url === "/results.html") {
-    console.log("sending results.html");
-    response.end(JSON.stringify(appdata));
-    console.log(appdata);
 
-    validateForm(appdata.id);
+// get main HTML page
+app.get("/", (req, res) => {
+  res.sendFile("index.html")
+});
 
-    sendFile(response, "public/results.html");
-    console.log("results sent");
+
+// GET request for results
+app.get('/results', (req, res) => {
+  if (validateForm) {
+    res.json(appdata);
+    console.log("Results updated.");
   }
   else {
-    sendFile(response, filename)
+    console.log("Results failed to update. Please check your inputs.");
   }
-}
+});
+
 
 let nextId = 1;
+app.post('/', (req, res) => { // POST request to add new item
+  if (validateForm) {
+    const newEntry = { ...req.body, id: nextId++ };
+    newEntry.total = newEntry.price * newEntry.quantity;
+    appdata.push(newEntry);
+    res.status(201).json(appdata);
+    console.log("Item added.");
+  }
+  else {
+    console.log("Failed to add item. Please check your inputs.");
+  }
 
-const handlePost = function(request, response) { // function for handling POST request
-  let dataString = "" // empty string of data to send to client
-
-  request.on("data", function(data) {
-      dataString += data // add to datastring
-  });
-
-  request.on("end", function() {
-    console.log(JSON.parse(dataString))
-
-    let newEntry = JSON.parse(dataString); // converts string into JSON format
-    newEntry.total = newEntry.price * newEntry.quantity; // calculate total cost
-    newEntry.id = nextId++;
-    
-    JSON.stringify(newEntry);
-    console.log(newEntry.id);
-    
-    appdata.push(newEntry); // add to array
-
-    response.writeHead( 200, "OK", {'Content-Type': 'text/plain' })
-    response.end(JSON.stringify(appdata))
-  });
-};
-
-const handleDelete = function (request, response) { // function for handling DELETE request
-  const id = parseInt(request.url.split("/")[2], 10); // splits url to get path
-  console.log(`Deleting entry with ID: ${id}`);
-
-  appdata = appdata.filter((entry) => entry.id !== id);
-  response.writeHead(200, "OK", { "Content-Type": "application/json" });
-  response.end(JSON.stringify(appdata));
-};
-
-const handlePut = function(request, response) { // function for handling PUT request
-  const id = parseInt(request.url.split("/")[2], 10);
-  let dataString = "";
-
-  request.on("data", function(data) {
-    dataString += data;
-  });
   
-  request.on("end", function() { // update table info
-    const updatedEntry = JSON.parse(dataString); // parse new received datastring
-    const entryIndex = appdata.findIndex((entry) => entry.id === id);
-    updatedEntry.total = updatedEntry.price * updatedEntry.quantity; // calculate total cost
-    
-    appdata[entryIndex] = {id, ...updatedEntry}; // update the table entry
-    console.log("Updated entry:", appdata[entryIndex]);
-    response.writeHead(200, "OK", {"Content-Type": "application/json"});
-    response.end(JSON.stringify(appdata));
-  });
-};
+});
 
-const sendFile = function(response, filename) {
-   const type = mime.getType(filename);
 
-   fs.readFile( filename, function(err, content) {
+app.delete('/remove/:id', (req, res) => { // DELETE request
+  const id = parseInt(req.params.id, 10);
+  appdata = appdata.filter(entry => entry.id !== id);
+  res.json(appdata);
+  console.log(`Deleting entry with ID: ${id}`);
+});
 
-     // if the error = null, then we've loaded the file successfully
-     if(err === null) {
+app.put("/update/:id", async (req, res) => { // PUT request (for editing)
+  const id = parseInt(req.params.id, 10);
+  const entryIndex = appdata.findIndex(entry => entry.id === id);
 
-       // status code: https://httpstatuses.com
-       response.writeHeader(200, {"Content-Type": type});
-       response.end(content);
-
-     }else{
-
-       // file not found, error code 404
-       response.writeHeader(404);
-       response.end("404 Error: File Not Found");
-     }
-   })
-}
-
-app.listen( process.env.PORT || port );
+  if (entryIndex === -1) { // checks if findIndex failed
+    return res.status(404).send('Entry not found');
+  }
+  
+  const updatedEntry = { ...req.body, id }; // spreads the array into individual elements
+  updatedEntry.total = updatedEntry.price * updatedEntry.quantity;
+  appdata[entryIndex] = updatedEntry;
+  
+  res.json(appdata); // sending the PUT response back to server
+});
