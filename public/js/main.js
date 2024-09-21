@@ -3,7 +3,7 @@ window.onload = function () {
   const dueDayInput = document.querySelector('#dueDay');
   const creationDateInput = document.querySelector('#creationDate');
   const submitButton = document.querySelector('#submitButton');
-  
+
   // Create an element to show the error message
   const errorMessage = document.createElement('div');
   errorMessage.style.color = 'red';
@@ -11,55 +11,52 @@ window.onload = function () {
   errorMessage.innerHTML = "Check your date!";
   submitButton.parentNode.insertBefore(errorMessage, submitButton);  // Insert before submit button
 
-  let taskObj = {};
-  fetch( '/', { // fetch is where you specify the url/ resouce that you want to see
-    method:'POST',
-    body: JSON.stringify(taskObj),// send body to server
-  }).then((response) => response.json())
-  .then((data) => {
-      // this is the response from the server
-      console.log(data)
-      for (i = 0; i < data.length; i++){
-        refreshTodoList(data[i]);
-      }
+  // Fetch and populate the table with tasks from MongoDB
+  fetch('/docs', { method: 'GET' })
+    .then((response) => response.json())
+    .then((data) => {
+      // Log the fetched data to confirm it's being retrieved correctly
+      console.log('Fetched data from MongoDB:', data);
+      document.getElementById("submittedTodo").innerHTML = "";  // Clear existing content
+      data.forEach(task => refreshTodoList(task));  // Populate the table with tasks from MongoDB
     })
- 
+    .catch(error => console.error('Error fetching tasks:', error));
 
-  // Add event listener to the due date input
+  // Add event listeners to validate dates
   dueDayInput.addEventListener('input', function () {
-      validateDates();
+    validateDates();
   });
 
   creationDateInput.addEventListener('input', function () {
-      validateDates();
+    validateDates();
   });
 
+  // Form submission handler
   form.onsubmit = function(e) {
-      e.preventDefault();
-      if (validateDates()) {
-          submit(e);
-      }
+    e.preventDefault();
+    if (validateDates()) {
+      submit(e);
+    }
   };
 
   // Function to validate if the due date is after the creation date
   function validateDates() {
-      let creationDate = new Date(creationDateInput.value);
-      let dueDate = new Date(dueDayInput.value);
+    let creationDate = new Date(creationDateInput.value);
+    let dueDate = new Date(dueDayInput.value);
 
-      // If due date is before the creation date, show error
-      if (dueDate < creationDate) {
-          errorMessage.style.display = 'block';  // Show the error message
-          return false;
-      } else {
-          errorMessage.style.display = 'none';   // Hide the error message
-          return true;
-      }
+    // If due date is before the creation date, show error
+    if (dueDate < creationDate) {
+      errorMessage.style.display = 'block';  // Show the error message
+      return false;
+    } else {
+      errorMessage.style.display = 'none';   // Hide the error message
+      return true;
+    }
   }
 };
 
-// Existing submit and refreshTodoList functions (no changes needed)
+// Submit the form and add a new task
 const submit = function (e) {
-  // Prevent default form action
   e.preventDefault();
 
   // Get the input values
@@ -76,70 +73,68 @@ const submit = function (e) {
     creationDate: creationDate,
     dueDate: dueDay,
     dueTime: dueTime,
-    daysLeft: 0
+    daysLeft: calculateDaysLeft(dueDay)
+  };
+
+  // Post the new task to the server
+  fetch('/submit', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(taskObj),  // Send the task object as JSON to the server
+  })
+  .then((response) => response.json())
+  .then((data) => {
+    // Clear the table and repopulate it with the updated task list
+    console.log('Tasks after submission:', data);
+    document.getElementById("submittedTodo").innerHTML = "";  // Clear existing content
+    data.forEach(task => refreshTodoList(task));  // Populate the table with updated tasks from MongoDB
+  })
+  .catch(error => console.error('Error submitting task:', error));
 };
 
-// Convert the object to a JSON string
-let jsonTaskObj = JSON.stringify(taskObj);
-
-let todoListDiv = document.getElementById("submittedTodo");
-let table = todoListDiv.querySelector("table");
-console.log(jsonTaskObj)
-if (table) {
-  table.remove();
+// Function to calculate days left
+function calculateDaysLeft(dueDay) {
+  let currentDate = new Date();
+  let dueDate = new Date(dueDay);
+  let timeDiff = dueDate.getTime() - currentDate.getTime();
+  let daysLeft = Math.ceil(timeDiff / (1000 * 3600 * 24));
+  return daysLeft > 0 ? daysLeft : 0;  // Return 0 if the due date has passed
 }
 
-  // post
-  fetch( '/submit', { // fetch is where you specify the url/ resouce that you want to see
-    method:'POST',
-    headers: {'Content-Type': 'application/json'},
-    body: jsonTaskObj,// send body to server
-  }).then((response) => response.json())
-  .then((data) => {
-      // this is the response from the server
-      console.log(data)
-      for (i = 0; i < data.length; i++){
-        refreshTodoList(data[i]);
-        console.log(data[i]);
-      }
-      console.log(taskObj)
-    })
- 
-};
-
-
-
+// Function to refresh the todo list UI with tasks
 function refreshTodoList(taskObj) {
-  // Get the div where the tasks will be displayed
   let todoListDiv = document.getElementById("submittedTodo");
 
   // Check if there's already a table, else create one
   let table = todoListDiv.querySelector("table");
   if (!table) {
-      table = document.createElement("table");
-      table.setAttribute('border', '1');
-      table.setAttribute('width', '100%');
+    table = document.createElement("table");
+    table.setAttribute('border', '1');
+    table.setAttribute('width', '100%');
 
-      // Create the table header
-      let tr = table.insertRow(-1);
-      let thTask = document.createElement("th");
-      thTask.innerHTML = "Task";
-      tr.appendChild(thTask);
-      let thPriority = document.createElement("th");
-      thPriority.innerHTML = "Priority";
-      tr.appendChild(thPriority);
-      let thCreationDate = document.createElement("th");
-      thCreationDate.innerHTML = "Creation Date";
-      tr.appendChild(thCreationDate);
-      let thDueDate = document.createElement("th");
-      thDueDate.innerHTML = "Due Date";
-      tr.appendChild(thDueDate);
-      let thDaysLeft = document.createElement("th");
-      thDaysLeft.innerHTML = "Days Left";
-      tr.appendChild(thDaysLeft);
-      let thActions = document.createElement("th");
-      thActions.innerHTML = "Actions";
-      tr.appendChild(thActions);
+    // Create the table header
+    let tr = table.insertRow(-1);
+    let thTask = document.createElement("th");
+    thTask.innerHTML = "Task";
+    tr.appendChild(thTask);
+    let thPriority = document.createElement("th");
+    thPriority.innerHTML = "Priority";
+    tr.appendChild(thPriority);
+    let thCreationDate = document.createElement("th");
+    thCreationDate.innerHTML = "Creation Date";
+    tr.appendChild(thCreationDate);
+    let thDueDate = document.createElement("th");
+    thDueDate.innerHTML = "Due Date";
+    tr.appendChild(thDueDate);
+    let thDaysLeft = document.createElement("th");
+    thDaysLeft.innerHTML = "Days Left";
+    tr.appendChild(thDaysLeft);
+    let thActions = document.createElement("th");
+    thActions.innerHTML = "Actions";
+    tr.appendChild(thActions);
+
+    // Append the table to the div
+    todoListDiv.appendChild(table);
   }
 
   // Add a new row for the new task
@@ -166,30 +161,28 @@ function refreshTodoList(taskObj) {
   let deleteBtn = document.createElement("button");
   deleteBtn.innerHTML = "Delete";
   deleteBtn.onclick = function () {
-    let taskToDelete = {
-      task: taskObj.task
-    };
-    console.log(taskObj.task);
-  
-    let jsonTaskToDelete = JSON.stringify(taskToDelete);
-  
-    fetch('/delete', {
-      method: 'POST',
-      body: jsonTaskToDelete,
-    })
-    .then((response) => response.json())
-    .then((data) => {
-      console.log(data);
-      tr.remove();
-    })
-    .catch((error) => {
-      console.error('Error:', error);
-    });
+    deleteTask(taskObj.task, tr);  // Pass the task name and row element to delete
   };
-  
-  tdActions.appendChild(deleteBtn);
 
-  // Append the table to the div
-  todoListDiv.innerHTML = "";
-  todoListDiv.appendChild(table);
+  tdActions.appendChild(deleteBtn);
+}
+
+// Function to delete a task
+function deleteTask(taskName, row) {
+  let taskToDelete = { task: taskName };
+  let jsonTaskToDelete = JSON.stringify(taskToDelete);
+
+  fetch('/delete', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: jsonTaskToDelete,
+  })
+  .then((response) => response.json())
+  .then((data) => {
+    console.log('Task deleted:', taskName);
+    row.remove();  // Remove the row from the table
+  })
+  .catch((error) => {
+    console.error('Error deleting task:', error);
+  });
 }

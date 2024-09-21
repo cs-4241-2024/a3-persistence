@@ -2,106 +2,80 @@ require('dotenv').config();
 
 const express = require("express"),
       { MongoClient, ObjectId } = require("mongodb"),
-      app = express()
+      app = express();
 
-app.use(express.static("public") )
-app.use(express.json() )
-const uri = `mongodb+srv://${process.env.USER}:${process.env.PASSWORD}@${process.env.HOST}`
-const client = new MongoClient( uri )
-const path = require('path'); 
+app.use(express.static("public"));
+app.use(express.json());
 
-let collection = null
+const uri = `mongodb+srv://${process.env.USER}:${process.env.PASSWORD}@${process.env.HOST}`;
+const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
+const path = require('path');
+
+let collection = null;
 
 async function run() {
-  await client.connect()
-  collection = await client.db("a3-database").collection("To-do-list")
+  try {
+    await client.connect();
+    console.log("Connected to MongoDB");
+    collection = client.db("a3-database").collection("To-do-list");
 
-  // route to get all docs
-  app.get("/docs", async (req, res) => {
-    if (collection !== null) {
-      const docs = await collection.find({}).toArray()
-      res.json( docs )
-    }
-  })
-}
+    // Route to get all tasks
+    app.get("/docs", async (req, res) => {
+      try {
+        const docs = await collection.find({}).toArray();
+        res.json(docs);  // Send the tasks back to the client as JSON
+      } catch (err) {
+        console.error("Error fetching tasks:", err);
+        res.status(500).json({ error: "Failed to fetch tasks" });
+      }
+    });
 
-run()
+    // Route to submit a new task
+    app.post("/submit", async (req, res) => {
+      try {
+        const result = await collection.insertOne(req.body);
+        const docs = await collection.find({}).toArray(); // Get updated list
+        res.json(docs);
+      } catch (err) {
+        console.error("Error submitting task:", err);
+        res.status(500).json({ error: "Failed to submit task" });
+      }
+    });
 
+    // Route to delete a task
+    app.post("/delete", async (req, res) => {
+      try {
+        const result = await collection.deleteOne({ task: req.body.task });
+        const docs = await collection.find({}).toArray(); // Get updated list
+        res.json(docs);
+      } catch (err) {
+        console.error("Error deleting task:", err);
+        res.status(500).json({ error: "Failed to delete task" });
+      }
+    });
 
-//Middle ware
-app.use( (req,res,next) => {
-  if( collection !== null ) {
-    next()
-  }else{
-    res.status( 503 ).send()
+  } catch (err) {
+    console.error("Failed to connect to MongoDB:", err);
   }
-})
-
-//Add Route to inser a todo
-app.post( '/submit', async (req,res) => {
-  console.log(req.body)
-  const result = await collection.insertOne( req.body )
-  res.json( result )
-})
-
-//Add Route to remove a todo
-//assumes req.body takes form { _id:5d91fb30f3f81b282d7be0dd } etc.
-app.post( '/remove', async (req,res) => {
-  const result = await collection.deleteOne({ 
-    _id:new ObjectId( req.body._id ) 
-  })
-  
-  res.json( result )
-})
-
-//Add a Route to update a document
-app.post( '/update', async (req,res) => {
-  const result = await collection.updateOne(
-    { _id: new ObjectId( req.body._id ) },
-    { $set:{ name:req.body.name } }
-  )
-
-  res.json( result )
-})
-
-// Mock data to store tasks
-let appdata = [
-  { "task": "Quiz", "priority": "Low", "creationdate": "09/02/2024", "duedate": "09/19/2024", "dueTime": "0" },
-];
-
-// Route to handle the main page request (GET request for the homepage)
-app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, 'public/index.html'));
-});
-
-// Handle POST requests for task submission
-app.post('/submit', (req, res) => {
-  let dataJson = req.body; // Express automatically parses JSON
-  appdata.push(dataJson); // Add task to appdata
-  console.log('After submit:', appdata);
-  
-  res.json(appdata); // Send the updated task list back
-});
-
-// Handle POST requests for task deletion
-app.post('/delete', (req, res) => {
-  let dataJson = req.body;
-  let taskToDelete = dataJson.task;
-  appdata = appdata.filter(item => item.task !== taskToDelete); // Remove task
-  console.log('After delete:', appdata);
-  
-  res.json(appdata); // Send the updated task list back
-});
-
-// Function to calculate days left (unchanged)
-function calculateDaysLeft(dueDay) {
-  let currentDate = new Date();
-  let dueDate = new Date(dueDay);
-  let timeDiff = dueDate.getTime() - currentDate.getTime();
-  let daysLeft = Math.ceil(timeDiff / (1000 * 3600 * 24));
-  return daysLeft > 0 ? daysLeft : 0;  // Return 0 if the due date has passed
 }
 
-// Start the server on the specified port
+run();
 
-app.listen(3001)
+// Middleware to ensure MongoDB is connected
+app.use((req, res, next) => {
+  if (collection !== null) {
+    next();
+  } else {
+    res.status(503).send("Service Unavailable: Database not connected");
+  }
+});
+
+// Serve the main page
+app.get("/", (req, res) => {
+  res.sendFile(path.join(__dirname, "public/index.html"));
+});
+
+// Start the server
+app.listen(3001, () => {
+  console.log("Server is running on port 3001");
+});
