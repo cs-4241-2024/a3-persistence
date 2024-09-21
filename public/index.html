@@ -1,28 +1,36 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" />
-    <script src="js/main.js"></script>
-    <link rel="stylesheet" href="https://unpkg.com/mvp.css" />
+    <title>Login – To Do List</title>
+    <meta
+      charset="utf-8"
+      name="viewport"
+      content="width=device-width, initial-scale=1"
+    />
+    <meta
+      name="description"
+      content="Login or signup to create a simple to-do list."
+    />
+    <script src="js/client.js"></script>
+    <link rel="stylesheet" href="/css/mvp.css" defer />
     <title>To Do List</title>
   </head>
   <body>
     <section>
-      <form action="/login" method="POST">
+      <form id="login" action="/login" method="POST">
         <h2>Log In:</h2>
-        <label for="username">Username:</label>
-        <input type="text" name="username" required autofocus />
-        <label for="password">Password:</label>
-        <input type="password" name="password" required />
+        <label for="login_username"> Username: </label>
+        <input type="text" id="login_username" required autofocus />
+        <label for="login_password"> Password: </label>
+        <input type="password" id="login_password" required />
         <input type="submit" />
       </form>
-      <form action="/register" method="POST">
+      <form id="signup" action="/register" method="POST">
         <h2>Sign up:</h2>
-        <label for="username">Username:</label>
-        <input id="username" type="text" name="username" required />
-        <label for="password">Password:</label>
-        <input type="password" name="password" required />
+        <label for="signup_username"> Username: </label>
+        <input type="text" id="signup_username" required />
+        <label for="signup_password"> Password: </label>
+        <input type="password" id="signup_password" required />
         <input type="submit" />
       </form>
     </section>

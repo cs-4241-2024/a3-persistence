@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+sitemap: https://a3-ian-poulsen.glitch.me/sitemap.txt

@@ -1,4 +1,31 @@
 // Front-end (client) JavaScript
+const updateEntry = async (entry) => {
+  const id = entry._id;
+  const updatedEntry = {
+    item: entry.item,
+    notes: entry.notes,
+    deadline: entry.deadline,
+    done: entry.done,
+  };
+  try {
+    const response = await fetch(`/update/${id}`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(updatedEntry),
+    });
+    if (response.ok) {
+      const data = await response.json();
+      console.log("Updated data:", data);
+      displayTab();
+      closeEditor();
+    } else {
+      console.error("Failed to update entry.");
+    }
+  } catch (error) {
+    console.error("Error:", error);
+  }
+};
+
 function openEditor(entry) {
   document.querySelector("#editItem").value = entry.item;
   document.querySelector("#editNotes").value = entry.notes;
@@ -57,7 +84,6 @@ const deleteEntry = async function (id) {
 };
 
 const displayTab = async function () {
-  console.log("displaying table");
   const tabBody = document.querySelector("#body");
   tabBody.innerHTML = "";
 
@@ -67,7 +93,6 @@ const displayTab = async function () {
   }
 
   const dataset = await response.json();
-
   for (const entry of dataset) {
     const row = document.createElement("tr");
 
@@ -87,6 +112,26 @@ const displayTab = async function () {
     priorityCell.textContent = entry.priority;
     row.appendChild(priorityCell);
 
+    const doneCell = document.createElement("td");
+    const doneCheckbox = document.createElement("input");
+    doneCheckbox.type = "checkbox";
+    doneCheckbox.checked = entry.done;
+    const checkboxId = `done-${entry._id}`;
+    doneCheckbox.id = checkboxId;
+
+    doneCheckbox.onchange = async () => {
+      entry.done = doneCheckbox.checked;
+      await updateEntry(entry);
+    };
+
+    const doneLabel = document.createElement("label");
+    doneLabel.htmlFor = checkboxId;
+    doneCell.appendChild(doneLabel);
+    doneLabel.textContent = "Mark as done";
+
+    doneCell.appendChild(doneCheckbox);
+    row.appendChild(doneCell);
+
     const editButton = document.createElement("button");
     editButton.textContent = "Edit";
     editButton.onclick = () => openEditor(entry);
@@ -99,8 +144,6 @@ const displayTab = async function () {
 
     tabBody.appendChild(row);
   }
-
-  console.log("Table printed");
 };
 
 const submit = async function (event) {

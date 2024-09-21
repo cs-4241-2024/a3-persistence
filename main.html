@@ -5,10 +5,11 @@
     <meta
       charset="utf-8"
       name="viewport"
-      content="width=device-width, initial-scale=1/"
+      content="width=device-width, initial-scale=1"
     />
+    <meta name="description" content="A simple to-do list." />
     <script src="js/main.js"></script>
-    <link rel="stylesheet" href="https://unpkg.com/mvp.css" />
+    <link rel="stylesheet" href="/css/mvp.css" defer />
     <!-- get rid of favicon error -->
     <link rel="icon" href="data:;base64,iVBORw0KGgo=" />
   </head>
@@ -17,7 +18,7 @@
     <p></p>
     <main>
       <header>
-        <h1>Welcome to the Shared To-Do List!</h1>
+        <h1>To Do:</h1>
         <p></p>
       </header>
       <section>
@@ -32,10 +33,11 @@
         <table class="tab">
           <thead>
             <tr>
-              <th>Item</th>
-              <th>Notes</th>
-              <th>Deadline</th>
-              <th>Priority</th>
+              <th style="width: 20%">Item</th>
+              <th style="width: 20%">Notes</th>
+              <th style="width: 20%">Deadline</th>
+              <th style="width: 20%">Priority</th>
+              <th style="width: 20%">Done</th>
             </tr>
           </thead>
           <tbody id="body"></tbody>
@@ -57,4 +59,29 @@
       </div>
     </main>
   </body>
+  <footer
+    style="
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      min-height: 60px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    "
+  >
+    <a
+      href="https://github.com/skypanther26/a3-skypanther26"
+      style="max-width: 400px; overflow: hidden"
+      >Check out the GitHub repo for this app!</a
+    >
+    <img
+      class="thumbsup-img"
+      src="https://cdn.glitch.global/735c8078-7a70-4d4d-bf4e-fd15243f7c04/thumbsup_resized%20(2).jpg?1726931988333"
+      alt="Smiling emoji giving a thumbs up"
+      width="50"
+      height="50"
+      style="flex-shrink: 0"
+    />
+  </footer>
 </html>

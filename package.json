@@ -10,7 +10,8 @@
     "express": "^4.17.1",
     "mongodb": "4.16",
     "mime": "^2.4.4",
-    "cookie-session": "^2.1.0"
+    "cookie-session": "^2.1.0",
+    "compression": "^1.7.4"
   },
   "engines": {
     "node": "^16.x"
