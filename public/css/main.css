@@ -16,7 +16,7 @@ body {
   }
   
   form {
-    background-color: #1d1f21; /* Dark background for form */
+    background-color: #1d1f21; 
     padding: 20px;
     border-radius: 8px;
   }
@@ -26,7 +26,7 @@ body {
   }
   
   button {
-    background-color: #007A33; /* Celtics green button */
+    background-color: #007A33; /* Celtics green */
     border: none;
     color: white;
     padding: 10px 20px;
@@ -45,7 +45,7 @@ body {
   }
   
   .list-group-item button {
-    background-color: #b80000; /* Red delete button */
+    background-color: #b80000;
   }
   
   .logout button {
