@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>CS4241 Assignment 1</title>
+    <meta charset="utf-8">
+    <script src="js/main.js"></script>
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Trirong">
+    <link rel="icon" href="data:;base64,iVBORw0KGgo=">
+    <style>
+      
+    </style>
+
+  </head>
+  <body>
+    
+    
+    <h1>Guess The Password</h1>
+    <div id = "title"></div>
+    <p>
+      Hello, please enter the password:
+    </p>
+    <div class="flex-container">
+      <form action="/my-handling-form-page" method="post">
+        <input type="text" id="password_entry" value="Password">
+        <button>submit</button>
+      </form>
+    </div>
+    <h2>Past Attempts:</h2>
+    <table id="password_attempts">
+      <tr>
+        <th>Correct?</th>
+        <th>Password Entered</th>
+        <th>number of correct letters</th>
+        <th>Does the Length Match?</th>
+      </tr>
+    </table>
+  </body>
+</html>
