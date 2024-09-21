@@ -6,8 +6,8 @@
 
 body {
   font-family: "Ubuntu";
-  background: rgb(0, 57, 10);
-  color:white;
+  background-color: rgb(0, 57, 10);
+  color: white; /* White text globally */
 }
 
 header {
@@ -15,14 +15,21 @@ header {
   text-align: left;
   font-size: 30px;
   font-weight: 1000;
+}
+
+h1{
   color: white;
+}
+
+footer {
+  margin-top: 150px;
+  font-weight: 1000;
+  text-align: left;
 }
 
 p {
   text-align: left;
   font-size: 18px;
-  color: black;
-  font-style: bold;
   font-weight: 1000;
   color: white;
   padding-left: 3px;
@@ -31,10 +38,23 @@ p {
 form {
   margin-top: 20px;
   display: flex;
-  justify-content: flex-start;
   flex-direction: column;
   justify-content: space-evenly;
-  border: 5px solid rgb(255, 4, 4);
+  border: 5px solid rgb(255, 4, 4); /* Red border */
+}
+
+label {
+  color: white !important;
+}
+
+input {
+  color: white; /* White text in input fields */
+  background-color: rgba(255, 255, 255, 0.1); /* Slightly transparent background */
+  border: 2px solid white; /* White border around inputs */
+}
+
+input::placeholder {
+  color: rgba(255, 255, 255, 0.7); /* Light white placeholder text */
 }
 
 #employeeid,
@@ -48,46 +68,36 @@ form {
 #submit {
   padding-bottom: 8px;
   padding: 3px;
-  background-color: black;
-  color: white;
-}
-
-#editBtn {
-  padding-bottom: 8px;
-  padding: 3px;
+  background-color: white; /* White background for submit button */
+  color: black; /* Black text for the button */
 }
 
 #instructions {
   padding-top: 50px;
 }
 
-footer {
-  margin-top: 150px;
-  font-weight: 1000;
-  text-align: left;
-  color: white;
-}
-
-
 table, th, td {
-  border: 5px solid rgb(255, 4, 4);
+  border: 5px solid rgb(255, 4, 4); /* Red border for table */
   border-collapse: collapse;
-  color: white;
+  color: white; /* White text for table */
 }
-
 
 table {
   margin-top: 50px;
 }
 
-th {
+th, td {
+  padding: 10px;
   font-family: "Ubuntu";
   text-align: left;
-  padding-right: 50px;
   font-weight: 1000;
 }
 
+th {
+  color: white !important;
+  padding-right: 50px;
+}
+
 td {
-  margin-right: 5px;
-  font-weight: 1000;
+  color: white;
 }

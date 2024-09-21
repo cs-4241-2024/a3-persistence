@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="css/main.css">
     <link rel="icon" href="data:;base64,iVBORw0KGgo=">
   </head>
-  <body class="has-background-success-dark has-text-white">
+  <body class="has-text-white">
     <section class="section">
       <div class="container">
         <header class="has-text-white has-background-danger p-4 mb-5">
@@ -18,38 +18,42 @@
         </header>
         <div class = "container" id="instructions">
           <p class="is-size-8">
-            Please enter nine digits for the ID.
+            Enter exactly nine digits for the ID.
           </p>
           <p class="is-size-8">
             Be sure to put a first and last name for the employee field.
           </p>
+          <p class="is-size-8">
+            Please fill ALL fields before submitting the form.
+          </p>
         </div>
+
         <form id="employeeForm" class="box has-background-success-dark has-text-white">
           <div class="field">
-            <label class="label">Employee ID</label>
+            <label class="label" for="employeeid">Employee ID</label>
             <div class="control">
-              <input class="input" type="text" id="employeeid" placeholder="Your employee ID" required>
+              <input class="input" type="text" id="employeeid" name="employeeid" placeholder="Your employee ID" title="Enter exactly 9 digits">
             </div>
           </div>
 
           <div class="field">
-            <label class="label">Name</label>
+            <label class="label" for="yourname">Name</label>
             <div class="control">
-              <input class="input" type="text" id="yourname" placeholder="Your name here" required>
+              <input class="input" type="text" id="yourname" name="yourname" placeholder="Your name here" required pattern="^[a-zA-Z]+ [a-zA-Z]+$" title="Enter a first and last name">
             </div>
           </div>
 
           <div class="field">
-            <label class="label">Salary</label>
+            <label class="label" for="salary">Salary</label>
             <div class="control">
-              <input class="input" type="text" id="salary" placeholder="Your yearly salary" required>
+              <input class="input" type="number" id="salary" name="salary" placeholder="Your yearly salary" required min="0" title="Enter a valid salary">
             </div>
           </div>
 
           <div class="field">
-            <label class="label">ID Registration Year</label>
+            <label class="label" for="regdate">ID Registration Year</label>
             <div class="control">
-              <input class="input" type="text" id="regdate" placeholder="ID registration year" required>
+              <input class="input" type="number" id="regdate" name="regdate" placeholder="ID registration year" required min="1900" max="2100" title="Enter a valid year">
             </div>
           </div>
 
@@ -58,7 +62,7 @@
           </div>
         </form>
 
-        <table class="table is-bordered is-fullwidth has-background-success-dark">
+        <table class="table is-bordered is-fullwidth has-background-success-dark" id="employeeTable">
           <thead>
             <tr>
               <th>ID</th>
@@ -68,16 +72,10 @@
               <th>ID Expiration Year</th>
             </tr>
           </thead>
-          <tbody>
+          <tbody id="employeeTableBody">
             <!-- Rows added from server -->
           </tbody>
         </table>
-
-        <footer class="footer has-background-success-dark has-text-white">
-          <div class="content has-text-centered">
-            <strong>CS4241 Assignment 3</strong>
-          </div>
-        </footer>
       </div>
     </section>
   </body>

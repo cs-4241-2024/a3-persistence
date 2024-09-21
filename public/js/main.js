@@ -1,5 +1,5 @@
 const loadData = async function () {
-  const response = await fetch('/data');
+  const response = await fetch('/docs');
   if (response.ok) {
     const data = await response.json();
 
@@ -9,10 +9,22 @@ const loadData = async function () {
     data.forEach((entry, index) => {
       const newRow = document.createElement('tr');
       newRow.innerHTML = `
-        <td><input type="text" value="${entry.employeeid}" disabled /></td>
-        <td><input type="text" value="${entry.name}" disabled /></td>
-        <td><input type="text" value="${entry.salary}" disabled /></td>
-        <td><input type="text" value="${entry.regdate}" disabled /></td>
+        <td>
+          <label for="employeeid-${index}">Employee ID</label>
+          <input type="text" id="employeeid-${index}" value="${entry.employeeid}" disabled />
+        </td>
+        <td>
+          <label for="name-${index}">Name</label>
+          <input type="text" id="name-${index}" value="${entry.name}" disabled />
+        </td>
+        <td>
+          <label for="salary-${index}">Salary</label>
+          <input type="text" id="salary-${index}" value="${entry.salary}" disabled />
+        </td>
+        <td>
+          <label for="regdate-${index}">ID Registration Year</label>
+          <input type="text" id="regdate-${index}" value="${entry.regdate}" disabled />
+        </td>
         <td>${entry.expdate}</td>
         <td>
           <button class="editBtn">Edit</button>
@@ -110,6 +122,6 @@ const getData = async () => {
 window.onload = function () {
   const form = document.querySelector('#employeeForm');
   form.onsubmit = submit;
-  getData();
-  //loadData();
+  loadData();
+  //getData();
 };

@@ -176,5 +176,5 @@ right, having all web text left-aligned enables a more natural flow of informati
 potential confusion when it comes to accessing and creating data.
 
 Proximity:
-For my main page, I positioned the form and table away from the header and footer, and had them near each other to signal to any user that the two were related. This
+For my main page, I positioned the form and table away from the header, and had them near each other to signal to any user that the two were related. This
 also served to make seeing the data easier, as because of its close proximity to the form, people with smaller screen sizes don't need to scroll down far after submitting data, and those with large screen heights won't need to scroll at all. This helps avoid any unnecessary confusion as users are able to see the top of the table at all times. Similarly to the form and table, I positioned the instruction text near the form so users could see it while glancing at the form. The goal was to create a link between the two in the user's head, and avoid any unneeded errors when filling out the form.

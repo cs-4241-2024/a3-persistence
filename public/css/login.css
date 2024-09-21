@@ -10,6 +10,12 @@ body {
   color:white;
 }
 
+html, body {
+  height: 100%;
+  margin: 0;
+}
+
+
 input.input {
   background-color: white; /* White input fields */
   color: black; /* Black text in the input fields */

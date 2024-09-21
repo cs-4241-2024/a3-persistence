@@ -18,11 +18,6 @@ const client = new MongoClient(uri, {
     strict: true,
     deprecationErrors: true,
   },
-  //useNewUrlParser: true,
-  //useUnifiedTechnology: true,
-  //connectionTimeoutMS: 10000,
-  //socketTimeoutMS: 45000,
-
 });
 
 //Run database
@@ -63,7 +58,7 @@ app.use(cookie({
 // Check login
 function requireLogin(req, res, next) {
   if (!req.session.login) {
-    return res.redirect('/login'); // Redirects to login
+    return res.redirect('/login');
   }
   next();
 }
@@ -110,7 +105,7 @@ app.get('/docs', requireLogin, async (req, res) => {
 });
 
 // Submit new employee data (protected route)
-app.post('/submit', requireLogin, (req, res) => {
+app.post('/submit', requireLogin, async (req, res) => {
   const newData = req.body;
   const newEntry = {
     employeeid: newData.employeeid,
@@ -120,38 +115,68 @@ app.post('/submit', requireLogin, (req, res) => {
     expdate: parseInt(newData.regdate) + 5
   };
 
-  appdata.push(newEntry);
-  res.status(200).json(appdata);
+
+  try {
+    if (collection !== null) {
+      const result = await collection.insertOne(newEntry);
+      console.log('New employee inserted:', result);
+      const updatedData = await collection.find({}).toArray();
+      res.status(200).json(updatedData);
+    } else {
+      res.status(500).send('No MongoDB collection found');
+    }
+  } catch (err) {
+    console.error(err);
+    res.status(500).send('Error inserting data');
+  }
 });
 
 // Edit employee data by index (protected route)
-app.put('/edit/:index', requireLogin, (req, res) => {
+app.put('/edit/:index', requireLogin, async (req, res) => {
   const index = parseInt(req.params.index);
   const updatedData = req.body;
 
-  if (index >= 0 && index < appdata.length) {
-    appdata[index] = {
-      employeeid: updatedData.employeeid,
-      name: updatedData.name,
-      salary: updatedData.salary,
-      regdate: updatedData.regdate,
-      expdate: parseInt(updatedData.regdate) + 5
-    };
-    res.status(200).json(appdata);
-  } else {
-    res.status(400).send('Invalid index');
+  try {
+    if (collection !== null) {
+      const result = await collection.updateOne(
+        { employeeid: employeeid },
+        {
+          $set: {
+            name: updatedData.name,
+            salary: updatedData.salary,
+            regdate: updatedData.regdate,
+            expdate: parseInt(updatedData.regdate) + 5
+          }
+        }
+      );
+      console.log('Employee updated:', result);
+      const updatedData = await collection.find({}).toArray();
+      res.status(200).json(updatedData);
+    } else {
+      res.status(500).send('No MongoDB collection found');
+    }
+  } catch (err) {
+    console.error(err);
+    res.status(500).send('Error updating data');
   }
 });
 
 // Delete employee data by index (protected route)
-app.delete('/delete/:index', requireLogin, (req, res) => {
-  const index = parseInt(req.params.index);
+app.delete('/delete/:index', requireLogin, async (req, res) => {
+  const employeeid = req.params.id;
 
-  if (index >= 0 && index < appdata.length) {
-    appdata.splice(index, 1);
-    res.status(200).json(appdata);
-  } else {
-    res.status(400).send('Invalid index');
+  try {
+    if (collection !== null) {
+      const result = await collection.deleteOne({ employeeid: employeeid });
+      console.log('Employee deleted:', result);
+      const updatedData = await collection.find({}).toArray();
+      res.status(200).json(updatedData);
+    } else {
+      res.status(500).send('No MongoDB collection found');
+    }
+  } catch (err) {
+    console.error(err);
+    res.status(500).send('Error deleting data');
   }
 });
 
