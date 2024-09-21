@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Journal</title>
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/pico.min.css">
+
+</head>
+<body>
+    <h1 id="userNameJournal">User's Journal</h1>
+    <div>
+        <h2>Enter your journal</h2>
+        <form id="journalForm">
+            <input type="text" id="journalTitle" placeholder="Journal Title" required>
+            <input type="date" id="date" required>
+            <input type="time" id="time" required>
+            <textarea id="journalEntry" placeholder="Journal Entry" required></textarea>
+            <button type="submit">Submit Entry</button>
+        </form>
+    </div>
+    <div>
+        <h2>Your Entries</h2>
+        <table id="entriesTable">
+            <thead>
+                <tr>
+                    <th>Title</th>
+                    <th>Date</th>
+                    <th>Time</th>
+                    <th>Entry</th>
+                    <th>Next Entry Before</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Entries will be populated here -->
+            </tbody>
+        </table>
+    </div>
+    <script src="js/main.js"></script>
+</body>
+</html>
