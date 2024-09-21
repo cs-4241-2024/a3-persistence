@@ -121,9 +121,12 @@ const submit = async function(event) {
   document.getElementById("date").value = "";
 };
 
+
+
 window.onload = function() {
-  const submitButton = document.querySelector("#submitButton");
+  const submitButton = document.getElementById("submitButton");
   submitButton.onclick = submit;
+
   document.querySelector("#saveButton").onclick = saveChanges;
   document.querySelector("#closeButton").onclick = closePopup;
 
