@@ -4,16 +4,11 @@ require('dotenv').config();
 const { MongoClient, ServerApiVersion } = require('mongodb');
 const uri = process.env.MongoDBLink;
 let current_user = null; // User variable to track whos logged in
-//let valid_users = [
-//  {'username' : 'arcash', 'password' : 'cash123'},
-//  {'username' : 'jmah', 'password' : 'mahmah'},
-//  {'username' : 'tom123', 'password' : 'tomtomtom'}
-//]
 
 const express    = require('express'),
       app        = express(),
       port       = 3000
-      
+     
 const client = new MongoClient(uri, {
   serverApi: {
     version: ServerApiVersion.v1,
@@ -21,7 +16,6 @@ const client = new MongoClient(uri, {
     deprecationErrors: true,
   }
 });
-
 
 async function mongoconnect() {
   try {
