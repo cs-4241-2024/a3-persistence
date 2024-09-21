@@ -43,11 +43,18 @@ app.get("/", (req, res) => {
 });
 
 //route to return appdata
-app.get("/appdata", (req, res) => {
-  res.status(200).json(appdata);
+app.get("/appdata", async (req, res) => {
+  try {
+    const entries = await collection.find({}).toArray();
+    res.status(200).json(entries);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({message: 'Error retriving data from table'});
+  }
+  
 });
 
-app.post("/submit", (req, res) => {
+app.post("/submit", async (req, res) => {
   const formData = req.body;
 
   const newEntry = {
@@ -57,23 +64,28 @@ app.post("/submit", (req, res) => {
     'date logged': getDate()
   };
 
-  appdata.push(newEntry);
-  console.log(appdata);
+  try {
+    await collection.insertOne(newEntry);
+    const allEntries = await collection.find({}).toArray();
+    res.status(200).json(allEntries);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({message: 'Error submitting data'});
+  }
 
-  res.status(200).json(appdata);
 });
 
-app.delete("/submit", (req, res) => {
+app.delete("/submit", async (req, res) => {
   const {username, showTitle} = req.body;
 
-  const newAppData = appdata.filter(entry => 
-    !(entry.username === username && entry['show title'] === showTitle)
-  );
-
-  appdata.length = 0;
-  appdata.push(...newAppData);
-
-  res.status(200).json(appdata);
+  try {
+    await collection.deleteOne({'username': username, 'show title': showTitle});
+    const allEntries = await collection.find({}).toArray();
+    res.status(200).json(allEntries);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({message: 'Error deleting data'});
+  }
 });
 
 //helper function --> gets current date
