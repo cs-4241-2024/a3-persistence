@@ -1,8 +1,8 @@
 Andrew Cash
 Assignment 3
+Note: Late submission free pass used
 
-## Your Web Application Title
-Classmate Tracker
+## Classmate Tracker
 
 glitch: https://glitch.com/edit/#!/a3-andrew-cash?path=public%2Findex.html%3A1%3A0
 
