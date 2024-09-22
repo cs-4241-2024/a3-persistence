@@ -1,0 +1,484 @@
+/* General Styles */
+
+#title {
+  font-size: 5rem;
+  font-weight: 700;
+  color: #1c2c3e;
+  text-align: center;
+}
+
+body {
+  font-family: "Noto Sans", sans-serif;
+  background-color: #f4f6f9;
+  color: #2a2a2a;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  height: auto;
+  margin: 0;
+  padding: 30px 0px;
+}
+
+#loginForm {
+  width: 600px;
+  max-width: 100%;
+  justify-content: center;
+}
+
+#registerForm {
+  background-color: white;
+  box-shadow: none;
+  padding: 0px 0px;
+}
+
+#loginSection #registerSection {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  max-width: 600px;
+  background-color: white;
+  padding: 40px;
+  border-radius: 12px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.15);
+}
+
+#taskSection {
+  display: inline-block;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: 20px auto;
+  width: 1200px;
+  height: 100%;
+}
+
+#taskForm {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 500px;
+}
+
+.responsive-table {
+  padding-bottom: 30px;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+}
+
+label {
+  color: #1c2c3e;
+}
+
+#loginLabel {
+  color: black;
+}
+
+#taskLabel {
+  color: black;
+}
+
+/* Header Styling */
+h1,
+h2 {
+  font-family: "Roboto Slab", serif;
+  text-align: center;
+  color: #1c2c3e;
+}
+
+h1 {
+  font-size: 2.5rem;
+  font-weight: 700;
+}
+
+h2 {
+  font-size: 2rem;
+  margin-top: 40px;
+  margin-bottom: 20px;
+}
+
+#topMenu {
+  display: flex;
+  justify-content: space-between;
+}
+
+#logoutBtn {
+  background-color: #c0392b;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s ease;
+}
+
+#logoutBtn:hover {
+  background-color: #a83225;
+}
+
+/* Form Styles */
+form {
+  width: 100%;
+  background-color: white;
+  padding: 40px;
+  border-radius: 12px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.15);
+  margin-bottom: 20px;
+}
+
+.input-field input[type="text"],
+.input-field input[type="password"],
+.input-field input[type="date"],
+.materialize-textarea {
+  border-bottom: 2px solid #1c2c3e !important;
+  font-size: 1.1rem;
+}
+
+select {
+  border: 1px solid #cccccc;
+  border-radius: 4px;
+  padding: 10px;
+}
+
+.btn {
+  background-color: #12856e;
+  border-radius: 8px;
+  padding: 0px 20px;
+  font-size: 16px;
+  transition: background-color 0.3s ease;
+  width: 100%;
+}
+
+.btn:hover {
+  background-color: #106554;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+/* .table-container {
+  margin-top: 30px;
+  border-radius: 12px;
+  background-color: white;
+  padding: 20px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.15);
+  width: 100%;
+  max-width: 1200px;
+} */
+
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  width: 100%;
+}
+
+/* table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+}
+
+table th,
+table td {
+  padding: 15px;
+  text-align: left;
+  vertical-align: middle;
+}
+
+table.striped th {
+  background-color: #1c2c3e;
+  color: white;
+}
+
+table.striped tbody tr:nth-child(odd) {
+  background-color: #f9f9f9;
+}
+
+table.striped tbody tr:nth-child(even) {
+  background-color: #ffffff;
+}
+
+th,
+td {
+  padding: 15px;
+  text-align: left;
+  vertical-align: middle;
+  border-bottom: 1px solid #ddd;
+  white-space: nowrap;
+  word-wrap: break-word;
+  white-space: normal;
+  overflow: hidden;
+}
+
+td {
+  font-size: 0.9rem;
+  color: #2a2a2a;
+}
+
+td:last-child,
+th:last-child {
+  text-align: center;
+  width: 300px;
+}
+
+th:nth-child(2),
+td:nth-child(2) {
+  width: 180px;
+}
+
+table {
+  border-radius: 8px;
+  overflow: hidden;
+} */
+
+/* Button Styles in Table */
+button {
+  margin: 5px 0px;
+  font-size: 0.9rem;
+  padding: 8px 15px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  color: white;
+}
+
+button.complete-btn {
+  background-color: #12856e; /* Green */
+}
+
+button.complete-btn:hover {
+  background-color: #106554; /* Darker Green on hover */
+}
+
+button.delete-btn {
+  background-color: #c0392b; /* Red */
+}
+
+button.delete-btn:hover {
+  background-color: #a83225; /* Darker Red on hover */
+}
+
+/* In-Progress Button (Blue) */
+button.in-progress-btn {
+  background-color: #3367d6; /* Blue */
+}
+
+button.in-progress-btn:hover {
+  background-color: #244da4; /* Darker Blue on hover */
+}
+
+/* Edit Button (Yellow) */
+button.edit-btn {
+  background-color: #f1c40f; /* Yellow */
+}
+
+button.edit-btn:hover {
+  background-color: #f39c12; /* Darker Yellow on hover */
+}
+
+/* Style for red exclamation mark */
+.red-text {
+  color: red;
+  margin-left: 5px;
+  font-size: 1rem;
+}
+
+/* Task Header Flex Layout */
+.task-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 0;
+}
+
+.task-header span {
+  flex: 1;
+  text-align: left;
+  padding: 0 10px;
+}
+
+.task-title i {
+  vertical-align: middle;
+}
+
+.collapsible-header {
+  background-color: #f5f5f5;
+  padding: 15px;
+  font-size: 1.1rem;
+  font-weight: bold;
+}
+
+.collapsible-body {
+  padding: 15px;
+}
+
+.task-title {
+  text-align: left;
+}
+
+.task-due {
+  text-align: center;
+}
+
+.task-time-left {
+  text-align: center;
+}
+
+.task-priority {
+  text-align: right;
+}
+
+#inProgressTable {
+  table-layout: fixed;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+}
+
+#completedTable {
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Google Button Styling */
+.google-btn {
+  background-color: #3367d6;
+  color: white;
+  padding: 12px 20px;
+  font-size: 16px;
+  border-radius: 8px;
+  display: inline-block;
+  transition: background-color 0.3s ease;
+  width: 100%;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.google-btn i {
+  margin-right: 8px;
+}
+
+.google-btn:hover {
+  background-color: #244da4;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Registration Section */
+.regButtonDiv {
+  width: 100%;
+  text-align: center;
+  margin-top: 20px;
+}
+
+.regButtonDiv button {
+  width: auto;
+}
+
+#registerSection {
+  display: none;
+  padding: 20px;
+}
+
+#registerSection.slide-in {
+  display: block;
+  transition: all 0.5s ease-in-out;
+}
+
+/* Responsive Layout */
+@media (max-width: 768px) {
+  #loginSection {
+    max-width: 90%;
+    padding: 30px;
+  }
+
+  form label {
+    font-size: 1rem;
+  }
+
+  form input,
+  form button,
+  .google-btn {
+    font-size: 1rem;
+  }
+
+  #taskSection {
+    max-width: 80%;
+    padding: 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  form {
+    padding: 20px;
+  }
+
+  form label {
+    font-size: 0.9rem;
+  }
+
+  form input,
+  form button,
+  .google-btn {
+    font-size: 0.9rem;
+  }
+
+  #taskSection {
+    width: 80%;
+    padding: 20px;
+  }
+}
+
+/* Dark Mode Styles */
+.dark-mode {
+  background-color: #121212;
+  color: #e0e0e0;
+}
+
+.dark-mode #title {
+  color: white;
+}
+
+.dark-mode #registerText {
+  color: #2c3e50;
+}
+
+.dark-mode #google-login-btn {
+  color: white;
+}
+
+.dark-mode h1 {
+  color: white;
+}
+
+.dark-mode h2 {
+  color: white;
+}
+
+.dark-mode .card {
+  background-color: #333333;
+  color: white;
+}
+
+.dark-mode .collapsible-header {
+  background-color: #333333;
+}
+
+.dark-mode .collapsible-body {
+  background-color: #424242;
+}
+
+.dark-mode .navbar,
+.dark-mode footer {
+  background-color: #1c1c1c;
+}
+
+.dark-mode #dark-modeLabel {
+  color: white;
+}
+.dark-mode a {
+  color: #bb86fc;
+}
