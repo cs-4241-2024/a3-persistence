@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Anime Tracker Registration Page</title>
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    
+    <!-- get rid of favicon error -->
+    <link rel="icon" href="data:;base64,iVBORw0KGgo=">
+
+    <style>
+
+        body {
+            background: url(https://i.pinimg.com/originals/76/01/a3/7601a31e47247077856ed69b7b4fa124.gif) no-repeat;
+            background-size: cover;    
+            background-position: center;  
+            background-attachment: fixed;
+        }
+
+        h1 {
+            color: #8ebd87;
+            text-align: center;
+            margin-bottom: 0px;
+        }
+
+        h2 {
+            text-align: center;
+        }
+
+        h4 {
+            color: #c2ab42;
+        }
+
+        button {
+            margin-top: 25px;
+        }
+ 
+    </style>
+</head>
+
+<body>
+
+    <div class="formBacking">
+    <h1>New to this page?</h1>
+    <h2>Register now!</h2>
+        <div class="userInfoForm">
+            <form>
+                <!-- Text Input: Full Name-->
+                <h4>Enter Your Name:</h4>
+                <div class="fullName">
+                    <input type="text" id="newFirstName" name="newFirstname" value="first name">
+                    <input type="text" id="newLastName" name="newLastname" value="last name">
+                </div>
+
+                <!-- Text Input: Username-->
+                <h4>Create a Username:</h4>
+                <input type="text" id="newUserName" name="newUsername">
+
+                <!-- Password Input: Password-->
+                <h4>Create a Password:</h4>
+                <input type="password" id="newPassword" name="newPassWord">
+
+                <button class="createUser">Create User</button>
+            </form>
+        </div>
+    </div>
+    
+</body>
+
+</html>

@@ -108,3 +108,25 @@ img {
   display: block;
   margin: auto;
 }
+
+.fullName {
+  display: flex;
+  gap: 20px;
+  width: 80%;
+  margin: 0 auto;
+}
+
+
+.userInfoForm {
+  max-width: 64em;
+  margin: auto;
+
+}
+
+.formBacking {
+  background-color: rgba(0, 0, 0, 0.55);
+  max-width: 64em;
+  margin: 2em auto;
+  padding: 25px;
+  box-sizing: border-box;   
+}

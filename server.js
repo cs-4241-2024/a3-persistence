@@ -4,6 +4,7 @@ const express = require("express"),
       mime = require( 'mime' ),
       bodyParser = require('body-parser'), 
       {MongoClient} = require('mongodb'),
+      bcrypt = require('bcrypt'),
       dir  = 'public/',
       port = 3000;
 
@@ -41,7 +42,12 @@ app.use(express.static('public'));    //serves files from the 'public' directory
 app.get("/", (req, res) => {
   res.sendFile(__dirname + '/public/index.html');
 });
-
+ 
+//route to serve the register page
+app.get("/register", (req, res) => {
+  res.sendFile(__dirname + '/public/register.html');
+});
+  
 //route to return appdata
 app.get("/appdata", async (req, res) => {
   try {
