@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>CS4241 Assignment 3</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="js/main.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,300;1,400;1,700;1,900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/main.css">
+    
+    <!-- get rid of favicon error -->
+    <link rel="icon" href="data:;base64,iVBORw0KGgo=">
+  </head>
+  <body>
+    
+    <h1>
+      Workout Logger
+    </h1>
+    <div id="flex-container">
+      
+      <div>
+        <h2>
+          Add Log:
+        </h2>
+
+        <form id="wform">
+          <label id="workout" class="lab">Select Workout Day: </label><br>
+          <input type="radio" id="body" name="wout" value="Full Body">
+          <label for="body">Full Body</label><br>
+          <input type="radio" id="upper" name="wout" value="Upper Body">
+          <label for="upper">Upper Body</label><br>
+          <input type="radio" id="lower" name="wout" value="Lower Body">
+          <label for="lower">Lower Body</label><br>
+          <input type="radio" id="abs" name="wout" value="Abs">
+          <label for="abs">Abs</label><br>
+          <input type="radio" id="cardio" name="wout" value="Cardio">
+          <label for="cardio">Cardio</label><br>
+
+          <label for="date" class="lab">Date: </label>
+          <input type="date" id="date" value="2024-09-01" required><br>
+
+          <label for="stime" class="lab">Start Time: </label>
+          <input type="time" id="stime" value="12:00" required><br>
+
+          <label for="etime" class="lab">End Time: </label>
+          <input type="time" id="etime" value="12:00" required><br>
+
+          <button>Submit</button>
+        </form>
+      </div>
+
+      <div>
+        <h2>
+          Workout Logs:
+        </h2>
+
+        <table id="data">
+          <thead>
+            <tr>
+              <th>Workout</th>
+              <th>Date</th>
+              <th>Start Time</th>
+              <th>End Time</th>
+              <th>Time (mins)</th>
+              <th>Edit</th>
+              <th>Delete</th>
+            </tr>
+          </thead>
+          <tbody>
+
+          </tbody>
+
+        </table>
+      </div>
+
+    </div>
+    
+  </body>
+</html>
