@@ -5,7 +5,7 @@ Link: https://a3-edward-dang.onrender.com
 Acheivements
 ---
 
-## Guest List
+Guest List
 
 ## Goal of the application
 To have a list of guest for a big event, The user would be able to see who was invited and by who. Then they can see if a user has checked into the event or not.
@@ -24,3 +24,5 @@ For authentication I checked the username and password from the database to see 
 ## Technical Achievements
 - **Tech Achievement 1**: I used Render to host my web application
 
+## Notes
+I emailed asking for an extension and it was approved
