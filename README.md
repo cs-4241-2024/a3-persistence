@@ -5,6 +5,8 @@ Assignment 3 - Persistence: Two-tier Web Application with Database, Express serv
 
 https://a3-azzhang3.glitch.me
 
+(Last Pass)
+
 
 ### Goal
 The goal of this application is to provide users with an efficient and intuitive platform for managing their tasks. Users can create, edit, prioritize, and track tasks based on their deadlines, allowing them to stay organized and focused. The application is designed to help users manage their workload by clearly showing upcoming deadlines, highlighting tasks that need attention, and providing a user-friendly interface for managing both ongoing and completed tasks. 
