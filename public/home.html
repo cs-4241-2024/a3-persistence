@@ -3,6 +3,11 @@
   <head>
     <title>Taskly - Home</title>
     <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="Stay on top of your tasks with Taskly, a task manager app. View, edit, and complete tasks with ease using an intuitive interface."
+    />
     <script src="js/main.js"></script>
     <!-- Keep this one -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -25,103 +30,105 @@
     <link rel="stylesheet" href="css/main.css" />
     <link rel="icon" href="data:;base64,iVBORw0KGgo=" />
   </head>
-  <body>
-    <div id="taskSection">
-      <div id="topMenu">
-        <!-- Dark Mode Toggle Switch -->
-        <div class="switch">
-          <label>
-            Light
-            <input type="checkbox" id="darkModeToggle" />
-            <span class="lever"></span>
-            Dark
-          </label>
-        </div>
-        <button id="logoutBtn">Logout</button>
+  <body id="taskSection">
+    <!-- <div id="taskSection"> -->
+    <div id="topMenu">
+      <!-- Dark Mode Toggle Switch -->
+      <div class="switch">
+        <label id="dark-modeLabel">
+          Light
+          <input type="checkbox" id="darkModeToggle" />
+          <span class="lever"></span>
+          Dark
+        </label>
       </div>
-      <h1>Welcome To Taskly!</h1>
-      <h2>Manage Your Tasks</h2>
-      <form id="taskForm" class="col s12">
-        <div class="input-field col s12">
-          <input type="text" id="task" name="task" required />
-          <label for="task">Task</label>
-        </div>
-        <div class="input-field col s12">
-          <textarea
-            id="description"
-            name="description"
-            class="materialize-textarea"
-            required
-          ></textarea>
-          <label for="description">Description</label>
-        </div>
-        <div class="input-field col s12">
-          <input type="date" id="date" name="date" required />
-          <label for="date">Due Date</label>
-        </div>
-        <div class="input-field col s12">
-          <select id="priority" name="priority" class="browser-default">
-            <option value="urgent">Urgent</option>
-            <option value="high">High</option>
-            <option value="medium">Medium</option>
-            <option value="low">Low</option>
-          </select>
-          <!-- <label for="priority">Priority</label> -->
-        </div>
-        <button type="submit" class="btn waves-effect waves-light">
-          Submit Task
-        </button>
-      </form>
-
-      <div class="responsive-table">
-        <!-- <table class="striped"> -->
-        <div class="container">
-          <!-- <div class="table-container"> -->
-          <h2>In Progress</h2>
-          <!-- <table id="inProgressTable">
-            <thead>
-              <tr>
-                <th>Task</th>
-                <th>Description</th>
-                <th>Creation Date</th>
-                <th>Due Date</th>
-                <th>Days Left</th>
-                <th>Priority</th>
-                <th>Status</th>
-                <th>Actions</th>
-              </tr>
-            </thead>
-            <tbody></tbody>
-          </table> -->
-          <!-- Collapsible for In Progress Tasks -->
-          <ul id="inProgressTable" class="collapsible popout">
-            <!-- Dynamically populated tasks will go here -->
-          </ul>
-          <!-- </div> -->
-          <!-- <div class="table-container"> -->
-          <h2>Completed</h2>
-          <!-- <table id="completedTable">
-            <thead>
-              <tr>
-                <th>Task</th>
-                <th>Description</th>
-                <th>Creation Date</th>
-                <th>Due Date</th>
-                <th>Days Left</th>
-                <th>Priority</th>
-                <th>Status</th>
-                <th>Actions</th>
-              </tr>
-            </thead>
-            <tbody></tbody>
-          </table> -->
-          <ul id="completedTable" class="collapsible popout">
-            <!-- Dynamically populated tasks will go here -->
-          </ul>
-          <!-- </div> -->
-        </div>
-        <!-- </table> -->
-      </div>
+      <button id="logoutBtn">Logout</button>
     </div>
+    <h1>Welcome To Taskly!</h1>
+    <h2>Manage Your Tasks</h2>
+    <form id="taskForm" class="col s12">
+      <div class="input-field col s12">
+        <input type="text" id="task" name="task" required />
+        <label for="task" id="taskLabel">Task</label>
+      </div>
+      <div class="input-field col s12">
+        <textarea
+          id="description"
+          name="description"
+          class="materialize-textarea"
+          required
+        ></textarea>
+        <label for="description" id="taskLabel">Description</label>
+      </div>
+      <div class="input-field col s12">
+        <input type="date" id="date" name="date" required />
+        <label for="date" id="taskLabel">Due Date</label>
+      </div>
+      <div class="input-field col s12">
+        <label for="priority" id="taskLabel">Priority</label>
+        <br />
+        <br />
+        <select id="priority" name="priority" class="browser-default">
+          <option value="urgent">Urgent</option>
+          <option value="high">High</option>
+          <option value="medium">Medium</option>
+          <option value="low">Low</option>
+        </select>
+      </div>
+      <button type="submit" class="btn waves-effect waves-light">
+        Submit Task
+      </button>
+    </form>
+
+    <div class="responsive-table">
+      <!-- <table class="striped"> -->
+      <div class="container">
+        <!-- <div class="table-container"> -->
+        <h2>In Progress</h2>
+        <!-- <table id="inProgressTable">
+            <thead>
+              <tr>
+                <th>Task</th>
+                <th>Description</th>
+                <th>Creation Date</th>
+                <th>Due Date</th>
+                <th>Days Left</th>
+                <th>Priority</th>
+                <th>Status</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table> -->
+        <!-- Collapsible for In Progress Tasks -->
+        <ul id="inProgressTable" class="collapsible popout">
+          <!-- Dynamically populated tasks will go here -->
+        </ul>
+        <!-- </div> -->
+        <!-- <div class="table-container"> -->
+        <h2>Completed</h2>
+        <!-- <table id="completedTable">
+            <thead>
+              <tr>
+                <th>Task</th>
+                <th>Description</th>
+                <th>Creation Date</th>
+                <th>Due Date</th>
+                <th>Days Left</th>
+                <th>Priority</th>
+                <th>Status</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table> -->
+        <ul id="completedTable" class="collapsible popout">
+          <!-- Dynamically populated tasks will go here -->
+        </ul>
+        <!-- </div> -->
+      </div>
+      <!-- </table> -->
+    </div>
+    <!-- </div> -->
   </body>
 </html>

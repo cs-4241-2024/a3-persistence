@@ -3,6 +3,11 @@
   <head>
     <title>Taskly - Login</title>
     <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="Efficiently manage your tasks with Taskly, a task manager app. Log in to track deadlines, prioritize tasks, and stay organized."
+    />
     <script src="js/login.js"></script>
     <!-- Keep this one -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -29,7 +34,7 @@
     <div id="loginSection">
       <!-- Dark Mode Toggle Switch -->
       <div class="switch" id="loginDark">
-        <label>
+        <label id="dark-modeLabel">
           Light
           <input type="checkbox" id="darkModeToggle" />
           <span class="lever"></span>
@@ -40,7 +45,7 @@
       <h1 id="loginText">Login</h1>
       <form id="loginForm" class="input-field">
         <div class="input-field">
-          <label for="login-username">Username</label>
+          <label for="login-username" id="loginLabel">Username</label>
           <input
             type="text"
             id="login-username"
@@ -50,7 +55,7 @@
           />
         </div>
         <div class="input-field">
-          <label for="login-password">Password</label>
+          <label for="login-password" id="loginLabel">Password</label>
           <input
             type="password"
             id="login-password"
@@ -80,11 +85,11 @@
         <h1 id="registerText">Register</h1>
         <form id="registerForm" class="form-group">
           <div class="input-field">
-            <label for="reg-username">Username:</label>
+            <label for="reg-username" id="loginLabel">Username</label>
             <input type="text" id="reg-username" name="username" required />
           </div>
           <div class="input-field">
-            <label for="reg-password">Password:</label>
+            <label for="reg-password" id="loginLabel">Password</label>
             <!-- <div class="password-container"> -->
             <input type="password" id="reg-password" name="password" required />
             <!-- </div> -->
