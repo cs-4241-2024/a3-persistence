@@ -42,8 +42,6 @@ There were also other custom CSS styling which all help with the user experience
 ![visual](images/pic2.png)
 
 
-- **Tech Achievement 3**: The website is also deployed on Digital Ocean.
-
 ## Design/Evaluation Achievements
 - **Design Achievement 1 (5 Points?)**: Instead of using a traditional table to display tasks, the app uses a collapsible dropdown to organize the task list. The collapsible component allows tasks to be presented in a clean, minimalistic manner while still providing access to detailed information when needed. It provides a more streamlined and user-friendly interface, where only the most relevant information (such as the task title, due date, and priority) is displayed at first glance. Users can then expand individual tasks to view detailed information like descriptions and action buttons (edit, complete, delete), keeping the interface less cluttered. Additionally it keeps users focused on what’s important, and not overwhelmed with too much information at once.
 
