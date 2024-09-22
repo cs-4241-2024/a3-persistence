@@ -2,7 +2,7 @@
 document.addEventListener("DOMContentLoaded", function () {
   let cart = {};
   let orderNumber = parseInt(localStorage.getItem('orderNumber')) || 0;
-  let cashTotal = parseFloat(localStorage.getItem('cashTotal')) || 0; 
+  let cashTotal = parseFloat(localStorage.getItem('cashTotal')) || 0;
   let cumulativeItemTotal = parseInt(localStorage.getItem('cumulativeItemTotal')) || 0;
 
   const addToCartForms = document.querySelectorAll(".add-to-cart-form");
@@ -97,27 +97,27 @@ document.addEventListener("DOMContentLoaded", function () {
     console.log(json, "data to be added")
     const body = JSON.stringify(json)
 
-    fetch('/submit', {
+    fetch('/orders/submit', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'  // Ensure JSON is sent
       },
       body
     })
-    .then(response => response.json())
-    .then(json => {
-      console.log(json, "json data after submitting the data");
+      .then(response => response.json())
+      .then(json => {
+        console.log(json, "json data after submitting the data");
         getData();
       })
   }
 
 
   const tableBody = document.querySelector("#orders-table tbody");
-  const displayData = ({ cart }) => {
+  const displayData = (cart) => {
     console.log(cart, "display data");
     tableBody.innerHTML = "";
-    if (cart.length > 0) {
-      cart.forEach(cartItem => {
+    if (cart.orders.length > 0) {
+      cart.orders.forEach((cartItem) => {
         const newRow = document.createElement("tr");
 
         newRow.innerHTML = `
@@ -127,16 +127,90 @@ document.addEventListener("DOMContentLoaded", function () {
           <td>${cartItem.totalPrice}</td>
           <td>${cartItem.cashTotal.toFixed(2)}</td>
           <td>${cartItem.itemTotal}</td>
+          <td>
+            <button class="edit-order-btn" data-id="${cartItem._id}">Edit</button>
+          </td>
+          <td>
+            <button class="delete-order-btn" data-id="${cartItem._id}">Delete</button>
+          </td>
         `;
 
         tableBody.appendChild(newRow);
       })
 
+      document.querySelectorAll(".edit-order-btn").forEach(button => {
+        button.addEventListener("click", (e) => {
+          const orderId = e.target.getAttribute("data-id");
+          editOrder(orderId);
+        });
+      });
+
+      document.querySelectorAll(".delete-order-btn").forEach(button => {
+        button.addEventListener("click", (e) => {
+          const orderId = e.target.getAttribute("data-id");
+          deleteOrder(orderId);
+        });
+      });
+    }
+  }
+
+  let currentOrderId = null;
+
+  const editOrder = (orderId) => {
+    currentOrderId = orderId;
+    document.getElementById("editModal").style.display = "block";
+    const editForm = document.querySelector("#editForm");
+
+    editForm.addEventListener("submit", (e) => {
+      e.preventDefault();
+      
+      let name = document.getElementById("edit-name").value;
+      let address = document.getElementById("edit-address").value;
+  
+      let updatedData = {
+        name,
+        address
+      }
+
+      // Fetch the order data (assuming you want to fetch fresh data)
+      fetch(`/orders/update/${orderId}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json'  // Ensure JSON is sent
+        },
+        body: JSON.stringify(updatedData)
+      })
+        .then(response => response.json())
+        .then(order => {
+          console.log(order, "order updated")
+          getData();
+        });
+
+    })
+  }
+
+  document.querySelector(".close").addEventListener("click", () => {
+    document.getElementById("editModal").style.display = "none";
+  });
+
+  const deleteOrder = (orderId) => {
+    if (confirm("Are you sure you want to delete this order?")) {
+      fetch(`/orders/delete/${orderId}`, {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      })
+        .then(response => response.json())
+        .then(() => {
+          alert('Order deleted successfully!');
+          getData();  // Refresh the orders
+        });
     }
   }
 
   const getData = () => {
-    fetch('/getCart', {
+    fetch('/orders/my-orders', {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json'
@@ -150,7 +224,7 @@ document.addEventListener("DOMContentLoaded", function () {
           cashTotal = json.cashTotal;
           localStorage.setItem('cashTotal', cashTotal.toFixed(2)); // Sync with localStorage
         }
-    
+
         if (json.cumulativeItemTotal !== undefined) {
           cumulativeItemTotal = json.cumulativeItemTotal;
           localStorage.setItem('cumulativeItemTotal', cumulativeItemTotal); // Sync with localStorage
@@ -195,7 +269,7 @@ document.addEventListener("DOMContentLoaded", function () {
         itemTotal: cumulativeItemTotal,
         action: "addToCart"
       }
-   
+
       addDataToServer(newData);
 
       cart = {};
