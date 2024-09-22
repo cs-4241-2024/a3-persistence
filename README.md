@@ -3,10 +3,6 @@ Assignment 3 - Persistence: Two-tier Web Application with Database, Express serv
 
 ## Taskly
 
-your glitch (or alternative server) link e.g. http://a3-charlie-roberts.glitch.me
-
-Include a very brief summary of your project here. Images are encouraged, along with concise, high-level text. Be sure to include:
-
 https://a3-azzhang3.glitch.me
 
 
@@ -40,11 +36,13 @@ There were also other custom CSS styling which all help with the user experience
 - **Tech Achievement 1**: Implemented the Google Authentication method as an alternative for users to sign-up and sign-in with. This was done through the passport library. The default registration and login method is using the user-name and password, but google authentication simplifies the process, if the user chooses to use it. 
 
 - **Tech Achievement 2**: The website achieved 100% in all four lighthouse tests required for this assignment on both the login page and the home page.
+
 ![visual](images/pic1.png)
+
 ![visual](images/pic2.png)
 
 
-- **Tech Achievement 2**: The website is also deployed on 
+- **Tech Achievement 3**: The website is also deployed on Digital Ocean.
 
 ## Design/Evaluation Achievements
 - **Design Achievement 1 (5 Points?)**: Instead of using a traditional table to display tasks, the app uses a collapsible dropdown to organize the task list. The collapsible component allows tasks to be presented in a clean, minimalistic manner while still providing access to detailed information when needed. It provides a more streamlined and user-friendly interface, where only the most relevant information (such as the task title, due date, and priority) is displayed at first glance. Users can then expand individual tasks to view detailed information like descriptions and action buttons (edit, complete, delete), keeping the interface less cluttered. Additionally it keeps users focused on what’s important, and not overwhelmed with too much information at once.
@@ -53,11 +51,19 @@ There were also other custom CSS styling which all help with the user experience
 
 
 ## Pictures
+
 ![visual](images/pic3.png)
+
 ![visual](images/pic4.png)
+
 ![visual](images/pic5.png)
+
 ![visual](images/pic6.png)
+
 ![visual](images/pic7.png)
+
 ![visual](images/pic8.png)
+
 ![visual](images/pic9.png)
+
 ![visual](images/pic10.png)
