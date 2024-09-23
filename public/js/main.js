@@ -152,6 +152,8 @@ const displayCards = function(data) {
     <button class="delete-button">Delete</button>
     `;
 
+    card.dataset.username = entry.username;
+
     const deleteButton = card.querySelector('.delete-button');
     deleteButton.addEventListener('click', deleteCard);
 
@@ -163,7 +165,7 @@ const displayCards = function(data) {
 const deleteCard = async function(event) {
   const button = event.target;
   const card = button.closest('.card');
-  const username = card.querySelector('h3').textContent;
+  const username = card.dataset.username;
   const showTitle = card.querySelector('p').textContent.split(': ')[1];
 
   const response = await fetch('/delete', {
