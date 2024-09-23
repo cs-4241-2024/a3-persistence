@@ -31,17 +31,17 @@ async function run() {
 });
 
     // Route to submit a new task
-    // Route to submit a new task
-app.post("/submit", async (req, res) => {
-  try {
-    const result = await collection.insertOne(req.body);
-    const insertedTask = result.ops[0]; // Get the inserted task, including its MongoDB _id
-    res.json(insertedTask);  // Send the inserted task back to the client
-  } catch (err) {
-    console.error("Error submitting task:", err);
-    res.status(500).json({ error: "Failed to submit task" });
-  }
-});
+    app.post("/submit", async (req, res) => {
+      try {
+        const result = await collection.insertOne(req.body);
+        const insertedTask = { ...req.body, _id: result.insertedId }; // Add the insertedId to the task object
+        res.json(insertedTask);  // Send the inserted task (with _id) back to the client
+      } catch (err) {
+        console.error("Error submitting task:", err);
+        res.status(500).json({ error: "Failed to submit task" });
+      }
+    });
+    
 
     // Route to delete a task
     app.delete('/remove', async (req, res) => {

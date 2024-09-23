@@ -84,11 +84,10 @@ const submit = function (e) {
   })
   .then((response) => response.json()) // Get the inserted task (including the _id)
   .then((insertedTask) => {
-    // Clear the table and repopulate it with the updated task list
-    console.log('Task submitted:', insertedTask);
-    refreshTodoList(insertedTask);  // Use the new task directly with the MongoDB _id
+    console.log('Inserted Task:', insertedTask);  // Log the full task object with all fields
+    refreshTodoList(insertedTask);  // Use the task directly with the MongoDB _id
   })
-  .catch(error => console.error('Error submitting task:', error));
+  .catch(error => console.error('Error submitting task:', error));  
 };
 
 // Function to calculate days left
@@ -158,12 +157,12 @@ function refreshTodoList(taskObj) {
   let tdActions = tr.insertCell(-1);
   let deleteBtn = document.createElement("button");
   deleteBtn.innerHTML = "Delete";
-  deleteBtn.setAttribute('data-id', taskObj._id);  // Set the _id as a data attribute on the button
   deleteBtn.onclick = function () {
     deleteTask(taskObj._id, tr);  // Pass the task's _id and the row element to delete
   };
 
   tdActions.appendChild(deleteBtn);
+
 }
 
 // Function to delete a task
