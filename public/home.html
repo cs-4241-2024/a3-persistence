@@ -1,30 +1,45 @@
 <!doctype html>
 <html lang="en">
-  <head>
+<head>
     <title>CS4241 Assignment 3</title>
     <meta charset="utf-8">
     <script src="js/main.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <link rel="stylesheet" href="css/main.css">
-    
-    <!-- get rid of favicon error -->
     <link rel="icon" href="data:;base64,iVBORw0KGgo=">
-  </head>
-  <body id = 'homePage'>
-    <div class="container">
-      <h1>Workout Log</h1>
-      <form class="form-group"> 
-        <label>Exercise:</label>
-        <input type="text" id="exercise" class="input-field"> 
-        <label>Sets:</label>
-        <input type="text" id="sets" class="input-field">
-        <label>Repetitions:</label>
-        <input type="text" id="reps" class="input-field">
-        <label>Weight:</label>
-        <input type="text" id="weight" class="input-field">
-        <button id="submit" class="btn">Submit</button>
-      </form>
-      <button id="clear" >Clear Workout</button>
-      <table id="results"></table>
+</head>
+<body id='homePage' class="bg-gray-100 flex items-center justify-center h-screen">
+    <div class="container max-w-xl mx-auto p-8 bg-white shadow-md rounded-lg">
+        <h1 class="text-4xl text-center text-blue-600 font-bold mb-6">Workout Log</h1>
+        <div class="overflow-auto max-h-96">
+            <form class="space-y-4">
+                <div>
+                    <label for ='exercise' class="block font-semibold">Exercise:</label>
+                    <input type="text" id="exercise" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                </div>
+                <div>
+                    <label for = 'sets'class="block font-semibold">Sets:</label>
+                    <input type="text" id="sets" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                </div>
+                <div>
+                    <label for = 'reps' class="block font-semibold">Repetitions:</label>
+                    <input type="text" id="reps" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                </div>
+                <div>
+                    <label for = 'weight' class="block font-semibold">Weight:</label>
+                    <input type="text" id="weight" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                </div>
+                <button id="submit" class="py-2 px-4 bg-blue-700 text-white rounded-lg hover:bg-blue-800">
+                  Submit
+              </button>
+            </form>
+            <button id="clear" class="mt-4 py-2 px-4 bg-red-700 text-white rounded-lg hover:bg-red-800">
+              Clear Workout
+          </button>
+            <button onclick="window.location.href='/logout'" class="mt-4 w-full bg-black text-white py-2 rounded-lg hover:bg-gray-800">Logout</button>
+        </div>
+        <table id="results" class="w-full mt-6 table-auto bg-gray-200"></table>
     </div>
-  </body>
+    
+</body>
 </html>

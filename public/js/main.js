@@ -84,13 +84,13 @@ table.appendChild(thead);
     const updateCell = document.createElement('td')
     const updateButton = document.createElement('button')
     updateButton.textContent = 'Update';
-    updateButton.classList.add('blue-button')
+    updateButton.classList.add('bg-blue-400', 'text-white', 'py-1', 'px-1', 'rounded', 'hover:bg-blue-300');
 
     const deleteCell = document.createElement('td')
     const deleteButton = document.createElement('button')
     deleteButton.textContent = 'Delete';
-    deleteButton.className = 'btn-red'; 
-    deleteButton.textContent = 'Delete';
+    deleteButton.classList.add('bg-red-500', 'text-white', 'py-1', 'px-1', 'rounded', 'hover:bg-red-400');
+
     
     
     console.log(rowData)
@@ -184,6 +184,7 @@ const clearPage = async function(event){
 //sets the button functions onload and focuses on the first box
 window.onload = async function() {
   if (document.getElementById('homePage')) {
+
     const submitButton = document.getElementById("submit")
     submitButton.onclick = submit;
     const clearButton = document.getElementById("clear")

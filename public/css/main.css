@@ -1,128 +1,24 @@
-@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
-
 body {
-  font-family: 'Roboto', sans-serif;
-  margin: 0;
-  padding: 0;
-  background-color: #121212;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-  color: #e0e0e0;
-}
-
-.container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 100%;
-  max-width: 600px;
+  font-family: 'Roboto', sans-serif; /* Optional, can remove if not using Roboto */
+  background-color: #ffffff;
+  color: #585858;
 }
 
 h1 {
-  text-align: center;
-  color: #90caf9;
-  margin-bottom: 20px;
-  font-size: 2.5em;
-}
-
-.form-group {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  width: 100%;
-}
-
-label {
-  font-weight: bold;
+  color: #3899e9;
 }
 
 .input-field {
-  padding: 10px;
-  border: 1px solid #424242;
-  background-color: #1e1e1e;
-  color: #e0e0e0;
-  border-radius: 5px;
-  font-size: 1em;
-  width: 100%;
-}
-
-.btn {
-  padding: 10px;
-  background-color: #90caf9;
+  border: 1px solid #8c8383;
+  background-color: #c3bfbf;
   color: #121212;
-  border: none;
   border-radius: 5px;
-  font-size: 1em;
-  cursor: pointer;
-}
-
-.btn:hover {
-  background-color: #64b5f6;
-}
-
-.btn-red {
-  background-color: #ef5350;
-  color: #121212;
-  border: none;
-  border-radius: 5px;
-  padding: 10px;
-  font-size: 1em;
-  cursor: pointer;
-}
-
-.btn-red:hover {
-  background-color: #e57373;
 }
 
 table {
-  margin-top: 20px;
-  border-collapse: collapse;
-  width: 100%;
-  background-color: #1e1e1e;
-}
-
-table, th, td {
-  border: 1px solid #424242;
-}
-
-th, td {
-  padding: 12px;
-  text-align: left;
-  color: #e0e0e0;
+  background-color: #bbbbbb;
 }
 
 th {
   background-color: #90caf9;
-  color: #121212;
-}
-
-#clear {
-  background-color: #ef5350;
-  color: #121212;
-  border: none;
-  border-radius: 5px;
-  padding: 10px 20px;
-  font-size: 1em;
-  cursor: pointer;
-  margin-top: 20px;
-}
-
-#clear:hover {
-  background-color: #e57373;
-}
-
-.blue-button {
-  background-color: #42a5f5;
-  color: #121212;
-  border: none;
-  border-radius: 5px;
-  padding: 10px 20px;
-  font-size: 1em;
-  cursor: pointer;
-}
-
-.blue-button:hover {
-  background-color: #1e88e5;
 }
