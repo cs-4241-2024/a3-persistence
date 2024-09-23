@@ -1,0 +1,48 @@
+body {
+  font-family: "Roberto Mono", monospace;
+}
+
+#habit-form {
+  display: flex;
+  flex-direction: column;
+}
+
+#container {
+  display: flex;
+  justify-content: space-between;
+  gap: 30px;
+}
+
+#form-div, #table-div {
+  flex: 1;
+  padding: 10px;
+  box-sizing: border-box;
+}
+
+#form-div {
+  border: 2px solid black;
+}
+
+#table-div table {
+  width: 100%;
+}
+
+h1 {
+  margin-left: 10px;
+  margin-bottom: 30px;
+}
+
+label {
+  margin-bottom: 10px;
+  margin-top: 10px;
+}
+
+#submit-button  {
+  margin-top: 20px;
+  width: 50%;
+  height: 20px;
+}
+
+#form-div text {
+  font-size: 18px;
+}
