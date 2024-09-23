@@ -144,7 +144,7 @@ const displayCards = function(data) {
     }
 
     card.innerHTML = `
-    <img src="${apiData.data[0].images.jpg.large_image_url}" id="coverImage">
+    <img src="${apiData.data[0].images.jpg.large_image_url}" id="coverImage" alt="animeCoverImage">
     <p><strong>Show Title:</strong> ${entry['show title']}</p>
     <p><strong>Last Episode Watched:</strong> ${entry['last ep watched']}</p>
     <p><strong>Progress:</strong> ${entry['last ep watched']}/${apiData.data[0].episodes}</p>
