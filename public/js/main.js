@@ -9,19 +9,12 @@ const register = async function (event) {
   const newUsernameInput = document.querySelector('#newUserName').value;
   const newPasswordInput = document.querySelector('#newPassword').value;
 
-  // Debugging logs to check if the values are correct
-/*   console.log("First Name: ", firstNameInput);
-  console.log("Last Name: ", lastNameInput);
-  console.log("Username: ", newUsernameInput);
-  console.log("Password: ", newPasswordInput); */
-
   const userData = {
     firstName: firstNameInput,
     lastName: lastNameInput,
     username: newUsernameInput,
     password: newPasswordInput
   };
-
 
   const body = JSON.stringify(userData);
 

@@ -101,7 +101,6 @@ app.post("/register", async (req, res) => {
   try {
 
   const hashedPassword = await bcrypt.hash(password, saltRounds);
-  console.log(hashedPassword);
  
   const newUser = {
     firstName: firstName,

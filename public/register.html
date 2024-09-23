@@ -51,18 +51,20 @@
         <div class="userInfoForm">
             <form onsubmit="register(event)">
                 <!-- Text Input: Full Name-->
-                <h4>Enter Your Name:</h4>
-                <div class="fullName">
+                
+                
+                    <label for="newFirstName"><h4>First Name:</h4></label>
                     <input type="text" id="newFirstName" name="newFirstname" value="first name">
+                    <label for="newLastName"><h4>Last Name:</h4></label>
                     <input type="text" id="newLastName" name="newLastname" value="last name">
-                </div>
+                
 
                 <!-- Text Input: Username-->
-                <h4>Create a Username:</h4>
+                <label for="newUserName"><h4>Create a Username:</h4></label>
                 <input type="text" id="newUserName" name="newUsername">
 
                 <!-- Password Input: Password-->
-                <h4>Create a Password:</h4>
+                <label for="newPassword"><h4>Create a Password:</h4></label>
                 <input type="password" id="newPassword" name="newPassWord">
 
                 <button id="register">Create User</button>
