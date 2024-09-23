@@ -6,16 +6,13 @@ const express = require("express"),
       {MongoClient} = require('mongodb'),
       bcrypt = require('bcrypt'),
       saltRounds = 10,
-      cookieParser = require('cookie-parser');
+      cookieParser = require('cookie-parser'),
       dir  = 'public/',
       port = 3000;
 
 
 //express setup
 const app = express();
-
-//cookie-parser setup
-app.use(cookieParser());
 
 //mongodb setup
 const connection = process.env.MONGO_URI;
@@ -45,6 +42,9 @@ async function connectToMongo() {
   }
 }
 
+//cookie-parser setup
+app.use(cookieParser());
+
 //temp data
 const appdata = [
   { 'username': 'Ananya', 'show title': "Jujutsu Kaisen", 'last ep watched': 12, 'date logged': '9/9/2024' },
@@ -71,14 +71,15 @@ app.get("/login", (req, res) => {
   
 //route to return appdata
 app.get("/appdata", async (req, res) => {
+  
+  const username = req.cookies.username;
+
+  if (!username) {
+    return res.status(401).json({message: 'Unauthorized. Please register/login.'});
+  }
+  
   try {
-    const username = req.cookies.username;
-
-    if (!username) {
-      return res.status(401).json({message: 'Unauthorized. Please register/login.'});
-    }
-
-    const entries = await cardCollection.find({ username: username}).toArray();
+    const entries = await cardCollection.find({ username: username }).toArray();
     res.status(200).json(entries);
   } catch (error) {
     console.error(error);
@@ -91,8 +92,16 @@ app.get("/appdata", async (req, res) => {
 app.post("/submit", async (req, res) => {
   const formData = req.body;
 
+  console.log("Cookies:", req.cookies); //debug
+  const username = req.cookies.username;
+  console.log(username);
+
+  if (!username) {
+    return res.status(401).json({ message: 'Unauthorized. Please log in.' });
+  }
+
   const newEntry = {
-    'username': formData.username,
+    'username': username,
     'show title': formData.showName,
     'last ep watched': Number(formData.lastViewed),
     'date logged': getDate()
@@ -100,7 +109,7 @@ app.post("/submit", async (req, res) => {
 
   try {
     await cardCollection.insertOne(newEntry);
-    const allEntries = await cardCollection.find({}).toArray();
+    const allEntries = await cardCollection.find({ username: username }).toArray();
     res.status(200).json(allEntries);
   } catch (error) {
     console.error(error);

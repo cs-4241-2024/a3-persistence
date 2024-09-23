@@ -70,10 +70,18 @@ const login = async function(event) {
 
 };
 
-const logout = async function () {
-  const response = await fetch('/logout', {method: 'POST'});
+const logout = async function() {
+  
+  console.log("logout function reached");
+  const response = await fetch('/logout', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  });
 
   if (response.ok) {
+    console.log('User logged out');
     window.location.href = '/login';
   } else {
     console.error('Failed to log out.');
@@ -85,14 +93,13 @@ const submit = async function( event ) {
   // a new .html page for displaying results...
   // this was the original browser behavior and still
   // remains to this day
-  event.preventDefault()
+  event.preventDefault();
+  console.log("submit accessed");
   
-  const nameInput = document.querySelector('#yourName').value;
   const titleInput = document.querySelector('#showTitle').value;
   const episodeInput = document.querySelector('#lastWatched').value;
 
   const input = {
-    username: nameInput,
     showName: titleInput,
     lastViewed: episodeInput
   };
@@ -112,7 +119,8 @@ const submit = async function( event ) {
     console.log(data);
     fetchAppData();
   } else {
-    console.error('Failed to submit data');
+    const errorData = await response.json();
+    console.error('Failed to submit data:', errorData);
   }
 };
 
@@ -136,8 +144,6 @@ const displayCards = function(data) {
     }
 
     card.innerHTML = `
-    <h3>${entry.username}</h3>
-    <hr class="solidLine"> 
     <img src="${apiData.data[0].images.jpg.large_image_url}" id="coverImage">
     <p><strong>Show Title:</strong> ${entry['show title']}</p>
     <p><strong>Last Episode Watched:</strong> ${entry['last ep watched']}</p>
@@ -177,18 +183,23 @@ const deleteCard = async function(event) {
 };
 
 const fetchAppData = async function() {
-  const response = await fetch('/appdata');
 
-  if (response.ok) {
-    const data = await response.json();
-    displayCards(data);
-  } else {
-    console.error('Failed to fetch app data');
+  try {
+    const response = await fetch('/appdata');
+
+    if (response.ok) {
+      const data = await response.json();
+      displayCards(data);
+    } else {
+      const errorData = await response.json();
+      console.error('Failed to fetch app data:', errorData);
+    }
+  } catch (error) {
+    console.error('Error fetching data:', error);
   }
 };
 
 window.onload = function() {
-  console.log("page loaded");
 
   if (window.location.pathname.includes('register')) {
     const registerButton = document.querySelector('#register');
@@ -199,14 +210,14 @@ window.onload = function() {
     }
   }
   
-  if (window.location.pathname.includes('submitButton')) {
+  
     const submitButton = document.querySelector("#submitButton");
     if (submitButton) {
       submitButton.onclick = submit;
     } else {
       console.error('Submit button not found!');
     }
-  }
+  
 
   if (window.location.pathname.includes('login')) {
     const loginButton = document.querySelector("#login");
@@ -216,6 +227,15 @@ window.onload = function() {
       console.error('Login button not found!');
     }
   }
+
+ 
+    const logoutButton = document.querySelector("#logoutButton");
+    if (logoutButton) {
+      logoutButton.onclick = logout;
+    } else {
+      console.error('logout button not found!');
+    }
+  
  
 
   fetchAppData();
