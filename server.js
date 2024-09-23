@@ -49,12 +49,43 @@ app.use(cookieParser());
 app.use(bodyParser.json());           //middleware handles JSON request bodies
 app.use(express.static('public'));    //serves files from the 'public' directory
 
+const isAuthenticated = (req, res, next) => {
+  console.log(`User is accessing ${req.path}`);
+
+  const isApiRequest = req.path.startsWith('/appdata') || req.path.startsWith('/submit') || req.path.startsWith('/update') || req.path.startsWith('/delete');
+
+  if (req.cookies.username) {
+    console.log('User is authenticated');
+    next();
+  } else {
+    console.log('User is not authenticated');
+
+    if (isApiRequest) {
+      //API request --> return a 401 Unauthorized response
+      res.status(401).json({ message: 'Unauthorized. Redirecting to login' });
+    } else {
+      //page request --> redirect to login unless accessing login or register pages
+      if (req.path === '/login' || req.path === '/register') {
+        console.log('Accessing login or register, allowed without auth');
+        next();
+      } else {
+        console.log('Redirecting to login');
+        res.redirect('/login');
+      }
+    }
+  }
+};
+
 
 //route to serve the main page
 app.get("/", (req, res) => {
-  res.sendFile(__dirname + '/public/index.html');
+  res.redirect("/login");
 });
- 
+
+app.get("/index",  isAuthenticated, (req, res) => {
+  res.sendFile(__dirname + '/public/index.html');
+})
+
 //route to serve the register page
 app.get("/register", (req, res) => {
   res.sendFile(__dirname + '/public/register.html');
@@ -66,14 +97,10 @@ app.get("/login", (req, res) => {
 })
   
 //route to return appdata
-app.get("/appdata", async (req, res) => {
+app.get("/appdata", isAuthenticated, async (req, res) => {
   
   const username = req.cookies.username;
 
-  if (!username) {
-    return res.status(401).json({message: 'Unauthorized. Please register/login.'});
-  }
-  
   try {
     const entries = await cardCollection.find({ username: username }).toArray();
     res.status(200).json(entries);
@@ -85,16 +112,9 @@ app.get("/appdata", async (req, res) => {
 });
 
 //submits and creates a card
-app.post("/submit", async (req, res) => {
+app.post("/submit", isAuthenticated, async (req, res) => {
   const formData = req.body;
-
-  console.log("Cookies:", req.cookies); //debug
   const username = req.cookies.username;
-  console.log(username);
-
-  if (!username) {
-    return res.status(401).json({ message: 'Unauthorized. Please log in.' });
-  }
 
   const newEntry = {
     'username': username,
@@ -197,7 +217,7 @@ app.put("/update", async (req, res) => {
 
 
 //handles the deletion of a card
-app.delete("/delete", async (req, res) => {
+app.delete("/delete", isAuthenticated, async (req, res) => {
   const {username, showTitle} = req.body;
 
   try {

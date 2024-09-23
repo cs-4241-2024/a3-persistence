@@ -247,6 +247,11 @@ const fetchAppData = async function() {
     if (response.ok) {
       const data = await response.json();
       displayCards(data);
+    } else if (response.status === 401) {
+      if (window.location.pathname !== '/login') {
+        console.error('User not logged in. Redirecting to login...');
+        window.location.href = '/login';
+      }
     } else {
       const errorData = await response.json();
       console.error('Failed to fetch app data:', errorData);
@@ -262,38 +267,31 @@ window.onload = function() {
     const registerButton = document.querySelector('#register');
     if (registerButton) {
       registerButton.onclick = register;
-    } else {
-      console.error('Register button not found!');
-    }
+    } 
   }
-  
   
     const submitButton = document.querySelector("#submitButton");
     if (submitButton) {
       submitButton.onclick = submit;
-    } else {
-      console.error('Submit button not found!');
-    }
+    } 
   
 
   if (window.location.pathname.includes('login')) {
     const loginButton = document.querySelector("#login");
     if (loginButton) {
       loginButton.onclick = login;
-    } else {
-      console.error('Login button not found!');
-    }
+    } 
   }
 
  
     const logoutButton = document.querySelector("#logoutButton");
     if (logoutButton) {
       logoutButton.onclick = logout;
-    } else {
-      console.error('logout button not found!');
-    }
+    } 
   
  
-  fetchAppData();
+  if (!window.location.pathname.includes('login') && !window.location.pathname.includes('register')) {
+    fetchAppData();
+  }
 }
 
