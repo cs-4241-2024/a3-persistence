@@ -111,8 +111,11 @@ I used the Bulma CSS framework as it offers good flexbox utility and provided a 
 
 ## Technical Achievements
 - **Lighthouse Grading**: I achieved 100% in Lighthouse for both my login page and main data display page. (Images can be found in the repo)
-- **List of Express Middleware**: Cookie-parser:
-                                  Handlebars:
+- **Web hosting**: I used Railway to host my webpage for this assignment. One obvious benefit is that it allowed for free hosting without giving any credit card info,
+                   which I found to be particularly noteworthy as I am not a fan of giving companies any financial information. other than that, it functions remarkably similarly to Glitch.
+- **List of Express Middleware**: Cookie-parser: Used with req.cookies to help with unique logins
+                                  Handlebars: Helped with backend integration with MongoDB
+
 
 ### Design/Evaluation Achievements
 - **W3C Accessibility**: I followed the following tips from the W3C Web Accessibility Initiative below

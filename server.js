@@ -1,4 +1,3 @@
-//Middle-ware used: Cookie-session, handlebars
 const express = require('express');
 const cookie = require( 'cookie-session' );
 const hbs = require( 'express-handlebars').engine;
