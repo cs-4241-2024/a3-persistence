@@ -6,8 +6,8 @@
     <link href="https://cdn.jsdelivr.net/npm/modern-normalize@3.0.1/modern-normalize.min.css" rel="stylesheet">
     <style>
         body {
-            font-family: Arial, sans-serif;
-            background-color: #f9f9f9;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #e9ecef;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -16,38 +16,87 @@
         }
         .formSection {
             background: white;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+            width: 300px;
         }
         h1 {
             margin-bottom: 20px;
-            font-size: 24px;
+            font-size: 26px;
+            color: #333;
+            text-align: center;
         }
         label {
             margin-bottom: 8px;
             display: block;
+            font-weight: 600;
+            color: #555;
         }
         input {
             width: 100%;
-            padding: 10px;
+            padding: 12px;
             margin-bottom: 16px;
             border: 1px solid #ccc;
-            border-radius: 4px;
+            border-radius: 5px;
             box-sizing: border-box;
+            transition: border-color 0.3s;
+        }
+        input:focus {
+            border-color: #007bff;
+            outline: none;
         }
         button {
             width: 100%;
-            padding: 10px;
+            padding: 12px;
             background-color: #007bff;
             color: white;
             border: none;
-            border-radius: 4px;
+            border-radius: 5px;
             cursor: pointer;
-            font-size: 16px;
+            font-size: 18px;
+            transition: background-color 0.3s;
         }
         button:hover {
             background-color: #0056b3;
+        }
+        .overlay {
+            display: none; /* Hide by default */
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            justify-content: center;
+            align-items: center;
+        }
+        .popup {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+            width: 300px;
+            display: none; /* Hide by default */
+        }
+        .popup h2 {
+            margin-bottom: 20px;
+            font-size: 24px;
+            text-align: center;
+            color: #333;
+        }
+        .popup label {
+            font-weight: 600;
+            color: #555;
+        }
+        .popup input {
+            margin-bottom: 16px;
+        }
+        .popup button {
+            background-color: #28a745;
+        }
+        .popup button:hover {
+            background-color: #218838;
         }
     </style>
 </head>
@@ -60,7 +109,68 @@
             <label for="password">Password:</label>
             <input type='password' id="password" name='password' required>
             <button type='submit' id="loginButton">Submit</button>
+            <button type='submit' id="createAccountButton">Create Account</button>
         </form>
     </div>
+    
+    <div class="overlay" id="popupOverlayAccount">
+        <div class="popup" id="popupAccount">
+            <h2>Create Account</h2>
+            <form id="popupFormAccount">
+                <label for="popupAccountUsername">Username:</label>
+                <input type="text" id="popupAccountUsername" required>
+                <label for="popupPassword">Password:</label>
+                <input type="password" id="popupPassword" required>
+                <button type="button" id="saveButtonAccount">Save</button>
+            </form>
+        </div>
+    </div>
+    <script>
+      // JavaScript to show and hide the popup
+      const createAccountButton = document.getElementById('createAccountButton');
+      const saveAccountButton = document.getElementById('saveButtonAccount');
+      const popupOverlayAccount = document.getElementById('popupOverlayAccount');
+      const popupAccount = document.getElementById('popupAccount');
+
+      createAccountButton.addEventListener('click', () => {
+          popupOverlayAccount.style.display = 'flex'; // Show the overlay
+          popupAccount.style.display = 'block'; // Show the popup
+      });
+
+      // Close the popup when clicking outside of it
+      popupOverlayAccount.addEventListener('click', (event) => {
+          if (event.target === popupOverlayAccount) {
+              popupOverlayAccount.style.display = 'none'; // Hide the overlay
+              popupAccount.style.display = 'none'; // Hide the popup
+          }
+      });
+
+      const saveAccount = async function(body) {
+        const response = await fetch('/addAccount', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body
+        });
+
+        const text = await response.json();
+        console.log(text);
+
+      }
+
+      // Close the popup when the Save button is clicked
+      saveAccountButton.addEventListener('click', () => {
+
+        const username = document.getElementById('popupAccountUsername').value;
+        const password = document.getElementById('popupPassword').value;
+        const newjson = { username: username, password: password};
+        const body = JSON.stringify(newjson);
+        saveAccount(body)
+
+          // Here you can add your logic to save the account information
+          popupOverlayAccount.style.display = 'none'; // Hide the overlay
+          popupAccount.style.display = 'none'; // Hide the popup
+          
+      });
+    </script>
 </body>
 </html>

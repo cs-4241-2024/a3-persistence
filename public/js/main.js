@@ -128,7 +128,6 @@ window.onload = function() {
   submitButton.onclick = submit;
 
   document.querySelector("#saveButton").onclick = saveChanges;
-  document.querySelector("#closeButton").onclick = closePopup;
 
   makeRequest(); // Populate table initially
 };

@@ -20,6 +20,8 @@ app.use( cookie({
   keys: ['key1', 'key2']
 }))
 
+
+
 app.post( '/login', async (req, res) => {
 
   const user = req.body.username;
@@ -57,12 +59,14 @@ const uri = 'mongodb+srv://asjacob:Webware25@cluster0.9xsgz.mongodb.net/?retryWr
 const client = new MongoClient( uri )
 
 let collection = null
+let collection2 = null
 
 async function run() {
   console.log("Hi");
   await client.connect()
   console.log("Connected to DB");
   collection = await client.db("datatest").collection("List")
+  collection2 = await client.db("datatest").collection("accounts")
 
 }
 
@@ -118,10 +122,21 @@ res.json(finalDocs);
 
 });
 
+app.post('/addAccount', async (req, res) => {
+  const account = req.body;
+  try {
+    await collection2.insertOne(account);
+    res.status(201).json({ message: 'Account created successfully' }); // Success response
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Failed to create account' }); // Error response
+  }
+});
 
 // Route to add a document and return all documents
 
 app.post("/add-doc", async (req, res) => {
+  console.log("adding item");
   if (collection !== null) {
     // Add a new item to the collection
     const newDoc = req.body;
@@ -133,6 +148,7 @@ app.post("/add-doc", async (req, res) => {
       } else if (newDoc.type === 'personal') {
         newDoc.priority = 3;
       }
+      newDoc.user = loggedInUser;
       await collection.insertOne(newDoc);
 
       // Update priority by type and date and order
