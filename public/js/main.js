@@ -69,6 +69,16 @@ const login = async function(event) {
   }
 
 };
+
+const logout = async function () {
+  const response = await fetch('/logout', {method: 'POST'});
+
+  if (response.ok) {
+    window.location.href = '/login';
+  } else {
+    console.error('Failed to log out.');
+  }
+};
  
 const submit = async function( event ) {
   // stop form submission from trying to load

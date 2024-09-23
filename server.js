@@ -6,12 +6,16 @@ const express = require("express"),
       {MongoClient} = require('mongodb'),
       bcrypt = require('bcrypt'),
       saltRounds = 10,
+      cookieParser = require('cookie-parser');
       dir  = 'public/',
       port = 3000;
 
 
 //express setup
 const app = express();
+
+//cookie-parser setup
+app.use(cookieParser());
 
 //mongodb setup
 const connection = process.env.MONGO_URI;
@@ -68,7 +72,13 @@ app.get("/login", (req, res) => {
 //route to return appdata
 app.get("/appdata", async (req, res) => {
   try {
-    const entries = await cardCollection.find({}).toArray();
+    const username = req.cookies.username;
+
+    if (!username) {
+      return res.status(401).json({message: 'Unauthorized. Please register/login.'});
+    }
+
+    const entries = await cardCollection.find({ username: username}).toArray();
     res.status(200).json(entries);
   } catch (error) {
     console.error(error);
@@ -115,6 +125,7 @@ app.post("/register", async (req, res) => {
   };
 
     await userCollection.insertOne(newUser);
+    res.cookie('username', username, { httpOnly: true, maxAge: 24 * 60 * 60 * 1000}); //cookie is set to expire in 24 hours})
     res.status(201).json({message: 'User registered successfully!'});
   } catch (error) {
     if (error.code === 11000) { //duplicate key detected error code
@@ -139,6 +150,7 @@ app.post("/login", async (req, res) => {
       const checkPassword = await bcrypt.compare(existingPassword, hash);
 
       if (checkPassword) {
+        res.cookie('username', existingUsername, {httpOnly: true, maxAge: 24 * 60 * 60 * 1000}); //cookie is set to expire in 24 hours
         res.status(201).json({message: 'user successfully logged in'});
       } else {
         res.status(401).json({message: 'Incorrect username or password'});
@@ -147,14 +159,15 @@ app.post("/login", async (req, res) => {
       res.status(401).json({message: 'Incorrect username or password'});
     }
 
-/*     const currentUser = {
-      existingUsername: existingUsername,
-      existingPassword: existingPassword
-    }; */
   } catch (error) {
     res.status(400).json({message: 'Username does not exist'});
   }
 
+});
+
+app.post('/logout', (req, res) => {
+  res.clearCookie('username');
+  res.status(200).json({ message: 'Logged out successfully' });
 });
 
 //handles the deletion of a card
