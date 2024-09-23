@@ -6,6 +6,11 @@
   "scripts": {
     "start": "node server.js"
   },
+  
+  "engines": {
+    "node": "16.x"
+  },
+
   "dependencies": {
     "bulma": "^1.0.2",
     "cookie-session": "^2.1.0",

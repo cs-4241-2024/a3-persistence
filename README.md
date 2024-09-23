@@ -1,6 +1,6 @@
 ## Company XYZ Employee Database
 
-your glitch (or alternative server) link e.g. http://a3-charlie-roberts.glitch.me
+your glitch (or alternative server) link e.g. https://a3-justin-s-23-production.up.railway.app/
 
 ## Goal
 The goal of this application was to create a simple employee database containing an ID, name, salary, and registration date for any registered employees. In theory,
