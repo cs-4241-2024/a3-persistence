@@ -1,5 +1,49 @@
 // FRONT-END (CLIENT) JAVASCRIPT HERE
 
+const register = async function (event) {
+  console.log("register function triggered");
+  event.preventDefault();
+
+  const firstNameInput = document.querySelector('#newFirstName').value;
+  const lastNameInput = document.querySelector('#newLastName').value;
+  const newUsernameInput = document.querySelector('#newUserName').value;
+  const newPasswordInput = document.querySelector('#newPassword').value;
+
+  // Debugging logs to check if the values are correct
+/*   console.log("First Name: ", firstNameInput);
+  console.log("Last Name: ", lastNameInput);
+  console.log("Username: ", newUsernameInput);
+  console.log("Password: ", newPasswordInput); */
+
+  const userData = {
+    firstName: firstNameInput,
+    lastName: lastNameInput,
+    username: newUsernameInput,
+    password: newPasswordInput
+  };
+
+
+  const body = JSON.stringify(userData);
+
+  const response = await fetch( '/register', {
+    method:'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body
+  });
+
+  if (response.ok) {
+    const data = await response.json();
+    console.log(data.message);
+    window.location.href = '/';
+  } else {
+    const errorData = await response.json();
+    console.error(errorData.message);
+  }
+
+}
+ 
 const submit = async function( event ) {
   // stop form submission from trying to load
   // a new .html page for displaying results...
@@ -34,7 +78,7 @@ const submit = async function( event ) {
   } else {
     console.error('Failed to submit data');
   }
-}
+};
 
 const displayCards = function(data) {
 
@@ -72,7 +116,7 @@ const displayCards = function(data) {
     cardContainer.appendChild(card); 
   });
 
-}
+};
 
 const deleteCard = async function(event) {
   const button = event.target;
@@ -80,7 +124,7 @@ const deleteCard = async function(event) {
   const username = card.querySelector('h3').textContent;
   const showTitle = card.querySelector('p').textContent.split(': ')[1];
 
-  const response = await fetch('/submit', {
+  const response = await fetch('/delete', {
     method: 'DELETE',
     headers: {
       'Content-Type': 'application/json',
@@ -94,7 +138,7 @@ const deleteCard = async function(event) {
   } else {
     console.error('Failed to delete data');
   }
-}
+};
 
 const fetchAppData = async function() {
   const response = await fetch('/appdata');
@@ -105,11 +149,29 @@ const fetchAppData = async function() {
   } else {
     console.error('Failed to fetch app data');
   }
-}
+};
 
 window.onload = function() {
-  const button = document.querySelector("button");
-  button.onclick = submit;
+  console.log("page loaded");
+
+  if (window.location.pathname.includes('register')) {
+    const registerButton = document.querySelector('#register');
+    if (registerButton) {
+      registerButton.onclick = register;
+    } else {
+      console.error('Register button not found!');
+    }
+  }
+  
+  if (window.location.pathname.includes('submitButton')) {
+    const submitButton = document.querySelector("#submitButton");
+    if (submitButton) {
+      submitButton.onclick = submit;
+    } else {
+      console.error('Submit button not found!');
+    }
+  }
+ 
 
   fetchAppData();
 }

@@ -49,7 +49,7 @@
     <h1>New to this page?</h1>
     <h2>Register now!</h2>
         <div class="userInfoForm">
-            <form>
+            <form onsubmit="register(event)">
                 <!-- Text Input: Full Name-->
                 <h4>Enter Your Name:</h4>
                 <div class="fullName">
@@ -65,11 +65,11 @@
                 <h4>Create a Password:</h4>
                 <input type="password" id="newPassword" name="newPassWord">
 
-                <button class="createUser">Create User</button>
+                <button id="register">Create User</button>
             </form>
         </div>
     </div>
-    
+    <script src="js/main.js"></script>
 </body>
 
 </html>

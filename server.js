@@ -5,6 +5,7 @@ const express = require("express"),
       bodyParser = require('body-parser'), 
       {MongoClient} = require('mongodb'),
       bcrypt = require('bcrypt'),
+      saltRounds = 10,
       dir  = 'public/',
       port = 3000;
 
@@ -15,15 +16,26 @@ const app = express();
 //mongodb setup
 const connection = process.env.MONGO_URI;
 const client = new MongoClient(connection);
-let collection;
+let cardCollection;
+let userCollection;
 
 //connect to mongodb
 async function connectToMongo() {
   try {
     await client.connect();
-    const database = client.db('anime-tracker');
-    collection = database.collection('anime-cards');
-    console.log('Connected to MongoDB Atlas');
+
+    //access all users on website
+    const userDatabase = client.db('accounts');
+    userCollection = userDatabase.collection('users');
+
+    //create unique index (trying to ensure no duplicate usernames)
+    await userCollection.createIndex({username: 1}, {unique: true});
+    
+    //access all cards in database
+    const cardDatabase = client.db('anime-tracker');
+    cardCollection = cardDatabase.collection('anime-cards');
+
+    console.log('Connected to MongoDB Atlas: card database and user database accessed');
   } catch (error) {
     console.error('Error connecting to MongoDB', error);
   }
@@ -51,7 +63,7 @@ app.get("/register", (req, res) => {
 //route to return appdata
 app.get("/appdata", async (req, res) => {
   try {
-    const entries = await collection.find({}).toArray();
+    const entries = await cardCollection.find({}).toArray();
     res.status(200).json(entries);
   } catch (error) {
     console.error(error);
@@ -60,6 +72,7 @@ app.get("/appdata", async (req, res) => {
   
 });
 
+//submits and creates a card
 app.post("/submit", async (req, res) => {
   const formData = req.body;
 
@@ -71,22 +84,51 @@ app.post("/submit", async (req, res) => {
   };
 
   try {
-    await collection.insertOne(newEntry);
-    const allEntries = await collection.find({}).toArray();
+    await cardCollection.insertOne(newEntry);
+    const allEntries = await cardCollection.find({}).toArray();
     res.status(200).json(allEntries);
   } catch (error) {
     console.error(error);
     res.status(500).json({message: 'Error submitting data'});
   }
+});
+
+
+//attempting to register a user
+app.post("/register", async (req, res) => {
+  const { firstName, lastName, username, password } = req.body;
+
+  try {
+
+  const hashedPassword = await bcrypt.hash(password, saltRounds);
+  console.log(hashedPassword);
+ 
+  const newUser = {
+    firstName: firstName,
+    lastName: lastName,
+    username: username,
+    password: hashedPassword,
+    createdAt: getDate(),
+  };
+
+    await userCollection.insertOne(newUser);
+    res.status(201).json({message: 'User registered successfully!'});
+  } catch (error) {
+    if (error.code === 11000) { //duplicate key detected error code
+      return res.status(400).json({message: 'Username already exists.'});
+    }
+    console.error('Error registering user: ', error);
+    res.status(500).json({message: 'Error registering user.'});
+  }
 
 });
 
-app.delete("/submit", async (req, res) => {
+app.delete("/delete", async (req, res) => {
   const {username, showTitle} = req.body;
 
   try {
-    await collection.deleteOne({'username': username, 'show title': showTitle});
-    const allEntries = await collection.find({}).toArray();
+    await cardCollection.deleteOne({'username': username, 'show title': showTitle});
+    const allEntries = await cardCollection.find({}).toArray();
     res.status(200).json(allEntries);
   } catch (error) {
     console.error(error);
