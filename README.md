@@ -1,6 +1,7 @@
 ## To-do List A3
 I have an extension from professor Roberts
 Glitch: https://a3-chenxiiz.glitch.me 
+
 Summary:
 - the goal of the application is to make sure people can add tasks as a To-do List and it will show you how many days left before deadline.
 - challenges I faced in realizing the application was it's important to be able to get the _id from MongoDb when tasks was submitted, so the delete button can associate with it and to delete tasks from backend too. It took me a couple of days to figure that out. 
