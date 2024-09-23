@@ -7,7 +7,10 @@ const express = require('express'),
       mongoose = require('mongoose'),
       cookie = require('cookie-session');
 
-const uri = `mongodb+srv://${process.env.USER}:${process.env.PASSWORD}@${process.env.HOST}@cs4341a3.sqkz12t.mongodb.net/?retryWrites=true&w=majority`; 
+app.use(express.static('./public'));
+app.use(express.json());
+
+const uri = `mongodb+srv://${process.env.USER}:${process.env.PASSWORD}@${process.env.HOST}`; 
 const clientOptions = {serverApi: {version: '1', strict: true, deprecationErrors: true}};
 
 const userSchema = new mongoose.Schema({
@@ -27,9 +30,6 @@ const Game = mongoose.model("Game", gameSchema);
 async function run() {
     await mongoose.connect(uri, clientOptions);
     console.log("Connected to MongoDB successfully!");
-
-    app.use(express.static(path.join(__dirname, '/public')));
-    app.use(express.json());
 
     app.post('/login', express.json(), async (req, res) => {
         let user = await User.findOne({ 'username': req.body.username });
@@ -88,8 +88,7 @@ async function run() {
         await Game.deleteOne({ _id: req.body._id, user: req.session.user });
         res.send("Game deleted");
     });
-
-    app.listen(3000)
 }
 
 run()
+app.listen(3000)
