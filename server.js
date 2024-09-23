@@ -2,6 +2,8 @@
 
 require("dotenv").config();
 
+let loggedInUser = null;
+
 const express = require("express"),
       { MongoClient, ObjectId } = require("mongodb"),
       cookie = require( 'cookie-session' ),
@@ -26,35 +28,18 @@ app.post( '/login', async (req, res) => {
 
   const username = await client.db("datatest").collection("accounts").findOne({ username: user });
 
-  console.log(username);
 
   if(username !== null){
     if(username.password === password){
       req.session.login = true
+      loggedInUser = user;
       res.redirect( 'main.html' )
+    }else{
+      return res.status(401).send("Incorrect password.");
     }
+  }else{
+    return res.status(404).send("Username not found.");
   }
-  // express.urlencoded will put your key value pairs 
-  // into an object, where the key is the name of each
-  // form field and the value is whatever the user entered
-  //console.log( req.body )
-  
-  // below is *just a simple authentication example* 
-  // for A3, you should check username / password combos in your database
-  // if( req.body.password === 'test' ) {
-  //   // define a variable that we can check in other middleware
-  //   // the session object is added to our requests by the cookie-session middleware
-  //   req.session.login = true
-    
-  //   // since login was successful, send the user to the main content
-  //   // use redirect to avoid authentication problems when refreshing
-  //   // the page or using the back button, for details see:
-  //   // https://stackoverflow.com/questions/10827242/understanding-the-post-redirect-get-pattern 
-  //   res.redirect( 'main.html' )
-  // }else{
-  //   // password incorrect, redirect back to login page
-  //   res.sendFile( __dirname + '/public/index.html' )
-  // }
 })
 
 // add some middleware that always sends unauthenicaetd users to the login page
@@ -108,7 +93,7 @@ app.post("/delete-doc", async (req, res) => {
     const result = await collection.findOneAndDelete({ priority: priorityNumber });
 
 // Retrieve and sort all remaining documents by type (reverse order) and date
-const docs = await collection.find({})
+const docs = await collection.find({ user: loggedInUser } )
   .sort({ type: -1, date: 1 }) // Sort type in reverse order and date in ascending order
   .toArray();
 
@@ -151,7 +136,7 @@ app.post("/add-doc", async (req, res) => {
       await collection.insertOne(newDoc);
 
       // Update priority by type and date and order
-      const docs = await collection.find({}).sort({ type: -1, date: 1 }).toArray();
+      const docs = await collection.find({ user: loggedInUser }).sort({ type: -1, date: 1 }).toArray();
       const updatedDocs = docs.map((doc, index) => ({
         ...doc,
         priority: index + 1
@@ -162,7 +147,8 @@ app.post("/add-doc", async (req, res) => {
         collection.updateOne({ _id: doc._id }, { $set: { priority: doc.priority } })
       ));
     }
-    const docs =  await collection.find({}).sort({ type: -1, date: 1 }).toArray();
+    const docs =  await collection.find({ user: loggedInUser }).sort({ type: -1, date: 1 }).toArray();
+    console.log(docs);
     res.json(docs);
   } else {
     res.status(503).send("Service unavailable");
@@ -201,7 +187,7 @@ app.post("/update-doc", async (req, res) => {
     }
 
     // Retrieve and return all documents from the collection in the desired order
-    const docs = await collection.find({})
+    const docs = await collection.find({ user: loggedInUser })
       .sort({ type: -1, date: 1 }) // Sort type in reverse order and date in ascending order
       .toArray();
 
