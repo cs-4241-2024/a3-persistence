@@ -1,18 +1,24 @@
+<!DOCTYPE html>
 <html lang="en">
   <head>
     <title>Highscore Racer</title>
+    <meta name="description" content="Highscore Racing App" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta charset="utf-8" />
-    <link rel="stylesheet" href="css/output.css" />
+    <link rel="stylesheet" href="css/main.css" />
 
     <!-- get rid of favicon error -->
     <link rel="icon" href="data:;base64,iVBORw0KGgo=" />
   </head>
   <body>
-    <form action="/login" method="POST" class="flex flex-col m-[1000px]">
-      <input type="text" name="username" />
-      <input type="password" name="password" />
-      <input type="submit" />
+    <form action="/login" method="POST" class="login">
+      <h1>Please Log In</h1>
+      <label for="username-input">Username: </label
+      ><input id="username-input" type="text" name="username" />
+      <label for="password-input">Password: </label
+      ><input id="password-input" type="password" name="password" />
+      <p>{{{msg}}}</p>
+      <input class="button" type="submit" />
     </form>
-    {{{msg}}}
   </body>
 </html>

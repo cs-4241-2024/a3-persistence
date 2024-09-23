@@ -101,6 +101,17 @@ async function run() {
 
 run().catch(console.dir);
 
+// Hash fucntion from stackoverflow
+function hashCode(str) {
+  let hash = 0;
+  for (let i = 0, len = str.length; i < len; i++) {
+    let chr = str.charCodeAt(i);
+    hash = (hash << 5) - hash + chr;
+    hash |= 0; // Convert to 32bit integer
+  }
+  return hash;
+}
+
 app.post("/login", async (req, res) => {
   if (collection === null) res.sendFile(__dirname + "/public/index.html");
   const users = await collection
@@ -110,7 +121,7 @@ app.post("/login", async (req, res) => {
   let accountFound = false;
   for (let user of users) {
     if (req.body.username === user.username) {
-      if (req.body.password === user.password) {
+      if (hashCode(req.body.password) === user.password) {
         // Correct username and password, login
         req.session.login = true;
         req.session.user = req.body.username;
@@ -137,7 +148,7 @@ app.post("/login", async (req, res) => {
 
     collection.insertOne({
       username: req.body.username,
-      password: req.body.password,
+      password: hashCode(req.body.password),
     });
     req.session.login = true;
     req.session.user = req.body.username;
@@ -150,7 +161,11 @@ app.post("/login", async (req, res) => {
 });
 
 app.use(function (req, res, next) {
-  if (req.session.login === true) {
+  if (
+    req.session.login === true ||
+    req.url.substring(req.url.length - 3) === "css" ||
+    req.url === "/robots.txt"
+  ) {
     next();
   } else res.render("index", { msg: "", layout: false });
 });

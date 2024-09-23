@@ -8,10 +8,9 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="css/nes.min.css" />
     <link rel="stylesheet" href="css/main.css" />
     <!-- get rid of favicon error -->
     <link rel="icon" href="data:;base64,iVBORw0KGgo=" />
@@ -30,7 +29,7 @@
         Use WASD or arrow keys to reach the checkpoint at the bottom of the map.
       </p>
     </div>
-    <div class="score-page nes-container is-rounded">
+    <div class="score-page">
       <h1>Highscore Racer</h1>
       <p>{{{welcome}}}</p>
       <table id="highscores" class="nes-table is-bordered">
@@ -50,9 +49,9 @@
       >
         Game Instructions
       </button>
-      <dialog class="nes-dialog" id="dialog-default">
+      <dialog id="dialog-default">
         <form method="dialog">
-          <p class="title">Dialog</p>
+          <h1>Dialog</h1>
           <p>
             Use the arrow keys or WASD to race the car around the track three
             times.
@@ -69,10 +68,7 @@
             Use the Delete button to delete a score from the table (and
             database). Use the Edit button to edit your times (no cheating!).
           </p>
-          <menu class="dialog-menu">
-            <button class="nes-btn">Cancel</button>
-            <button class="nes-btn is-primary">Confirm</button>
-          </menu>
+          <button>OK</button>
         </form>
       </dialog>
 
