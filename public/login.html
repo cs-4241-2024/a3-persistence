@@ -37,5 +37,14 @@
           </form>
       </div>
   </section>
+
+  <!-- Error Message Script -->
+  <script>
+    const urlParams = new URLSearchParams(window.location.search);
+    const error = urlParams.get('error');
+    if (error) {
+      document.getElementById('error-message').textContent = decodeURIComponent(error);
+    }
+  </script>
 </body>
 </html>

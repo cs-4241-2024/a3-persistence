@@ -1,29 +1,29 @@
 const loadData = async function () {
-  const response = await fetch('/docs');
+  const response = await fetch('/data'); // Ensure you're fetching from the correct endpoint
   if (response.ok) {
     const data = await response.json();
 
-    const tableBody = document.querySelector('#employeeTable tbody');
+    const tableBody = document.querySelector('#employeeTableBody');
     tableBody.innerHTML = '';
 
-    data.forEach((entry, index) => {
+    data.forEach((entry) => {
       const newRow = document.createElement('tr');
       newRow.innerHTML = `
         <td>
-          <label for="employeeid-${index}">Employee ID</label>
-          <input type="text" id="employeeid-${index}" value="${entry.employeeid}" disabled />
+          <label for="employeeid-${entry.employeeid}">Employee ID</label>
+          <input type="text" id="employeeid-${entry.employeeid}" value="${entry.employeeid}" disabled />
         </td>
         <td>
-          <label for="name-${index}">Name</label>
-          <input type="text" id="name-${index}" value="${entry.name}" disabled />
+          <label for="name-${entry.employeeid}">Name</label>
+          <input type="text" id="name-${entry.employeeid}" value="${entry.name}" disabled />
         </td>
         <td>
-          <label for="salary-${index}">Salary</label>
-          <input type="text" id="salary-${index}" value="${entry.salary}" disabled />
+          <label for="salary-${entry.employeeid}">Salary</label>
+          <input type="text" id="salary-${entry.employeeid}" value="${entry.salary}" disabled />
         </td>
         <td>
-          <label for="regdate-${index}">ID Registration Year</label>
-          <input type="text" id="regdate-${index}" value="${entry.regdate}" disabled />
+          <label for="regdate-${entry.employeeid}">ID Registration Year</label>
+          <input type="text" id="regdate-${entry.employeeid}" value="${entry.regdate}" disabled />
         </td>
         <td>${entry.expdate}</td>
         <td>
@@ -31,8 +31,8 @@ const loadData = async function () {
           <button class="deleteBtn">Delete</button>
         </td>
       `;
-      newRow.querySelector('.editBtn').onclick = () => toggleEdit(newRow, index);
-      newRow.querySelector('.deleteBtn').onclick = () => deleteRow(index);
+      newRow.querySelector('.editBtn').onclick = () => toggleEdit(newRow, entry.employeeid);
+      newRow.querySelector('.deleteBtn').onclick = () => deleteRow(entry.employeeid);
       tableBody.appendChild(newRow);
     });
   } else {
@@ -40,7 +40,7 @@ const loadData = async function () {
   }
 };
 
-const toggleEdit = function (row, index) {
+const toggleEdit = function (row, employeeid) {
   const inputs = row.querySelectorAll('input');
   const editBtn = row.querySelector('.editBtn');
 
@@ -55,7 +55,7 @@ const toggleEdit = function (row, index) {
       regdate: inputs[3].value
     };
 
-    fetch(`/edit/${index}`, {
+    fetch(`/edit/${employeeid}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json'
@@ -63,20 +63,23 @@ const toggleEdit = function (row, index) {
       body: JSON.stringify(updatedData)
     }).then(response => {
       if (response.ok) {
-        loadData();
+        loadData(); // Reload data to reflect changes
       } else {
         console.error('Failed to save changes');
       }
     });
+    
+    inputs.forEach(input => input.disabled = true);
+    editBtn.textContent = 'Edit';
   }
 };
 
-const deleteRow = function (index) {
-  fetch(`/delete/${index}`, {
+const deleteRow = function (employeeid) {
+  fetch(`/delete/${employeeid}`, {
     method: 'DELETE'
   }).then(response => {
     if (response.ok) {
-      loadData();
+      loadData(); // Reload data to reflect deletion
     } else {
       console.error('Failed to delete row');
     }
@@ -93,7 +96,7 @@ const submit = async function (event) {
 
   const data = {
     employeeid: employeeID,
-    yourname: yourName,
+    name: yourName, // Changed this to "name"
     salary: salary,
     regdate: regDate
   };
@@ -107,21 +110,15 @@ const submit = async function (event) {
   });
 
   if (response.ok) {
-    await loadData();
-    document.querySelector('#employeeForm').reset();
+    await loadData(); // Refresh the table with updated data
+    document.querySelector('#employeeForm').reset(); // Reset the form
   } else {
     console.error('Failed to submit data');
   }
 };
 
-const getData = async () => {
-  await fetch('/docs', {
-  method: 'GET',
-})}
-
 window.onload = function () {
   const form = document.querySelector('#employeeForm');
   form.onsubmit = submit;
-  loadData();
-  //getData();
+  loadData(); // Load initial data on page load
 };

@@ -20,28 +20,29 @@ const client = new MongoClient(uri, {
   },
 });
 
+const userAccounts = [
+  { username: 'JohnD2020', password: 'tester456' },
+  { username: 'Wizard4600', password: 'ShaneZ55' },
+  { username: 'XYZ123', password: 'JD2600' },
+]
+
 //Run database
-let collection = null;
+let collectionLogins = null;
+let collectionUsers = null;
+
 async function run() {
   try {
-    // Connect the client to the server	(optional starting in v4.7)
     await client.connect();
-    // Send a ping to confirm a successful connection
-    await client.db("admin").command({ ping: 1 });
-    collection = await client.db('EmployeeDB').collection('Users');
-    console.log("Pinged your deployment. You successfully connected to MongoDB!");
-  } finally {
-    // Ensures that the client will close when you finish/error
-    //await client.close();
+    // Separate user data and logins
+    collectionLogins = await client.db('EmployeeDB').collection('Logins');
+    collectionUsers = await client.db('EmployeeDB').collection('Users');
+    console.log("Successfully connected to MongoDB!");
+  } catch (error) {
+    console.error("Error connecting to MongoDB:", error);
   }
 }
-run().catch(console.dir);
 
-let appdata = [
-  { 'employeeid': '123456789', 'name': 'John Doe', 'salary': 57000, 'regdate': 2021, 'expdate': 2026 },
-  { 'employeeid': '987563409', 'name': 'Jack Smith', 'salary': 75000, 'regdate': 2019, 'expdate': 2024 },
-  { 'employeeid': '456891237', 'name': 'Jane Lee', 'salary': 90000, 'regdate': 2020, 'expdate': 2025 }
-];
+run().catch(console.dir);
 
 
 // Express.js middleware
@@ -57,7 +58,7 @@ app.use(cookie({
 
 // Check login
 function requireLogin(req, res, next) {
-  if (!req.session.login) {
+  if (!req.session.username) {
     return res.redirect('/login');
   }
   next();
@@ -69,14 +70,22 @@ app.get('/login', (req, res) => {
 });
 
 // Handle login request
-app.post('/login', (req, res) => {
-  console.log(req.body);
+app.post('/login', async (req, res) => {
+  const { username, password } = req.body;
 
-  if (req.body.password === 'wizard') {
-    req.session.login = true; // Set session login flag
-    res.redirect('/'); // Redirect to the index.html
-  } else {
-    res.sendFile(path.join(__dirname, 'public', 'login.html'));
+  try {
+    // Find user in MongoDB
+    const user = await collectionLogins.findOne({ username: username, password: password });
+
+    if (user) {
+      req.session.username = user.username; // Store username in session
+      res.redirect('/'); // Redirect to index page
+    } else {
+      res.redirect('/login?error=Invalid username or password');
+    }
+  } catch (error) {
+    console.error("Error during login:", error);
+    res.status(500).send('Server error during login');
   }
 });
 
@@ -89,14 +98,27 @@ app.get('/', requireLogin, (req, res) => {
 app.use(express.static('public'));
 
 // Fetch employee data (protected route)
-app.get('/data', requireLogin, (req, res) => {
-  res.status(200).json(appdata);
+app.get('/data', requireLogin, async (req, res) => {
+  try {
+    const username = req.session.username; // Retrieve logged-in username
+
+    if (collectionUsers !== null) {
+      // Fetch only data for the logged-in user
+      const userData = await collectionUsers.find({ username: username }).toArray();
+      res.status(200).json(userData);
+    } else {
+      res.status(500).send('No MongoDB collection found');
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).send('Error fetching data');
+  }
 });
 
 // Fetch documents from MongoDB (protected route)
 app.get('/docs', requireLogin, async (req, res) => {
-  if (collection !== null) {
-    const docs = await collection.find({}).toArray();
+  if (collectionUsers !== null) {
+    const docs = await collectionUsers.find({}).toArray();
     console.log(docs);
     res.json(docs);
   } else {
@@ -109,18 +131,18 @@ app.post('/submit', requireLogin, async (req, res) => {
   const newData = req.body;
   const newEntry = {
     employeeid: newData.employeeid,
-    name: newData.yourname,
+    name: newData.name, // Ensure you're using the correct property
     salary: newData.salary,
     regdate: newData.regdate,
-    expdate: parseInt(newData.regdate) + 5
+    expdate: parseInt(newData.regdate) + 5,
+    username: req.session.username // Associate employee data with logged-in user
   };
 
-
   try {
-    if (collection !== null) {
-      const result = await collection.insertOne(newEntry);
+    if (collectionUsers !== null) {
+      const result = await collectionUsers.insertOne(newEntry);
       console.log('New employee inserted:', result);
-      const updatedData = await collection.find({}).toArray();
+      const updatedData = await collectionUsers.find({ username: req.session.username }).toArray(); // Fetch user-specific data
       res.status(200).json(updatedData);
     } else {
       res.status(500).send('No MongoDB collection found');
@@ -132,14 +154,15 @@ app.post('/submit', requireLogin, async (req, res) => {
 });
 
 // Edit employee data by index (protected route)
-app.put('/edit/:index', requireLogin, async (req, res) => {
-  const index = parseInt(req.params.index);
+app.put('/edit/:employeeid', requireLogin, async (req, res) => {
+  const employeeid = req.params.employeeid;
   const updatedData = req.body;
 
   try {
-    if (collection !== null) {
-      const result = await collection.updateOne(
-        { employeeid: employeeid },
+    if (collectionUsers !== null) {
+      // Ensure the record belongs to the logged-in user
+      const result = await collectionUsers.updateOne(
+        { employeeid: employeeid, username: req.session.username }, // Match both employeeid and username
         {
           $set: {
             name: updatedData.name,
@@ -149,9 +172,13 @@ app.put('/edit/:index', requireLogin, async (req, res) => {
           }
         }
       );
-      console.log('Employee updated:', result);
-      const updatedData = await collection.find({}).toArray();
-      res.status(200).json(updatedData);
+
+      if (result.modifiedCount === 1) {
+        const updatedDataList = await collectionUsers.find({ username: req.session.username }).toArray();
+        res.status(200).json(updatedDataList);
+      } else {
+        res.status(404).send('Employee not found or no changes made');
+      }
     } else {
       res.status(500).send('No MongoDB collection found');
     }
@@ -162,15 +189,20 @@ app.put('/edit/:index', requireLogin, async (req, res) => {
 });
 
 // Delete employee data by index (protected route)
-app.delete('/delete/:index', requireLogin, async (req, res) => {
-  const employeeid = req.params.id;
+app.delete('/delete/:employeeid', requireLogin, async (req, res) => {
+  const employeeid = req.params.employeeid;
+  const username = req.session.username;
 
   try {
-    if (collection !== null) {
-      const result = await collection.deleteOne({ employeeid: employeeid });
-      console.log('Employee deleted:', result);
-      const updatedData = await collection.find({}).toArray();
-      res.status(200).json(updatedData);
+    if (collectionUsers !== null) {
+      const result = await collectionUsers.deleteOne({ employeeid: employeeid, username: username });
+      
+      if (result.deletedCount === 1) {
+        const updatedData = await collectionUsers.find({ username: username }).toArray(); // Fetch remaining user-specific data
+        res.status(200).json(updatedData);
+      } else {
+        res.status(404).send('Employee not found');
+      }
     } else {
       res.status(500).send('No MongoDB collection found');
     }
@@ -178,6 +210,12 @@ app.delete('/delete/:index', requireLogin, async (req, res) => {
     console.error(err);
     res.status(500).send('Error deleting data');
   }
+});
+
+// Handle logout
+app.post('/logout', (req, res) => {
+  req.session = null; // Destroy the session
+  res.redirect('/login'); // Redirect to the login page
 });
 
 // Handle logout
