@@ -82,12 +82,11 @@ const submit = function (e) {
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(taskObj),  // Send the task object as JSON to the server
   })
-  .then((response) => response.json())
-  .then((data) => {
+  .then((response) => response.json()) // Get the inserted task (including the _id)
+  .then((insertedTask) => {
     // Clear the table and repopulate it with the updated task list
-    console.log('Tasks after submission:', data);
-    document.getElementById("submittedTodo").innerHTML = "";  // Clear existing content
-    data.forEach(task => refreshTodoList(task));  // Populate the table with updated tasks from MongoDB
+    console.log('Task submitted:', insertedTask);
+    refreshTodoList(insertedTask);  // Use the new task directly with the MongoDB _id
   })
   .catch(error => console.error('Error submitting task:', error));
 };
@@ -159,29 +158,31 @@ function refreshTodoList(taskObj) {
   let tdActions = tr.insertCell(-1);
   let deleteBtn = document.createElement("button");
   deleteBtn.innerHTML = "Delete";
+  deleteBtn.setAttribute('data-id', taskObj._id);  // Set the _id as a data attribute on the button
   deleteBtn.onclick = function () {
-    deleteTask(taskObj.task, tr);  // Pass the task name and row element to delete
+    deleteTask(taskObj._id, tr);  // Pass the task's _id and the row element to delete
   };
 
   tdActions.appendChild(deleteBtn);
 }
 
 // Function to delete a task
-function deleteTask(taskName, row) {
-  let taskToDelete = { task: taskName };
-  let jsonTaskToDelete = JSON.stringify(taskToDelete);
-
-  fetch('/delete', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: jsonTaskToDelete,
+// Updated deleteTask function to use the task's _id
+function deleteTask(taskId, rowElement) {
+  console.log("Deleting task with _id:", taskId);
+  fetch('/remove', {
+    method: 'DELETE',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ _id: taskId }),  // Send the _id of the task to the backend
   })
-  .then((response) => response.json())
-  .then((data) => {
-    console.log('Task deleted:', taskName);
-    row.remove();  // Remove the row from the table
+  .then(response => response.json())
+  .then(data => {
+    console.log('Updated tasks after deletion:', data);
+    rowElement.remove();  // Remove the row from the table after successful deletion
   })
-  .catch((error) => {
+  .catch(error => {
     console.error('Error deleting task:', error);
   });
 }

@@ -8,7 +8,7 @@ app.use(express.static("public"));
 app.use(express.json());
 
 const uri = `mongodb+srv://${process.env.USER}:${process.env.PASSWORD}@${process.env.HOST}`;
-const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
+const client = new MongoClient(uri);
 const path = require('path');
 
 let collection = null;
@@ -20,46 +20,50 @@ async function run() {
     collection = client.db("a3-database").collection("To-do-list");
 
     // Route to get all tasks
-    app.get("/docs", async (req, res) => {
-      try {
-        const docs = await collection.find({}).toArray();
-        res.json(docs);  // Send the tasks back to the client as JSON
-      } catch (err) {
-        console.error("Error fetching tasks:", err);
-        res.status(500).json({ error: "Failed to fetch tasks" });
-      }
-    });
+   app.get("/docs", async (req, res) => {
+  try {
+    const docs = await collection.find({}).toArray();
+    res.json(docs);  // Send the tasks back to the client as JSON
+  } catch (err) {
+    console.error("Error fetching tasks:", err);
+    res.status(500).json({ error: "Failed to fetch tasks" });
+  }
+});
 
     // Route to submit a new task
-    app.post("/submit", async (req, res) => {
-      try {
-        const result = await collection.insertOne(req.body);
-        const docs = await collection.find({}).toArray(); // Get updated list
-        res.json(docs);
-      } catch (err) {
-        console.error("Error submitting task:", err);
-        res.status(500).json({ error: "Failed to submit task" });
-      }
-    });
+    // Route to submit a new task
+app.post("/submit", async (req, res) => {
+  try {
+    const result = await collection.insertOne(req.body);
+    const insertedTask = result.ops[0]; // Get the inserted task, including its MongoDB _id
+    res.json(insertedTask);  // Send the inserted task back to the client
+  } catch (err) {
+    console.error("Error submitting task:", err);
+    res.status(500).json({ error: "Failed to submit task" });
+  }
+});
 
     // Route to delete a task
-    app.post("/delete", async (req, res) => {
+    app.delete('/remove', async (req, res) => {
       try {
-        const result = await collection.deleteOne({ task: req.body.task });
-        const docs = await collection.find({}).toArray(); // Get updated list
-        res.json(docs);
+        const result = await collection.deleteOne({
+          _id: new ObjectId(req.body._id)  // Convert the task ID to ObjectId
+        });
+    
+        res.json(result);  // Return the result of the deletion
       } catch (err) {
-        console.error("Error deleting task:", err);
-        res.status(500).json({ error: "Failed to delete task" });
+        console.error('Error deleting task:', err);
+        res.status(500).json({ error: 'Failed to delete task' });
       }
     });
-
+    
   } catch (err) {
     console.error("Failed to connect to MongoDB:", err);
   }
 }
 
 run();
+
 
 // Middleware to ensure MongoDB is connected
 app.use((req, res, next) => {
