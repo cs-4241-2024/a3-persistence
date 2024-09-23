@@ -1,0 +1,24 @@
+body {
+  font-family: 'Roboto', sans-serif; /* Optional, can remove if not using Roboto */
+  background-color: #ffffff;
+  color: #585858;
+}
+
+h1 {
+  color: #3899e9;
+}
+
+.input-field {
+  border: 1px solid #8c8383;
+  background-color: #c3bfbf;
+  color: #121212;
+  border-radius: 5px;
+}
+
+table {
+  background-color: #bbbbbb;
+}
+
+th {
+  background-color: #90caf9;
+}
