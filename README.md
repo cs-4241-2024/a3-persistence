@@ -1,64 +1,36 @@
-Assignment 3 - Persistence: Two-tier Web Application with Database, Express server, and CSS template
+Anime Tracker Web App (now with login and persistent data!)
+===
+https://a3-ananya-jayamoorthy.glitch.me/login 
+
+- the goal of the application
+- challenges you faced in realizing the application
+- what authentication strategy you chose to use and why (choosing one because it seemed the easiest to implement is perfectly acceptable)
+- what CSS framework you used and why
+  - include any modifications to the CSS framework you made via custom CSS you authored
+ 
+The goal of my application was to build on the existing project from A2 in order to make it a portfolio piece. While developing, the most difficult parts were definitely trying to get the registration page to work because I had to create that from scratch as opposed to index.html, where the starter code provided some help. I chose to use a basic authentication strategy where the username/password checks all occur within my code and not through the use of an external library because I knew I wouldn't have the time to wrangle something like passport.js.
+
+For the CSS framework, I chose to take inspiration from the Bootstrap library but I did all of the CSS myself. As I am interested in full-stack web development as a career, I wanted to try my hand and designing the web app completely. It was difficult and time consuming but the result was pretty solid and visually appealing. With practice, I think I could make some real nice UI in the future.
+
+My Google Lighthouse scores were all over 90, with a majority of them being 100s.
+
+Login Page Lighthouse:
+![image](https://github.com/user-attachments/assets/801bbeb6-fd2a-4c1a-989e-ff2ce374735f)
+
+Registration Page Lighthouse:
+![image](https://github.com/user-attachments/assets/8eadefd3-3e79-4641-ae3f-565ff38d2324)
+
+Main Page Lighthouse:
+![image](https://github.com/user-attachments/assets/01763abc-c97f-4b40-b0e2-b5f590625d2d)
+
 ===
 
-Due: September 19th, by 11:59 AM.
+## Technical Achievements
+- **Tech Achievement 1**: I used OAuth authentication via the GitHub strategy
 
-This assignnment continues where we left off, extending it to use the most popular Node.js server framework (express), 
-a database (mongodb), and a CSS application framework / template of your choice (Boostrap, Material Design, Semantic UI, Pure etc.)
+### Design/Evaluation Achievements
+- **Design Achievement 1**: I followed the following tips from the W3C Web Accessibility Initiative...
 
-Baseline Requirements
----
-
-Your application is required to implement the following functionalities:
-
-- a `Server`, created using Express (no alternatives will be accepted for this assignment)
-- a `Results` functionality which shows all data associated with a logged in user (except passwords)
-- a `Form/Entry` functionality which allows users to add, modify, and delete data items (must be all three!) associated with their user name / account. 
-- Persistent data storage in between server sessions using [mongodb](https://www.mongodb.com/cloud/atlas) (you *must* use mongodb for this assignment). You can use either the [official mongodb node.js library](https://www.npmjs.com/package/mongodb) or use the [Mongoose library](https://www.npmjs.com/package/mongoose), which enables you to define formal schemas for your database. Please be aware that the course staff cannot provide in-depth support for use of Mongoose.  
-- Use of a [CSS framework or template](https://github.com/troxler/awesome-css-frameworks). 
-This should do the bulk of your styling/CSS for you and be appropriate to your application. 
-For example, don't use [NES.css](https://nostalgic-css.github.io/NES.css/) (which is awesome!) unless you're creating a game or some type of retro 80s site.
-
-Your application is required to demonstrate the use of the following concepts:  
-
-HTML:  
-- HTML input tags and form fields of various flavors (`<textarea>`, `<input>`, checkboxes, radio buttons etc.)
-- HTML that can display all data *for a particular authenticated user*. Note that this is different from the last assignnment, which required the display of all data in memory on the server.
-
-Note that it might make sense to have two pages for this assignment, one that handles login / authentication, and one that contains the rest of your application.
-For example, when visiting the home page for the assignment, users could be presented with a login form. After submitting the login form, if the login is 
-successful, they are taken to the main application. If they fail, they are sent back to the login to try again. For this assignment, it is acceptable to simply create 
-new user accounts upon login if none exist, however, you must alert your users to this fact.  
-
-CSS:  
-- CSS styling should primarily be provided by your chosen template/framework. 
-Oftentimes a great deal of care has been put into designing CSS templates; 
-don't override their stylesheets unless you are extremely confident in your graphic design capabilities. 
-The idea is to use CSS templates that give you a professional looking design aesthetic without requiring you to be a graphic designer yourself.
-
-JavaScript:  
-- At minimum, a small amount of front-end JavaScript to get / fetch data from the server. 
-See the [previous assignment](https://github.com/cs-4241-23/shortstack) for reference.
-
-Node.js:  
-- A server using Express and a persistent database (mongodb).
-
-General:  
-- Your site should achieve at least 90% on the `Performance`, `Best Practices`, `Accessibility`, and `SEO` tests 
-using Google [Lighthouse](https://developers.google.com/web/tools/lighthouse) (don't worry about the PWA test, and don't worry about scores for mobile devices).
-Test early and often so that fixing problems doesn't lead to suffering at the end of the assignment. 
-
-Deliverables
----
-
-Do the following to complete this assignment:
-
-1. Implement your project with the above requirements. I'd begin by converting your A2 assignment. First, change the server to use express. Then, modify the server to use mongodb instead of storing data locally. Last but not least, implement user accounts and login. User accounts and login is often the hardest part of this assignment, so budget your time accordingly.
-2. If you developed your project locally, deploy your project to Glitch (unless completing the alternative server technical acheivement described below), and fill in the appropriate fields in your package.json file.
-3. Test your project to make sure that when someone goes to your main page on Glitch (or an alternative server), it displays correctly.
-4. Ensure that your project has the proper naming scheme `a3-yourfirstname-yourlastname` so we can find it.
-5. Fork this repository and modify the README to the specifications below.
-6. Create and submit a Pull Request to the original repo. Name the pull request using the following template: `a3-firstname-lastname`.
 
 Acheivements
 ---
@@ -91,23 +63,5 @@ What design elements (colors, fonts, layouts, etc.) did you use repeatedly throu
 How did you use alignment to organize information and/or increase contrast for particular elements. 
 Write a paragraph of at least 125 words *for each of four principles* (four paragraphs, 500 words in total). 
 
-Sample Readme (delete the above when you're ready to submit, and modify the below so with your links and descriptions)
----
 
-## Your Web Application Title
 
-your glitch (or alternative server) link e.g. http://a3-charlie-roberts.glitch.me
-
-Include a very brief summary of your project here. Images are encouraged, along with concise, high-level text. Be sure to include:
-
-- the goal of the application
-- challenges you faced in realizing the application
-- what authentication strategy you chose to use and why (choosing one because it seemed the easiest to implement is perfectly acceptable)
-- what CSS framework you used and why
-  - include any modifications to the CSS framework you made via custom CSS you authored
-
-## Technical Achievements
-- **Tech Achievement 1**: I used OAuth authentication via the GitHub strategy
-
-### Design/Evaluation Achievements
-- **Design Achievement 1**: I followed the following tips from the W3C Web Accessibility Initiative...
