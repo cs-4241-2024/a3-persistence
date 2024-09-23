@@ -1,19 +1,66 @@
 <!doctype html>
 <html lang='en'>
-  <head>
-    <!-- <link rel="stylesheet" href="css/main.css"> -->
-    <link rel="stylesheet" href="node_modules/modern-normalize/modern-normalize.css">
-  </head>
-  <body>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/modern-normalize@3.0.1/modern-normalize.min.css" rel="stylesheet">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f9f9f9;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .formSection {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            margin-bottom: 20px;
+            font-size: 24px;
+        }
+        label {
+            margin-bottom: 8px;
+            display: block;
+        }
+        input {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 16px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
     <div class="formSection">
-    <h1>Login</h1>
-    <form action='/login' method='POST' class="vertical-form">
-      <label for="user">username:</label>
-      <input type='text' id="user" name='username'>
-      <label for="password">password:</label>
-      <input type='password' id="password" name='password'>
-      <button type='submit' id="loginButton" >Submit</button>
-    </form>
-  </div>
-  </body>
+        <h1>Login</h1>
+        <form action='/login' method='POST' class="vertical-form">
+            <label for="user">Username:</label>
+            <input type='text' id="user" name='username' required>
+            <label for="password">Password:</label>
+            <input type='password' id="password" name='password' required>
+            <button type='submit' id="loginButton">Submit</button>
+        </form>
+    </div>
+</body>
 </html>

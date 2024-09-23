@@ -4,66 +4,140 @@
     <title>CS4241 Assignment 2</title>
     <meta charset="utf-8">
     <script src="js/main.js"></script>
-    <link rel="stylesheet" href="node_modules/modern-normalize/modern-normalize.css">
+    <link href="https://cdn.jsdelivr.net/npm/modern-normalize@3.0.1/modern-normalize.min.css" rel="stylesheet">
     <!-- <link rel="stylesheet" href="css/main.css"> -->
     
-    <!-- get rid of favicon error -->
+    <!-- Get rid of favicon error -->
     <link rel="icon" href="data:;base64,iVBORw0KGgo=">
+
+    <style>
+      body {
+        font-family: sans-serif; /* Modern normalize sets a sans-serif font */
+        line-height: 1.5; /* Consistent line height */
+        margin: 0; /* Remove default margin */
+        padding: 20px; /* Add some padding */
+        background-color: #f9f9f9; /* Light background for contrast */
+      }
+
+      h1, h2 {
+        margin: 0 0 1em; /* Space out headings */
+        color: #333; /* Darker text color for better readability */
+      }
+
+      .formSection, .tableSection {
+        background: white; /* White background for sections */
+        border-radius: 5px; /* Rounded corners */
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+        padding: 20px; /* Padding inside sections */
+        margin-bottom: 20px; /* Space between sections */
+      }
+
+      label {
+        display: block; /* Labels on their own line */
+        margin-bottom: 0.5em; /* Space below labels */
+      }
+
+      input[type="text"],
+      input[type="date"],
+      select {
+        width: 100%; /* Full-width inputs */
+        padding: 10px; /* Padding for inputs */
+        margin-bottom: 1em; /* Space below inputs */
+        border: 1px solid #ccc; /* Light border */
+        border-radius: 4px; /* Rounded corners */
+      }
+
+      button {
+        background-color: #007bff; /* Button color */
+        color: white; /* White text */
+        padding: 10px 15px; /* Button padding */
+        border: none; /* No border */
+        border-radius: 4px; /* Rounded corners */
+        cursor: pointer; /* Pointer on hover */
+      }
+
+      button:hover {
+        background-color: #0056b3; /* Darker on hover */
+      }
+
+      table {
+        width: 100%; /* Full-width table */
+        border-collapse: collapse; /* Remove spacing between cells */
+        margin-top: 1em; /* Space above table */
+      }
+
+      th, td {
+        padding: 10px; /* Padding in cells */
+        text-align: left; /* Left align text */
+        border-bottom: 1px solid #ccc; /* Border between rows */
+      }
+
+      th {
+        background-color: #f2f2f2; /* Light background for header */
+      }
+    </style>
   </head>
   <body>
     <div class="formSection">
-    <h1>To Do List</h1>
-    <form class="vertical-form">
-      <label for="ToDo">Item To Do::</label>
-      <input type="text" id="ToDo" value="to do item">
-      <label for="type">Type of Work:</label>
-      <select name="type" id="type">
-        <option value="school">School</option>
-        <option value="work">Work</option>
-        <option value="personal">Personal</option>
-      </select>
-      <label for="date">Due Date:</label>
-      <input type="date" id="date" value="due date">
-      <!-- <input type="text" id="priority" value="priority number 1-10"> -->
-      <button id="submitButton" type="submit">Submit</button>
-    </form>
-  </div>
-  <div class="tableSection">
-    <h2>Your List:</h2>
-    <table id="myList">
-      <tr>
-        <th>Item</th>
-        <th>Type of Work</th>
-        <th>Date</th>
-        <th>Priority</th>
-        <th>Delete</th>
-        <th>Change</th>
-      </tr>
+      <h1>To Do List</h1>
+      <form class="vertical-form">
+        <label for="ToDo">Item To Do:</label>
+        <input type="text" id="ToDo" value="to do item">
+        
+        <label for="type">Type of Work:</label>
+        <select name="type" id="type">
+          <option value="school">School</option>
+          <option value="work">Work</option>
+          <option value="personal">Personal</option>
+        </select>
+        
+        <label for="date">Due Date:</label>
+        <input type="date" id="date" value="due date">
+        
+        <!-- <input type="text" id="priority" value="priority number 1-10"> -->
+        <button id="submitButton" type="submit">Submit</button>
+      </form>
+    </div>
 
-    </table>
-  </div>
-  
-  <div class="overlay" id="popupOverlay"></div>
-  <div class="popup" id="popup">
-    <h2>Edit To-Do Item</h2>
-    <form id="popupForm">
-      <input type="hidden" id="popupId">
-      <label for="popupToDo">Item To Do:</label>
-      <input type="text" id="popupToDo">
-      <label for="popupType">Type of Work:</label>
-      <select id="popupType">
-        <option value="school">School</option>
-        <option value="work">Work</option>
-        <option value="personal">Personal</option>
-      </select>
-      <label for="popupDate">Due Date:</label>
-      <input type="date" id="popupDate">
-      <label for="popupPriority">Priority:</label>
-      <input type="text" id="popupPriority" readonly>
-      <button type="button" id="saveButton">Save</button>
-      <button type="button" id="closeButton">Close</button>
-    </form>
-  </div>
-
+    <div class="tableSection">
+      <h2>Your List:</h2>
+      <table id="myList">
+        <tr>
+          <th>Item</th>
+          <th>Type of Work</th>
+          <th>Date</th>
+          <th>Priority</th>
+          <th>Delete</th>
+          <th>Change</th>
+        </tr>
+      </table>
+    </div>
+    
+    <div class="overlay" id="popupOverlay"></div>
+    <div class="popup" id="popup">
+      <h2>Edit To-Do Item</h2>
+      <form id="popupForm">
+        <input type="hidden" id="popupId">
+        
+        <label for="popupToDo">Item To Do:</label>
+        <input type="text" id="popupToDo">
+        
+        <label for="popupType">Type of Work:</label>
+        <select id="popupType">
+          <option value="school">School</option>
+          <option value="work">Work</option>
+          <option value="personal">Personal</option>
+        </select>
+        
+        <label for="popupDate">Due Date:</label>
+        <input type="date" id="popupDate">
+        
+        <label for="popupPriority">Priority:</label>
+        <input type="text" id="popupPriority" readonly>
+        
+        <button type="button" id="saveButton">Save</button>
+        <button type="button" id="closeButton">Close</button>
+      </form>
+    </div>
   </body>
 </html>
