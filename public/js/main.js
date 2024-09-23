@@ -146,18 +146,30 @@ const displayCards = function(data) {
     card.innerHTML = `
     <img src="${apiData.data[0].images.jpg.large_image_url}" id="coverImage" alt="animeCoverImage">
     <p><strong>Show Title:</strong> ${entry['show title']}</p>
-    <p><strong>Last Episode Watched:</strong> ${entry['last ep watched']}</p>
-    <p><strong>Progress:</strong> ${entry['last ep watched']}/${apiData.data[0].episodes}</p>
-    <p><strong>Date Logged:</strong> ${entry['date logged']}</p>
-    <button class="delete-button">Delete</button>
+      <p><strong>Last Episode Watched:</strong> 
+        <span id="ep-watched-${entry['_id']}">${entry['last ep watched']}</span>
+        <input type="number" id="edit-ep-${entry['_id']}" style="display:none" value="${entry['last ep watched']}">
+      </p>
+      <p><strong>Progress:</strong> ${entry['last ep watched']}/${apiData.data[0].episodes}</p>
+      <p><strong>Date Logged:</strong> ${entry['date logged']}</p>
+      <button class="edit-button" data-id="${entry['_id']}">Edit</button>
+      <button class="submit-button" data-id="${entry['_id']}" style="display:none">Submit</button>
+      <button class="delete-button" data-id="${entry['_id']}">Delete</button>
     `;
 
     card.dataset.username = entry.username;
 
+    cardContainer.appendChild(card); 
+
+    // Event listeners for edit and delete buttons
     const deleteButton = card.querySelector('.delete-button');
     deleteButton.addEventListener('click', deleteCard);
 
-    cardContainer.appendChild(card); 
+    const editButton = card.querySelector('.edit-button');
+    editButton.addEventListener('click', () => toggleEditMode(entry['_id']));
+
+    const submitButton = card.querySelector('.submit-button');
+    submitButton.addEventListener('click', () => submitEdit(entry['_id']));    
   });
 
 };
@@ -183,6 +195,49 @@ const deleteCard = async function(event) {
     console.error('Failed to delete data');
   }
 };
+
+const toggleEditMode = (cardId) => {
+  const episodeSpan = document.querySelector(`#ep-watched-${cardId}`);
+  const episodeInput = document.querySelector(`#edit-ep-${cardId}`);
+  const editButton = document.querySelector(`.edit-button[data-id='${cardId}']`);
+  const submitButton = document.querySelector(`.submit-button[data-id='${cardId}']`);
+
+  // Toggle visibility between span and input
+  if (episodeSpan.style.display === 'none') {
+    episodeSpan.style.display = 'inline';
+    episodeInput.style.display = 'none';
+    editButton.style.display = 'inline';
+    submitButton.style.display = 'none';
+  } else {
+    episodeSpan.style.display = 'none';
+    episodeInput.style.display = 'inline';
+    editButton.style.display = 'none';
+    submitButton.style.display = 'inline';
+  }
+};
+
+const submitEdit = async (cardId) => {
+  const newEpisode = document.querySelector(`#edit-ep-${cardId}`).value;
+
+  const response = await fetch(`/update`, {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      cardId,
+      lastWatched: Number(newEpisode)
+    })
+  });
+
+  if (response.ok) {
+    // Refresh the card data after successful update
+    fetchAppData();
+  } else {
+    console.error('Failed to update data');
+  }
+};
+
 
 const fetchAppData = async function() {
 
@@ -239,7 +294,6 @@ window.onload = function() {
     }
   
  
-
   fetchAppData();
 }
 

@@ -74,7 +74,7 @@ form {
   text-align: center;
 }
 
-.submitButton {
+#submitButton {
   margin-top: 15px;
   background-color: #8ebd87;
 }

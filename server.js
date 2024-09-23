@@ -4,6 +4,7 @@ const express = require("express"),
       mime = require( 'mime' ),
       bodyParser = require('body-parser'), 
       {MongoClient} = require('mongodb'),
+      { ObjectId } = require('mongodb'),
       bcrypt = require('bcrypt'),
       saltRounds = 10,
       cookieParser = require('cookie-parser'),
@@ -44,11 +45,6 @@ async function connectToMongo() {
 
 //cookie-parser setup
 app.use(cookieParser());
-
-//temp data
-const appdata = [
-  { 'username': 'Ananya', 'show title': "Jujutsu Kaisen", 'last ep watched': 12, 'date logged': '9/9/2024' },
-]
 
 app.use(bodyParser.json());           //middleware handles JSON request bodies
 app.use(express.static('public'));    //serves files from the 'public' directory
@@ -178,6 +174,27 @@ app.post('/logout', (req, res) => {
   res.clearCookie('username');
   res.status(200).json({ message: 'Logged out successfully' });
 });
+
+app.put("/update", async (req, res) => {
+  const { cardId, lastWatched } = req.body;
+
+  try {
+    const result = await cardCollection.updateOne(
+      { _id: new ObjectId(cardId) },  // Convert cardId to ObjectId
+      { $set: { 'last ep watched': lastWatched, 'date logged': getDate() } }
+    );
+
+    if (result.modifiedCount > 0) {
+      res.status(200).json({ message: 'Card updated successfully!' });
+    } else {
+      res.status(404).json({ message: 'Card not found' });
+    }
+  } catch (error) {
+    console.error('Error updating card:', error);
+    res.status(500).json({ message: 'Error updating card' });
+  }
+});
+
 
 //handles the deletion of a card
 app.delete("/delete", async (req, res) => {
