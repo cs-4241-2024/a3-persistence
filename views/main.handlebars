@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Highscore Racer</title>
+    <meta charset="utf-8" />
+    <meta name="description" content="Highscore Racing App" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="css/nes.min.css" />
+    <link rel="stylesheet" href="css/main.css" />
+    <!-- get rid of favicon error -->
+    <link rel="icon" href="data:;base64,iVBORw0KGgo=" />
+  </head>
+  <body>
+    <div>
+      <canvas id="canvas">
+        <img
+          id="racetrack"
+          alt="Racetrack clipart"
+          src="assets/racetrack.png"
+        />
+        <img id="racecar" alt="Racecar clipart" src="assets/racecar.png" />
+      </canvas>
+      <p id="statusText">
+        Use WASD or arrow keys to reach the checkpoint at the bottom of the map.
+      </p>
+    </div>
+    <div class="score-page nes-container is-rounded">
+      <h1>Highscore Racer</h1>
+      <p>{{{welcome}}}</p>
+      <table id="highscores" class="nes-table is-bordered">
+        <tr>
+          <th>Lap 1</th>
+          <th>Lap 2</th>
+          <th>Lap 3</th>
+          <th>Total</th>
+          <th>Options</th>
+        </tr>
+      </table>
+
+      <button
+        type="button"
+        class="nes-btn is-primary"
+        onclick="document.getElementById('dialog-default').showModal();"
+      >
+        Game Instructions
+      </button>
+      <dialog class="nes-dialog" id="dialog-default">
+        <form method="dialog">
+          <p class="title">Dialog</p>
+          <p>
+            Use the arrow keys or WASD to race the car around the track three
+            times.
+          </p>
+          <p>
+            There is a checkpoint at the bottom of the track that must be
+            reached every lap. Try to avoid the grass, it slows you down!
+          </p>
+          <p>
+            Press the reset button at any time to start over or start a new
+            game.
+          </p>
+          <p>
+            Use the Delete button to delete a score from the table (and
+            database). Use the Edit button to edit your times (no cheating!).
+          </p>
+          <menu class="dialog-menu">
+            <button class="nes-btn">Cancel</button>
+            <button class="nes-btn is-primary">Confirm</button>
+          </menu>
+        </form>
+      </dialog>
+
+      <button id="reset" type="button" class="nes-btn">Reset Game</button>
+      <button id="logout" type="button" class="nes-btn is-error">
+        Log Out
+      </button>
+    </div>
+    <div id="popup">
+      <form action="/update" method="POST">
+        <h1>Edit Time</h1>
+        <ol>
+          <li>
+            <label for="lap1input">Lap 1: </label
+            ><input id="lap1input" type="text" name="lap1" />
+          </li>
+          <br />
+          <li>
+            <label for="lap2input">Lap 2: </label
+            ><input id="lap2input" type="text" name="lap2" />
+          </li>
+          <br />
+          <li>
+            <label for="lap3input">Lap 3: </label
+            ><input id="lap3input" type="text" name="lap3" />
+          </li>
+        </ol>
+        <input type="text" name="_id" id="idHolder" style="display: none" />
+        <input class="button" type="submit" />
+        <button
+          type="button"
+          value="Cancel"
+          onclick="document.getElementById('popup').style.display = 'none';"
+        >
+          Cancel
+        </button>
+      </form>
+    </div>
+    <script src="js/main.js"></script>
+  </body>
+</html>

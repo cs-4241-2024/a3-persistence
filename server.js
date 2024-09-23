@@ -1,6 +1,11 @@
 const express = require("express"),
   cookie = require("cookie-session"),
+  hbs = require("express-handlebars").engine,
   app = express();
+
+app.engine("handlebars", hbs());
+app.set("view engine", "handlebars");
+app.set("views", "./views");
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -38,7 +43,9 @@ async function run() {
 
     app.get("/highscores", async (req, res) => {
       if (collection !== null) {
-        const docs = await collection.find({}).toArray();
+        const docs = await collection
+          .find({ user: req.session.user })
+          .toArray();
         res.json(docs);
       }
     });
@@ -48,6 +55,7 @@ async function run() {
       req.body.lapTimes.push(
         req.body.lapTimes[0] + req.body.lapTimes[1] + req.body.lapTimes[2]
       );
+      req.body.user = req.session.user;
 
       // Add time to database
       await collection.insertOne(req.body);
@@ -93,17 +101,71 @@ async function run() {
 
 run().catch(console.dir);
 
-app.post("/login", (req, res) => {
-  req.session.login = true;
-  res.redirect("main.html");
+app.post("/login", async (req, res) => {
+  if (collection === null) res.sendFile(__dirname + "/public/index.html");
+  const users = await collection
+    .find({ username: { $exists: true } })
+    .toArray();
+
+  let accountFound = false;
+  for (let user of users) {
+    if (req.body.username === user.username) {
+      if (req.body.password === user.password) {
+        // Correct username and password, login
+        req.session.login = true;
+        req.session.user = req.body.username;
+        accountFound = true;
+        res.render("main", {
+          welcome: "Welcome " + req.body.username,
+          layout: false,
+        });
+        break;
+      } else {
+        // Wrong password
+        accountFound = true;
+        res.render("index", {
+          msg: "Wrong password, please try again",
+          layout: false,
+        });
+        break;
+      }
+    }
+  }
+
+  if (!accountFound) {
+    // No user with this username found, make new account and login
+
+    collection.insertOne({
+      username: req.body.username,
+      password: req.body.password,
+    });
+    req.session.login = true;
+    req.session.user = req.body.username;
+
+    res.render("main", {
+      welcome: "New account created: " + req.body.username,
+      layout: false,
+    });
+  }
 });
 
 app.use(function (req, res, next) {
   if (req.session.login === true) {
-    console.log("Logged in");
-    // req.session.login = false;
     next();
-  } else res.sendFile(__dirname + "/public/index.html");
+  } else res.render("index", { msg: "", layout: false });
+});
+
+app.get("/main.html", (req, res) => {
+  res.render("main", { welcome: "Welcome " + req.session.user, layout: false });
+});
+
+app.get("/logout", async (req, res) => {
+  res.render("index", {
+    msg: "Successfully logged out",
+    layout: false,
+  });
+  req.session.login = false;
+  req.session.user = undefined;
 });
 
 app.use(express.static("public"));

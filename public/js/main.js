@@ -1,18 +1,19 @@
+// import "nes.css/css/nes.min.css";
+
 // Set up stage
 const canvas = document.getElementById("canvas");
 const ctx = canvas.getContext("2d", { willReadFrequently: true });
 
-const size = window.innerHeight;
+const statusText = document.getElementById("statusText");
+
+const size = 600;
 canvas.width = size;
 canvas.height = size;
+canvas.style = `width: ${size}px; height: ${size}px;`;
 
 // Get images
 const racetrack = document.getElementById("racetrack");
 const racecar = document.getElementById("racecar");
-
-// Initial status text
-let statusText =
-  "Use WASD or arrow keys to reach the checkpoint at the bottom of the map.";
 
 // Store racecar values
 let velocity = 0,
@@ -50,9 +51,6 @@ const draw = () => {
   let time =
     startTime == 0 ? 0 : Math.floor((Date.now() - startTime) / 100) / 10;
   ctx.fillText(time + (time % 1 == 0 ? ".0" : ""), 10, 30);
-
-  // Draw status text
-  ctx.fillText(statusText, 10, size - 10);
 
   return pixelData[0] == 42;
 };
@@ -128,14 +126,14 @@ const run = async () => {
 
   // Check for crossing checkpoint and lap
   if (!checkpoint && y > (size * 3) / 4) {
-    statusText = "Checkpoint reached!";
+    statusText.innerHTML = "Checkpoint Reached!";
     checkpoint = true;
   } else if (checkpoint && y < size / 8 && x > size / 3) {
     checkpoint = false;
     const lapTime = Date.now();
     const delta = (lapTime - prevLap) / 1000;
     lapTimes.push(delta);
-    statusText = "Lap " + lapTimes.length + " time: " + delta;
+    statusText.innerHTML = "Lap " + lapTimes.length + " time: " + delta;
     prevLap = lapTime;
   }
 
@@ -146,9 +144,9 @@ const run = async () => {
   }
 
   if (forward && !backward) {
-    velocity += 0.04;
+    velocity += 0.02;
   } else if (backward && !forward) {
-    velocity -= 0.04;
+    velocity -= 0.02;
   }
 
   x += velocity * Math.cos(direction);
@@ -213,6 +211,8 @@ const setupTable = async () => {
 
     const deleteButton = document.createElement("button");
     deleteButton.innerHTML = "Delete";
+    deleteButton.classList.add("nes-button");
+    deleteButton.classList.add("is-error");
     deleteButton.onclick = async () => {
       await fetch("/delete", {
         method: "DELETE",
@@ -226,6 +226,7 @@ const setupTable = async () => {
 
     const editButton = document.createElement("button");
     editButton.innerHTML = "Edit";
+    editButton.className = "nes-button";
     editButton.onclick = async () => {
       document.getElementById("popup").style.display = "inline";
 
@@ -241,7 +242,7 @@ const setupTable = async () => {
 
 const resetStage = () => {
   // Reset status text
-  statusText =
+  statusText.innerHTML =
     "Use WASD or arrow keys to reach the checkpoint at the bottom of the map.";
 
   // Reset racecar values
@@ -270,10 +271,15 @@ racetrack.onload = () => {
   draw();
 };
 
-// setTimeout(draw, 500);
 draw();
 
 // Set up base table
 setupTable();
 
 document.getElementById("reset").onclick = resetStage;
+document.getElementById("logout").onclick = async () => {
+  await fetch("/logout", {
+    method: "GET",
+  });
+  document.location.href = "/";
+};
