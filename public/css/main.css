@@ -16,6 +16,10 @@ h1 {
   margin-bottom: 35px;
 }
 
+h3 {
+  text-align: center;
+}
+
 .card-container {
   display: flex;
   flex-wrap: wrap;

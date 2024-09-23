@@ -1,7 +1,7 @@
 // FRONT-END (CLIENT) JAVASCRIPT HERE
 
 const register = async function (event) {
-  console.log("register function triggered");
+  
   event.preventDefault();
 
   const firstNameInput = document.querySelector('#newFirstName').value;
@@ -35,7 +35,40 @@ const register = async function (event) {
     console.error(errorData.message);
   }
 
-}
+};
+
+const login = async function(event) {
+  
+  event.preventDefault();
+
+  const usernameInput = document.querySelector("#existingUsername").value; 
+  const passwordInput = document.querySelector("#existingPassword").value;
+
+  const userData = {
+    existingUsername: usernameInput,
+    existingPassword: passwordInput
+  };
+
+  const body = JSON.stringify(userData);
+
+  const response = await fetch( '/login', {
+    method:'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body
+  });
+
+  if (response.ok) {
+    const data = await response.json();
+    console.log(data.message);
+    window.location.href = '/';
+  } else {
+    const errorData = await response.json();
+    console.error(errorData.message);
+  }
+
+};
  
 const submit = async function( event ) {
   // stop form submission from trying to load
@@ -162,6 +195,15 @@ window.onload = function() {
       submitButton.onclick = submit;
     } else {
       console.error('Submit button not found!');
+    }
+  }
+
+  if (window.location.pathname.includes('login')) {
+    const loginButton = document.querySelector("#login");
+    if (loginButton) {
+      loginButton.onclick = login;
+    } else {
+      console.error('Login button not found!');
     }
   }
  
