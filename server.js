@@ -6,7 +6,7 @@ app.use(express.static("public") )
 app.use(express.urlencoded({ extended:true }))
 app.use(express.json())
 
-const uri = `mongodb+srv://${process.env.USER}:${process.env.PASSWORD}@cluster0.nc6as.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0`
+const uri = `mongodb+srv://snaik5:AoHeBSM0lvyrIWeo@cluster0.nc6as.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0`
 const client = new MongoClient( uri )
 
 let collection = null
