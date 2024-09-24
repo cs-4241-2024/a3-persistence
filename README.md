@@ -1,6 +1,10 @@
 Anime Tracker Web App (now with login and persistent data!)
 ===
 https://a3-ananya-jayamoorthy.glitch.me/login 
+
+For login testing purposes, the following user is available:
+     username: firstUser
+     password: password
  
 The goal of my application was to build on the existing project from A2 in order to make it a portfolio piece. While developing, the most difficult parts were definitely trying to get the registration page to work because I had to create that from scratch as opposed to index.html, where the starter code provided some help. I chose to use a basic authentication strategy where the username/password checks all occur within my code and not through the use of an external library because I knew I wouldn't have the time to wrangle something like passport.js.
 
