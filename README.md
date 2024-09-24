@@ -38,6 +38,6 @@ Main Page Lighthouse:
     - Proximity: The elements of my app are divided into visual blocks. The forms are coupled with descriptive headings and surrounded by an opaque box to visually signify that these elements are related to one another. Cards are a different color from anything else on the page and are surrounded by a border.
  
 Background Image Sources: 
-My Neighbor Totoro: https://i.pinimg.com/originals/11/7b/ea/117bea6777b5ad4e03bb63a154f1603d.gif
-Spirited Away: https://i.gifer.com/4tkR.gif
-The Secret World of Arietty: https://i.pinimg.com/originals/76/01/a3/7601a31e47247077856ed69b7b4fa124.gif 
+- My Neighbor Totoro: https://i.pinimg.com/originals/11/7b/ea/117bea6777b5ad4e03bb63a154f1603d.gif
+- Spirited Away: https://i.gifer.com/4tkR.gif
+- The Secret World of Arietty: https://i.pinimg.com/originals/76/01/a3/7601a31e47247077856ed69b7b4fa124.gif 
