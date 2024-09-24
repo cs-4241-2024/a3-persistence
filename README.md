@@ -3,7 +3,7 @@ Assignment 3 - Persistence: Two-tier Web Application with Database, Express serv
 
 ## To Do List
 
-glitch link: e.g. http://a3-charlie-roberts.glitch.me
+glitch link: https://a3-asjacob25.glitch.me/ 
 
 Include a very brief summary of your project here. Images are encouraged, along with concise, high-level text. Be sure to include:
 
