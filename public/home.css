@@ -1,0 +1,51 @@
+html, body {
+    margin: 0;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #16423C;
+    color: #E9EFEC;
+}
+
+h1 {
+    margin: 20px;
+    font-size: 60px;
+}
+
+input {
+    border-radius: 10px;
+    border: 1px solid #6A9C89;
+    color: #16423C;
+    padding: 5px 15px;
+    font-size: 15px;
+}
+
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 20px;
+    padding: 20px;
+}
+
+.login, .signup {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    flex-direction: column;
+}
+
+a.github-login {
+    margin-top: 15px;
+    text-decoration: none;
+    color: #E9EFEC;
+    opacity: 0.8;
+}
+
+a.github-login:hover {
+    opacity: 0.6;
+    text-decoration: underline;
+}
