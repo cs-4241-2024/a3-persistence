@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Anime Tracker Registration Page</title>
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    
+    <!-- get rid of favicon error -->
+    <link rel="icon" href="data:;base64,iVBORw0KGgo=">
+
+    <style>
+
+        body {
+            background: url(https://i.pinimg.com/originals/76/01/a3/7601a31e47247077856ed69b7b4fa124.gif) no-repeat;
+            background-size: cover;    
+            background-position: center;  
+            background-attachment: fixed;
+        }
+
+        h1 {
+            color: #8ebd87;
+            text-align: center;
+            margin-bottom: 0px;
+        }
+
+        h2 {
+            text-align: center;
+        }
+
+        h4 {
+            color: #c2ab42;
+        }
+
+        button {
+            margin-top: 25px;
+        }
+ 
+    </style>
+</head>
+
+<body>
+
+    <div class="formBacking">
+    <h1>New to this page?</h1>
+    <h2>Register now!</h2>
+        <div class="userInfoForm">
+            <form onsubmit="register(event)">
+
+                <!-- Text Input: Full Name-->                
+                <label for="newFirstName"><h4>First Name:</h4></label>
+                <input type="text" id="newFirstName" name="newFirstname" value="first name">
+                <label for="newLastName"><h4>Last Name:</h4></label>
+                <input type="text" id="newLastName" name="newLastname" value="last name">
+
+                <!-- Text Input: Username-->
+                <label for="newUserName"><h4>Create a Username:</h4></label>
+                <input type="text" id="newUserName" name="newUsername">
+
+                <!-- Password Input: Password-->
+                <label for="newPassword"><h4>Create a Password:</h4></label>
+                <input type="password" id="newPassword" name="newPassWord">
+
+                <button id="register">Create User</button>
+            </form>
+            <h3>Already a user? <a href="./login.html">Login here</a></h3>
+        </div>
+    </div>
+    <script src="js/main.js"></script>
+</body>
+
+</html>

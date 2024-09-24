@@ -1,0 +1,140 @@
+body {
+  background: #f0e8d1;
+  color: white;
+  font-family: "Montserrat", sans-serif;
+}
+
+h4, h1, .desc {
+  color: #f0e8d1;
+}
+
+p {
+  font-weight: 700;
+}
+
+h1 {
+  margin-bottom: 35px;
+}
+
+h3 {
+  text-align: center;
+}
+
+.card-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+}
+
+.card {
+  border: 3px solid white;
+  background-color: #776720;
+  border-radius: 10px;
+  margin: 10px;
+  padding: 15px;
+  flex-shrink: 0;
+  max-width: 13em;
+}
+
+a {
+  color: #c2ab42;
+}
+
+.heroBack {
+  background: url(https://i.pinimg.com/originals/11/7b/ea/117bea6777b5ad4e03bb63a154f1603d.gif) center/cover no-repeat;
+  padding: 24px;
+}
+
+.hero {
+  display: flex;
+  justify-content: space-between; 
+  align-items: center; 
+  padding: 20px;
+}
+
+.intro {
+  width: 40%; 
+  text-align: left; 
+  
+}
+
+.formHero {
+  width: 50%; 
+  max-width: 500px; 
+  padding: 20px;
+  border: 2px solid #f0e8d1;
+  border-radius: 2px;
+  background: rgba(63, 103, 53, 0.7);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+form {
+  text-align: center;
+}
+
+#submitButton {
+  margin-top: 15px;
+  background-color: #8ebd87;
+}
+
+.delete-button {
+  background-color: #722C2C;
+  color: #F3D3D3;
+  font-weight: bold;
+  border-color: #F3D3D3;
+}
+
+button {
+  border-radius: 800px;
+  cursor: pointer;
+  padding: 5px 16px;
+  /* border: 3px solid #e2d5ad; */
+  border: 3px solid #ffffff;
+  font-family: "Montserrat", sans-serif;
+  text-align: center;
+  font-size: medium;
+}
+
+input {
+  display: block;
+  height: 40px;
+  border-radius: 4px;
+  border: 0.6px solid #f0e8d1;
+  font-family: "Montserrat", sans-serif;
+  font-weight: 600;
+  width: 80%;
+  margin: 0 auto;
+}
+
+img {
+  object-fit: cover;
+  max-width: 150px;
+  height: auto;
+  display: block;
+  margin: auto;
+}
+
+.fullName {
+  display: flex;
+  gap: 20px;
+  width: 80%;
+  margin: 0 auto;
+}
+
+
+.userInfoForm {
+  max-width: 40em;
+  margin: auto;
+
+}
+
+.formBacking {
+  background-color: rgba(0, 0, 0, 0.55);
+  max-width: 40em;
+  margin: 2em auto;
+  padding: 25px;
+  box-sizing: border-box;   
+}

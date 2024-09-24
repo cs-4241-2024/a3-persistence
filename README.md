@@ -1,113 +1,47 @@
-Assignment 3 - Persistence: Two-tier Web Application with Database, Express server, and CSS template
+Anime Tracker Web App (now with login and persistent data!)
+===
+https://a3-ananya-jayamoorthy.glitch.me/login 
+
+For login testing purposes, the following user is available:
+> username: firstUser,
+> password: password
+ 
+The goal of my application was to build on the existing project from A2 in order to make it a portfolio piece. While developing, the most difficult parts were definitely trying to get the registration page to work because I had to create that from scratch as opposed to index.html, where the starter code provided some help. I chose to use a basic authentication strategy where the username/password checks all occur within my code and not through the use of an external library because I knew I wouldn't have the time to wrangle something like passport.js.
+
+For the CSS framework, I chose to take inspiration from the Bootstrap library but I did all of the CSS myself. As I am interested in full-stack web development as a career, I wanted to try my hand and designing the web app completely. It was difficult and time consuming but the result was pretty solid and visually appealing. With practice, I think I could make some real nice UI in the future.
+
+My `Google Lighthouse` scores were all over 90, with a majority of them being 100s.
+
+Login Page Lighthouse:
+![image](https://github.com/user-attachments/assets/801bbeb6-fd2a-4c1a-989e-ff2ce374735f)
+
+Registration Page Lighthouse:
+![image](https://github.com/user-attachments/assets/8eadefd3-3e79-4641-ae3f-565ff38d2324)
+
+Main Page Lighthouse:
+![image](https://github.com/user-attachments/assets/01763abc-c97f-4b40-b0e2-b5f590625d2d)
+
 ===
 
-Due: September 19th, by 11:59 AM.
-
-This assignnment continues where we left off, extending it to use the most popular Node.js server framework (express), 
-a database (mongodb), and a CSS application framework / template of your choice (Boostrap, Material Design, Semantic UI, Pure etc.)
-
-Baseline Requirements
----
-
-Your application is required to implement the following functionalities:
-
-- a `Server`, created using Express (no alternatives will be accepted for this assignment)
-- a `Results` functionality which shows all data associated with a logged in user (except passwords)
-- a `Form/Entry` functionality which allows users to add, modify, and delete data items (must be all three!) associated with their user name / account. 
-- Persistent data storage in between server sessions using [mongodb](https://www.mongodb.com/cloud/atlas) (you *must* use mongodb for this assignment). You can use either the [official mongodb node.js library](https://www.npmjs.com/package/mongodb) or use the [Mongoose library](https://www.npmjs.com/package/mongoose), which enables you to define formal schemas for your database. Please be aware that the course staff cannot provide in-depth support for use of Mongoose.  
-- Use of a [CSS framework or template](https://github.com/troxler/awesome-css-frameworks). 
-This should do the bulk of your styling/CSS for you and be appropriate to your application. 
-For example, don't use [NES.css](https://nostalgic-css.github.io/NES.css/) (which is awesome!) unless you're creating a game or some type of retro 80s site.
-
-Your application is required to demonstrate the use of the following concepts:  
-
-HTML:  
-- HTML input tags and form fields of various flavors (`<textarea>`, `<input>`, checkboxes, radio buttons etc.)
-- HTML that can display all data *for a particular authenticated user*. Note that this is different from the last assignnment, which required the display of all data in memory on the server.
-
-Note that it might make sense to have two pages for this assignment, one that handles login / authentication, and one that contains the rest of your application.
-For example, when visiting the home page for the assignment, users could be presented with a login form. After submitting the login form, if the login is 
-successful, they are taken to the main application. If they fail, they are sent back to the login to try again. For this assignment, it is acceptable to simply create 
-new user accounts upon login if none exist, however, you must alert your users to this fact.  
-
-CSS:  
-- CSS styling should primarily be provided by your chosen template/framework. 
-Oftentimes a great deal of care has been put into designing CSS templates; 
-don't override their stylesheets unless you are extremely confident in your graphic design capabilities. 
-The idea is to use CSS templates that give you a professional looking design aesthetic without requiring you to be a graphic designer yourself.
-
-JavaScript:  
-- At minimum, a small amount of front-end JavaScript to get / fetch data from the server. 
-See the [previous assignment](https://github.com/cs-4241-23/shortstack) for reference.
-
-Node.js:  
-- A server using Express and a persistent database (mongodb).
-
-General:  
-- Your site should achieve at least 90% on the `Performance`, `Best Practices`, `Accessibility`, and `SEO` tests 
-using Google [Lighthouse](https://developers.google.com/web/tools/lighthouse) (don't worry about the PWA test, and don't worry about scores for mobile devices).
-Test early and often so that fixing problems doesn't lead to suffering at the end of the assignment. 
-
-Deliverables
----
-
-Do the following to complete this assignment:
-
-1. Implement your project with the above requirements. I'd begin by converting your A2 assignment. First, change the server to use express. Then, modify the server to use mongodb instead of storing data locally. Last but not least, implement user accounts and login. User accounts and login is often the hardest part of this assignment, so budget your time accordingly.
-2. If you developed your project locally, deploy your project to Glitch (unless completing the alternative server technical acheivement described below), and fill in the appropriate fields in your package.json file.
-3. Test your project to make sure that when someone goes to your main page on Glitch (or an alternative server), it displays correctly.
-4. Ensure that your project has the proper naming scheme `a3-yourfirstname-yourlastname` so we can find it.
-5. Fork this repository and modify the README to the specifications below.
-6. Create and submit a Pull Request to the original repo. Name the pull request using the following template: `a3-firstname-lastname`.
-
-Acheivements
----
-
-Below are suggested technical and design achievements. You can use these to help boost your grade up to an A and customize the 
-assignment to your personal interests, for a maximum twenty additional points and a maximum grade of a 100%. 
-These are recommended acheivements, but feel free to create/implement your own... just make sure you thoroughly describe what you did in your README, 
-why it was challenging, and how many points you think the achievement should be worth. 
-ALL ACHIEVEMENTS MUST BE DESCRIBED IN YOUR README IN ORDER TO GET CREDIT FOR THEM.
-
-*Technical*
-- (10 points) Implement OAuth authentication, perhaps with a library like [passport.js](http://www.passportjs.org/). 
-*You must either use Github authenticaion or provide a username/password to access a dummy account*. 
-Course staff cannot be expected, for example, to have a personal Facebook, Google, or Twitter account to use when grading this assignment. 
-Please contact the course staff if you have any questions about this. THIS IS THE HARDEST ACHEIVEMENT OFFERED IN WEBWARE. You have been warned!  
-- (5 points) Instead of Glitch, host your site on a different service like [Heroku](https://www.heroku.com) or [Digital Ocean](https://www.digitalocean.com). Make sure to describe this a bit in your README. What was better about using the service you chose as compared to Glitch? What (if anything) was worse? 
-- (5 points) Get 100% (not 98%, not 99%, but 100%) in all four lighthouse tests required for this assignment.
-- (up to 5 points) List up to five Express middleware packages you used and a short (one sentence) summary of what each one does. THESE MUST BE SEPARATE PACKAGES THAT YOU INSTALL VIA NPM, NOT THE ONES INCLUDED WITH EXPRESS. So express.json and express.static don't count here. For a starting point on middleware, see [this list](https://expressjs.com/en/resources/middleware.html).
-
-*Design/UX*
-- (10 points) Make your site accessible using the [resources and hints available from the W3C](https://www.w3.org/WAI/), Implement/follow twelve tips from their [tips for writing](https://www.w3.org/WAI/tips/writing/), [tips for designing](https://www.w3.org/WAI/tips/designing/), and [tips for development](https://www.w3.org/WAI/tips/developing/). *Note that all twelve must require active work on your part*. 
-For example, even though your page will most likely not have a captcha, you don't get this as one of your twelve tips to follow because you're effectively 
-getting it "for free" without having to actively change anything about your site. 
-Contact the course staff if you have any questions about what qualifies and doesn't qualify in this regard. 
-List each tip that you followed and describe what you did to follow it in your site.
-- (5 points) Describe how your site uses the CRAP principles in the Non-Designer's Design Book readings. 
-Which element received the most emphasis (contrast) on each page? 
-How did you use proximity to organize the visual information on your page? 
-What design elements (colors, fonts, layouts, etc.) did you use repeatedly throughout your site? 
-How did you use alignment to organize information and/or increase contrast for particular elements. 
-Write a paragraph of at least 125 words *for each of four principles* (four paragraphs, 500 words in total). 
-
-Sample Readme (delete the above when you're ready to submit, and modify the below so with your links and descriptions)
----
-
-## Your Web Application Title
-
-your glitch (or alternative server) link e.g. http://a3-charlie-roberts.glitch.me
-
-Include a very brief summary of your project here. Images are encouraged, along with concise, high-level text. Be sure to include:
-
-- the goal of the application
-- challenges you faced in realizing the application
-- what authentication strategy you chose to use and why (choosing one because it seemed the easiest to implement is perfectly acceptable)
-- what CSS framework you used and why
-  - include any modifications to the CSS framework you made via custom CSS you authored
-
-## Technical Achievements
-- **Tech Achievement 1**: I used OAuth authentication via the GitHub strategy
+### Technical Achievements
+- **Tech Achievement 1**: While not all three of my pages have a full 100 in all 4 lighthouse tests, 2 of my webpages do hit that mark so I think I should get some partial credit, especially when I consider the time spent wrangling with the accessibility marker.
+- **Tech Achievement 2**: I installed a lot of things through the terminal and npm for this project, so here they are with short descriptions:
+    - `body-parser`: middleware; parses incoming request bodies in a middleware before it reaches the handlers, making them accessible under req.body
+    - `cookie-parser`: middleware; parses cookies attached to the client request object, making them accessible under req.cookies
+    - `bcrypt`: library; used to hash passwords, providing security to user authentication
+    - `dotenv`: module; loads environment files from a .env file and adds a layer of security for "secret" variables and admin details
+    - `nodemon`: tool; restarts the node server automatically when file changes are detected
+ - **Tech Achievement 3**: I added a level of user security by saving a hash of a user's password in the database, instead of just saving the password straight up. At no point during my development was there a moment where a user's privacy wasn't protected. I did this hashing by using the `bcrypt` library which utilizes a cryptographically secure hash function. I would say this acheivement is worth between 3 and 5 points.
 
 ### Design/Evaluation Achievements
-- **Design Achievement 1**: I followed the following tips from the W3C Web Accessibility Initiative...
+- **Design Achievement 1**: I chose to forego CSS styling libraries/frameworks and instead did all the styling myself. I did get inspiration from Bootstrap and Tailwind but the code was mine. The challengng part of this achievement was definitely working with flecbox and trying to make a somewhat visually appealing design. Of course, I can see *many* places for improvement on the design. Since a significant portion of time went into the UI aspect, I think this achievement is worth between 2 and 5 points.
+- **Design Achievement 2**: Design according to the CRAP Principles:
+    - Contrast: This was probably the most difficult principle to nail down because I like curated and aesthetic color palettes but a lot of those palettes are NOT meant for web design. To determine what colors I used on my webpages, I looked at various animation screengrabs because the colors in those scenes have already been taken care of by real artists. Once I decided on a screengrab, I pulled colors from those images and tweaked them until the contrast values passed the accessibility tests. My web app is definitely far from perfect, but I'm working on it.
+    - Repetition: I stuck to only one font for my web app, which was Montserrat. I chose this font because it was simple and clean but also because it has a lot of variations. I also wanted to have a theme to my website that matched its purpose so because the app tracks anime progress, the backgrounds were gifs taken from well known animes. All of the gifs are from Studio Ghibli so that's another element of repetition. The main index page has a forest theme, with muted greens and browns. The login page is more bright and pink and the register page was a more vibrant green. All of the pictures were based in nature.
+    - Alignment: Against the advice of the book I used different alignments to get a look I wanted, including the dreaded center alignment. A lot of the forms I see out in the wild (on the Internet) are center justified because they tend to be the only thing on the page. That is why all of the forms in my web app have a center alignment. For the hero element on the index.html page, I chose the left align option, mainly because I liked the way it looked.
+    - Proximity: The elements of my app are divided into visual blocks. The forms are coupled with descriptive headings and surrounded by an opaque box to visually signify that these elements are related to one another. Cards are a different color from anything else on the page and are surrounded by a border.
+ 
+Background Image Sources: 
+- My Neighbor Totoro: https://i.pinimg.com/originals/11/7b/ea/117bea6777b5ad4e03bb63a154f1603d.gif
+- Spirited Away: https://i.gifer.com/4tkR.gif
+- The Secret World of Arietty: https://i.pinimg.com/originals/76/01/a3/7601a31e47247077856ed69b7b4fa124.gif 

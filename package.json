@@ -1,0 +1,21 @@
+{
+  "name": "Anime-Tracker",
+  "version": "1.0.0",
+  "description": "Anime Tracker Website",
+  "author": "Ananya Jayamoorthy",
+  "scripts": {
+    "start": "nodemon server.js"
+  },
+  "dependencies": {
+    "bcrypt": "^5.1.1",
+    "body-parser": "^1.20.3",
+    "cookie-parser": "^1.4.6",
+    "dotenv": "^16.4.5",
+    "express": "^4.21.0",
+    "mime": "^2.4.4",
+    "mongodb": "^6.9.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.7"
+  }
+}

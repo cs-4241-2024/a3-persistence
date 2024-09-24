@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Anime Tracker Login Page</title>
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    
+    <!-- get rid of favicon error -->
+    <link rel="icon" href="data:;base64,iVBORw0KGgo="> 
+    
+    <style>
+        body {
+            background: url(https://i.gifer.com/4tkR.gif) no-repeat;
+            background-size: cover;    
+            background-position: center;  
+            background-attachment: fixed;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 0px;
+        }
+
+        button {
+            margin-top: 25px;
+        }
+
+
+    </style>
+</head>
+<body>
+    
+
+    <div class="userInfoForm">
+        <div class="formBacking">
+            <h1>Welcome Back!</h1>
+            <form>
+                <!-- Text Input: Username-->
+                <label for="existingUsername"><h4>Enter Username: </h4></label>
+                <input type="text" id="existingUsername" value="username">
+
+                <!-- Password Input: Password-->
+                <label for="existingPassword"><h4>Enter Password: </h4></label>
+                <input type="password" id="existingPassword">
+
+                <button id="login">Log In</button>
+            </form>
+            <h3>Not yet a user? <a href="./register.html">Register here!</a></h3>
+        </div>
+    </div>
+
+    <script src="js/main.js"></script>
+</body>
+</html>
