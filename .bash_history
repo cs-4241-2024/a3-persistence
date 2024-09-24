@@ -1,0 +1,4 @@
+ls
+refresh
+refresh
+console

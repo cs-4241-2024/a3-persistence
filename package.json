@@ -1,0 +1,35 @@
+{
+  "name": "a3-krsiegall",
+  "version": "",
+  "description": "",
+  "author": "K Siegall",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js --env-file=.env",
+    "dev": "nodemon index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "engines": {
+    "node": "^16.x"
+  },
+  "dependencies": {
+    "dotenv": "^8.2.0",
+    "mime": "^2.4.4",
+    "express": "^4.19.2",
+    "express-flash": "^0.0.2",
+    "express-session": "^1.18.0",
+    "method-override": "^3.0.0",
+    "mongodb": "4.16",
+    "passport": "^0.7.0",
+    "passport-github": "^1.1.0",
+    "passport-github2": "^0.1.12",
+    "passport-local": "^1.0.0",
+    "lodash": "^1.0.0",
+    "nes.css": "^1.0.0"
+  },
+  "devDependencies": {
+    "dotenv": "^16.4.5",
+    "nodemon": "^3.1.4",
+    "nes.css": "^1.0.0"
+  }
+}
