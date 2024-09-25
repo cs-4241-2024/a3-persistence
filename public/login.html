@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="'Task Manager: Login page: log into the task manager.'">
+    <title>Login - Task Manager</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <h1>
+      <center>TASK MANAGER SITE</center>
+    </h1>
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-md-6">
+          <div class="card shadow">
+            <h2 class="header-title text-center">Login</h2>
+            <form id="loginForm">
+              <div class="mb-3">
+                <label for="username" class="form-label">User Name</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="username"
+                  placeholder="Enter user name"
+                  required
+                />
+              </div>
+              <div class="mb-3">
+                <label for="password" class="form-label">Password</label>
+                <input
+                  type="password"
+                  class="form-control"
+                  id="password"
+                  placeholder="Enter password"
+                  required
+                />
+              </div>
+              <button type="submit" class="btn btn-custom btn-block">
+                Login
+              </button>
+            </form>
+            <p class="text-center">
+              Don't have an account? <a href="register.html">Register here</a>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="AboutSite">
+      <h2 class="header-title text-center">
+        <center>Welcome to my site!</center>
+        <h3>
+          <center>
+            This site allows you to track task! Log in or create an account to
+            track your task!
+          </center>
+        </h3>
+      </h2>
+    </div>
+
+    <script src="login.js" defer></script>
+    <script src="script.js" defer></script>
+    <footer>
+      <p style="color: white">CS 4241 - Kayla Afonseca</p>
+    </footer>
+  </body>
+</html>

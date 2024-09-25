@@ -1,0 +1,56 @@
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 20px;
+  background-color: #F2E1C3;
+  color: #333333; 
+}
+
+h1 {
+  color: #A63922; 
+}
+
+.container {
+  margin-top: 50px;
+  background-color: #D8B573; 
+  color: #333333; /* Dark text for contrast */
+  box-shadow: 10px 10px #A66F2E; /* Keep the original shadow */
+}
+
+.card {
+  padding: 20px;
+  background-color: #FFFFFF; /* Light card background for better contrast */
+  color: #333333; /* Dark text for contrast */
+}
+
+.header-title {
+  color: #A63922; /* Keep the original color */
+}
+
+.btn-custom {
+  background-color: #02385A; /* Keep the existing color */
+  color: #FFFFFF; /* White text for better contrast */
+}
+
+.btn-custom:hover {
+  background-color: #A63922; /* Keep the existing hover color */
+}
+
+.AboutSite {
+  margin-top: 50px;
+  background-color: #D8B573; /* Keep the existing color */
+  color: #333333; /* Dark text for contrast */
+  box-shadow: 10px 10px #A66F2E; /* Keep the original shadow */
+}
+
+footer {
+  text-align: center;
+  background-color: #02385A; /* Keep the existing color */
+  padding: 10px 20px;
+  position: absolute; 
+  bottom: 0; 
+  left: 0;
+  right: 0;
+  z-index: 10;
+  color: #FFFFFF; /* White text for contrast */
+}

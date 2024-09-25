@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="'Task Manager: Manage your tasks efficiently with our intuitive interface.'">
+    <title>Task Manager</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <h1>
+      <center>TASK MANAGER SITE</center>
+    </h1>
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-md-6">
+          <div class="card shadow">
+            <h2 class="header-title text-center">Task Manager</h2>
+            <p class="text-center text-muted">Easily manage your tasks below</p>
+
+            <form id="taskForm">
+              <div class="mb-3">
+                <label for="taskName" class="form-label">Task Name</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="taskName"
+                  placeholder="Enter task name"
+                  required
+                />
+              </div>
+              <div class="mb-3">
+                <label for="dueDate" class="form-label">Due Date</label>
+                <input type="date" class="form-control" id="dueDate" required />
+              </div>
+              <div class="mb-3">
+                <label for="userName" class="form-label">User Name</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="userName"
+                  placeholder="Enter user name"
+                  required
+                />
+              </div>
+              <button type="submit" class="btn btn-custom btn-block">
+                Add Task
+              </button>
+            </form>
+
+            <hr />
+            <h5 class="header-title">Your Tasks</h5>
+            <ul id="taskList" class="list-group"></ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="script.js" defer></script>
+    <footer>
+    <p style="color: white">CS 4241 - Kayla Afonseca</p>
+  </footer>
+  </body>
+</html>

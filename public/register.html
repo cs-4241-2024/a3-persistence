@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="'Task Manager: Registration page: register an account!.'">
+    <title>Register - Task Manager</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <h1>
+      <center>TASK MANAGER SITE</center>
+    </h1>
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-md-6">
+          <div class="card shadow">
+            <h2 class="header-title text-center">Register</h2>
+            <form id="registerForm">
+              <div class="mb-3">
+                <label for="regUsername" class="form-label">User Name</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="regUsername"
+                  placeholder="Enter user name"
+                  required
+                />
+              </div>
+              <div class="mb-3">
+                <label for="regPassword" class="form-label">Password</label>
+                <input
+                  type="password"
+                  class="form-control"
+                  id="regPassword"
+                  placeholder="Enter password"
+                  required
+                />
+              </div>
+              <button type="submit" class="btn btn-custom btn-block">
+                Register
+              </button>
+            </form>
+            <p class="text-center">
+              Already have an account? <a href="login.html">Login here</a>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="register.js" defer></script>
+    <footer>
+    <p style="color: white">CS 4241 - Kayla Afonseca</p>
+  </footer>
+  </body>
+</html>
