@@ -95,7 +95,7 @@ app.post("/login", (req, res) => {
   User.findOne({ username, password })
     .then((user) => {
       if (user) {
-        res.redirect("/dashboard"); // Redirect to dashboard after successful login
+        res.redirect("/dashboard"); 
       } else {
         res.status(400).send("Login failed. Incorrect username or password.");
       }
