@@ -4,66 +4,66 @@
     <title>CS4241 Assignment 3</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <script src="js/main.js"></script>
-<!--     <script src="https://cdn.tailwindcss.com"></script> -->
+    <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,300;1,400;1,700;1,900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="css/main.css">
+<!--     <link rel="stylesheet" href="css/main.css"> -->
     
     <!-- get rid of favicon error -->
     <link rel="icon" href="data:;base64,iVBORw0KGgo=">
   </head>
-  <body>
+  <body class="text-[#224050] bg-[#CCEFFF] font-['Merriweather'] ml-20px">
     
-    <h1>
+    <h1 class="text-center text-extrabold text-4xl m-5">
       Workout Logger
     </h1>
-    <div id="flex-container">
+    <div id="flex-container" class="flex justify-around">
       
       <div>
-        <h2>
+        <h2 class="text-center text-bold text-xl m-3">
           Add Log:
         </h2>
 
         <form id="wform">
-          <label id="workout" class="lab">Select Workout Day: </label><br>
-          <input type="radio" id="body" name="wout" value="Full Body">
-          <label for="body">Full Body</label><br>
-          <input type="radio" id="upper" name="wout" value="Upper Body">
-          <label for="upper">Upper Body</label><br>
-          <input type="radio" id="lower" name="wout" value="Lower Body">
-          <label for="lower">Lower Body</label><br>
-          <input type="radio" id="abs" name="wout" value="Abs">
-          <label for="abs">Abs</label><br>
-          <input type="radio" id="cardio" name="wout" value="Cardio">
-          <label for="cardio">Cardio</label><br>
+          <label id="workout" class="bg-[#B3E7FF] m-1.5 rounded-md">Select Workout Day: </label><br>
+          <input type="radio" id="body" name="wout" value="Full Body" class="ml-5 rounded-md">
+          <label for="body" class="m-1.5 rounded-md">Full Body</label><br>
+          <input type="radio" id="upper" name="wout" value="Upper Body" class="ml-5 rounded-md">
+          <label for="upper" class="m-1.5 rounded-md">Upper Body</label><br>
+          <input type="radio" id="lower" name="wout" value="Lower Body" class="ml-5 rounded-md">
+          <label for="lower" class="m-1.5 rounded-md">Lower Body</label><br>
+          <input type="radio" id="abs" name="wout" value="Abs" class="ml-5 rounded-md">
+          <label for="abs" class="m-1.5 rounded-md">Abs</label><br>
+          <input type="radio" id="cardio" name="wout" value="Cardio" class="ml-5 rounded-md">
+          <label for="cardio" class="m-1.5 rounded-md">Cardio</label><br>
 
-          <label for="date" class="lab">Date: </label>
-          <input type="date" id="date" value="2024-09-01" required><br>
+          <label for="date" class="bg-[#B3E7FF] m-1.5">Date: </label>
+          <input type="date" id="date" value="2024-09-01" class="border-2 border-[#224050] rounded-md m-1.5" required><br>
 
-          <label for="stime" class="lab">Start Time: </label>
-          <input type="time" id="stime" value="12:00" required><br>
+          <label for="stime" class="bg-[#B3E7FF] m-1.5 rounded-md">Start Time: </label>
+          <input type="time" id="stime" value="12:00" class="border-2 border-[#224050] rounded-md m-1.5" required><br>
 
-          <label for="etime" class="lab">End Time: </label>
-          <input type="time" id="etime" value="12:00" required><br>
+          <label for="etime" class="bg-[#B3E7FF] m-1.5 rounded-md">End Time: </label>
+          <input type="time" id="etime" value="12:00" class="border-2 border-[#224050] rounded-md m-1.5" required><br>
 
-          <button>Submit</button>
+          <button class="bg-[#8BDAFF] p-2 block mx-2 my-2 mt-1.5 border-[#224050] border-2">Submit</button>
         </form>
       </div>
 
       <div>
-        <h2>
+        <h2 class="text-center text-bold text-xl m-3">
           Workout Logs:
         </h2>
 
-        <table id="data">
+        <table id="data" class="text-[#305B72] border-2 border-[#224050] border-collapse rounded-xl text-center bg-[#B3E7FF]">
           <thead>
             <tr>
-              <th>Workout</th>
-              <th>Date</th>
-              <th>Start Time</th>
-              <th>End Time</th>
-              <th>Time (mins)</th>
-              <th>Edit</th>
-              <th>Delete</th>
+              <th class="border-2 border-[#224050] p-4">Workout</th>
+              <th class="border-2 border-[#224050] p-4">Date</th>
+              <th class="border-2 border-[#224050] p-4">Start Time</th>
+              <th class="border-2 border-[#224050] p-4">End Time</th>
+              <th class="border-2 border-[#224050] p-4">Time (mins)</th>
+              <th class="border-2 border-[#224050] p-4">Edit</th>
+              <th class="border-2 border-[#224050] p-4">Delete</th>
             </tr>
           </thead>
           <tbody>

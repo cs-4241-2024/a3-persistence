@@ -59,7 +59,7 @@ passport.use(
             // avatarUrl: profile.photos[0].value
           };
           const result = await userCollection.insertOne(newUser);
-          user = result.ops[0];
+          user = await userCollection.findOne({ githubId: profile.id });
         }
         return done(null, user);
 
