@@ -43,6 +43,8 @@ function updateTable(values){
     const wtd = document.createElement('td'),
           winp = document.createElement('select')
     
+    wtd.className = "border-2 border-[#224050] p-2";
+    
     winp.name = 'wout';
     
     const op1 = document.createElement('option'),
@@ -75,6 +77,8 @@ function updateTable(values){
     const dtd = document.createElement('td'),
           dinp = document.createElement('input')
     
+    dtd.className = "border-2 border-[#224050] p-2";
+    
     dinp.type = 'date';
     dinp.value = value.date;
     dtd.appendChild(dinp);
@@ -82,12 +86,16 @@ function updateTable(values){
     const sttd = document.createElement('td'),
           stnp = document.createElement('input')
     
+    sttd.className = "border-2 border-[#224050] p-2";
+    
     stnp.type = 'time';
     stnp.value = value.stime;
     sttd.appendChild(stnp);
     
     const ettd = document.createElement('td'),
           etnp = document.createElement('input')
+    
+    ettd.className = "border-2 border-[#224050] p-2";
     
     etnp.type = 'time';
     etnp.value = value.etime;
@@ -99,6 +107,8 @@ function updateTable(values){
     element.appendChild(ettd);
     
     save.innerText = 'Save';
+    save.className = "bg-[#8BDAFF] p-2 border-[#224050] border-2 rounded mx-2";
+
     save.addEventListener("click", async function(){
       
       const newVals = {
@@ -124,6 +134,7 @@ function updateTable(values){
     })
     
     del.innerText = 'Delete';
+    del.className = "bg-[#8BDAFF] p-2 border-[#224050] border-2 rounded mx-2";
     del.addEventListener("click", async function(){
       const response = await fetch('/delete', {
         method: "POST",
@@ -139,17 +150,20 @@ function updateTable(values){
     
     const ttd = document.createElement('td');
     
+    ttd.className = "border-2 border-[#224050] p-2";
+    
     ttd.innerHTML = `${h * 60 + m}`;
     element.appendChild(ttd);
     
     const tdsa = document.createElement('td');
+    tdsa.className = "border-2 border-[#224050] p-2 text-center";
     tdsa.appendChild(save);
     element.appendChild(tdsa);
     
     const tddel = document.createElement('td');
+    tddel.className = "border-2 border-[#224050] p-2 text-center";
     tddel.appendChild(del);
-    element.appendChild( tddel );
-    
+    element.appendChild( tddel );    
     
     tbody.appendChild(element);
   })
