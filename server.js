@@ -6,7 +6,7 @@ const cookie     = require("cookie-session");
 const handlebars = require("express-handlebars").engine;
 
 // Project function imports
-const {cookieKey1, cookieKey2} = require("./public/js/private.js");
+const {cookieKey1, cookieKey2} = require("./private.js");
 const
 {
   DB_CreateCollection,
@@ -14,7 +14,7 @@ const
   DB_UpdateDocument,
   DB_DeleteDocument,
   DB_FindDocuments,
-} = require("./public/js/database.js");
+} = require("./database.js");
 
 // Local directory
 const dir  = "public/";
