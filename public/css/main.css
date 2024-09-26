@@ -1,0 +1,53 @@
+body {
+  color: #224050;
+  font-family: "Merriweather", serif;
+  font-style: normal;
+  margin-left: 20px;
+  background-color: #CCEFFF;
+}
+
+table, th, td, tbody {
+  color: #305B72;
+  border: 3px solid;
+  border-color: #224050;
+  border-collapse: collapse;
+  padding: 10px;
+  text-align: center;
+  background-color: #B3E7FF;
+  border-radius: 10px;
+}
+
+#flex-container {
+  display: flex;
+  justify-content: space-around; 
+}
+
+.lab {
+  background-color: #B3E7FF;
+}
+
+label, input {
+  margin: 6px;
+  padding: 4px;
+  border-radius: 5px;
+}
+
+input[type=radio] {
+  margin-left: 20px;
+}
+
+h1 {
+  text-align: center;
+}
+
+button {
+  background-color: #8BDAFF;
+  padding: 3px;
+  display: block;
+  margin:auto;
+  margin-top: 5px;
+}
+
+h2 {
+  text-align: center;
+}
