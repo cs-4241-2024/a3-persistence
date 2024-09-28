@@ -111,14 +111,20 @@ app.put('/update', async (req, res) => {
 
         console.log({ _id: objectId }, "Query to update document");
 
+        const currentCost = parseFloat(req.body.cost);
+        const currentTax = parseFloat(req.body.tax);
+        
+        const newTotal = currentCost * (1 + currentTax);
+        console.log(newTotal, "newTotal");
+
         const result = await collection.updateOne(
             { _id: objectId },
             { $set: { 
                 item: req.body.item,
                 description: req.body.description,
-                cost: req.body.cost,
-                tax: req.body.tax,
-                total: req.body.total,
+                cost: parseFloat(req.body.cost),
+                tax: parseFloat(req.body.tax),
+                total: newTotal,
                 tag: req.body.tag,
                 user: req.body.user
             }}

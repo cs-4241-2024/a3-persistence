@@ -30,8 +30,14 @@ Include a very brief summary of your project here. Images are encouraged, along 
 add a little more detail about what it does.
 
 ## Technical Achievements
-- **Tech Achievement 5**: I got 100% on all four lighthouse tests
+- **Tech Achievement 3**: I got 100% on all four lighthouse tests
 ![alt text](image.png)
 
-### Design/Evaluation Achievements
-- **Design Achievement 1**: I followed the following tips from the W3C Web Accessibility Initiative...
+![alt text](image-1.png)
+
+- **Tech Achievement 4**: The dotenv middleware package loads environment variables from the .env file in process.env. Holds database login info.
+The express middleware provides the framework for the express server. The server type hosting this app is express.
+The cookie-session middleware uses cookies to store user session data.
+The path middleware provides utilities for working with the directory paths.
+The compression middleware compresses the bodies for requests that go through it. Reduces the size of the response body.
+The MongodDB middleware is the driver for MongoDB. This is the database used to store the information within the application.
