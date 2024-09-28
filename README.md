@@ -1,9 +1,15 @@
 --## a3-joeyc5565
 Name: Joseph Caproni
-Glitch Link:
+Glitch Link: https://a4joeyc5565.glitch.me/
 Include a very brief summary of your project here. Be sure to include the CSS positioning technique you used, and any required instructions to use your application.
 
 App lets you add grocery items to a list. It calculates the total cost of each one based upon the sales tax inputed. To add an item press submit. To edit an item, press the edit button on the item you wish to modify, and change the fields in the top box. Press submit to apply the changes to the table. To delete an item press the delete button next to the respective item.
+
+Used the mvp.css layout. I modified the color scheme and minified it to pass the lighthouse test with 100% on everything.
+
+I encountered challenges getting the data to edit by prepopulating my form and then submitting it to edit an existing entry.
+
+I used the cookie-session to authenticate the login and referenced the user in that cookie to ensure that the data in the table that they saw was relevant only to them.
 
 
 ## Technical Achievements
