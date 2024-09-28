@@ -4,9 +4,11 @@
   "description": "Descr",
   "author": "Me",
   "scripts": {
-    "start": "node server.js"
+    "start": "node server.js",
+    "minify-css": "postcss styles.css -o styles.min.css"
   },
   "dependencies": {
+    "compression": "^1.7.4",
     "cookie-session": "^2.1.0",
     "dotenv": "^16.4.5",
     "express": "^4.21.0",
@@ -15,5 +17,8 @@
   },
   "engines": {
     "node": "20.x"
+  },
+  "devDependencies": {
+    "cssnano": "^7.0.6"
   }
 }

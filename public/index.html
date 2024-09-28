@@ -1,10 +1,52 @@
 <!doctype html>
 <html lang='en'>
-  <body>
-    <form action='/login' method='POST'>
-      <input type='text' name='username'>
-      <input type='password' name='password'>
-      <input type='submit'>
-    </form>
-  </body>
+
+<head>
+  <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Login to your account and add items to your own personal shopping ">
+  <title>Dynamic Shopping List</title>
+  <style>
+    .preload{visibility:hidden}
+    table{border:1px solid var(--color-bg-secondary);border-radius:var(--border-radius);border-spacing:0;display:inline-block;max-width:100%;overflow-x:auto;padding:0;white-space:nowrap}
+    table td,table th,table tr{padding:.4rem .8rem;text-align:var(--justify-important)}
+    input[type="text"],input[type="password"],input[type="submit"]{background-color:#fff;color:#000;border:1px solid #000;padding:.5rem;font-size:1rem}
+    input[type="text"]::placeholder,input[type="password"]::placeholder{color:#666}
+    h1 {
+      font-size: 2rem;
+      min-height: 3rem;
+    }
+    form {
+      display: block;
+      min-width: 300px;
+    }
+
+  </style>
+  <link rel="preload" href="css/mvp.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript><link rel="stylesheet" href="css/mvp.css"></noscript>
+</head>
+
+<body class="preload">
+  <h1>Login to Account</h1>
+  <form method='POST' id="loginForm">
+    <label for="username">Username:</label>
+    <input type="text" id="username" name="username">
+  
+    <label for="password">Password:</label>
+    <input type="password" id="password" name="password">
+
+    <button type="submit">Login</button>
+  </form>
+</body>
+<script>
+  window.addEventListener('load',()=>document.body.classList.remove('preload'));
+  document.getElementById('loginForm').addEventListener('submit',async e=>{e.preventDefault();
+    sessionStorage.setItem('username',document.getElementsByName('username')[0].value);
+    const r=await fetch('/login',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({username:document.getElementsByName('username')[0].value,password:document.getElementsByName('password')[0].value})});
+    const d=await r.json();
+    d.user?window.location.href='/main.html':alert('Login failed');
+  });
+
+</script>
+
 </html>
