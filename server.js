@@ -7,7 +7,6 @@ const { MongoClient, ObjectId, MongoCursorInUseError } = require("mongodb")
 
 const app = express()
 
-// Enable compression middleware
 app.use(compression())
 
 app.use(express.urlencoded({ extended: true }))
