@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Assignment Tracker</title>
+    <link rel="stylesheet" href="css/main.css" />
+  </head>
+  <body>
+    <div class="container" aria-labelledby="assignment-tracker">
+      <h1 id="assignment-tracker">Assignment Tracker</h1>
+
+      <!-- add task -->
+      <form id="taskForm" class="form-group" aria-labelledby="task-form">
+        <label for="task" class="visually-hidden">Enter task</label>
+        <input
+          type="text"
+          id="task"
+          placeholder="Enter task"
+          required
+          aria-label="Enter task"
+        />
+
+        <label for="priority" class="visually-hidden">Select priority</label>
+        <select id="priority" aria-label="Select priority">
+          <option value="Low">Low</option>
+          <option value="High">High</option>
+        </select>
+
+        <button type="submit" aria-label="Add task">Add Task</button>
+      </form>
+
+      <!-- display table -->
+      <table id="taskTable" aria-label="Task list">
+        <thead>
+          <tr>
+            <th scope="col">Assignment</th>
+            <th scope="col">Priority</th>
+            <th scope="col">Created on</th>
+            <th scope="col">Finished?</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </div>
+
+    <script src="js/main.js"></script>
+  </body>
+</html>

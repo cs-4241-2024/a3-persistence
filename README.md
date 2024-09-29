@@ -1,113 +1,89 @@
-Assignment 3 - Persistence: Two-tier Web Application with Database, Express server, and CSS template
-===
+# Task Tracker Application
 
-Due: September 19th, by 11:59 AM.
+**Hosted at**: [Task Tracker](https://a3-yourname.glitch.me)
 
-This assignnment continues where we left off, extending it to use the most popular Node.js server framework (express), 
-a database (mongodb), and a CSS application framework / template of your choice (Boostrap, Material Design, Semantic UI, Pure etc.)
+## Overview
 
-Baseline Requirements
----
+The **Assignment Tracker** allows users to create and delete tasks. Each task can be given a priority of high or low and is stored in a MongoDB database. You can log in with either GitHub or create an account using a username and password to manage tasks.
 
-Your application is required to implement the following functionalities:
+This project was developed as part of Assignment 3 which focuses on persistence.
 
-- a `Server`, created using Express (no alternatives will be accepted for this assignment)
-- a `Results` functionality which shows all data associated with a logged in user (except passwords)
-- a `Form/Entry` functionality which allows users to add, modify, and delete data items (must be all three!) associated with their user name / account. 
-- Persistent data storage in between server sessions using [mongodb](https://www.mongodb.com/cloud/atlas) (you *must* use mongodb for this assignment). You can use either the [official mongodb node.js library](https://www.npmjs.com/package/mongodb) or use the [Mongoose library](https://www.npmjs.com/package/mongoose), which enables you to define formal schemas for your database. Please be aware that the course staff cannot provide in-depth support for use of Mongoose.  
-- Use of a [CSS framework or template](https://github.com/troxler/awesome-css-frameworks). 
-This should do the bulk of your styling/CSS for you and be appropriate to your application. 
-For example, don't use [NES.css](https://nostalgic-css.github.io/NES.css/) (which is awesome!) unless you're creating a game or some type of retro 80s site.
+## Goals of the Application
 
-Your application is required to demonstrate the use of the following concepts:  
+- **User Authentication**: Users can log in using either GitHub OAuth or a sign up for an account.
+- **Task Management**: Users can create and delete their tasks, which are stored in a MongoDB database for persistence between sessions.
+- **Minimalistic UI**: The CSS design focuses on simplicity and user friendliness.
+- **Security**: Data is securely handled as sessions are being maintained using Passport.js.
 
-HTML:  
-- HTML input tags and form fields of various flavors (`<textarea>`, `<input>`, checkboxes, radio buttons etc.)
-- HTML that can display all data *for a particular authenticated user*. Note that this is different from the last assignnment, which required the display of all data in memory on the server.
+## Features
 
-Note that it might make sense to have two pages for this assignment, one that handles login / authentication, and one that contains the rest of your application.
-For example, when visiting the home page for the assignment, users could be presented with a login form. After submitting the login form, if the login is 
-successful, they are taken to the main application. If they fail, they are sent back to the login to try again. For this assignment, it is acceptable to simply create 
-new user accounts upon login if none exist, however, you must alert your users to this fact.  
+1. **User Authentication**:
 
-CSS:  
-- CSS styling should primarily be provided by your chosen template/framework. 
-Oftentimes a great deal of care has been put into designing CSS templates; 
-don't override their stylesheets unless you are extremely confident in your graphic design capabilities. 
-The idea is to use CSS templates that give you a professional looking design aesthetic without requiring you to be a graphic designer yourself.
+   - Users can log in via **GitHub OAuth** or **locally**.
+   - New users can sign up, and returning users can log in and manage their tasks.
 
-JavaScript:  
-- At minimum, a small amount of front-end JavaScript to get / fetch data from the server. 
-See the [previous assignment](https://github.com/cs-4241-23/shortstack) for reference.
+2. **Task Management**:
 
-Node.js:  
-- A server using Express and a persistent database (mongodb).
+   - **Add Tasks**: Users can create tasks and give them a priority level (High/Low).
+   - **View Tasks**: Tasks are displayed in a table format, showing the task description, priority, date it was created, and a delete button for when they are finished.
+   - **Delete Tasks**: Users can remove tasks by clicking the delete button.
 
-General:  
-- Your site should achieve at least 90% on the `Performance`, `Best Practices`, `Accessibility`, and `SEO` tests 
-using Google [Lighthouse](https://developers.google.com/web/tools/lighthouse) (don't worry about the PWA test, and don't worry about scores for mobile devices).
-Test early and often so that fixing problems doesn't lead to suffering at the end of the assignment. 
+3. **Persistent Data Storage**:
 
-Deliverables
----
+   - The tasks are all saved in **MongoDB**, so data is stored between sessions and be accessed by any device that connects to the website.
 
-Do the following to complete this assignment:
+4. **Responsive Design**:
+   - The user interface is responsive and simplistic to help users easily navigate and use the site its purpose but still designed with intent.
 
-1. Implement your project with the above requirements. I'd begin by converting your A2 assignment. First, change the server to use express. Then, modify the server to use mongodb instead of storing data locally. Last but not least, implement user accounts and login. User accounts and login is often the hardest part of this assignment, so budget your time accordingly.
-2. If you developed your project locally, deploy your project to Glitch (unless completing the alternative server technical acheivement described below), and fill in the appropriate fields in your package.json file.
-3. Test your project to make sure that when someone goes to your main page on Glitch (or an alternative server), it displays correctly.
-4. Ensure that your project has the proper naming scheme `a3-yourfirstname-yourlastname` so we can find it.
-5. Fork this repository and modify the README to the specifications below.
-6. Create and submit a Pull Request to the original repo. Name the pull request using the following template: `a3-firstname-lastname`.
+## Challenges Faced
 
-Acheivements
----
+- **Authentication Integration**: I also implemented GitHub OAuth alongside locally having an account. This required use of Passport.js, which took some time to properly get to implement.
+- **MongoDB Integration**: Ensuring persistent data storage with MongoDB, especially when trying to organize tasks and attach them to the user who created it was a bit of a hurdle.
+- **Responsive Design**: I had to mess with CSS a bit to provide a mobile friendly and uniform design across login, signup, and the actual assignment tracker,
 
-Below are suggested technical and design achievements. You can use these to help boost your grade up to an A and customize the 
-assignment to your personal interests, for a maximum twenty additional points and a maximum grade of a 100%. 
-These are recommended acheivements, but feel free to create/implement your own... just make sure you thoroughly describe what you did in your README, 
-why it was challenging, and how many points you think the achievement should be worth. 
-ALL ACHIEVEMENTS MUST BE DESCRIBED IN YOUR README IN ORDER TO GET CREDIT FOR THEM.
+## Authentication Strategy
 
-*Technical*
-- (10 points) Implement OAuth authentication, perhaps with a library like [passport.js](http://www.passportjs.org/). 
-*You must either use Github authenticaion or provide a username/password to access a dummy account*. 
-Course staff cannot be expected, for example, to have a personal Facebook, Google, or Twitter account to use when grading this assignment. 
-Please contact the course staff if you have any questions about this. THIS IS THE HARDEST ACHEIVEMENT OFFERED IN WEBWARE. You have been warned!  
-- (5 points) Instead of Glitch, host your site on a different service like [Heroku](https://www.heroku.com) or [Digital Ocean](https://www.digitalocean.com). Make sure to describe this a bit in your README. What was better about using the service you chose as compared to Glitch? What (if anything) was worse? 
-- (5 points) Get 100% (not 98%, not 99%, but 100%) in all four lighthouse tests required for this assignment.
-- (up to 5 points) List up to five Express middleware packages you used and a short (one sentence) summary of what each one does. THESE MUST BE SEPARATE PACKAGES THAT YOU INSTALL VIA NPM, NOT THE ONES INCLUDED WITH EXPRESS. So express.json and express.static don't count here. For a starting point on middleware, see [this list](https://expressjs.com/en/resources/middleware.html).
+The application uses **Passport.js** for authentication. I used it in this project in two different ways:
 
-*Design/UX*
-- (10 points) Make your site accessible using the [resources and hints available from the W3C](https://www.w3.org/WAI/), Implement/follow twelve tips from their [tips for writing](https://www.w3.org/WAI/tips/writing/), [tips for designing](https://www.w3.org/WAI/tips/designing/), and [tips for development](https://www.w3.org/WAI/tips/developing/). *Note that all twelve must require active work on your part*. 
-For example, even though your page will most likely not have a captcha, you don't get this as one of your twelve tips to follow because you're effectively 
-getting it "for free" without having to actively change anything about your site. 
-Contact the course staff if you have any questions about what qualifies and doesn't qualify in this regard. 
-List each tip that you followed and describe what you did to follow it in your site.
-- (5 points) Describe how your site uses the CRAP principles in the Non-Designer's Design Book readings. 
-Which element received the most emphasis (contrast) on each page? 
-How did you use proximity to organize the visual information on your page? 
-What design elements (colors, fonts, layouts, etc.) did you use repeatedly throughout your site? 
-How did you use alignment to organize information and/or increase contrast for particular elements. 
-Write a paragraph of at least 125 words *for each of four principles* (four paragraphs, 500 words in total). 
+1. **Local Strategy**: Allows users to create an account and log in using a username and password. For security reasons, the passwords are hashed using **bcryptjs**.
+2. **GitHub OAuth**: Users can also log in via GitHub, where their GitHub ID is connected to their specific assignment tracker and tasks in the table.
 
-Sample Readme (delete the above when you're ready to submit, and modify the below so with your links and descriptions)
----
+As many modern sites where log in is necessary provide a local sign up option as well as others like using a google email option, I decided to use both to replicate that experience.
 
-## Your Web Application Title
+## CSS Framework Used
 
-your glitch (or alternative server) link e.g. http://a3-charlie-roberts.glitch.me
-
-Include a very brief summary of your project here. Images are encouraged, along with concise, high-level text. Be sure to include:
-
-- the goal of the application
-- challenges you faced in realizing the application
-- what authentication strategy you chose to use and why (choosing one because it seemed the easiest to implement is perfectly acceptable)
-- what CSS framework you used and why
-  - include any modifications to the CSS framework you made via custom CSS you authored
+The project uses **custom CSS** to structure the login page, task tracker page, and other visual components.
 
 ## Technical Achievements
-- **Tech Achievement 1**: I used OAuth authentication via the GitHub strategy
 
-### Design/Evaluation Achievements
-- **Design Achievement 1**: I followed the following tips from the W3C Web Accessibility Initiative...
+1. **OAuth Authentication**: Implemented GitHub OAuth by using **Passport.js**, which gave users the option to log in with their GitHub account. This required redirect URIs and an understanding of how to handle user data.
+2. **MongoDB Integration**: Used **MongoDB** to persist data between log ins. All tasks are stored in MongoDB and connected with the logged in user. Tasks can be seen in the display and deleted, and the data is accessible after logging out and then back in.
+3. **User Session Management**: Managed user sessions via **express-session** to ensure persistent login states across different pages.
+
+## Design and UX Achievements
+
+1. **Custom CSS Styling**: I manually styled the CSS, to focus on a engaging but simple site that is focused on its main purpose but also visually neat and professional.
+   - **Contrast**: Emphasized the buttons (Login, Sign Up, Add Task) by giving them a color that constrasts against the darker background.
+   - **Repetition**: Repeated design elements such as button shapes, input fields, and spacing.
+   - **Alignment**: Carefully aligned all elements in a box like formatting to create a clean and organized layout.
+   - **Proximity**: Grouped related items like inputs boxes and task table columns to help the user easily grasp how to navigate the site and use it for its given purpose.
+
+## Lighthouse Performance
+
+The application was tested using **Google Lighthouse**.
+
+## Lighthouse Scores:
+
+- Performance: 100
+- Best Practices: 100
+- Accessibility: 84
+- SEO: 90
+
+## How to Run
+
+1. Clone this repository or fork it.
+2. Install dependencies using `npm install`.
+3. Set up a **MongoDB Atlas** account and add your database URI to the `.env` file.
+4. Create GitHub OAuth credentials and add them to the `.env` file.
+5. Run the app with `npm start`.
+6. The app should be available at `http://localhost:3000` or your Glitch deployment.
