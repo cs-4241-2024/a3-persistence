@@ -7,8 +7,7 @@ app.use(express.static("public"))
 app.use(express.json());
 app.use(express.urlencoded({extended: true})); // gets data sent by defaut form actions
 
-const uri = `mongodb+srv://${process.env.USER}:${process.env.PASS}@cluster0.gpytm.mongodb.net/`
-console.log(uri);
+const uri = `mongodb+srv://${process.env.USER}:${process.env.PASS}@${process.env.HOST}`
 const client = new MongoClient(uri) // Create a MongoClient
 
 let collection = null
@@ -21,24 +20,19 @@ run()
 
 // route to get all docs
 app.get("/docs", async (req, res) => {
+  // const userId = req.session.userId; // cookie & user verification?
   if (collection !== null) { // if you already connected
     const docs = await collection.find({}).toArray() // .find is a query; empty {} means to return everything in an array
     res.json(docs) // convert array into JSON for response
   }
 })
 
-app.listen(3000)
 
-
-
-// ------------------------------------------------------------------------------------------
-
-
-
+// -----------------------------* Now the actual server code *-----------------------------------
 
 // app.use applies whatever function in the parenthesis to every request
 
-let appdata = [] // name price quantity total
+//let appdata = [] // name price quantity total
 //{"name": "apple", "price": "1.00", "quantity": "5", "total": "5.00", "id":"0"}
 
 
@@ -59,10 +53,10 @@ function validateForm(x) { // severside function for handling invalid (blank) da
 // // });
 
 
-// // get main HTML page
-// app.get("/", (req, res) => {
-//   res.sendFile("index.html")
-// });
+// get main HTML page
+app.get("/", (req, res) => {
+  res.sendFile("index.html")
+});
 
 
 // // GET request for results
@@ -77,40 +71,70 @@ function validateForm(x) { // severside function for handling invalid (blank) da
 // });
 
 
-let nextId = 1;
-app.post('/add', (req, res) => { // POST request to add new item
-  if (validateForm) {
-    const newEntry = { ...req.body, id: nextId++ };
-    newEntry.total = newEntry.price * newEntry.quantity;
-    appdata.push(newEntry);
-    res.status(201).json(appdata);
-    console.log("Item added.");
-  }
-  else {
-    console.log("Failed to add item. Please check your inputs.");
-  }
+// app.post( '/add', async (req,res) => {
+//   const result = await collection.insertOne( req.body )
+//   res.json( result )
+// })
 
+
+//let nextId = 1;
+app.post('/add', async (req, res) => { // POST request to add new item
+  try {
+    const userId = req.session.userId; // cookie?
+    req.total = req.price * req.quantity;
+    const { name, price, quantity, total} = req.body;
+
+    const result = await collection.insertOne({
+      name,
+      price,
+      quantity,
+      total,
+      userId,
+    });
+    res.status(201).json(result);
+    console.log("Item added.");
+  } 
+  catch (error) {
+    console.error("Error adding document:", error);
+    res.status(500).send("Error adding document.");
+  }
+  // const newEntry = { ...req.body, id: nextId++ };
+  // newEntry.total = newEntry.price * newEntry.quantity;
+  // appdata.push(newEntry);
+  // res.status(201).json(appdata);
 });
 
 
-// app.delete('/remove/:id', (req, res) => { // DELETE request
-//   const id = parseInt(req.params.id, 10);
-//   appdata = appdata.filter(entry => entry.id !== id);
-//   res.json(appdata);
-//   console.log(`Deleting entry with ID: ${id}`);
-// });
+app.delete('/remove/:id', async (req, res) => { // DELETE request
+  const result = await collection.deleteOne({
+    _id: new ObjectId(req.params.id),
+  });
 
-// app.put("/update/:id", async (req, res) => { // PUT request (for editing)
-//   const id = parseInt(req.params.id, 10);
-//   const entryIndex = appdata.findIndex(entry => entry.id === id);
+  res.json(result);
+  console.log(`Deleting entry with ID: ${req.params.id}`);
+});
 
-//   if (entryIndex === -1) { // checks if findIndex failed
-//     return res.status(404).send('Entry not found');
-//   }
+
+app.put("/update/:id", async (req, res) => { // PUT request (for editing)
+  const id = parseInt(req.params.id);
+  //const entryIndex = appdata.findIndex(entry => entry.id === id);
+  // if (entryIndex === -1) { // checks if findIndex failed
+  //   return res.status(404).send('Entry not found');
+  // }
   
-//   const updatedEntry = { ...req.body, id }; // spreads the array into individual elements
-//   updatedEntry.total = updatedEntry.price * updatedEntry.quantity;
-//   appdata[entryIndex] = updatedEntry;
+  req.total = req.price * req.quantity;
+  const {name, price, quantity, total} = req.body;
+
+  const result = await collection.updateOne(
+    { _id: new ObjectId(id) },
+    { $set: {name, price, quantity, total} }
+  );
+
+  // const updatedEntry = { ...req.body, id }; // spreads the array into individual elements
+  // updatedEntry.total = updatedEntry.price * updatedEntry.quantity;
+  // appdata[entryIndex] = updatedEntry;
   
-//   res.json(appdata); // sending the PUT response back to server
-// });
+  res.json(result); // sending the PUT response back to server
+});
+
+app.listen(process.env.PORT || 3000);

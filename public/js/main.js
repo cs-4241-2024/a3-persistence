@@ -1,42 +1,28 @@
 // FRONT-END (CLIENT) JAVASCRIPT HERE
 
 const submit = async function(event) {
-  // stop form submission from trying to load a new .html page for displaying results...
-  // this was the original browser behavior and still remains to this day
-  event.preventDefault()
+  event.preventDefault() // stop form submission from trying to load a new .html page
   
   const entry = {
       name: document.querySelector("#name").value, // item to buy (string)
       price: document.querySelector("#price").value, // price (number)
       quantity: document.querySelector("#quantity").value, // quantity (number)
   };
-  
-  if (entry.name == null || entry.name == "") {
-      alert("Name must be filled out");
-      return false;
-  }
-  if (entry.price == null || entry.price == "") {
-    alert("Price must be filled out");
-    return false;
-  }
-  if (entry.quantity == null || entry.quantity == "") {
-    alert("Quantity must be filled out");
-    return false;
-  }
-  
+
   const body = JSON.stringify(entry);
-  
+  console.log(entry);
+
   try {
-    const response = await fetch("/submit", {
+    const response = await fetch("/add", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body,
     });
     
-    const data = await response.json();
+    const data = await response.json(event);
     if (response.ok) {
       console.log("Received data:", data);
-      displayRows(data); // call displayRows function after sending data
+      displayRows(); // call displayRows function after sending data
     } 
     else {
       console.error("Failed to submit data.");
@@ -48,9 +34,16 @@ const submit = async function(event) {
   }
 };
 
-const displayRows = function(dataset) { // adds entries to the table, along with edit/delete button
+const displayRows = async function() { // adds entries to the table, along with edit/delete button
   const tabBody = document.querySelector("#body");
   tabBody.innerHTML = "";
+
+  const response = await fetch("/docs");
+  if (!response.ok) { // check if fetch failed
+    throw new Error("Failed to fetch documents.");
+  }
+
+  const dataset = await response.json(); // get entered dataset to add row
 
   for (const entry of dataset) {
     const tr = document.createElement("tr");
@@ -88,11 +81,11 @@ const displayRows = function(dataset) { // adds entries to the table, along with
 
 const deleteRow = async function(id) {
   try {
-    const response = await fetch(`/delete/${id}`, {method: "DELETE"});
+    const response = await fetch(`/remove/${id}`, {method: "DELETE"});
     if (response.ok) { // successfully deleted
       const data = await response.json();
       console.log("Received data:", data);
-      displayRows(data); // display the new data
+      displayRows(); // display the new data
     } else {
       console.error("Failed to delete entry.");
     }
@@ -101,42 +94,35 @@ const deleteRow = async function(id) {
   }
 };
 
-function editRow(entry) {
-  document.querySelector("#editItem").value = entry.name;
-  document.querySelector("#editPrice").value = entry.price;
-  document.querySelector("#editQuantity").value = entry.quantity;
-  document.querySelector("#editId").value = entry.id;
-  document.querySelector("#editor").style.display = "block";
+function editRow = async (entry) => {
+  const id = entry._id;
 
-  document.querySelector("#editForm").onsubmit = async function(event) {
-    event.preventDefault();
-
-    const id = document.querySelector("#editId").value;
-    const updatedEntry = {
-      name: document.querySelector("#editItem").value,
-      price: document.querySelector("#editPrice").value,
-      quantity: document.querySelector("#editQuantity").value,
-    };
-
-    try {
-      const response = await fetch(`/editor/${id}`, {
-        method: "PUT",
-        headers: {"Content-Type": "application/json"},
-        body: JSON.stringify(updatedEntry),
-      });
-      if (response.ok) {
-        const data = await response.json();
-        console.log("Updated data:", data);
-        displayRows(data);
-        stopEdit();
-      } else {
-        console.error("Failed to update entry.");
-      }
-    } catch (error) {
-      console.error("Error:", error);
-    }
+  const updatedEntry = {
+    name: entry.name,
+    price: entry.price,
+    quantity: entry.quantity
   };
-}
+
+  try {
+    const response = await fetch(`/update/${id}`, {
+      method: "PUT",
+      headers: {"Content-Type": "application/json"},
+      body: JSON.stringify(updatedEntry),
+    });
+    if (response.ok) {
+      const data = await response.json();
+      console.log("Updated data:", data);
+      displayRows();
+      stopEdit();
+    } 
+    else {
+      console.error("Failed to update entry.");
+    }
+  } 
+  catch (error) {
+    console.error("Error:", error);
+  }
+};
 
 function stopEdit() { // closes editing tab
   document.querySelector("#editor").style.display = "none";
@@ -147,9 +133,11 @@ window.onload = async function() { // make sure elements are loaded
   const button = document.querySelector("#submit");
   button.onclick = submit; // call submit when button is pressed
   
-  const form = document.querySelector('#name');
-  const priceInput = document.querySelector('#price');
-  const quantityInput = document.querySelector('#quantity');
+  displayRows();
+
+  // const form = document.querySelector('#name');
+  // const priceInput = document.querySelector('#price');
+  // const quantityInput = document.querySelector('#quantity');
   
   //const data = await response.json();
   //displayRows(data);
@@ -161,6 +149,6 @@ window.onload = async function() { // make sure elements are loaded
   }).then((response) => response.json())
   .then((data) => { // retrieve all the data
       //console.log(data); // print response
-      displayRows(data);
+      displayRows();
     })
 };
