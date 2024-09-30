@@ -4,91 +4,123 @@ const express = require('express'),
       port = 3000,
       app = express(),
       path = require('node:path'),
-      mongodb = require('mongodb'),
+      { MongoClient, ObjectId } = require('mongodb'),
       cookie = require('cookie-session');
 
-app.use(express.static('./public'));
+app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.json());
 
+app.use(cookie({
+  secret: 'secret-key',
+  resave: false,
+  saveUninitialized: true
+}));
+
+
 const uri = `mongodb+srv://${process.env.USER}:${process.env.PASSWORD}@${process.env.HOST}`; 
-const clientOptions = {serverApi: {version: '1', strict: true, deprecationErrors: true}};
+let client = new MongoClient(uri);
+let db, usersCollection, gamesCollection;
 
-const userSchema = new mongodb.Schema({
-    username: {type: String, unique: true, required: true},
-    password: {type: String, required: true}
-}, {versionKey: false});
-const User = mongodb.model("User", userSchema);
+async function connectDB() {
+  try{
+    await client.connect();
+    db = client.db('gameDatabase'); 
+    usersCollection = db.collection('users');
+    gamesCollection = db.collection('games');
+  console.log("Connected to MongoDB");
+  } catch (err) {
+    console.error("MongoDB connection error:", err);
+  }
+}
 
-const gameSchema = new mongodb.Schema({
-    opponent: { type: String, required: true },
-    gameDate: { type: Date, required: true },
-    location: { type: String, required: true },
-    user: { type: mongodb.Types.ObjectId, required: true, ref: "User" }
-}, { versionKey: false });
-const Game = mongodb.model("Game", gameSchema);
+connectDB();
 
-async function run() {
-    await mongodb.connect(uri, clientOptions);
-    console.log("Connected to MongoDB successfully!");
-
-    app.post('/login', express.json(), async (req, res) => {
-        let user = await User.findOne({ 'username': req.body.username });
-        if (user === null) {
-            user = await new User(req.body).save();
-            req.session.user = user._id;
-            res.set('Content-Type', 'text/plain');
-            res.send("new");
+app.post('/login', express.json(), async (req, res) => {
+    try {
+        const user = await usersCollection.findOne({ username: req.body.username });
+        if (!user) {
+            const newUser = await usersCollection.insertOne(req.body);
+            req.session.user = newUser.insertedId;
+            return res.json({ success: true, message: 'New account created' });
         } else if (user.password === req.body.password) {
             req.session.user = user._id;
             res.redirect(303, '/');
         } else {
             res.sendStatus(403);
         }
-    });
+    } catch (error) {
+        console.error("Error during login:", error);
+        res.status(500).send("Error during login");
+    }
+});
 
-    app.post('/logout', (req, res) => {
-        req.session = null;
-        res.send("Logged out");
-    });
+app.post('/logout', (req, res) => {
+    req.session = null;
+    res.send("Logged out");
+});
 
-    app.use((req, res, next) => {
-        if (req.session && req.session.user) {
-            next();
-        } else {
-            res.sendFile('/login.html', { root: path.join(__dirname, 'public') });
-        }
-    });
+app.use((req, res, next) => {
+    if (req.session && req.session.user) {
+        next();
+    } else {
+        res.sendFile('/index.html', { root: path.join(__dirname, 'public') });
+    }
+});
 
-    app.get('/', (req, res) => {
-        res.sendFile("/main.html", { root: path.join(__dirname, 'public') });
-    });
+app.get('/', (req, res) => {
+    res.sendFile("/main.html", { root: path.join(__dirname, 'public') });
+});
 
-    app.get("/getGames", async (req, res) => {
-        const games = await Game.find({ user: req.session.user });
+app.get("/getGames", async (req, res) => {
+    try {
+        const games = await gamesCollection.find({ user: ObjectId(req.session.user) }).toArray();
         res.json(games);
-    });
+    } catch (error) {
+        console.error("Error getting games:", error);
+        res.status(500).send("Error getting games");
+    }
+});
 
-    app.post("/addGame", async (req, res) => {
-        const game = new Game({
+app.post("/addGame", async (req, res) => {
+    try {
+        const game = {
             opponent: req.body.opponent,
             gameDate: new Date(req.body.gameDate),
             location: req.body.location,
-            user: req.session.user
-        });
-        const newGame = await game.save();
-        res.json(newGame);
-    });
+            user: ObjectId(req.session.user)
+        };
+        const newGame = await gamesCollection.insertOne(game);
+        res.json(newGame.ops[0]);
+    } catch (error) {
+        console.error("Error adding game:", error);
+        res.status(500).send("Error adding game");
+    }
+});
 
-    app.put("/updateGame", async (req, res) => {
-        const game = await Game.findOneAndUpdate({ _id: req.body._id, user: req.session.user }, req.body, { new: true });
-        res.json(game);
-    });
+app.put("/updateGame", async (req, res) => {
+    try {
+        const updatedGame = await gamesCollection.findOneAndUpdate(
+            { _id: ObjectId(req.body._id), user: ObjectId(req.session.user) },
+            { $set: req.body },
+            { returnOriginal: false }
+        );
+        res.json(updatedGame.value);
+    } catch (error) {
+        console.error("Error updating game:", error);
+        res.status(500).send("Error updating game");
+    }
+});
 
-    app.delete("/deleteGame", async (req, res) => {
-        await Game.deleteOne({ _id: req.body._id, user: req.session.user });
+app.delete("/deleteGame", async (req, res) => {
+    try {
+        await gamesCollection.deleteOne({ _id: ObjectId(req.body._id), user: ObjectId(req.session.user) });
         res.send("Game deleted");
-    });
-}
+    } catch (error) {
+        console.error("Error deleting game:", error);
+        res.status(500).send("Error deleting game");
+    }
+});
 
-run()
-app.listen(3000)
+app.listen(port, () => {
+    console.log(`Server is running on port ${port}`);
+});
