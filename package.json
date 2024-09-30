@@ -1,14 +1,22 @@
 {
+    "name": "glitch-mvp-node",
+    "version": "0.1.0",
+    "description": "A simple Node app built on fastify, instantly up and running.",
+    "main": "server.js",
+    "scripts": {
+        "start": "node server.js"
+    },
     "dependencies": {
-      "bootstrap": "^5.3.3",
-      "cookie-session": "^2.1.0",
-      "dotenv": "^16.4.5",
-      "express": "^4.21.0",
-      "mime": "^4.0.4",
-      "mongodb": "^6.9.0",
-      "mongoose": "^8.6.2"
+        "bootstrap": "^5.3.3",
+        "cookie-session": "^2.1.0",
+        "dotenv": "^16.4.5",
+        "express": "^4.21.0",
+        "mime": "^4.0.4",
+        "mongodb": "^6.9.0",
+        "mongoose": "^8.6.3",
+        "node.js": "^0.0.1-security"
     },
     "engines": {
-      "node": "16.x"
+        "node": "^16.x"
     }
-  }
+}

@@ -4,7 +4,7 @@ const express = require('express'),
       port = 3000,
       app = express(),
       path = require('node:path'),
-      mongoose = require('mongoose'),
+      mongodb = require('mongodb'),
       cookie = require('cookie-session');
 
 app.use(express.static('./public'));
@@ -13,22 +13,22 @@ app.use(express.json());
 const uri = `mongodb+srv://${process.env.USER}:${process.env.PASSWORD}@${process.env.HOST}`; 
 const clientOptions = {serverApi: {version: '1', strict: true, deprecationErrors: true}};
 
-const userSchema = new mongoose.Schema({
+const userSchema = new mongodb.Schema({
     username: {type: String, unique: true, required: true},
     password: {type: String, required: true}
 }, {versionKey: false});
-const User = mongoose.model("User", userSchema);
+const User = mongodb.model("User", userSchema);
 
-const gameSchema = new mongoose.Schema({
+const gameSchema = new mongodb.Schema({
     opponent: { type: String, required: true },
     gameDate: { type: Date, required: true },
     location: { type: String, required: true },
-    user: { type: mongoose.Types.ObjectId, required: true, ref: "User" }
+    user: { type: mongodb.Types.ObjectId, required: true, ref: "User" }
 }, { versionKey: false });
-const Game = mongoose.model("Game", gameSchema);
+const Game = mongodb.model("Game", gameSchema);
 
 async function run() {
-    await mongoose.connect(uri, clientOptions);
+    await mongodb.connect(uri, clientOptions);
     console.log("Connected to MongoDB successfully!");
 
     app.post('/login', express.json(), async (req, res) => {
