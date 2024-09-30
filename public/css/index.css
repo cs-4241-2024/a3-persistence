@@ -1,7 +1,7 @@
 
 body {
     background-color: rgb(0, 122, 51); /* Celtics green */
-    color: green;
+    color: white;
     font-family: 'Dosis', sans-serif;
     font-family: 'Oswald', sans-serif;
     text-align: center; 
@@ -11,6 +11,15 @@ form{
     padding: 10px 60px;
     font-size: 18px;
     border-radius: 5px;
+}
+
+label{
+    text-align: center; 
+}
+
+input{
+    text-align: center; 
+    color: rgb(0, 122, 51);
 }
 
 h1{

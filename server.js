@@ -24,9 +24,9 @@ let db, usersCollection, gamesCollection;
 async function connectDB() {
   try{
     await client.connect();
-    db = client.db('gameDatabase'); 
-    usersCollection = db.collection('users');
-    gamesCollection = db.collection('games');
+    db = client.db('Celtics_Game_Tracker'); 
+    usersCollection = db.collection('User');
+    gamesCollection = db.collection('Games');
   console.log("Connected to MongoDB");
   } catch (err) {
     console.error("MongoDB connection error:", err);
