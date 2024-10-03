@@ -13,14 +13,14 @@ const submit = async function(event) {
   console.log(entry);
 
   try {
-    const response = await fetch("/add", {
+    const response = await fetch("/submit", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body,
     });
     
-    const data = await response.json(event);
     if (response.ok) {
+      const data = await response.json(event);
       console.log("Received data:", data);
       displayRows(); // call displayRows function after sending data
     } 
@@ -71,17 +71,18 @@ const displayRows = async function() { // adds entries to the table, along with 
 
     const deleteButton = document.createElement("button");
     deleteButton.textContent = "Delete";
-    deleteButton.onclick = () => deleteRow(entry.id);
+    deleteButton.onclick = () => deleteRow(entry._id);
     tr.appendChild(deleteButton);
 
     tabBody.appendChild(tr);
-    console.log("entry: " + entry);
+    //console.log("entry: " + dataset);
   }
 };
 
 const deleteRow = async function(id) {
+  console.log(`Attempting to delete entry with ID: ${id}`);
   try {
-    const response = await fetch(`/remove/${id}`, {method: "DELETE"});
+    const response = await fetch(`/delete/${id}`, {method: "DELETE"});
     if (response.ok) { // successfully deleted
       const data = await response.json();
       console.log("Received data:", data);
@@ -94,35 +95,42 @@ const deleteRow = async function(id) {
   }
 };
 
-function editRow = async (entry) => {
-  const id = entry._id;
+function editRow(entry) {
+  document.querySelector("#editItem").value = entry.name;
+  document.querySelector("#editPrice").value = entry.price;
+  document.querySelector("#editQuantity").value = entry.quantity;
+  document.querySelector("#editId").value = entry._id;
+  document.querySelector("#editor").style.display = "block";
 
-  const updatedEntry = {
-    name: entry.name,
-    price: entry.price,
-    quantity: entry.quantity
-  };
+  document.querySelector("#editForm").onsubmit = async function(event) {
+    event.preventDefault();
 
-  try {
-    const response = await fetch(`/update/${id}`, {
-      method: "PUT",
-      headers: {"Content-Type": "application/json"},
-      body: JSON.stringify(updatedEntry),
-    });
-    if (response.ok) {
-      const data = await response.json();
-      console.log("Updated data:", data);
-      displayRows();
-      stopEdit();
-    } 
-    else {
-      console.error("Failed to update entry.");
+    const id = document.querySelector("#editId").value;
+    const updatedEntry = {
+      name: document.querySelector("#editItem").value,
+      price: document.querySelector("#editPrice").value,
+      quantity: document.querySelector("#editQuantity").value,
+    };
+
+    try {
+      const response = await fetch(`/update/${id}`, {
+        method: "PUT",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify(updatedEntry),
+      });
+      if (response.ok) {
+        const data = await response.json();
+        console.log("Updated data:", data);
+        displayRows();
+        stopEdit();
+      } else {
+        console.error("Failed to update entry.");
+      }
+    } catch (error) {
+      console.error("Error:", error);
     }
-  } 
-  catch (error) {
-    console.error("Error:", error);
-  }
-};
+  };
+}
 
 function stopEdit() { // closes editing tab
   document.querySelector("#editor").style.display = "none";
@@ -143,12 +151,12 @@ window.onload = async function() { // make sure elements are loaded
   //displayRows(data);
   
   let taskObj = {};
-  fetch( '/', {
-    method:'POST',
-    body: JSON.stringify(taskObj),// send (empty) body to server
-  }).then((response) => response.json())
-  .then((data) => { // retrieve all the data
-      //console.log(data); // print response
-      displayRows();
-    })
+  // fetch( '/data', {
+  //   method:'POST',
+  //   body: JSON.stringify(taskObj),// send (empty) body to server
+  // }).then((response) => response.json())
+  // .then((data) => { // retrieve all the data
+  //     //console.log(data); // print response
+  //     displayRows();
+  //   })
 };

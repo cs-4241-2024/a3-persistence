@@ -78,18 +78,18 @@ app.get("/", (req, res) => {
 
 
 //let nextId = 1;
-app.post('/add', async (req, res) => { // POST request to add new item
+app.post("/submit", async (req, res) => { // POST request to add new item
   try {
-    const userId = req.session.userId; // cookie?
-    req.total = req.price * req.quantity;
-    const { name, price, quantity, total} = req.body;
+    //const userId = req.session.userId; // cookie?
+    //let {name, price, quantity, total} = req.body;
+    //req.body.total = req.price * req.quantity;
 
     const result = await collection.insertOne({
-      name,
-      price,
-      quantity,
-      total,
-      userId,
+      name: req.body.name,
+      price: req.body.price,
+      quantity: req.body.quantity,
+      total: req.body.price * req.body.quantity,
+      //userId: userId,
     });
     res.status(201).json(result);
     console.log("Item added.");
@@ -105,30 +105,30 @@ app.post('/add', async (req, res) => { // POST request to add new item
 });
 
 
-app.delete('/remove/:id', async (req, res) => { // DELETE request
+app.delete('/delete/:id', async (req, res) => { // DELETE request
   const result = await collection.deleteOne({
     _id: new ObjectId(req.params.id),
   });
-
   res.json(result);
-  console.log(`Deleting entry with ID: ${req.params.id}`);
+  console.log("Entry successfully deleted.");
 });
 
 
 app.put("/update/:id", async (req, res) => { // PUT request (for editing)
-  const id = parseInt(req.params.id);
+  const id = req.params.id;
   //const entryIndex = appdata.findIndex(entry => entry.id === id);
   // if (entryIndex === -1) { // checks if findIndex failed
   //   return res.status(404).send('Entry not found');
   // }
   
-  req.total = req.price * req.quantity;
-  const {name, price, quantity, total} = req.body;
-
+  let {name, price, quantity, total} = req.body;
+  total = req.body.price * req.body.quantity;
+  console.log("id", id);
   const result = await collection.updateOne(
     { _id: new ObjectId(id) },
     { $set: {name, price, quantity, total} }
   );
+  
 
   // const updatedEntry = { ...req.body, id }; // spreads the array into individual elements
   // updatedEntry.total = updatedEntry.price * updatedEntry.quantity;
