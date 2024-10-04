@@ -1,26 +1,41 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <title>Celtics Tracker Login</title>
-    <meta charset="utf-8">
-    <meta name="description" content="Login Page">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-    <script src="/public/js/index.js"></script>
-    <link rel="icon" href="data:;base64,iVBORw0KGgo=">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
     <link rel="stylesheet" href="/css/index.css">
-  </head>
-  <body>
-    <h1 class="display-1 text-center">Upcoming Celtics Games</h1>
-    <form id="login-form"> 
-      <div class="mb-3">
-        <label for="username" class="form-label">Username: </label>
-        <input id="username" class="form-control" name="username" type="text" placeholder="Username">
-      </div>
-      <div class="mb-3">
-        <label for="password"  class="form-label">Password: </label>
-        <input id="password" class="form-control" name="password" type="password" placeholder="Password">
-      </div>
-      <button id="login-btn" class="btn btn-primary" type="submit">Login</button>
+</head>
+<body>
+    <h1>Login to Celtics Game Tracker</h1>
+    <form id="login-form">
+        <label for="username">Username:</label>
+        <input type="text" id="username" name="username" required>
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" required>
+        <button type="submit">Login</button>
     </form>
-  </body>
+
+    <script>
+        document.getElementById("login-form").addEventListener("submit", async (e) => {
+            e.preventDefault();
+            const username = document.getElementById("username").value;
+            const password = document.getElementById("password").value;
+            
+            const response = await fetch('/login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ username, password })
+            });
+
+            if (response.ok) {
+                window.location.href = '/main.html';  // Redirect to main page
+            } else {
+                alert('Login failed.');
+            }
+        });
+    </script>
+</body>
 </html>

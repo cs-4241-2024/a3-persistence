@@ -1,49 +1,51 @@
 require('dotenv').config();
 
 const express = require('express'),
-      port = 3000,
-      app = express(),
-      path = require('node:path'),
-      { MongoClient, ObjectId } = require('mongodb'),
-      cookie = require('cookie-session');
+    port = 3000,
+    app = express(),
+    path = require('node:path'),
+    { MongoClient, ObjectId } = require('mongodb'),
+    cookie = require('cookie-session');
 
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.json());
 
 app.use(cookie({
-  secret: 'secret-key',
-  resave: false,
-  saveUninitialized: true
+    name: 'session',
+    secret: 'secret-key',
+    resave: false,
+    saveUninitialized: true
 }));
 
-
-const uri = `mongodb+srv://${process.env.USER}:${process.env.PASSWORD}@${process.env.HOST}`; 
+const uri = `mongodb+srv://${process.env.USER}:${process.env.PASS}@${process.env.HOST}`;
 let client = new MongoClient(uri);
 let db, usersCollection, gamesCollection;
 
 async function connectDB() {
-  try{
-    await client.connect();
-    db = client.db('Celtics_Game_Tracker'); 
-    usersCollection = db.collection('User');
-    gamesCollection = db.collection('Games');
-  console.log("Connected to MongoDB");
-  } catch (err) {
-    console.error("MongoDB connection error:", err);
-  }
+    try {
+        await client.connect();
+        db = await client.db('Celtics_Game_Tracker');
+        usersCollection = db.collection('User');
+        gamesCollection = db.collection('Games');
+        console.log("Connected to MongoDB");
+    } catch (err) {
+        console.error("MongoDB connection error:", err);
+    }
 }
 
-connectDB();
+connectDB()
 
-app.post('/login', express.json(), async (req, res) => {
+app.post('/login', async (req, res) => {
     try {
-        const user = await usersCollection.findOne({ username: req.body.username });
+        console.log(req.body);
+        let user = await usersCollection.findOne({ name: req.body.username });
+        console.log(user);
         if (!user) {
-            const newUser = await usersCollection.insertOne(req.body);
-            req.session.user = newUser.insertedId;
+            let newUser = await usersCollection.insertOne(req.body);
+            req.session.user = newUser.username;
             return res.json({ success: true, message: 'New account created' });
         } else if (user.password === req.body.password) {
-            req.session.user = user._id;
+            req.session.user = newUser.password;
             res.redirect(303, '/');
         } else {
             res.sendStatus(403);
@@ -65,10 +67,6 @@ app.use((req, res, next) => {
     } else {
         res.sendFile('/index.html', { root: path.join(__dirname, 'public') });
     }
-});
-
-app.get('/', (req, res) => {
-    res.sendFile("/main.html", { root: path.join(__dirname, 'public') });
 });
 
 app.get("/getGames", async (req, res) => {
