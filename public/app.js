@@ -28,32 +28,44 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function fetchData() {
     console.log('Fetching student data...');
-    fetch('/data')
-      .then(response => {
-        if (response.ok) {
-          return response.json();
-        } else {
-          console.error('Failed to fetch data:', response.status);
-          throw new Error('Failed to fetch data');
-        }
-      })
-      .then(data => {
-        console.log('Student data fetched:', data);
-        studentTableBody.innerHTML = '';
-        data.forEach(student => {
-          const row = `<tr>
-                          <td>${student.name}</td>
-                          <td>${student.age}</td>
-                          <td>${student.year}</td>
-                          <td>${student.grade}</td>
-                          <td>${student.status}</td>
-                      </tr>`;
-          studentTableBody.innerHTML += row;
-        });
-      })
-      .catch(error => {
-        console.error('Error fetching student data:', error);
+
+    fetch('/data', {
+      method: 'GET',
+      headers: { 'Cache-Control': 'no-cache' }  // Prevent caching
+    })
+    .then(response => {
+      if (!response.ok) {
+        console.error('Failed to fetch data:', response.status);
+        throw new Error('Failed to fetch data');
+      }
+      return response.json();
+    })
+    .then(data => {
+      if (!Array.isArray(data)) {
+        console.error('Fetched data is not an array:', data);
+        return;
+      }
+      console.log('Student data fetched:', data);
+      
+      // Clear existing table rows
+      studentTableBody.innerHTML = '';
+      
+      // Append new rows to the table
+      data.forEach(student => {
+        const row = document.createElement('tr');
+        row.innerHTML = `
+          <td>${student.name}</td>
+          <td>${student.age}</td>
+          <td>${student.year}</td>
+          <td>${student.grade}</td>
+          <td>${student.status}</td>
+        `;
+        studentTableBody.appendChild(row);
       });
+    })
+    .catch(error => {
+      console.error('Error fetching student data:', error);
+    });
   }
 
   studentForm.addEventListener('submit', event => {
@@ -75,7 +87,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }).then(response => {
       if (response.ok) {
         console.log('Student added/updated successfully');
-        fetchData();
+        fetchData();  // Refresh the student list
       } else {
         console.error('Error adding/updating student:', response.status);
         alert('Error adding/updating student');
@@ -98,7 +110,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }).then(response => {
       if (response.ok) {
         console.log('Student deleted successfully');
-        fetchData();
+        fetchData();  // Refresh the student list
       } else {
         console.error('Error deleting student:', response.status);
         alert('Error deleting student');
@@ -108,7 +120,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  fetchData();
+  fetchData();  // Fetch student data on page load
 });
 
 
