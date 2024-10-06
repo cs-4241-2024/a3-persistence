@@ -156,7 +156,7 @@ function refreshTodoList(taskObj) {
   // Add a delete button
   let tdActions = tr.insertCell(-1);
   let deleteBtn = document.createElement("button");
-  deleteBtn.innerHTML = "Delete";
+  deleteBtn.innerHTML = "Delete Task";
   deleteBtn.onclick = function () {
     deleteTask(taskObj._id, tr);  // Pass the task's _id and the row element to delete
   };
