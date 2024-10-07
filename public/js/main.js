@@ -142,21 +142,24 @@ window.onload = async function() { // make sure elements are loaded
   button.onclick = submit; // call submit when button is pressed
   
   displayRows();
+  
+  //let taskObj = {};
 
-  // const form = document.querySelector('#name');
-  // const priceInput = document.querySelector('#price');
-  // const quantityInput = document.querySelector('#quantity');
-  
-  //const data = await response.json();
-  //displayRows(data);
-  
-  let taskObj = {};
-  // fetch( '/data', {
-  //   method:'POST',
-  //   body: JSON.stringify(taskObj),// send (empty) body to server
-  // }).then((response) => response.json())
-  // .then((data) => { // retrieve all the data
-  //     //console.log(data); // print response
-  //     displayRows();
-  //   })
+  document.getElementById("logout").addEventListener("click", async () => {
+    console.log("Requesting to log out");
+    try {
+      const response = await fetch("/logout", {
+        method: "POST",
+      });
+
+      if (response.ok) {
+        window.location.href = "/login.html";
+      } else {
+        console.error("Failed to log out");
+      }
+    } catch (error) {
+      console.error("Error during logout:", error);
+    }
+  });
+ 
 };
