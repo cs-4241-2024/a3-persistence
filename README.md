@@ -28,14 +28,14 @@ W3C
 CRAP principles
 
 
-- ### Contrast:
+-Contrast:
 On my to-do list website, the element that receives the most contrast is the header, which features a bold, larger-sized font compared to the rest of the content on the page. I used a darker font color for the title to ensure it stands out from the background, immediately drawing attention when a user visits the page. Additionally, the background gradient—a mix of soft blues, greens, and beige tones—creates a smooth contrast against the text, which is primarily a dark shade. Buttons are given an accent color (brownish tones, like #D2AC8A) to make them pop, especially when compared to the lighter background. This contrast ensures that users immediately know where the interactive elements are and helps them easily locate the key action points.
 
-- ### Repetition:
+-Repetition:
 Repetition is achieved through the consistent use of a singular font family (Montserrat) across the entire website. This maintains uniformity in the design and provides a polished, cohesive look. The use of consistent spacing and margin throughout both the form elements and the table ensures that the layout feels unified. The button design remains the same across all actions, with the same primary color and hover effect, reinforcing a sense of familiarity for the user. This repetition creates predictability in the interface, helping users feel more comfortable navigating the site, as they don’t have to guess where to click or how elements will behave based on inconsistent designs.
 
-- ### Alignment:
+-Alignment:
 Alignment is used to maintain a clean, organized layout. All content is center-aligned, which gives a symmetrical, balanced look to the site, helping it feel approachable and easy to navigate. The form elements are stacked vertically with consistent left alignment for the labels, ensuring clarity in user input areas. Meanwhile, the table of tasks is center-aligned to give a neat, organized feel, with columns arranged consistently across the page. This vertical and horizontal alignment creates an easy-to-follow structure, enabling users to find information quickly and ensuring that the design appears orderly, reducing any visual clutter.
 
-- ### Proximity:
+-Proximity:
 Proximity is used to group related elements together to enhance the user’s understanding of the interface. For instance, in the to-do form, the label and input fields for each task detail (e.g., task name, priority, creation date) are placed in close proximity, indicating they belong together and should be interacted with sequentially. Similarly, the table columns group related information (like task details) together, while actions like delete buttons are placed close to the respective task to clarify their function. This grouping helps users process information efficiently, as related elements are visually close, reducing cognitive load and making the interface more intuitive.
