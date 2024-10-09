@@ -3,11 +3,14 @@
 
   <head>
     <title>Shopping List</title>
-    <meta charset="utf-8">
-    <script src="js/main.js"></script>
+
+    <meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1"/>
+    <meta name="description" content="A shopping list." />
+  
+    <script src="js/client.js"></script>
     <link rel="stylesheet" href="css/main.css">
-    <link rel="stylesheet" href="https://fonts.google.com/specimen/Kanit">
-    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/picnic">
+
     <!-- get rid of favicon error -->
     <link rel="icon" href="data:;base64,iVBORw0KGgo=">
   </head>
@@ -17,14 +20,14 @@
 
     <body>Login:</body>
 
-    <form id="login" action="/login" method="POST">
+    <form id="login" action="/login" method="post">
       <input type="text" id="login_username" name="username" placeholder="Username:" required autofocus>
       <input type="password" id="login_password" name="password" placeholder="Password:" required>
       <input type="submit">
     </form>
     <p></p>
     <body>Signup:</body>
-    <form id="signup" action="/register" method="POST">
+    <form id="signup" action="/register" method="post">
       <input type="text" id="signup_username" name="username" placeholder="Username:" required>
       <input type="password" id="signup_password" name="password" placeholder="Password:" required>
       <input type="submit">

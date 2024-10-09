@@ -12,7 +12,7 @@ document.addEventListener("DOMContentLoaded", () => {
         body: JSON.stringify({ username, password }),
       });
       if (response.ok) {
-        window.location.href = "/index.html";
+        window.location.href = "/main.html";
       } else {
         console.error("Login failed");
         alert("Login failed. Incorrect credentials.");

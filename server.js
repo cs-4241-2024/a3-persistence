@@ -1,3 +1,5 @@
+require('dotenv').config();
+
 const express = require ("express");
 const app = express();
 const { MongoClient, ObjectId } = require("mongodb"); // objID is for db key 
@@ -11,10 +13,12 @@ app.use(express.static("public"))
 app.use(express.json());
 app.use(express.urlencoded({extended: true})); // gets data sent by defaut form actions
 
-const uri = `mongodb+srv://${process.env.USER}:${process.env.PASS}@${process.env.HOST}`
+const uri = `mongodb+srv://${process.env.MUSER}:${process.env.PASS}@${process.env.HOST}`
+console.log(uri);
 const client = new MongoClient(uri) // Create a MongoClient
 
 app.get("/", (req, res) => { // get login page
+  // res.redirect("/login.html");
   res.sendFile("login.html", { root: "public" });
 });
 
@@ -32,18 +36,19 @@ app.post("/register", async (req, res) => {
   async function registerUser() {
     try {
       const authnDB = await client.db("a3-database").collection("logins");
-      const hashedPassword = password; //hash this if time
+      const hPassword = password; //hash this if time
       
       const user = await authnDB.findOne({ username: username });
-      if (username === user.username) { // check for duplicate username
-        console.error("Error during registration; username already exists. ", error);
+      if (user) { // check for username existing
+        console.log("Error during registration; username already exists.");
+        res.status(400).send("Registration error.");
       }
       else {
         const result = await authnDB.insertOne({
         username: username,
-        password: hashedPassword,
+        password: hPassword,
         });
-      res.status(201).send("User registered successfully.");
+        res.status(201).send("User registered successfully.");
       }
     } 
     catch (error) {
@@ -68,7 +73,7 @@ app.post("/login", async (req, res) => {
         res.redirect("/main.html");
       } else {
         console.log("Incorrect credentials");
-        res.redirect("/index.html");
+        res.status(401).send("Unauthorized credentials.");
       }
     } catch (error) {
       console.error("Error during authentication:", error);
@@ -87,40 +92,7 @@ const requireAuth = (req, res, next) => {
   }
 };
 
-let collection = null
-
-async function run() {
-  await client.connect()
-  collection = await client.db("a3-database").collection("a3") // grab data
-}
-run()
-
-
-// route to get all docs
-app.get("/docs", async (req, res) => {
-  const userId = req.session.userId; // cookie & user verification?
-  if (collection !== null) { // if you already connected
-    const docs = await collection.find({}).toArray() // .find is a query; empty {} means to return everything in an array
-    res.json(docs) // convert array into JSON for response
-  }
-})
-
-
 // -----------------------------* Now the actual server code *-----------------------------------
-
-// app.use applies whatever function in the parenthesis to every request
-
-//let appdata = [] // name price quantity total
-//{"name": "apple", "price": "1.00", "quantity": "5", "total": "5.00", "id":"0"}
-
-app.use((req, res, next) => {
-  if (collection !== null) {
-    next();
-  } 
-  else {
-    res.status(503).send(); // service unavailable
-  }
-});
 
 function validateForm(x) { // serverside function for handling invalid (blank) data
   //var x = document.forms["myForm"]["fname"].value;
@@ -134,12 +106,40 @@ function validateForm(x) { // serverside function for handling invalid (blank) d
 }
 
 // get main HTML page
-app.get("/index.html", requireAuth, (req, res) => {
-  res.sendFile("index.html")
+app.get("/main.html", requireAuth, (req, res) => {
+  res.sendFile("main.html", { root: "public" });
 });
 
 // protect routes
 app.use(requireAuth);
+
+
+let collection = null
+
+async function run() {
+  await client.connect()
+  collection = await client.db("a3-database").collection("a3") // grab data
+}
+run()
+
+
+// route to get all docs
+app.get("/docs", async (req, res) => {
+  const userId = req.session.userId; // cookie & user verification?
+  if (collection !== null) { // if you already connected
+    const docs = await collection.find({userId}).toArray(); // .find is a query; empty {} means to return everything in an array
+    res.json(docs); // convert array into JSON for response
+  }
+})
+
+app.use((req, res, next) => {
+  if (collection !== null) {
+    next();
+  } 
+  else {
+    res.status(503).send(); // service unavailable
+  }
+});
 
 
 //let nextId = 1;
@@ -150,7 +150,7 @@ app.post("/submit", async (req, res) => { // POST request to add new item
       price: req.body.price,
       quantity: req.body.quantity,
       total: req.body.price * req.body.quantity,
-      //userId: userId,
+      userId: req.session.userId
     });
     res.status(201).json(result);
     console.log("Item added.");
@@ -192,6 +192,12 @@ app.put("/update/:id", async (req, res) => { // PUT request (for editing)
   // appdata[entryIndex] = updatedEntry;
   
   res.json(result); // sending the PUT response back to server
+});
+
+app.post("/logout", (req, res) => {
+  req.session = null;
+  console.log("User logged out");
+  res.redirect("/login.html");
 });
 
 app.listen(process.env.PORT || 3000);

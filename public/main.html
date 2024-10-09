@@ -2,15 +2,20 @@
 <html lang="en">
   <head>
     <title>CS4241 Assignment 2</title>
-    <meta charset="utf-8">
+
+    <meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1"/>
+    <meta name="description" content="A shopping list." />
+
     <script src="js/main.js"></script>
     <link rel="stylesheet" href="css/main.css">
-    <link rel="stylesheet" href="https://fonts.google.com/specimen/Kanit">
-    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/picnic">
+
     <!-- get rid of favicon error -->
     <link rel="icon" href="data:;base64,iVBORw0KGgo=">
   </head>
   <body>
+    <button type="logout" id="logout">Logout</button>
+    <p></p>
     <h1>
       Shopping List
     </h1>
@@ -44,7 +49,7 @@
         <label for="editItem">Item:</label>
         <input type="text" id="editItem" name="name" required /><br />
         <label for="editPrice">Price:</label>
-        <input type="number" id="editPrice" name="price" min="0" required /><br />
+        <input type="number" id="editPrice" name="price" min="0" step="any" required /><br />
         <label for="editQuantity">Quantity:</label>
         <input type="number" id="editQuantity" name="quantity" min="1" required /><br />
         <input type="hidden" id="editId" />
