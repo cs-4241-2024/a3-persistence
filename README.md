@@ -1,117 +1,49 @@
 Assignment 3 - Persistence: Two-tier Web Application with Database, Express server, and CSS template
 ===
+## Grocery List Application
 
-Due: September 19th, by 11:59 AM.
+https://a3-krutgoat.glitch.me/ 
 
-This assignment continues where we left off, extending it to use the most popular Node.js server framework (express), 
-a database (mongodb), and a CSS application framework / template of your choice (Boostrap, Material Design, Semantic UI, Pure etc.)
+- This app is a grocery/item list that was created using an Express server, MongoDB, and a CSS template.
 
-Baseline Requirements
----
+- Users can register a new account or log in with an existing account. 
 
-Your application is required to implement the following functionalities:
+- Authentication and keeping the data the same between users was implemented using cookies and plaintext credentials (because using plaintext was simple and I did not have tiem to implement hashing.)
 
-- a `Server`, created using Express (no alternatives will be accepted for this assignment)
-- a `Results` functionality which shows all data associated with a logged in user (except passwords)
-- a `Form/Entry` functionality which allows users to add, modify, and delete data items (must be all three!) associated with their user name / account. 
-- Persistent data storage in between server sessions using [mongodb](https://www.mongodb.com/cloud/atlas) (you *must* use mongodb for this assignment). You can use either the [official mongodb node.js library](https://www.npmjs.com/package/mongodb) or use the [Mongoose library](https://www.npmjs.com/package/mongoose), which enables you to define formal schemas for your database. Please be aware that the course staff cannot provide in-depth support for use of Mongoose.  
-- Use of a [CSS framework or template](https://github.com/troxler/awesome-css-frameworks). 
-This should do the bulk of your styling/CSS for you and be appropriate to your application. 
-For example, don't use [NES.css](https://nostalgic-css.github.io/NES.css/) (which is awesome!) unless you're creating a game or some type of retro 80s site.
+- I needed to get rid of the pink colors (such as in the buttons, borders, backgrounds) from my original A2 assignment so that there would be enough contrast for the accessibility requirements. 
 
-Your application is required to demonstrate the use of the following concepts:  
+- The CSS framework I used is picnic because it seamlessly integrated with my code.
+  - I modified the h1 and h2 headings within my CSS file to match the framework colors (blue); originally those were pink and brown from my own design of my site.
 
-HTML:  
-- HTML input tags and form fields of various flavors (`<textarea>`, `<input>`, checkboxes, radio buttons etc.)
-- HTML that can display all data *for a particular authenticated user*. Note that this is different from the last assignnment, which required the display of all data in memory on the server.
+- The middleware packages that I used were cookies, requiring authentication, and compression. 
 
-Note that it might make sense to have two pages for this assignment, one that handles login / authentication, and one that contains the rest of your application.
-For example, when visiting the home page for the assignment, users could be presented with a login form. After submitting the login form, if the login is 
-successful, they are taken to the main application. If they fail, they are sent back to the login to try again. For this assignment, it is acceptable to simply create 
-new user accounts upon login if none exist, however, you must alert your users to this fact.  
 
-CSS:  
-- CSS styling should primarily be provided by your chosen template/framework. 
-Oftentimes a great deal of care has been put into designing CSS templates; 
-don't override their stylesheets unless you are extremely confident in your graphic design capabilities. 
-The idea is to use CSS templates that give you a professional looking design aesthetic without requiring you to be a graphic designer yourself.
-
-JavaScript:  
-- At minimum, a small amount of front-end JavaScript to get / fetch data from the server. 
-See the [previous assignment](https://github.com/cs-4241-23/shortstack) for reference.
-
-Node.js:  
-- A server using Express and a persistent database (mongodb).
-
-General:  
-- Your site should achieve at least 90% on the `Performance`, `Best Practices`, `Accessibility`, and `SEO` tests 
-using Google [Lighthouse](https://developers.google.com/web/tools/lighthouse) (don't worry about the PWA test, and don't worry about scores for mobile devices).
-Test early and often so that fixing problems doesn't lead to suffering at the end of the assignment. 
-
-Deliverables
----
-
-Do the following to complete this assignment:
-
-1. Implement your project with the above requirements. I'd begin by converting your A2 assignment. First, change the server to use express. Then, modify the server to use mongodb instead of storing data locally. Last but not least, implement user accounts and login. User accounts and login is often the hardest part of this assignment, so budget your time accordingly.
-2. If you developed your project locally, deploy your project to Glitch (unless completing the alternative server technical acheivement described below), and fill in the appropriate fields in your package.json file.
-3. Test your project to make sure that when someone goes to your main page on Glitch (or an alternative server), it displays correctly.
-4. Ensure that your project has the proper naming scheme `a3-yourfirstname-yourlastname` so we can find it.
-5. Fork this repository and modify the README to the specifications below.
-6. Create and submit a Pull Request to the original repo. Name the pull request using the following template: `a3-firstname-lastname`.
-
-Acheivements
----
-
-Below are suggested technical and design achievements. You can use these to help boost your grade up to an A and customize the 
-assignment to your personal interests, for a maximum twenty additional points and a maximum grade of a 100%. 
-These are recommended acheivements, but feel free to create/implement your own... just make sure you thoroughly describe what you did in your README, 
-why it was challenging, and how many points you think the achievement should be worth. 
-ALL ACHIEVEMENTS MUST BE DESCRIBED IN YOUR README IN ORDER TO GET CREDIT FOR THEM.
-
-*Technical*
-- I implemented authentication with usernames and passwords. Here is a "dummy account" that you can access with some grocery list items in it:
+## Technical Achievements
+- **Tech Achievement 1**: I implemented authentication with usernames and passwords. Here is a "dummy account" that you can access with some grocery list items in it:
 
   username: kroot
   password: 123
 
-- I got a 100% in all four of my lighthouse tests for this assignment.  
+- **Tech Achievement 2**: I got a 100% in all four of my lighthouse tests for this assignment.  
 
-*Design/UX*
+- **Tech Achievement 3**: I used some middleware for my app. Here is what I used:
+  1. cookies in order to store userID for shopping list info and logins
+  2. requiring authentication in order to be able to access main.js or any other page 
+  3. compression for accessibilty, to compress the text for better performance
 
-- 
-
-- (10 points) Make your site accessible using the [resources and hints available from the W3C](https://www.w3.org/WAI/), Implement/follow twelve tips from their [tips for writing](https://www.w3.org/WAI/tips/writing/), [tips for designing](https://www.w3.org/WAI/tips/designing/), and [tips for development](https://www.w3.org/WAI/tips/developing/). *Note that all twelve must require active work on your part*. 
-For example, even though your page will most likely not have a captcha, you don't get this as one of your twelve tips to follow because you're effectively 
-getting it "for free" without having to actively change anything about your site. 
-Contact the course staff if you have any questions about what qualifies and doesn't qualify in this regard. 
-List each tip that you followed and describe what you did to follow it in your site.
-- (5 points) Describe how your site uses the CRAP principles in the Non-Designer's Design Book readings. 
-Which element received the most emphasis (contrast) on each page? 
-How did you use proximity to organize the visual information on your page? 
-What design elements (colors, fonts, layouts, etc.) did you use repeatedly throughout your site? 
-How did you use alignment to organize information and/or increase contrast for particular elements. 
-Write a paragraph of at least 125 words *for each of four principles* (four paragraphs, 500 words in total). 
-
-Sample Readme (delete the above when you're ready to submit, and modify the below so with your links and descriptions)
----
-
-## Your Web Application Title
-
-your glitch (or alternative server) link e.g. http://a3-charlie-roberts.glitch.me
-
-Include a very brief summary of your project here. Images are encouraged, along with concise, high-level text. Be sure to include:
-
-- the goal of the application
-- challenges you faced in realizing the application
-- what authentication strategy you chose to use and why (choosing one because it seemed the easiest to implement is perfectly acceptable)
-- what CSS framework you used and why
-  - include any modifications to the CSS framework you made via custom CSS you authored
-- the five Express middleware packages you used and a short (one sentence) summary of what each one does. If you use a custom function for *one* (and one alone) middleware please 
-add a little more detail about what it does.
-
-## Technical Achievements
-- **Tech Achievement 1**: I used OAuth authentication via the GitHub strategy
 
 ### Design/Evaluation Achievements
-- **Design Achievement 1**: I followed the following tips from the W3C Web Accessibility Initiative...
+- **Design Achievement 1**: I used the CRAP principles in my site:
+
+- The most contrast for each item on the page is between the text in the table and the background (black and white)
+- I use the color blue (using the CSS template I chose) repeatedly throughout my site. 
+- The elements in the site are center-asigned and large, so that they are easily readable. 
+- The table groups grocery list items together in a list in order of insertion. I used proximity to keep the "edit" and "delete" buttons next to each other, in the "settings" category/column. Also, adding new items has the input fields all in the same place, above the table. 
+
+- **Design Achievement 2**: I made my site accessible. Here is what I implemented:
+  1. Identify page language: I used \<html lang="en"\> in my form.
+  2. Write code that adapts to the user’s technology: I used the line "name="viewport"content="width=device-width, initial-scale=1" to adapt to the user's technology.
+  3. Provide sufficient contrast between foreground and background: I provided sharp contrast between my text, background, headers, and buttons. 
+  4. Provide clear instructions: I have placeholders in all my HTML forms that explain to the user what to type. The application also responds to a user successfully (or unsuccessfully) signing up or registering with an alert/popup.
+  5. Provide easily identifiable feedback: The login and signup fields are required, so my app alerts the user to fill in the field if they try to submit a blank form.
+  6. Provide informative, unique page titles: My entry page is titled "Login or Sign up" with a sub-heading stating "Access the shopping list". Once signed in, the headings are "Shopping list" and "things to buy" with a list of items under it. 
