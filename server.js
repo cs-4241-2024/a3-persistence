@@ -40,12 +40,14 @@ app.post('/login', async (req, res) => {
         console.log("here");
         let user = await usersCollection.findOne({ name: req.body.username });
         if (!user) {
+            console.log("user");
             let newUser = await usersCollection.insertOne(req.body);
-            req.session.user = newUser.username;
+            req.session.user = newUser.insertedId;
             return res.json({ success: true, message: 'New account created' });
         } 
         if (user.password === req.body.password) {
-            req.session.user = newUser.password;
+            console.log("password");
+            req.session.user = user._id;
             res.redirect(303, '/');
         } else {
             res.sendStatus(403);
@@ -56,9 +58,10 @@ app.post('/login', async (req, res) => {
     }
 });
 
-app.post('/logout', (req, res) => {
-    req.session = null;
-    res.send("Logged out");
+app.post('/logout', async (req, res) => {
+    console.log("logout");
+    req.session.user = null;
+    return res.json({ success: true })
 });
 
 app.use((req, res, next) => {
@@ -71,7 +74,7 @@ app.use((req, res, next) => {
 
 app.get('/getGames', async (req, res) => {
     try {
-        const games = await gamesCollection.find({ user: ObjectId(req.session.username) }).toArray();
+        const games = await gamesCollection.find().toArray();
         res.json(games);
     } catch (error) {
         console.error("Error getting games:", error);
@@ -79,16 +82,17 @@ app.get('/getGames', async (req, res) => {
     }
 });
 
-app.post('/submitGame', async (req, res) => {
+app.post('/addGame', async (req, res) => {
     try {
+        console.log("submit game");
         console.log(req.body);
         const game = {
             opponent: req.body.opponent,
             gameDate: req.body.gameDate,
             location: req.body.location
         };
-        const newGame = await gamesCollection.insertOne(req.body);
-        return res.json({ success: true });
+        const newGame = await gamesCollection.insertOne(game);
+        return res.status(201).json(newGame.opponent);
     } catch (error) {
         console.error("Error adding game:", error);
         res.status(500).send("Error adding game");

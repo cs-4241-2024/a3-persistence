@@ -38,28 +38,31 @@ window.addEventListener('DOMContentLoaded', () => {
 
     // Function to show the game form
     function showGameForm() {
+        console.log("show game");
         const formClone = gameFormTemplate.cloneNode(true);
         const form = formClone.querySelector('form');
 
         // Handle form submission for adding a new game
         form.addEventListener('submit', async (e) => {
+            console.log("submit game")
             e.preventDefault(); // Prevent default form submission
-            const currOpponent = document.getElementById('opponent').value;
-            const currGameDate = document.getElementById('gameDate').value;
-            const currLocation = document.getElementById('location').value;
-            // const newGame = {
-            //     opponent: form.opponent.value,
-            //     gameDate: form.gameDate.value,
-            //     location: form.location.value
-            // };
 
-            try {
-                const response = await fetch('/submitGame', {
+            //const currOpponent = form.getElementById('opponent').value;
+            //const currGameDate = form.getElementById('gameDate').value;
+            //const currLocation = form.getElementById('location').value;
+            const newGame = {
+                opponent: form.opponent.value,
+                gameDate: form.gameDate.value,
+                location: form.location.value
+            };
+
+            try{
+                const response = await fetch('/addGame', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
                     },
-                    body: JSON.stringify({currOpponent, currGameDate, currLocation})
+                    body: JSON.stringify(newGame)
                 });
 
                 if (!response.ok) throw new Error('Failed to add game');
@@ -68,8 +71,9 @@ window.addEventListener('DOMContentLoaded', () => {
                 fetchGames();
                 form.remove(); // Remove the form after submission
             } catch (error) {
-                console.error('Error adding game:', error);
+                console.error('Error adding game');
             }
+            
         });
 
         // Handle cancel button
@@ -81,7 +85,7 @@ window.addEventListener('DOMContentLoaded', () => {
     }
 
     // Event listener to show the form when 'Add Game' is clicked
-    addGameBtn.addEventListener('click', async () => {
+    addGameBtn.addEventListener('click', () => {
         showGameForm();
     });
 
@@ -93,6 +97,7 @@ window.addEventListener('DOMContentLoaded', () => {
     // Event listener for logout button
     logoutBtn.addEventListener('click', async () => {
         try {
+            console.log("logged out");
             const response = await fetch('/logout', { method: 'POST' });
             if (response.ok) {
                 window.location.href = '/index.html'; // Redirect to the login page
