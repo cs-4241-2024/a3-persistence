@@ -6,6 +6,3 @@ I created a tracker to help users track upcoming Celtics games, allowing them to
 
 Light House:
 ![alt text](image.png)
-
-## Technical Achievements
-- **Tech Achievement 1**: 
