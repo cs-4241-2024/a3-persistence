@@ -115,13 +115,17 @@ app.put('/updateGame', async (req, res) => {
 
 app.delete('/deleteGame', async (req, res) => {
     try {
-        await gamesCollection.deleteOne({ _id: ObjectId(req.body._id), user: ObjectId(req.session.username) });
-        res.send("Game deleted");
+        const {_id} = req.body
+        console.log("work");
+        const result = await gamesCollection.deleteOne( {_id: new ObjectId(_id)});
+        console.log(result);
+        res.sendStatus(200);
     } catch (error) {
         console.error("Error deleting game:", error);
         res.status(500).send("Error deleting game");
     }
 });
+
 
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`);

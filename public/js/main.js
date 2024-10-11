@@ -28,13 +28,49 @@ window.addEventListener('DOMContentLoaded', () => {
         gameList.innerHTML = ''; // Clear current list
         games.forEach(game => {
             const listItem = document.createElement('div');
-            listItem.classList.add('list-group-item');
+            listItem.classList.add('list-group-item', 'd-flex', 'justify-content-between', 'align-items-center');
             listItem.innerHTML = `
-                <h5>${game.opponent} - ${new Date(game.gameDate).toLocaleDateString()} at ${game.location}</h5>
+                <div>
+                    <h5>${game.opponent} - ${new Date(game.gameDate).toLocaleDateString()} at ${game.location}</h5>
+                </div>
+                <button class="btn btn-danger btn-sm delete-game" data-id="${game._id}">Delete</button>
             `;
             gameList.appendChild(listItem);
         });
+
+        // Attach delete event listener to each delete button
+        document.querySelectorAll('.delete-game').forEach(button => {
+            button.addEventListener('click', async (e) => {
+                const gameId = e.target.getAttribute('data-id');
+                await deleteGame(gameId); // Call delete function
+                fetchGames(); // Refresh games list after deletion
+            });
+        });
     }
+
+    // Function to delete a game
+    async function deleteGame(gameId) {
+        try {
+            const response = await fetch('/deleteGame', {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({_id: gameId })
+            });
+
+            if (response.ok) {
+                const result = await response.json();
+                console.log('Game deleted successfully:', result);
+            }
+            else {
+                console.error('Failed to delete game');
+            }
+        } catch (error) {
+            console.error('Error deleting game:', error);
+        }
+    }
+
 
     // Function to show the game form
     function showGameForm() {
