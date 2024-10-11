@@ -4,7 +4,6 @@
     <title>Celtics Game Tracker</title>
     <meta charset="utf-8">
     <meta name="description" content="Celtics Game Tracker Home Page">
-    <script src="/js/main.js"></script> <!-- Correct path to JS file -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link rel="stylesheet" href="/css/main.css"> <!-- Correct path to CSS file -->
 
@@ -22,10 +21,6 @@
           <input id="gameDate" name="gameDate" class="form-control" type="date" required>
         </div>
         <div class="mb-3">
-          <label for="gameTime" class="form-label">Game Time: </label>
-          <input id="gameTime" name="gameTime" class="form-control" type="time" required>
-        </div>
-        <div class="mb-3">
           <label for="location" class="form-label">Location: </label>
           <input id="location" name="location" class="form-control" type="text" placeholder="Enter Location" required>
         </div>
@@ -36,7 +31,9 @@
       </form>
     </template>
 
-    <button id="logout" class="btn btn-danger w-75 m-3">Logout</button>
+    <div class="d-flex justify-content-center">
+      <button id="logout" class="btn btn-danger w-75 m-3">Logout</button>
+    </div>
 
     <div class="container-sm align-items-center">
       <h1 class="display-1 text-center">Upcoming Celtics Games</h1>
@@ -52,6 +49,7 @@
         <button id="add-game" class="btn btn-primary w-75 m-3">Add Game</button>
       </div>
     </div>
+    <script src="/js/main.js"></script>
   </body>
 </html>
 

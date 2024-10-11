@@ -1,17 +1,22 @@
-window.addEventListener('DOMContentLoaded', () => {
-
+window.addEventListener('DOMContentLoaded', () => { 
     const gameList = document.getElementById('gameList');
     const addGameBtn = document.getElementById('add-game');
-    const showGamesBtn = document.getElementById('show-games'); // Show games button
+    const showGamesBtn = document.getElementById('show-games');
     const logoutBtn = document.getElementById('logout');
     const gameFormTemplate = document.getElementById('game-form-template').content;
 
     // Function to fetch games from the backend and display them
     async function fetchGames() {
         try {
-            const response = await fetch('/getGames');
+            const response = await fetch('/getGames', {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+
             if (!response.ok) throw new Error('Failed to fetch games');
-            const games = await response.json();
+            const games = await response.json(); // Assuming the API returns an array of games
             displayGames(games);
         } catch (error) {
             console.error('Error fetching games:', error);
@@ -37,21 +42,24 @@ window.addEventListener('DOMContentLoaded', () => {
         const form = formClone.querySelector('form');
 
         // Handle form submission for adding a new game
-        form.addEventListener('submit', async (event) => {
-            event.preventDefault();
-            const newGame = {
-                opponent: form.opponent.value,
-                gameDate: form.gameDate.value,
-                location: form.location.value
-            };
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault(); // Prevent default form submission
+            const currOpponent = document.getElementById('opponent').value;
+            const currGameDate = document.getElementById('gameDate').value;
+            const currLocation = document.getElementById('location').value;
+            // const newGame = {
+            //     opponent: form.opponent.value,
+            //     gameDate: form.gameDate.value,
+            //     location: form.location.value
+            // };
 
             try {
-                const response = await fetch('/addGame', {
+                const response = await fetch('/submitGame', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
                     },
-                    body: JSON.stringify(newGame)
+                    body: JSON.stringify({currOpponent, currGameDate, currLocation})
                 });
 
                 if (!response.ok) throw new Error('Failed to add game');
@@ -73,12 +81,12 @@ window.addEventListener('DOMContentLoaded', () => {
     }
 
     // Event listener to show the form when 'Add Game' is clicked
-    addGameBtn.addEventListener('click', () => {
+    addGameBtn.addEventListener('click', async () => {
         showGameForm();
     });
 
     // Event listener to fetch and display games when 'Show Games' is clicked
-    showGamesBtn.addEventListener('click', () => {
+    showGamesBtn.addEventListener('click', async () => {
         fetchGames();
     });
 
@@ -96,10 +104,6 @@ window.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-});
-
-
-// Fetch and display games when the page loads
-showGamesBtn.addEventListener('click', () => {
+    // Automatically fetch and display games when the page loads
     fetchGames();
 });

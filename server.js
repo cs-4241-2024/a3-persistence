@@ -37,14 +37,14 @@ connectDB()
 
 app.post('/login', async (req, res) => {
     try {
-        console.log(req.body);
+        console.log("here");
         let user = await usersCollection.findOne({ name: req.body.username });
-        console.log(user);
         if (!user) {
             let newUser = await usersCollection.insertOne(req.body);
             req.session.user = newUser.username;
             return res.json({ success: true, message: 'New account created' });
-        } else if (user.password === req.body.password) {
+        } 
+        if (user.password === req.body.password) {
             req.session.user = newUser.password;
             res.redirect(303, '/');
         } else {
@@ -69,9 +69,9 @@ app.use((req, res, next) => {
     }
 });
 
-app.get("/getGames", async (req, res) => {
+app.get('/getGames', async (req, res) => {
     try {
-        const games = await gamesCollection.find({ user: ObjectId(req.session.user) }).toArray();
+        const games = await gamesCollection.find({ user: ObjectId(req.session.username) }).toArray();
         res.json(games);
     } catch (error) {
         console.error("Error getting games:", error);
@@ -79,26 +79,26 @@ app.get("/getGames", async (req, res) => {
     }
 });
 
-app.post("/addGame", async (req, res) => {
+app.post('/submitGame', async (req, res) => {
     try {
+        console.log(req.body);
         const game = {
             opponent: req.body.opponent,
-            gameDate: new Date(req.body.gameDate),
-            location: req.body.location,
-            user: ObjectId(req.session.user)
+            gameDate: req.body.gameDate,
+            location: req.body.location
         };
-        const newGame = await gamesCollection.insertOne(game);
-        res.json(newGame.ops[0]);
+        const newGame = await gamesCollection.insertOne(req.body);
+        return res.json({ success: true });
     } catch (error) {
         console.error("Error adding game:", error);
         res.status(500).send("Error adding game");
     }
 });
 
-app.put("/updateGame", async (req, res) => {
+app.put('/updateGame', async (req, res) => {
     try {
         const updatedGame = await gamesCollection.findOneAndUpdate(
-            { _id: ObjectId(req.body._id), user: ObjectId(req.session.user) },
+            { _id: ObjectId(req.body._id), user: ObjectId(req.session.username) },
             { $set: req.body },
             { returnOriginal: false }
         );
@@ -109,9 +109,9 @@ app.put("/updateGame", async (req, res) => {
     }
 });
 
-app.delete("/deleteGame", async (req, res) => {
+app.delete('/deleteGame', async (req, res) => {
     try {
-        await gamesCollection.deleteOne({ _id: ObjectId(req.body._id), user: ObjectId(req.session.user) });
+        await gamesCollection.deleteOne({ _id: ObjectId(req.body._id), user: ObjectId(req.session.username) });
         res.send("Game deleted");
     } catch (error) {
         console.error("Error deleting game:", error);
