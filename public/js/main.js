@@ -1,31 +1,28 @@
-window.addEventListener('DOMContentLoaded', () => { 
+window.addEventListener('DOMContentLoaded', () => {
     const gameList = document.getElementById('gameList');
     const addGameBtn = document.getElementById('add-game');
     const showGamesBtn = document.getElementById('show-games');
     const logoutBtn = document.getElementById('logout');
     const gameFormTemplate = document.getElementById('game-form-template').content;
 
-    // Function to fetch games from the backend and display them
+    // Fetch and display games
     async function fetchGames() {
         try {
             const response = await fetch('/getGames', {
                 method: 'GET',
-                headers: {
-                    'Content-Type': 'application/json'
-                }
+                headers: { 'Content-Type': 'application/json' }
             });
-
             if (!response.ok) throw new Error('Failed to fetch games');
-            const games = await response.json(); // Assuming the API returns an array of games
+            const games = await response.json();
             displayGames(games);
         } catch (error) {
             console.error('Error fetching games:', error);
         }
     }
 
-    // Function to display games in the list
+    // Display games in the list
     function displayGames(games) {
-        gameList.innerHTML = ''; // Clear current list
+        gameList.innerHTML = '';
         games.forEach(game => {
             const listItem = document.createElement('div');
             listItem.classList.add('list-group-item', 'd-flex', 'justify-content-between', 'align-items-center');
@@ -38,32 +35,28 @@ window.addEventListener('DOMContentLoaded', () => {
             gameList.appendChild(listItem);
         });
 
-        // Attach delete event listener to each delete button
         document.querySelectorAll('.delete-game').forEach(button => {
             button.addEventListener('click', async (e) => {
                 const gameId = e.target.getAttribute('data-id');
-                await deleteGame(gameId); // Call delete function
-                fetchGames(); // Refresh games list after deletion
+                await deleteGame(gameId);
+                fetchGames();
             });
         });
     }
 
-    // Function to delete a game
+    // Delete a game
     async function deleteGame(gameId) {
         try {
             const response = await fetch('/deleteGame', {
                 method: 'DELETE',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({_id: gameId })
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ _id: gameId })
             });
 
             if (response.ok) {
                 const result = await response.json();
                 console.log('Game deleted successfully:', result);
-            }
-            else {
+            } else {
                 console.error('Failed to delete game');
             }
         } catch (error) {
@@ -71,72 +64,48 @@ window.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-
-    // Function to show the game form
+    // Show the game form
     function showGameForm() {
-        console.log("show game");
         const formClone = gameFormTemplate.cloneNode(true);
         const form = formClone.querySelector('form');
 
-        // Handle form submission for adding a new game
         form.addEventListener('submit', async (e) => {
-            console.log("submit game")
-            e.preventDefault(); // Prevent default form submission
-
-            //const currOpponent = form.getElementById('opponent').value;
-            //const currGameDate = form.getElementById('gameDate').value;
-            //const currLocation = form.getElementById('location').value;
+            e.preventDefault();
             const newGame = {
                 opponent: form.opponent.value,
                 gameDate: form.gameDate.value,
                 location: form.location.value
             };
 
-            try{
+            try {
                 const response = await fetch('/addGame', {
                     method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
+                    headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(newGame)
                 });
 
                 if (!response.ok) throw new Error('Failed to add game');
 
-                // After adding the game, fetch and display updated games list
                 fetchGames();
-                form.remove(); // Remove the form after submission
+                form.remove();
             } catch (error) {
                 console.error('Error adding game');
             }
-            
         });
 
-        // Handle cancel button
-        form.querySelector('#cancelGame').addEventListener('click', () => {
-            form.remove(); // Simply remove the form if canceled
-        });
+        form.querySelector('#cancelGame').addEventListener('click', () => form.remove());
 
-        gameList.insertAdjacentElement('beforebegin', form); // Insert the form above the game list
+        gameList.insertAdjacentElement('beforebegin', form);
     }
 
-    // Event listener to show the form when 'Add Game' is clicked
-    addGameBtn.addEventListener('click', () => {
-        showGameForm();
-    });
-
-    // Event listener to fetch and display games when 'Show Games' is clicked
-    showGamesBtn.addEventListener('click', async () => {
-        fetchGames();
-    });
-
-    // Event listener for logout button
+    // Event listeners
+    addGameBtn.addEventListener('click', showGameForm);
+    showGamesBtn.addEventListener('click', fetchGames);
     logoutBtn.addEventListener('click', async () => {
         try {
-            console.log("logged out");
             const response = await fetch('/logout', { method: 'POST' });
             if (response.ok) {
-                window.location.href = '/index.html'; // Redirect to the login page
+                window.location.href = '/index.html';
             } else {
                 console.error('Failed to log out');
             }
@@ -145,6 +114,6 @@ window.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // Automatically fetch and display games when the page loads
+    // Fetch and display games on page load
     fetchGames();
 });

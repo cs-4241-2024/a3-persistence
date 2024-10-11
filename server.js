@@ -1,11 +1,10 @@
 require('dotenv').config();
-
-const express = require('express'),
-    port = 3000,
-    app = express(),
-    path = require('node:path'),
-    { MongoClient, ObjectId } = require('mongodb'),
-    cookie = require('cookie-session');
+const express = require('express');
+const port = 3000;
+const app = express();
+const path = require('node:path');
+const { MongoClient, ObjectId } = require('mongodb');
+const cookie = require('cookie-session');
 
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.json());
@@ -24,7 +23,7 @@ let db, usersCollection, gamesCollection;
 async function connectDB() {
     try {
         await client.connect();
-        db = await client.db('Celtics_Game_Tracker');
+        db = client.db('Celtics_Game_Tracker');
         usersCollection = db.collection('User');
         gamesCollection = db.collection('Games');
         console.log("Connected to MongoDB");
@@ -33,20 +32,17 @@ async function connectDB() {
     }
 }
 
-connectDB()
+connectDB();
 
 app.post('/login', async (req, res) => {
     try {
-        console.log("here");
         let user = await usersCollection.findOne({ name: req.body.username });
         if (!user) {
-            console.log("user");
             let newUser = await usersCollection.insertOne(req.body);
             req.session.user = newUser.insertedId;
             return res.json({ success: true, message: 'New account created' });
         } 
         if (user.password === req.body.password) {
-            console.log("password");
             req.session.user = user._id;
             res.redirect(303, '/');
         } else {
@@ -59,9 +55,8 @@ app.post('/login', async (req, res) => {
 });
 
 app.post('/logout', async (req, res) => {
-    console.log("logout");
     req.session.user = null;
-    return res.json({ success: true })
+    return res.json({ success: true });
 });
 
 app.use((req, res, next) => {
@@ -84,8 +79,6 @@ app.get('/getGames', async (req, res) => {
 
 app.post('/addGame', async (req, res) => {
     try {
-        console.log("submit game");
-        console.log(req.body);
         const game = {
             opponent: req.body.opponent,
             gameDate: req.body.gameDate,
@@ -115,17 +108,14 @@ app.put('/updateGame', async (req, res) => {
 
 app.delete('/deleteGame', async (req, res) => {
     try {
-        const {_id} = req.body
-        console.log("work");
-        const result = await gamesCollection.deleteOne( {_id: new ObjectId(_id)});
-        console.log(result);
+        const { _id } = req.body;
+        const result = await gamesCollection.deleteOne({ _id: new ObjectId(_id) });
         res.sendStatus(200);
     } catch (error) {
         console.error("Error deleting game:", error);
         res.status(500).send("Error deleting game");
     }
 });
-
 
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`);
