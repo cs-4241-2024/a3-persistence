@@ -1,0 +1,64 @@
+body {
+    background-color: rgb(0, 122, 51); /* Celtics green */
+    color: green;
+    font-family: 'Dosis', sans-serif;
+    font-family: 'Oswald', sans-serif;
+    align-content: center;
+  }
+  
+  .container {
+    margin-top: 30px;
+  }
+  
+  h1, h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #ffffff;
+  }
+  
+  form {
+    background-color: #1d1f21; 
+    padding: 20px;
+    border-radius: 8px;
+  }
+  
+  form label {
+    color: #cccccc;
+  }
+  
+  button {
+    background-color: #007A33; /* Celtics green */
+    border: none;
+    color: white;
+    padding: 10px 20px;
+    font-size: 16px;
+    border-radius: 5px;
+    align-content: center;
+  }
+  
+  #gameList {
+    margin-top: 20px;
+  }
+  
+  .list-group-item {
+    background-color: #1d1f21;
+    color: #ffffff;
+    border: 1px solid #444444;
+  }
+  
+  .list-group-item button {
+    background-color: #b80000;
+  }
+  
+  .logout button {
+    background-color: #b80000;
+  
+  }
+  
+  .logout {
+    margin-top: 20px;
+    text-align: center;
+    width: 30%;
+    margin: auto;
+  }
+  
