@@ -64,6 +64,7 @@ const submit = async function( event ) {
     createCell(secondvalue, row)
     createCell(operation, row)
     createCell(result, row)
+    createCell("", row, true)
   })
 }
 
@@ -78,24 +79,47 @@ window.onload = function() {
   .then( fillTable )
 }
 
-fillTable = function(table) {
+const fillTable = function(table) {
   for(let row = 0; row < table.length; row++) {
     createRow(row)
     createCell(table[row].firstvalue, row)
     createCell(table[row].secondvalue, row)
     createCell(table[row].operation, row)
     createCell(table[row].result, row)
+    createCell("", row, true)
   }
 }
 
-createRow = function(row) {
+const createRow = function(row) {
   const tr = document.createElement( 'tr' )
   tr.setAttribute( 'id' , 'r' + row )
   document.getElementById( 'tbody' ).appendChild( tr )
 }
 
-createCell = function(data, row) {
+const createCell = function(data, row, button) {
   const cell = document.createElement( 'td' )
-  cell.innerHTML = data
+  if(!button) {
+    cell.innerHTML = data
+  }
+  else {
+    const button = document.createElement( 'button' )
+    button.innerHTML = "X"
+    button.style.background = "red"
+    button.style.paddingInline = "4px"
+    button.onclick = () => removeRow(row)
+    cell.appendChild( button )
+  }
   document.getElementById( 'r' + row ).appendChild( cell )
+}
+
+
+const removeRow = function(row) {
+  row = {_id: 'r' + row}
+  document.getElementById( row._id ).remove()
+
+  fetch( '/remove', {
+    method:  'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body:    JSON.stringify( row )
+  })
 }

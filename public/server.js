@@ -1,42 +1,71 @@
 require('dotenv').config()
 const express = require( 'express' ),
-      { MongoClient, ObjectId } = require("mongodb"),
-      app = express()
+    cookie  = require( 'cookie-session' ),
+    { MongoClient, ObjectId } = require("mongodb"),
+    app = express()
 
-app.use( express.static( 'public', {index: 'login.html' } ) )
+app.use( express.static( 'public' , {index: '/login.html' } ) )
+app.use( express.urlencoded({ extended:true }) )
 app.use( express.json() )
+app.use( cookie({
+  name: 'session',
+  keys: ['key1', 'key2']
+}))
 
 const uri = `mongodb+srv://${process.env.USER}:${process.env.PASS}@${process.env.HOST}`
 const client = new MongoClient( uri )
 
-let collection = null
+let equations = null
+let loginData = null
 let tableLength = 0
 
 app.use( (req,res,next) => {
-  if( collection !== null ) {
+  if( req.session.login === true )
     next()
-  }else{
-    res.status( 503 ).send()
-  }
+  else
+    res.sendFile( __dirname + 'login.html' )
 })
+
+app.post( '/login', async (req,res)=> {
+  console.log( req.body )
+  let username = req.body.user
+  let password = req.body.pass
+  let login = await loginData.findOne({user: username, pass: password})
+
+  if (login === null || login.user !== username || login.pass !== password) {
+    await loginData.insertOne( req.body )
+  }
+  req.session.user = username
+  req.session.login = true
+
+  res.json()
+})
+
+app.get('/logout', ( req, res ) => {
+  req.session = null;
+});
 
 app.post( '/add', async (req,res) => {
   row = tableLength
   tableLength++
-  const insert = await collection.insertOne( req.body )
+  req.body.owner = req.session.user
+  await equations.insertOne( req.body )
   res.json( row )
 })
 
 app.post( '/remove', async (req,res) => {
-  const result = await collection.deleteOne({ 
-    _id:new ObjectId( req.body._id ) 
-  })
+  // const result = await equations.deleteOne({
+  //   _id:new ObjectId( req.body._id )
+  // })
+  const result = req.body._id
+
+  console.log(ObjectId.generate( result) )
   
   res.json( result )
 })
 
 app.post( '/update', async (req,res) => {
-  const result = await collection.updateOne(
+  const result = await calculator.updateOne(
     { _id: new ObjectId( req.body._id ) },
     { $set:{ name:req.body.name } }
   )
@@ -45,18 +74,19 @@ app.post( '/update', async (req,res) => {
 })
 
 app.post( '/table', async (req,res) => {
-  const table = await collection.find({}).toArray()
+  const table = await equations.find({owner: req.session.user}).toArray()
   tableLength = table.length
   res.json( table )
 })
 
 async function run() {
   await client.connect()
-  collection = await client.db("calculator").collection("equation")
+  equations = await client.db("calculator").collection("equation")
+  loginData = await client.db("calculator").collection("logins")
 
   app.get("/docs", async (req, res) => {
-    if (collection !== null) {
-      const docs = await collection.find({}).toArray()
+    if (equations !== null) {
+      const docs = await equations.find({}).toArray()
       res.json( docs )
     }
   })

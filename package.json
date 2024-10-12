@@ -4,14 +4,18 @@
   "description": "",
   "author": "",
   "scripts": {
-    "start": "node server.js",
+    "start": "node public/server.js",
     "dev": "tailwindcss -i public/css/main.css -o public/css/style.css --watch"
   },
   "dependencies": {
+    "cookie-session": "^2.1.0",
     "dotenv": "^16.4.5",
     "express": "^4.16.4",
     "mime": "^2.4.4",
     "mongodb": "^6.9.0"
+  },
+  "engines": {
+    "node": "16.x"
   },
   "devDependencies": {
     "tailwindcss": "^3.4.12"
