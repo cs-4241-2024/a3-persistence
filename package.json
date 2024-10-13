@@ -3,6 +3,7 @@
   "version": "",
   "description": "",
   "author": "",
+    "engines": { "node": "16.x" },
   "scripts": {
     "start": "node server.js"
   },
