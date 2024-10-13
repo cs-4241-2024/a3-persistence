@@ -1,0 +1,23 @@
+body {
+    background-color: lavender;
+  }
+  
+  h1, h2 {
+    text-align: center;
+  }
+  
+  table {
+    width: 80%;
+    margin: auto;
+  }
+  
+  button.edit {
+    background-color: #3498db;
+    color: white;
+  }
+  
+  button.delete {
+    background-color: #e74c3c;
+    color: white;
+  }
+  
