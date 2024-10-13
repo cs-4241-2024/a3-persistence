@@ -68,15 +68,24 @@ const submit = async function( event ) {
   })
 }
 
+const logout = function () {
+  fetch( '/logout', {
+    method: 'GET',
+    headers: { "Content-Type": "application/json" }
+  }).then(() => window.location.href = '/')
+}
+
 window.onload = function() {
   const calculate = document.getElementById( 'calculate' )
+  const logoutButton = document.getElementById( 'logout' )
   calculate.onclick = submit
+  logoutButton.onclick = logout
 
   fetch( '/table', {
-    method: 'POST',
+    method: 'GET',
+    headers: { "Content-Type": "application/json" }
   })
-  .then( response => response.json() )
-  .then( fillTable )
+  //.then( response => response.json() )//response.status === 404 ? window.location.href = "/" : fillTable()} )
 }
 
 const fillTable = function(table) {

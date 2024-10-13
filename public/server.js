@@ -23,7 +23,7 @@ app.use( (req,res,next) => {
   if( req.session.login === true )
     next()
   else
-    res.sendFile( __dirname + 'login.html' )
+    res.sendFile( __dirname + '/login.html' )
 })
 
 app.post( '/login', async (req,res)=> {
@@ -37,8 +37,6 @@ app.post( '/login', async (req,res)=> {
   }
   req.session.user = username
   req.session.login = true
-
-  res.json()
 })
 
 app.get('/logout', ( req, res ) => {
@@ -73,10 +71,15 @@ app.post( '/update', async (req,res) => {
   res.json( result )
 })
 
-app.post( '/table', async (req,res) => {
-  const table = await equations.find({owner: req.session.user}).toArray()
+app.get( '/table', async (req,res) => {
+  const loggedIn = req.session
+  if(loggedIn === null) {
+    return res.json( "failure" )
+    //return res.status(404).send("user not logged in")
+  }
+  const table = await equations.find({owner: loggedIn.user}).toArray()
   tableLength = table.length
-  res.json( table )
+  res.json( "success" )
 })
 
 async function run() {
