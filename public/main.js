@@ -57,55 +57,60 @@ const submit = async function( event ) {
     headers: { 'Content-Type': 'application/json' },
     body:    JSON.stringify( json )
   })
-  .then( row => row.json() )
-  .then( row => {
-    createRow(row)
-    createCell(firstvalue, row)
-    createCell(secondvalue, row)
-    createCell(operation, row)
-    createCell(result, row)
-    createCell("", row, true)
+  .then( id => id.json() )
+  .then( id => {
+    createRow(id)
+    createCell(firstvalue, id)
+    createCell(secondvalue, id)
+    createCell(operation, id)
+    createCell(result, id)
+    createCell("", id, true)
   })
 }
 
 const logout = function () {
   fetch( '/logout', {
-    method: 'GET',
+    method: 'POST',
     headers: { "Content-Type": "application/json" }
-  }).then(() => window.location.href = '/')
+  }).then( response => window.location.href = response.url )
 }
 
-window.onload = function() {
+window.onload = async function() {
   const calculate = document.getElementById( 'calculate' )
   const logoutButton = document.getElementById( 'logout' )
   calculate.onclick = submit
   logoutButton.onclick = logout
 
   fetch( '/table', {
-    method: 'GET',
+    method: 'POST',
     headers: { "Content-Type": "application/json" }
-  })
-  //.then( response => response.json() )//response.status === 404 ? window.location.href = "/" : fillTable()} )
+  }).then( async response => {
+    if(response.status == 400) {
+      window.location.href = "/"
+    } else {
+      fillTable(await response.json())
+    }})
 }
 
 const fillTable = function(table) {
   for(let row = 0; row < table.length; row++) {
-    createRow(row)
-    createCell(table[row].firstvalue, row)
-    createCell(table[row].secondvalue, row)
-    createCell(table[row].operation, row)
-    createCell(table[row].result, row)
-    createCell("", row, true)
+    const id = table[row]._id
+    createRow(id)
+    createCell(table[row].firstvalue, id)
+    createCell(table[row].secondvalue, id)
+    createCell(table[row].operation, id)
+    createCell(table[row].result, id)
+    createCell("", id, true)
   }
 }
 
-const createRow = function(row) {
+const createRow = function(id) {
   const tr = document.createElement( 'tr' )
-  tr.setAttribute( 'id' , 'r' + row )
+  tr.setAttribute( 'id' , id )
   document.getElementById( 'tbody' ).appendChild( tr )
 }
 
-const createCell = function(data, row, button) {
+const createCell = function(data, id, button) {
   const cell = document.createElement( 'td' )
   if(!button) {
     cell.innerHTML = data
@@ -115,20 +120,19 @@ const createCell = function(data, row, button) {
     button.innerHTML = "X"
     button.style.background = "red"
     button.style.paddingInline = "4px"
-    button.onclick = () => removeRow(row)
+    button.onclick = () => removeRow(id)
     cell.appendChild( button )
   }
-  document.getElementById( 'r' + row ).appendChild( cell )
+  document.getElementById( id ).appendChild( cell )
 }
 
 
-const removeRow = function(row) {
-  row = {_id: 'r' + row}
-  document.getElementById( row._id ).remove()
+const removeRow = function(id) {
+  document.getElementById( id ).remove()
 
   fetch( '/remove', {
     method:  'POST',
     headers: { 'Content-Type': 'application/json' },
-    body:    JSON.stringify( row )
+    body:    JSON.stringify( {id: id} )
   })
 }

@@ -17,16 +17,15 @@ const client = new MongoClient( uri )
 
 let equations = null
 let loginData = null
-let tableLength = 0
 
-app.use( (req,res,next) => {
-  if( req.session.login === true )
-    next()
-  else
-    res.sendFile( __dirname + '/login.html' )
-})
+// app.use( (req,res,next) => {
+//   if( req.session.login === true )
+//     next()
+//   else
+//     res.sendFile( __dirname + '/login.html' )
+// })
 
-app.post( '/login', async (req,res)=> {
+app.post( '/login', async (req,res) => {
   console.log( req.body )
   let username = req.body.user
   let password = req.body.pass
@@ -37,29 +36,25 @@ app.post( '/login', async (req,res)=> {
   }
   req.session.user = username
   req.session.login = true
+  res.redirect( "/index.html" )
 })
 
-app.get('/logout', ( req, res ) => {
-  req.session = null;
-});
+app.post('/logout', ( req, res ) => {
+  req.session = null
+  res.redirect( "/" )
+})
 
 app.post( '/add', async (req,res) => {
-  row = tableLength
-  tableLength++
-  req.body.owner = req.session.user
-  await equations.insertOne( req.body )
-  res.json( row )
+  equation = req.body
+  equation.owner = req.session.user
+  const result = await equations.insertOne( equation )
+  equation._id = result.insertedId
+  res.status( 200 ).send( equation._id )
 })
 
 app.post( '/remove', async (req,res) => {
-  // const result = await equations.deleteOne({
-  //   _id:new ObjectId( req.body._id )
-  // })
-  const result = req.body._id
-
-  console.log(ObjectId.generate( result) )
-  
-  res.json( result )
+  const result = await equations.deleteOne({_id: new ObjectId( req.body.id )})
+  res.status( 200 ).send( result )
 })
 
 app.post( '/update', async (req,res) => {
@@ -71,15 +66,12 @@ app.post( '/update', async (req,res) => {
   res.json( result )
 })
 
-app.get( '/table', async (req,res) => {
-  const loggedIn = req.session
-  if(loggedIn === null) {
-    return res.json( "failure" )
-    //return res.status(404).send("user not logged in")
+app.post( '/table', async (req,res) => {
+  if(!req.session.isPopulated) {
+    return res.status(400).send( "user not logged in" )
   }
-  const table = await equations.find({owner: loggedIn.user}).toArray()
-  tableLength = table.length
-  res.json( "success" )
+  const table = await equations.find({owner: req.session.user}).toArray()
+  res.status( 200 ).send( table )
 })
 
 async function run() {

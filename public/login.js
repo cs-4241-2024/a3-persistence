@@ -11,7 +11,7 @@ const submit = async function( event ) {
         method:  'POST',
         headers: { 'Content-Type': 'application/json' },
         body:    JSON.stringify( json )
-    }).then(() => window.location.href = '/index.html')
+    }).then( response => window.location.href = response.url )
 }
 
 window.onload = function() {
