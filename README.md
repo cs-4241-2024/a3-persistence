@@ -9,5 +9,5 @@ https://a3-henryhribar.glitch.me/
 
 ## Technical Achievements
 - **Tech Achievement 1**: I got 100% in all four lighthouse tests for both the login page and the main page.
-![alt text]({072082DD-D96E-41B7-9DE1-8D51E597A97D}.png)
-![alt text]({8AA8D8E9-CBED-4A04-BB66-52B711093082}.png)
+![alt text]({08C60280-3810-42FC-A1C3-3611CE344926}.png)
+![alt text]({FF4B731B-7869-4B9C-B203-EBE4FDC3C8F5}.png)
