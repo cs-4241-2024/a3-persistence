@@ -1,0 +1,10 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+th, td {
+    border: 2px;
+    border-style: solid;
+    text-align: start;
+    padding: 4px;
+}

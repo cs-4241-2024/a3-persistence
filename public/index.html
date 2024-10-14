@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>CS4241 Assignment 3</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="This is CS4241 Assigmnent 3">
+
+    <script src="main.js"></script>
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/style.css">
+    
+    <!-- get rid of favicon error -->
+    <link rel="icon" href="data:;base64,iVBORw0KGgo=">
+  </head>
+  <body class="bg-neutral-500 text-white flex justify-center mt-12">
+    <div class="text-2xl">
+      <button type="button" id="logout" class="bg-neutral-700 p-2 rounded-lg border-2 border-neutral-300 hover:cursor-pointer active:bg-neutral-500">logout</button>
+    </div>
+    <div class="bg-neutral-700 p-4 ml-12 rounded-lg text-4xl">
+      <h1 id="equation" class="mb-4 p-2 rounded-lg bg-neutral-900">awaiting equation...</h1>
+      <form>
+        <input type="number" id="firstvalue" placeholder="first value here" required class="text-black mb-4 p-1 rounded border-neutral-500 border-2"><br>
+        <input type="radio" id="addition" value="addition" name="operation" required>
+        <label for="addition">addition (+)</label><br>
+        <input type="radio" id="subtraction" value="subtraction" name="operation" required>
+        <label for="subtraction">subtraction (-)</label><br>
+        <input type="radio" id="multiplication" value="multiplication" name="operation" required>
+        <label for="multiplication">multiplication (*)</label><br>
+        <input type="radio" id="division" value="division" name="operation" required>
+        <label for="division">division (/)</label><br>
+        <input type="number" id="secondvalue" placeholder="second value here" required class="text-black my-4 p-1 rounded border-neutral-500 border-2"><br>
+        <input type="submit" id="calculate" value="calculate" class="bg-neutral-300 text-black h-fit p-1 border-2 rounded-lg border-neutral-500 hover:cursor-pointer active:bg-neutral-400">
+      </form>
+    </div>
+    <table class="text-2xl ml-12 flex">
+      <tbody id="tbody">
+        <tr id="h">
+          <th>firstvalue</th>
+          <th>secondvalue</th>
+          <th>operation</th>
+          <th>result</th>
+        </tr>
+      </tbody>
+    </table>
+  </body>
+</html>
