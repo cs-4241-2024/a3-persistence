@@ -57,45 +57,82 @@ const submit = async function( event ) {
     headers: { 'Content-Type': 'application/json' },
     body:    JSON.stringify( json )
   })
-  .then( row => row.json() )
-  .then( row => {
-    createRow(row)
-    createCell(firstvalue, row)
-    createCell(secondvalue, row)
-    createCell(operation, row)
-    createCell(result, row)
+  .then( id => id.json() )
+  .then( id => {
+    createRow(id)
+    createCell(firstvalue, id)
+    createCell(secondvalue, id)
+    createCell(operation, id)
+    createCell(result, id)
+    createCell("", id, true)
   })
 }
 
-window.onload = function() {
+const logout = function () {
+  fetch( '/logout', {
+    method: 'POST',
+    headers: { "Content-Type": "application/json" }
+  }).then( response => window.location.href = response.url )
+}
+
+window.onload = async function() {
   const calculate = document.getElementById( 'calculate' )
+  const logoutButton = document.getElementById( 'logout' )
   calculate.onclick = submit
+  logoutButton.onclick = logout
 
   fetch( '/table', {
     method: 'POST',
-  })
-  .then( response => response.json() )
-  .then( fillTable )
+    headers: { "Content-Type": "application/json" }
+  }).then( async response => {
+    if(response.status == 400) {
+      window.location.href = "/"
+    } else {
+      fillTable(await response.json())
+    }})
 }
 
-fillTable = function(table) {
+const fillTable = function(table) {
   for(let row = 0; row < table.length; row++) {
-    createRow(row)
-    createCell(table[row].firstvalue, row)
-    createCell(table[row].secondvalue, row)
-    createCell(table[row].operation, row)
-    createCell(table[row].result, row)
+    const id = table[row]._id
+    createRow(id)
+    createCell(table[row].firstvalue, id)
+    createCell(table[row].secondvalue, id)
+    createCell(table[row].operation, id)
+    createCell(table[row].result, id)
+    createCell("", id, true)
   }
 }
 
-createRow = function(row) {
+const createRow = function(id) {
   const tr = document.createElement( 'tr' )
-  tr.setAttribute( 'id' , 'r' + row )
+  tr.setAttribute( 'id' , id )
   document.getElementById( 'tbody' ).appendChild( tr )
 }
 
-createCell = function(data, row) {
+const createCell = function(data, id, button) {
   const cell = document.createElement( 'td' )
-  cell.innerHTML = data
-  document.getElementById( 'r' + row ).appendChild( cell )
+  if(!button) {
+    cell.innerHTML = data
+  }
+  else {
+    const button = document.createElement( 'button' )
+    button.innerHTML = "X"
+    button.style.background = "red"
+    button.style.paddingInline = "4px"
+    button.onclick = () => removeRow(id)
+    cell.appendChild( button )
+  }
+  document.getElementById( id ).appendChild( cell )
+}
+
+
+const removeRow = function(id) {
+  document.getElementById( id ).remove()
+
+  fetch( '/remove', {
+    method:  'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body:    JSON.stringify( {id: id} )
+  })
 }
