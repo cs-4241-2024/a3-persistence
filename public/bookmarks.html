@@ -1,0 +1,36 @@
+<!-- bookmarks.html -->
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Bookmark app | View Bookmarks</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.2/css/bulma.min.css">
+  </head>
+  <body>
+    <section class="section">
+        <div class="container">
+            <h1 class="title">My Bookmarks</h1>
+            <table class="table is-striped">
+                <thead>
+                    <tr>
+                        <th>Title</th>
+                        <th>URL</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="bookmarkTable">
+                    <!-- Bookmarks will be dynamically populated here -->
+                </tbody>
+            </table>
+            <div class="field">
+                <div class="control">
+                    <button class="button is-primary" id="addBookmarkBtn">Add Bookmark</button>
+                </div>
+            </div>
+        </div>
+    </section>
+    <script src="/public/javascripts/bookmarks.js"></script>
+    <!-- Link to your JavaScript file -->
+  </body>
+</html>
