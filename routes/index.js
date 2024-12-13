@@ -48,7 +48,7 @@ router.post("/login", async (req, res) => {
       await usersCollection.insertOne({ username, password: hashedPassword });
 
       // Set user info in session for new user
-      req.session.user = username;
+      req.session.user = {username, "password": hashedPassword};
 
       console.log("New user added, redirecting to bookmarks.");
 
