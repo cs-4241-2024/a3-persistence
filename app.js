@@ -2,8 +2,11 @@ const express = require("express");
 var path = require("path");
 var cookieParser = require("cookie-parser");
 var logger = require("morgan");
-
 var indexRouter = require("./routes/index");
+require("dotenv").config();
+
+const session = require('express-session');
+
 const { MongoClient } = require("mongodb");
 
 const app = express();
@@ -16,13 +19,23 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 
-app.use("/", indexRouter);
 
-// Connection URI and client setup
-const uri = "mongodb://localhost:27017";
+// Mount the indexRouter at the root path, prefix routes with /
+app.use(indexRouter);
+
+
+app.use(session({
+  secret: 'trajanA3PersistenceSuperSecretKey',
+  resave: false,
+  saveUninitialized: true,
+  cookie: { secure: false } // Set to true if using HTTPS
+}));
+
+// Connection URI and client setup using connection string from .env
+const uri = process.env.MONGODB_URI;
 const client = new MongoClient(uri);
 
-const databaseName = "bookmarks_db";
+const databaseName = "bookmark-manager";
 const usersCollectionName = "users";
 
 // Connect to the database
@@ -37,15 +50,53 @@ async function connectToDatabase() {
 
 connectToDatabase();
 
-app.post("/login", (req, res) => {
+app.post("/login", async (req, res) => {
   const { username, password } = req.body;
 
-  // Handle authentication logic (e.g., check against the database)
-  if (username === "admin" && password === "admin") {
-    console.log("redirecting to bookmarks");
-    res.redirect("/bookmarks");
-  } else {
-    res.status(401).json({ message: "Invalid credentials" });
+  try {
+    const db = client.db(databaseName); // Replace with your database name
+    const usersCollection = db.collection(usersCollectionName);
+
+    // Check if the user exists
+    const existingUser = await usersCollection.findOne({ username });
+
+    if (existingUser) {
+      // User exists, validate the password
+      if (existingUser.password === password) {
+
+        // Storing user data in session
+        req.session.user = existingUser;
+
+        console.log("Authentication successful, redirecting to bookmarks.");
+
+        return res.json({
+          message: "Login successful.",
+          isNewUser: false,
+          redirectTo: "/bookmarks",
+        });
+
+      } else {
+        return res.status(401).json({ message: "Invalid password." });
+      }
+
+    } else {
+      // User does not exist, add to the database
+      await usersCollection.insertOne({ username, password });
+
+      // Set user info in session for new user
+      req.session.user = { username, password};
+
+      console.log("New user added, redirecting to bookmarks.");
+
+      return res.json({
+        message: "New user created successfully.",
+        isNewUser: true, // new user!
+        redirectTo: "/bookmarks",
+      });
+    }
+  } catch (err) {
+    console.error("Error handling login:", err);
+    res.status(500).json({ message: "Internal server error." });
   }
 });
 
