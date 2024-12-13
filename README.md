@@ -1,7 +1,7 @@
 Assignment 3 - Persistence: Two-tier Web Application with Database, Express server, and CSS template
 ===
 
-## Your Web Application Title
+## Simple Bookmark Manager
 
 [Heroku link](https://trajan-espelien-webware-a3-589e3ae8565b.herokuapp.com)
 
